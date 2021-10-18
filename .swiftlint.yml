@@ -1,0 +1,10 @@
+disabled_rules:
+  - line_length
+  - trailing_whitespace
+  - block_based_kvo
+  - identifier_name
+  - type_name
+  - closure_parameter_position
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+  - Pods
