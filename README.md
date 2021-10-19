@@ -18,7 +18,7 @@ Thank you for participating in the iOS Bootcamp 2021!.
 
 This README file contains the instructions to complete the capstone project for the bootcamp.
 
-## The project
+## The Project
 
 The purpose of this project is for you to demonstrate your iOS skills.
 
