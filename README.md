@@ -1,4 +1,4 @@
-# iOS Apprenticeship Program 2020
+# iOS Bootcamp Project 2021
 
 ## Table of Contents
 
@@ -11,22 +11,22 @@
 
 ## Introduction
 
-This Apprenticeship Program is looking for improve the iOS Technical skills. 
-When the Wizeliner ends this program the expected level would be two or above according the current necessities.
+This iOS Bootcamp is looking to improve your iOS Technical skills. 
+When you complete this program, the expected level would be two or above according the current necessities.
 
-Thank you for participating in the Apprenticeship Program 2020!.
+Thank you for participating in the iOS Bootcamp 2021!.
 
-Here, you'll find instructions to complete this program.
+This README file contains the instructions to complete the capstone project for the bootcamp.
 
-## The Challenge
+## The project
 
-The purpose of the challenge is for you to demonstrate your iOS skills.
+The purpose of this project is for you to demonstrate your iOS skills.
 
-This is your chance to show off everything you've learned during the program and to improve your Technical skills.
+This is your chance to show off everything you've learned during the bootcamp and to improve your Technical skills.
 
 You will build and deliver a **whole** iOS application on your own.
 
-We don't want to limit you by providing some fill-in-the-blanks exercises. Instead, we want you to build it from scratch. 
+We don't want to limit you by providing some *fill-in-the-blanks* exercises. Instead, we want you to build it from scratch. 
 
 We hope you find this exercise challenging and engaging.
 
@@ -55,9 +55,9 @@ These are the main requirements for your deliverable evaluation:
   - Unit Test
 - Implement Unit Tests Coverage (~70%)
 
-Try to keep the use of 3rd party libraries to the minimum, especially the ones related to the topics covered in the course.
+Keep the use of 3rd party libraries to the minimum, especially the ones related to the topics covered in the course.
 
-For example, you can use some Image downloader framework (such as Kingfisher) if that makes you feel more comfortable and move faster. However, we will still want you to develop and deliver meaningful styled-components.
+For example, you can use an image downloader framework (such as Kingfisher) if that makes you feel more comfortable and move faster. However, we still want you to develop and deliver meaningful styled-components.
 
 ## Getting Started
 
@@ -87,11 +87,11 @@ example: dev-steve-jobs
 
 ## Deliverables
 
-We provide the delivery dates so you can plan accordingly. Please, take this challenge seriously and try to make progress constantly.
+We provide the delivery dates for you to can plan accordingly. Please, take this challenge seriously and try to make progress constantly.
 
 It’s worth mentioning that you’ll ONLY get feedback from the review team for your first deliverable, so you will have a chance to fix or improve the code based on our suggestions.
 
-For the final deliverable, we will provide some feedback, but there is no extra review date. If you are struggling with something, we will be happy to help you via the #ios-apprenticeship-2020 slack channel.
+For the final deliverable, we will provide some feedback, but there is no extra review date. If you are struggling with something, we will be happy to help you via the #ios-bootcamp-2021 slack channel.
 
 ### First Deliverable 
 
@@ -135,7 +135,7 @@ For the final deliverable, we will provide some feedback, but there is no extra 
 For submitting your work, you should follow these steps:
 
 - Create a pull request with your code. 
-- Target your main branch of the repository [iOS-apprenticeship-program-2020](https://github.com/wizeline/iOS-apprenticeship-program-2020).
+- Target your main branch of the repository [ios-bootcamp-project-2021](https://github.com/wizelineacademy/ios-bootcamp-project-2021).
 
 
 # TheMovieDb API
