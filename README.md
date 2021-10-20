@@ -1,5 +1,9 @@
 # iOS Bootcamp Project 2021
 
+Thank you for participating in the iOS Bootcamp 2021!
+
+This README file contains the instructions to complete the capstone project for the bootcamp.
+
 ## Table of Contents
 
 * [Introduction](#introduction)
@@ -27,9 +31,6 @@ At the end of the course, you will have gained enough experience to recall the e
 
 Additionally, you’ll understand how the technologies internally work and what are the dos and don'ts.
 
-Thank you for participating in the iOS Bootcamp 2021!.
-
-This README file contains the instructions to complete the capstone project for the bootcamp.
 
 ## The Project
 
