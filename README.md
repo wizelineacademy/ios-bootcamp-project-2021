@@ -12,7 +12,20 @@
 ## Introduction
 
 This iOS Bootcamp is looking to improve your iOS Technical skills. 
-When you complete this program, the expected level would be two or above according the current necessities.
+
+At the end of the course, you will have gained enough experience to recall the essence of several techniques related to the skills covered in the bootcamp, apply them correctly, and even provide shortcuts and quick ways for accomplishing your tasks. 
+
+- iOS SDK 
+- Swift 
+- Presentation Patterns 
+- Dependency Injection
+- Networking 
+- Software Design Principles
+- Debugging 
+- Persistence Layers 
+- Mobile App Release Management
+
+Additionally, you’ll understand how the technologies internally work and what are the dos and don'ts.
 
 Thank you for participating in the iOS Bootcamp 2021!.
 
@@ -87,7 +100,7 @@ example: dev-steve-jobs
 
 ## Deliverables
 
-We provide the delivery dates for you to can plan accordingly. Please, take this challenge seriously and try to make progress constantly.
+We provide the delivery dates for you to plan accordingly. Please, take this challenge seriously and try to make progress constantly.
 
 It’s worth mentioning that you’ll ONLY get feedback from the review team for your first deliverable, so you will have a chance to fix or improve the code based on our suggestions.
 
