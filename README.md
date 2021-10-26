@@ -129,9 +129,9 @@ The application interface must contain this next screen to be functionaly.
 
 We provide the delivery dates for you to plan accordingly. Please, take this challenge seriously and try to make progress constantly.
 
-It’s worth mentioning that you’ll ONLY get feedback from the review team for your first deliverable, so you will have a chance to fix or improve the code based on our suggestions.
+It’s worth mentioning that you’ll ONLY get feedback from the review team for your first and second deliverable, so you will have a chance to fix or improve the code based on our suggestions.
 
-For the final deliverable, we will provide some feedback, but there is no extra review date. If you are struggling with something, we will be happy to help you via the #ios-bootcamp-2021 slack channel.
+For the final deliverable, we will provide some feedback, but there is no extra review date. If you are struggling with something, we will be happy to help you via the #ios-q4-bootcamp slack channel.
 
 ### First Deliverable 
 
