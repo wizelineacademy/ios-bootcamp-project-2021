@@ -101,7 +101,7 @@ example: dev-steve-jobs
 
 ## App Contents
 
-The application interface must contain this next screen to be functionaly.
+The application interface must contain this next screens to be functional.
 
 - Home View
   - Show movies
