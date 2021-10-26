@@ -99,18 +99,11 @@ example: dev-steve-jobs
 
 **Step 8:** Have fun!
 
-## Deliverables
+## App Contents
 
-We provide the delivery dates for you to plan accordingly. Please, take this challenge seriously and try to make progress constantly.
-
-It’s worth mentioning that you’ll ONLY get feedback from the review team for your first deliverable, so you will have a chance to fix or improve the code based on our suggestions.
-
-For the final deliverable, we will provide some feedback, but there is no extra review date. If you are struggling with something, we will be happy to help you via the #ios-bootcamp-2021 slack channel.
-
-### First Deliverable 
+The application interface must contain this next screen to be functionaly.
 
 - Home View
- 
   - Show movies
      - Trending
       - Now Playing
@@ -119,11 +112,9 @@ For the final deliverable, we will provide some feedback, but there is no extra 
       - Upcoming
 
 - Search movie or person.
-  
   -  Display results by keyword and by query.
 
 - Movie Details View
-
   - Display the selected movie and its information.
   - Display overview.
   - Display cast.
@@ -134,15 +125,52 @@ For the final deliverable, we will provide some feedback, but there is no extra 
 - Reviews View
   - Display reviews
 
+## Deliverables
+
+We provide the delivery dates for you to plan accordingly. Please, take this challenge seriously and try to make progress constantly.
+
+It’s worth mentioning that you’ll ONLY get feedback from the review team for your first deliverable, so you will have a chance to fix or improve the code based on our suggestions.
+
+For the final deliverable, we will provide some feedback, but there is no extra review date. If you are struggling with something, we will be happy to help you via the #ios-bootcamp-2021 slack channel.
+
+### First Deliverable 
+
+Build an App from scratch in Swift with the following features:
+
+* Request an existing and public Movie Database (TMDB) API.
+* Consume KingFisher libraries to get all images.
+* Apply background thread, URLSession, model (codables), async task (GCD).
+* Design pattern MVC.
+* Apply good standard library and design practices.
+* Apply ALL design principles
+* Apply SwiftLint (based on defined rules)
+* Create your own repo with a personal account.
+* Apply Storyboards on the UI.
+
 > \*_Important:_ what’s listed in this deliverable is just for guidance and to help you distribute your workload; you can deliver more items if necessary.
+
+### Second Deliverable 
+
+Using what you've build from previous deliverable:
+
+* Apply generics where you identified they are needed (Answer Key: at least in the network layer)
+* Unit test - XCTest (network layer, models)
+* Use os.log to log errors
+* Refactor design pattern to MVVM or MVP.
+* Remove KingFisher interface and use NSCache
+* Change Storyboards to a programmatic list for the UI (Constraints layouts)
+* Apply Dependency Injection
 
 ### Final Deliverable 
 
-- Finish any pending functionality or address any comment you receive from your previous deliverable.
+Finish any pending functionality or address any comment you receive from your previous deliverables.
 
-- Unit Testing
-  - Create tests for your application
-  - Coverage must be at least `70%`
+* Refactor applying other design pattern (e.g. MVP)
+* Apply RxSwift or Combine
+* Integrate SwiftInject lib
+* Use Memory Graph to debug the application
+* Profiling of memory leaks, stack review, performance review (General profiling based on learned with Instruments)
+* Apply SwiftUI in at least one view
 
 ## Submitting the deliverables
 
