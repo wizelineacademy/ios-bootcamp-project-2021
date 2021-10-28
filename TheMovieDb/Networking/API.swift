@@ -7,9 +7,6 @@
 
 import Foundation
 
-let baseURL = "https://api.themoviedb.org/3"
-private let apiKey = "dc8558900a17ca7149d85463428100bc"
-
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
@@ -24,21 +21,8 @@ protocol LSRequest {
     var headers: [String: String]? { get }
     func resume<T: Codable>(completion: @escaping (Result<T, Error>) -> Void)
 }
-enum APIInformation {
-  var baseURL: String {
-    return "https://api.themoviedb.org/3"
-  }
-}
 
-enum APIs {
-  case getTrendingMovies
-  case getNowPlayingMovies
-  case getPopularMovies
-  case getTopRatedMovies
-  case getUpcomingMovies
-}
-
-extension APIs: LSRequest {
+extension API: LSRequest {
   var method: HTTPMethod {
     switch self {
     case .getNowPlayingMovies, .getPopularMovies, .getTrendingMovies, .getUpcomingMovies, .getTopRatedMovies:
@@ -49,22 +33,22 @@ extension APIs: LSRequest {
   var parameters: [String: Any]? {
     switch self {
     case .getTrendingMovies, .getPopularMovies, .getTopRatedMovies, .getUpcomingMovies, .getNowPlayingMovies:
-      return nil
+      return ["language": "en", "page": 1, "region": "US"]
     }
   }
   
   var url: String {
     switch self {
     case .getTrendingMovies:
-      return "\(baseURL)/trending/movie/day?api_key=\(apiKey)&language=en&region=US&page=1"
+      return "\(baseURL)/trending/movie/day?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&region=US&page=1"
     case .getNowPlayingMovies:
-      return "\(baseURL)/movie/now_playing?api_key=\(apiKey)&language=en&region=US&page=1"
+      return "\(baseURL)/movie/now_playing?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&region=US&page=1"
     case .getPopularMovies:
-      return "\(baseURL)/movie/popular?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&region=US&page=1"
+      return "\(baseURL)/movie/popular?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&region=US&page=1"
     case .getTopRatedMovies:
-      return "\(baseURL)/movie/top_rated?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&page=1&region=US"
+      return "\(baseURL)/movie/top_rated?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&page=1&region=US"
     case .getUpcomingMovies:
-      return "\(baseURL)/movie/upcoming?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&region=US&page=1"
+      return "\(baseURL)/movie/upcoming?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&region=US&page=1"
     }
   }
   
@@ -72,7 +56,7 @@ extension APIs: LSRequest {
     return nil
   }
   
-  func resume<T>(completion: @escaping (Result<T, Error>) -> Void) where T: Decodable, T: Encodable {
+  func resume<T>(completion: @escaping (Result<T, Error>) -> Void) where T: Decodable {
     guard let url = URL(string: self.url) else {
         return
     }
@@ -81,14 +65,14 @@ extension APIs: LSRequest {
     
     request.allHTTPHeaderFields = self.headers
     
-    if let parametros = self.parameters {
+    if let parameters = self.parameters {
         do {
-            let data = try JSONSerialization.data(withJSONObject: parametros, options: .fragmentsAllowed)
+            let data = try JSONSerialization.data(withJSONObject: parameters, options: .fragmentsAllowed)
             request.httpBody = data
         } catch {
             debugPrint(error)
             completion(.failure(error))
-        }
+        } 
     }
     
     URLSession.shared.dataTask(with: request) { (data, _, error) in

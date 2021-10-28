@@ -7,13 +7,13 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
   
-  var trendingMovies: [Movie] = []
-  var nowPlayingMovies: [Movie] = []
-  var popularMovies: [Movie] = []
-  var topRatedMovies: [Movie] = []
-  var upcomingMovies: [Movie] = []
+  private var trendingMovies: [Movie] = []
+  private var nowPlayingMovies: [Movie] = []
+  private var popularMovies: [Movie] = []
+  private var topRatedMovies: [Movie] = []
+  private var upcomingMovies: [Movie] = []
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -32,17 +32,18 @@ class MainViewController: UIViewController {
     
   }
   
-  func requestAPI() {
-    let completion: (Result<MoviesResponse, Error>) -> Void = { [weak self] result in
+  private func requestAPI() {
+    let completion: (Result<MovieList, Error>) -> Void = { [weak self] result in
         debugPrint(result)
         switch result {
         case .success(let response):
           self?.trendingMovies = response.results
+          print(response)
         default:
           self?.trendingMovies = []
         }
     }
-    APIs.getTrendingMovies.resume(completion: completion)
+    API.getTrendingMovies.resume(completion: completion)
   }
   
   /*
