@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie: Codable {
+struct Movie: Decodable {
     var posterPath: String?
     var overview: String?
     var genresIds: [Int]?

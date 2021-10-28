@@ -7,31 +7,63 @@
 
 import Foundation
 
-enum ShowMoviesURLs: String {
-    case Trending = "trending/movie/week?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
-    case NowPlaying = "movie/now_playing?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38&alanguage=en-US&page=1"
-    case Popular = "movie/popular?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US&page=1"
-    case TopRated = "movie/top_rated?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US&page=1"
-    case Upcoming = "movie/upcoming?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US&page=1"
+enum MovieListEndpoint {
+    case trending
+    case nowPlaying
+    case popular
+    case topRated
+    case upcoming
+    
+    fileprivate var path: String {
+        switch self {
+        case .trending: return "trending/movie/week"
+        case .nowPlaying: return "movie/now_playing"
+        case .popular: return "movie/popular"
+        case .topRated: return "movie/top_rated"
+        case .upcoming: return "movie/upcoming"
+        }
+    }
+}
+enum HTTPMethod: String {
+    case get, post, put, patch, delete, options, head
 }
 
-class MovieFacade {
+enum MovieError: Error {
+    case invalidUrl
+    case wrongResponse
+    case unknownError(error: Error)
+}
+
+protocol MovieService {
+    static func getMovies(endpoint: MovieListEndpoint, returnMovies: @escaping (Result<MovieResponse, MovieError>) -> Void)
+}
+
+struct MovieFacade: MovieService {
     
-    static let baseURL = "https://api.themoviedb.org/3/"
+    static let baseURL = URL(string:"https://api.themoviedb.org/3/")!
+    static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
     
-    static func getMovies(showMoviesURL: ShowMoviesURLs, returnMovies: @escaping (MovieResponse) -> Void) {
+    static func getMovies(endpoint: MovieListEndpoint, returnMovies: @escaping (Result<MovieResponse, MovieError>) -> Void) {
+
+        var components = URLComponents()
+        components.path = endpoint.path
+        components.queryItems = [
+            .init(name: "api_key", value: apiKey)
+        ]
         
-        let url = URL(string: baseURL + showMoviesURL.rawValue)
-        guard let requestUrl = url else { fatalError() }
+        guard let url = components.url(relativeTo: baseURL) else {
+            returnMovies(.failure(.invalidUrl))
+            return
+        }
         
-        var request = URLRequest(url: requestUrl)
-        
-        request.httpMethod = "GET"
+        var request = URLRequest(url: url)
+        request.httpMethod = HTTPMethod.get.rawValue
         
         let taskRequest = URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             if let error = error {
-                print("Error took place \(error)")
+                returnMovies(.failure(.unknownError(error: error)))
+                print("Error took place \(error.localizedDescription)")
                 return
             }
             
@@ -39,16 +71,17 @@ class MovieFacade {
                 print("Response HTTP Status code: \(response.statusCode)")
             }
             
-            if let data = data, let dataString = String(data: data, encoding: .utf8) {
-                print("Response data string:\n \(dataString)")
-                
+            if let data = data {
                 let jsonDecoder = JSONDecoder()
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                guard let moviesDecoded = try? jsonDecoder.decode(MovieResponse.self, from: data) else {
-                    fatalError()
+                
+                do {
+                    let moviesDecoded = try jsonDecoder.decode(MovieResponse.self, from: data)
+                    print(moviesDecoded.page ?? "Not Found")
+                    returnMovies(.success(moviesDecoded))
+                } catch {
+                    returnMovies(.failure(.wrongResponse))
                 }
-                print(moviesDecoded.page ?? "Not Found")
-                returnMovies(moviesDecoded)
             }
         }
         

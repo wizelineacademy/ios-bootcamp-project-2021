@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MovieResponse: Codable {
+struct MovieResponse: Decodable {
     var page: Int?
     var results: [Movie]?
     var totalPages: Int?
