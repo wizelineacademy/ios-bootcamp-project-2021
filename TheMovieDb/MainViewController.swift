@@ -9,10 +9,17 @@ import UIKit
 
 class MainViewController: UIViewController {
   
+  var trendingMovies: [Movie] = []
+  var nowPlayingMovies: [Movie] = []
+  var popularMovies: [Movie] = []
+  var topRatedMovies: [Movie] = []
+  var upcomingMovies: [Movie] = []
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     configureNavigationController()
     // Do any additional setup after loading the view.
+    requestAPI()
     
   }
   
@@ -24,6 +31,20 @@ class MainViewController: UIViewController {
     self.title = "MovieDB"
     
   }
+  
+  func requestAPI() {
+    let completion: (Result<MoviesResponse, Error>) -> Void = { [weak self] result in
+        debugPrint(result)
+        switch result {
+        case .success(let response):
+          self?.trendingMovies = response.results
+        default:
+          self?.trendingMovies = []
+        }
+    }
+    APIs.getTrendingMovies.resume(completion: completion)
+  }
+  
   /*
    // MARK: - Navigation
    
