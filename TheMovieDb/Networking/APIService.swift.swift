@@ -8,20 +8,23 @@ import Foundation
 
 class APIService {
     
-    func getResults(completion: @escaping(Results) -> Void) {
-        guard let url = URL(string: APIConst.BASE_URL+"/trending/movie/day?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&region=US&page=1") else { return }
+    func getResults(completion: @escaping(Movies?) -> Void) {
+        
+        guard let url = URL(string: APIConst.BASE_URL+"") else { return }
+        
         URLSession.shared.dataTask(with: url) { data, _, error in
             
             guard let data = data, error == nil else { return }
-            
-            let result = try? JSONDecoder().decode(Results.self, from: data)
-            
-            if let result = result {
-                completion(result)
-            } else {
-                print("error al convertir array a simple object")
-                let result = Results()
-                completion(result)
+            do {
+                let result: Movies? = try JSONDecoder().decode(Movies.self, from: data)
+                
+                guard let saveResults = result else {return}
+                
+                completion(saveResults)
+                
+            } catch let error {
+                print("________", error.localizedDescription )
+                completion(nil)
             }
             
         }.resume()

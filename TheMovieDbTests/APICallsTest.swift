@@ -18,7 +18,7 @@ class APICallsTest: XCTestCase {
         
         // 2. Exercise the asynchronous code
         api.getResults { result in
-            print("___", result)
+            print("___", result as Any)
             XCTAssertTrue(true)
 
             expectation.fulfill()
