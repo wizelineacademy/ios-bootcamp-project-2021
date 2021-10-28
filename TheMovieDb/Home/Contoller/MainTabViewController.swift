@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainTabViewController: UITabBarController {
+final class MainTabViewController: UITabBarController {
     // MARK: - Properties
     
     // MARK: - Life Cycle
@@ -28,9 +28,9 @@ class MainTabViewController: UITabBarController {
     
     private func configureViewControllers() {
         
-        let home = templateNavigationController(unseledtedImage: UIImage(systemName: "house")!, selectedImage: UIImage(systemName: "house.fill")!, title: "Home", rootViewController: HomeViewController())
+        let home = templateNavigationController(unselectedImage: UIImage(systemName: "house")!, selectedImage: UIImage(systemName: "house.fill")!, title: "Home", rootViewController: HomeViewController())
         
-        let search = templateNavigationController(unseledtedImage: UIImage(systemName: "magnifyingglass")!, selectedImage: UIImage(systemName: "text.magnifyingglass")!, title: "Search", rootViewController: SearchViewController())
+        let search = templateNavigationController(unselectedImage: UIImage(systemName: "magnifyingglass")!, selectedImage: UIImage(systemName: "text.magnifyingglass")!, title: "Search", rootViewController: SearchViewController())
         
         viewControllers = [home, search]
     }
