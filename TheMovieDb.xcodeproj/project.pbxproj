@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E0BDB7E2728644500DC4011 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E0BDB7D2728644500DC4011 /* TableViewController.swift */; };
 		2E86F8AC272732C0005DB3E2 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86F8AB272732C0005DB3E2 /* Movie.swift */; };
 		2E86F8B1272737F6005DB3E2 /* MovieResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86F8B0272737F6005DB3E2 /* MovieResponse.swift */; };
 		2E86F8B327273F68005DB3E2 /* MovieFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E86F8B227273F68005DB3E2 /* MovieFacade.swift */; };
@@ -444,6 +445,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				837B4EAC258178B6003DFC67 /* ViewController.swift in Sources */,
+				2E0BDB7E2728644500DC4011 /* TableViewController.swift in Sources */,
 				2E86F8B1272737F6005DB3E2 /* MovieResponse.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				2E86F8B327273F68005DB3E2 /* MovieFacade.swift in Sources */,
