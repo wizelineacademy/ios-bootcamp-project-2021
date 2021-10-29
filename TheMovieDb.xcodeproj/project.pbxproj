@@ -453,7 +453,6 @@
 				452BD82B272A364800F842F5 /* APIEndPoints.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				452BD82F272A3A5700F842F5 /* APIService.swift.swift in Sources */,
-				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
 				452BD839272A5C4700F842F5 /* Reviews.swift in Sources */,
 				4583F684272BAFA7006E13AD /* Result.swift in Sources */,
 				452BD82D272A395D00F842F5 /* Movie.swift in Sources */,
