@@ -11,6 +11,7 @@ class MovieAPI {
     static let shared = MovieAPI()
     private let apiService = APIService()
     
+    // MARK: - Todo: reduce code in the functions, repeated code
     public func getTrending(completion: @escaping([Movie]?) -> Void) {
         apiService.getResponse(typeEndpoint: .TRENDING, completion: { (movies: Movies?, _) in
             completion(movies?.movies)
