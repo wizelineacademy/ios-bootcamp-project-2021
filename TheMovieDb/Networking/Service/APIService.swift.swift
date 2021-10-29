@@ -8,11 +8,11 @@ import Foundation
 
 class APIService {
     
-    func getResponse<T: Decodable>(typeEndpoint: APIEndPoints, completion: @escaping(T?) -> Void) {
+    func getResponse<T: Decodable>(typeEndpoint: APIEndPoints, completion: @escaping(T?, Error?) -> Void) {
         let  urlBuild = APIBuild()
-        
+    
         guard let url = urlBuild.buildURL(api: typeEndpoint) else { return }
-        
+        print("_______________________", url)
         URLSession.shared.dataTask(with: url) { data, _, error in
             
             guard let data = data, error == nil else { return }
@@ -21,11 +21,11 @@ class APIService {
                 
                 guard let saveResults = result else {return}
                 
-                completion(saveResults)
+                completion(saveResults, nil)
                 
             } catch let error {
                 print("________", error.localizedDescription )
-                completion(nil)
+                completion(nil, error)
             }
             
         }.resume()

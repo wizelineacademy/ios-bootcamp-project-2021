@@ -10,17 +10,15 @@ import XCTest
 
 class APICallsTest: XCTestCase {
     
-    func testCallMovieDay () throws {
-        let api = APIService()
-     
+    func testCallGetTrending () throws {
+        
         // 1. Define an expectation
         let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
         
         // 2. Exercise the asynchronous code
-        api.getResults { result in
-            print("___", result as Any)
+        MovieAPI.shared.getBySearching { movies in
+            print(movies as Any)
             XCTAssertTrue(true)
-
             expectation.fulfill()
         }
         

@@ -17,6 +17,8 @@
 		4546A262272B848800D77147 /* APIBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546A261272B848800D77147 /* APIBuild.swift */; };
 		4583F67D272B9C8D006E13AD /* APIConst.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583F67C272B9C8D006E13AD /* APIConst.swift.swift */; };
 		4583F67F272BA4D0006E13AD /* MovieAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583F67E272BA4D0006E13AD /* MovieAPI.swift */; };
+		4583F682272BAF82006E13AD /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583F681272BAF82006E13AD /* Search.swift */; };
+		4583F684272BAFA7006E13AD /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4583F683272BAFA7006E13AD /* Result.swift */; };
 		837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EA7258178B6003DFC67 /* AppDelegate.swift */; };
 		837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EA9258178B6003DFC67 /* SceneDelegate.swift */; };
 		837B4EAC258178B6003DFC67 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EAB258178B6003DFC67 /* ViewController.swift */; };
@@ -54,6 +56,8 @@
 		4546A261272B848800D77147 /* APIBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBuild.swift; sourceTree = "<group>"; };
 		4583F67C272B9C8D006E13AD /* APIConst.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIConst.swift.swift; sourceTree = "<group>"; };
 		4583F67E272BA4D0006E13AD /* MovieAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPI.swift; sourceTree = "<group>"; };
+		4583F681272BAF82006E13AD /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		4583F683272BAFA7006E13AD /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		837B4EA4258178B6003DFC67 /* TheMovieDb.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieDb.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		837B4EA7258178B6003DFC67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		837B4EA9258178B6003DFC67 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +105,8 @@
 				452BD834272A4DD400F842F5 /* Movies.swift */,
 				452BD836272A5B1500F842F5 /* Review.swift */,
 				452BD838272A5C4700F842F5 /* Reviews.swift */,
+				4583F681272BAF82006E13AD /* Search.swift */,
+				4583F683272BAFA7006E13AD /* Result.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -108,8 +114,8 @@
 		452BD828272A360C00F842F5 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				4583F680272BA55C006E13AD /* Service */,
 				452BD829272A363600F842F5 /* Utils */,
-				452BD82E272A3A5700F842F5 /* APIService.swift.swift */,
 				4583F67E272BA4D0006E13AD /* MovieAPI.swift */,
 			);
 			path = Networking;
@@ -123,6 +129,14 @@
 				4583F67C272B9C8D006E13AD /* APIConst.swift.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		4583F680272BA55C006E13AD /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				452BD82E272A3A5700F842F5 /* APIService.swift.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		45A64D452728ECB000159CE6 /* System */ = {
@@ -363,7 +377,9 @@
 				452BD82F272A3A5700F842F5 /* APIService.swift.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
 				452BD839272A5C4700F842F5 /* Reviews.swift in Sources */,
+				4583F684272BAFA7006E13AD /* Result.swift in Sources */,
 				452BD82D272A395D00F842F5 /* Movie.swift in Sources */,
+				4583F682272BAF82006E13AD /* Search.swift in Sources */,
 				452BD835272A4DD400F842F5 /* Movies.swift in Sources */,
 				4546A262272B848800D77147 /* APIBuild.swift in Sources */,
 			);

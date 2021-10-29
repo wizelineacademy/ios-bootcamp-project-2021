@@ -11,7 +11,7 @@ enum APIEndPoints: String {
     case POPULAR = "/movie/popular"
     case TOP_RATED = "/movie/top_rated"
     case UPCOMING = "/movie/upcoming"
-    case KEYWORD = "/movie/keyword"
+    case KEYWORD = "/search/keyword"
     case SEARCH = "/search/movie"
     case REVIEWS = "/movie/[id]/reviews"
     case SIMILAR = "/movie/[id]/similar"
