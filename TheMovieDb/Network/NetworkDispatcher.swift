@@ -7,16 +7,15 @@
 
 import Foundation
 
-enum ConnError: Error {
-    case invalidURL
+enum NetworkError: Error {
+    case invalidRequest
     case noData
 }
 
 protocol NetworkDispatcher {
-    func dispatch(
-        request: RequestData,
-        onSuccess: @escaping (Data) -> Void,
-        onError: @escaping (Error) -> Void
+    func dispatch<RequestType: Request>(
+        request: RequestType,
+        completion: @escaping (Result<Data, Error>) -> Void
     )
 }
 
@@ -26,47 +25,35 @@ struct URLSessionNetworkDispatcher: NetworkDispatcher {
     
     private init() {}
     
-    func dispatch(
-        request: RequestData,
-        onSuccess: @escaping (Data) -> Void,
-        onError: @escaping (Error) -> Void
+    func dispatch<RequestType: Request>(
+        request: RequestType,
+        completion: @escaping (Result<Data, Error>) -> Void
     ) {
-        guard var urlComponents = URLComponents(string: request.path) else {
-            onError(ConnError.invalidURL)
+        guard let urlRequest = request.asURLRequest() else {
+            completion(.failure(NetworkError.invalidRequest))
             return
         }
-        urlComponents.queryItems = request.queryParams?.map { key, value in
-            URLQueryItem(name: key, value: value)
-        }
-        guard let url = urlComponents.url else {
-            onError(ConnError.invalidURL)
-            return
-        }
-        
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = request.method.rawValue
-        
-        do {
-            if let params = request.params {
-                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-            }
-        } catch let error {
-            onError(error)
-            return
-        }
-        
         URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
             if let error = error {
-                onError(error)
+                completion(.failure(error))
                 return
             }
             
             guard let _data = data else {
-                onError(ConnError.noData)
+                completion(.failure(NetworkError.noData))
                 return
             }
             
-            onSuccess(_data)
+            completion(.success(_data))
         }.resume()
     }
+}
+
+protocol APIClient {
+    var dispatcher: NetworkDispatcher { get }
+    
+    func execute<RequestType: Request>(
+        _ request: RequestType,
+        completion: @escaping (Result<RequestType.ResponseType, Error>) -> Void
+    )
 }

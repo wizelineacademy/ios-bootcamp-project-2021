@@ -7,72 +7,68 @@
 
 import Foundation
 
-struct MovieDBAPI {
-    static let baseUrl = "https://api.themoviedb.org/3"
-    static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
+struct MovieDBAPI: APIClient {
     
-    struct GetTrendingMovies: RequestType {
-        typealias ResponseType = MovieListResponse
-        
-        var data = RequestData(
-            path: "\(MovieDBAPI.baseUrl)/trending/movie/day",
-            queryParams: [
-                "api_key": MovieDBAPI.apiKey,
-                "language": "en",
-                "region": "US"
-            ]
-        )
+    private struct APIConstants {
+        static let baseUrl = "https://api.themoviedb.org/"
+        static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
     }
     
-    struct GetNowPlayingMovies: RequestType {
-        typealias ResponseType = MovieListResponse
-        
-        var data = RequestData(
-            path: "\(MovieDBAPI.baseUrl)/movie/now_playing",
-            queryParams: [
-                "api_key": MovieDBAPI.apiKey,
-                "language": "en",
-                "region": "US"
-            ]
-        )
+    enum MoviesEndpoints: String {
+        case trending = "3/trending/movie/day"
+        case nowPlaying = "3/movie/now_playing"
+        case popular = "3/movie/popular"
+        case topRated = "3/movie/top_rated"
+        case upcoming = "3/movie/upcoming"
     }
     
-    struct GetPopularMovies: RequestType {
-        typealias ResponseType = MovieListResponse
+    var dispatcher: NetworkDispatcher
+    
+    init(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher.instance) {
+        self.dispatcher = dispatcher
+    }
         
-        var data = RequestData(
-            path: "\(MovieDBAPI.baseUrl)/movie/popular",
-            queryParams: [
-                "api_key": MovieDBAPI.apiKey,
-                "language": "en",
-                "region": "US"
-            ]
-        )
+    func execute<RequestType: Request>(
+        _ request: RequestType,
+        completion: @escaping (Result<RequestType.ResponseType, Error>) -> Void
+    ) {
+        dispatcher.dispatch(request: request) { result in
+            switch result {
+            case .success(let data):
+                do {
+                    let jsonDecoder = JSONDecoder()
+                    jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let result = try jsonDecoder.decode(RequestType.ResponseType.self, from: data)
+                    DispatchQueue.main.async {
+                        completion(.success(result))
+                    }
+                } catch let error {
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                }
+            case .failure(let error):
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
+            }
+        }
     }
     
-    struct GetTopRatedMovies: RequestType {
+    struct GetMovies: Request {
+        var path: String
+        var queryParams: [String: String]? = [
+            "api_key": APIConstants.apiKey
+        ]
         typealias ResponseType = MovieListResponse
         
-        var data = RequestData(
-            path: "\(MovieDBAPI.baseUrl)/movie/top_rated",
-            queryParams: [
-                "api_key": MovieDBAPI.apiKey,
-                "language": "en",
-                "region": "US"
-            ]
-        )
+        init(on endpoint: MoviesEndpoints, extraQueryParams: [String: String]? = nil) {
+            self.path = APIConstants.baseUrl + endpoint.rawValue
+            guard let newQueries = extraQueryParams else {
+                return
+            }
+            queryParams?.merge(newQueries, uniquingKeysWith: { current, _ in current })
+        }
     }
     
-    struct GetUpcomingMovies: RequestType {
-        typealias ResponseType = MovieListResponse
-        
-        var data = RequestData(
-            path: "\(MovieDBAPI.baseUrl)/movie/upcoming",
-            queryParams: [
-                "api_key": MovieDBAPI.apiKey,
-                "language": "en",
-                "region": "US"
-            ]
-        )
-    }
 }
