@@ -8,15 +8,16 @@ import Foundation
 
 class APIService {
     
-    func getResults(completion: @escaping(Movies?) -> Void) {
+    func getResponse<T: Decodable>(typeEndpoint: APIEndPoints, completion: @escaping(T?) -> Void) {
+        let  urlBuild = APIBuild()
         
-        guard let url = URL(string: APIConst.BASE_URL+"") else { return }
+        guard let url = urlBuild.buildURL(api: typeEndpoint) else { return }
         
         URLSession.shared.dataTask(with: url) { data, _, error in
             
             guard let data = data, error == nil else { return }
             do {
-                let result: Movies? = try JSONDecoder().decode(Movies.self, from: data)
+                let result: T? = try JSONDecoder().decode(T.self, from: data)
                 
                 guard let saveResults = result else {return}
                 
