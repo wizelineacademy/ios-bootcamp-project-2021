@@ -16,7 +16,7 @@ class APICallsTest: XCTestCase {
         let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
         
         // 2. Exercise the asynchronous code
-        MovieAPI.shared.getBySearching { movies in
+        MovieAPI.shared.getReviews { movies in
             print(movies as Any)
             XCTAssertTrue(true)
             expectation.fulfill()
