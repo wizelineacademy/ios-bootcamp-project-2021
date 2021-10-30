@@ -27,7 +27,6 @@ final class MainTabViewController: UITabBarController {
     }
     
     private func configureViewControllers() {
-        
         let home = templateNavigationController(unselectedImage: UIImage(systemName: "house")!, selectedImage: UIImage(systemName: "house.fill")!, title: "Home", rootViewController: HomeViewController())
         
         let search = templateNavigationController(unselectedImage: UIImage(systemName: "magnifyingglass")!, selectedImage: UIImage(systemName: "text.magnifyingglass")!, title: "Search", rootViewController: SearchViewController())

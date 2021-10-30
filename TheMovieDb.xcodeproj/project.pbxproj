@@ -11,7 +11,7 @@
 		45A64D512728F8DC00159CE6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A64D502728F8DC00159CE6 /* HomeViewController.swift */; };
 		45A64D552728FA0400159CE6 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A64D542728FA0400159CE6 /* SearchViewController.swift */; };
 		45A64D592729017200159CE6 /* UITabViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A64D582729017200159CE6 /* UITabViewControllerExtension.swift */; };
-		45BB7AA9272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AA8272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift */; };
+		45BB7AA9272D8D0800DE07C3 /* HomeViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AA8272D8D0800DE07C3 /* HomeViewControllerExtension.swift */; };
 		45BB7AAB272D99AC00DE07C3 /* HomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AAA272D99AC00DE07C3 /* HomeHeader.swift */; };
 		837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EA7258178B6003DFC67 /* AppDelegate.swift */; };
 		837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EA9258178B6003DFC67 /* SceneDelegate.swift */; };
@@ -44,7 +44,7 @@
 		45A64D502728F8DC00159CE6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		45A64D542728FA0400159CE6 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		45A64D582729017200159CE6 /* UITabViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabViewControllerExtension.swift; sourceTree = "<group>"; };
-		45BB7AA8272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewControllerExtension.swift; sourceTree = "<group>"; };
+		45BB7AA8272D8D0800DE07C3 /* HomeViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerExtension.swift; sourceTree = "<group>"; };
 		45BB7AAA272D99AC00DE07C3 /* HomeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeader.swift; sourceTree = "<group>"; };
 		837B4EA4258178B6003DFC67 /* TheMovieDb.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieDb.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		837B4EA7258178B6003DFC67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -116,6 +116,7 @@
 		45A64D482728F23900159CE6 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				45BB7AAC272DA27E00DE07C3 /* Extensions */,
 				45A64D4F2728F2F800159CE6 /* View */,
 				45A64D4E2728F2EB00159CE6 /* Contoller */,
 			);
@@ -167,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				45A64D582729017200159CE6 /* UITabViewControllerExtension.swift */,
-				45BB7AA8272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -178,6 +178,14 @@
 				45A64D56272900E600159CE6 /* Extensions */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		45BB7AAC272DA27E00DE07C3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				45BB7AA8272D8D0800DE07C3 /* HomeViewControllerExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		837B4E9B258178B6003DFC67 = {
@@ -385,7 +393,7 @@
 				45BB7AAB272D99AC00DE07C3 /* HomeHeader.swift in Sources */,
 				45A64D552728FA0400159CE6 /* SearchViewController.swift in Sources */,
 				45A64D512728F8DC00159CE6 /* HomeViewController.swift in Sources */,
-				45BB7AA9272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift in Sources */,
+				45BB7AA9272D8D0800DE07C3 /* HomeViewControllerExtension.swift in Sources */,
 				837B4EAC258178B6003DFC67 /* ViewController.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				45A64D592729017200159CE6 /* UITabViewControllerExtension.swift in Sources */,

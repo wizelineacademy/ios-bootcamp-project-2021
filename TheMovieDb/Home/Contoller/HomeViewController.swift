@@ -7,15 +7,17 @@
 
 import UIKit
 
+let categoryHomeHeaderId = "categoryHomeHeaderId"
 final class HomeViewController: UICollectionViewController {
     
     // MARK: - Properties
     private let cellId = "homeId"
     private let homeHeaderId = "homeHeaderId"
-    
+   
     // MARK: - Life Cycle
+    
     init() {
-        super.init(collectionViewLayout: HomeViewController.createLayout())
+        super.init(collectionViewLayout: HomeViewController.configureCollectionViewLayout())
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -27,7 +29,13 @@ final class HomeViewController: UICollectionViewController {
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        cell.backgroundColor = .red
+        
+        if (indexPath.row%2) == 0 {
+            cell.backgroundColor = .red
+        } else {
+            cell.backgroundColor = .blue
+        }
+           
         return cell
     }
     
@@ -52,7 +60,7 @@ final class HomeViewController: UICollectionViewController {
     private func configureUICollection() {
         collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         
-        collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: HomeViewController.categoryHomeHeaderId, withReuseIdentifier: homeHeaderId)
+        collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: homeHeaderId)
     }
     private func configureUI() {
         navigationItem.title = "Movies"
