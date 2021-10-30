@@ -125,6 +125,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
+                                <connections>
+                                    <segue destination="X6H-Kk-ged" kind="showDetail" id="sNE-9T-AwC"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -161,7 +164,7 @@
             <objects>
                 <viewController id="X6H-Kk-ged" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="S0C-Ti-43S">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="aCZ-LH-t7r"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
