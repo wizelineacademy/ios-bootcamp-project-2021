@@ -16,9 +16,17 @@ class APICallsTest: XCTestCase {
         let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
         
         // 2. Exercise the asynchronous code
-        MovieAPI.shared.getReviews { movies in
-            print(movies as Any)
-            XCTAssertTrue(true)
+        MovieAPI.shared.getReviews { (response: Result<Reviews, Error>) in
+            
+            switch response {
+            case .failure(let error):
+                print(error)
+                XCTAssertTrue(false)
+            case .success(let res):
+                print(res)
+                XCTAssertTrue(true)
+            }
+           
             expectation.fulfill()
         }
         

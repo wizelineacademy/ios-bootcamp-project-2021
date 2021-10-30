@@ -8,7 +8,7 @@
 import Foundation
 
 struct Search: Decodable {
-    let results: [Result]
+    let results: [ResultSearch]
     
     enum CodingKeys: String, CodingKey {
         case results
@@ -16,6 +16,6 @@ struct Search: Decodable {
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.results = try container.decode([Result].self, forKey: .results)
+        self.results = try container.decode([ResultSearch].self, forKey: .results)
     }
 }

@@ -12,64 +12,63 @@ class MovieAPI {
     private let apiService = APIService()
     
     // MARK: - Todo: reduce code in the functions, repeated code
-    public func getTrending(completion: @escaping([Movie]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .trending, completion: { (movies: Movies?, _) in
-            completion(movies?.movies)
-        })
-        
-    }
-    
-    public func getNowPlaying(completion: @escaping([Movie]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .nowPlaying, completion: { (movies: Movies?, _) in
-            completion(movies?.movies)
+    public func getTrending(completion: @escaping(Result<Movies, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .trending, completion: { (response: Result<Movies, Error>) in
+            completion(response)
         })
     }
     
-    public func getPopular(completion: @escaping([Movie]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .popular, completion: { (movies: Movies?, _) in
-            completion(movies?.movies)
+    public func getNowPlaying(completion: @escaping(Result<Movies, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .nowPlaying, completion: { (response: Result<Movies, Error>) in
+            completion(response)
         })
     }
     
-    public func getTopRated(completion: @escaping([Movie]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .topRated, completion: { (movies: Movies?, _) in
-            completion(movies?.movies)
+    public func getPopular(completion: @escaping(Result<Movies, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .popular, completion: { (response: Result<Movies, Error>) in
+            completion(response)
         })
     }
     
-    public func getUpcoming(completion: @escaping([Movie]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .upcoming, completion: { (movies: Movies?, _) in
-            completion(movies?.movies)
+    public func getTopRated(completion: @escaping(Result<Movies, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .topRated, completion: { (response: Result<Movies, Error>) in
+            completion(response)
         })
     }
     
-    public func getByKeyword(completion: @escaping([Result]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .keyword, completion: { (results: Search?, _) in
-            completion(results?.results)
+    public func getUpcoming(completion: @escaping(Result<Movies, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .upcoming, completion: { (response: Result<Movies, Error>) in
+            completion(response)
         })
     }
     
-    public func getBySearching(completion: @escaping([Movie]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .search, completion: { (movies: Movies?, _) in
-            completion(movies?.movies)
+    public func getByKeyword(completion: @escaping(Result<Search, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .keyword, completion: { (response: Result<Search, Error>) in
+            completion(response)
         })
     }
     
-    public func getReviews(completion: @escaping([Review]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .review, completion: { (reviews: Reviews?, _) in
-            completion(reviews?.reviews)
+    public func getBySearching(completion: @escaping(Result<Movies, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .search, completion: { (response: Result<Movies, Error>) in
+            completion(response)
         })
     }
     
-    public func getSimilar(completion: @escaping([Movie]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .similar, completion: { (movies: Movies?, _) in
-            completion(movies?.movies)
+    public func getReviews(completion: @escaping(Result<Reviews, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .review, completion: { (response: Result<Reviews, Error>) in
+            completion(response)
         })
     }
     
-    public func getRecommendations(completion: @escaping([Movie]?) -> Void) {
-        apiService.getResponse(typeEndpoint: .recommendations, completion: { (movies: Movies?, _) in
-            completion(movies?.movies)
+    public func getSimilar(completion: @escaping(Result<Movies, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .similar, completion: { (response: Result<Movies, Error>) in
+            completion(response)
+        })
+    }
+    
+    public func getRecommendations(completion: @escaping(Result<Movies, Error>) -> Void) {
+        apiService.getResponse(typeEndpoint: .recommendations, completion: { (response: Result<Movies, Error>) in
+            completion(response)
         })
     }
 }

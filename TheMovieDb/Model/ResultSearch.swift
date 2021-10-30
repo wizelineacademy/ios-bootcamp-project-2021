@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Result: Decodable {
+struct ResultSearch: Decodable {
     let id: Int
     let name: String
 }
