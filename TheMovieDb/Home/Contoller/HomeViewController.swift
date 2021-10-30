@@ -26,6 +26,7 @@ final class HomeViewController: UICollectionViewController {
         super.viewDidLoad()
         configureUI()
         configureUICollection()
+        navigationController?.hidesBarsOnSwipe = true
     }
     
     // MARK: - Helpers
@@ -33,7 +34,7 @@ final class HomeViewController: UICollectionViewController {
         // register cells
         collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reuseIdentifier)
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
-        
+        collectionView.register(TopSectionCell.self, forCellWithReuseIdentifier: TopSectionCell.reuseIdentifier)
         collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
     }
     private func configureUI() {
@@ -60,7 +61,12 @@ extension HomeViewController {
         switch indexPath.section {
         case 0:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: HightSectionCell.reuseIdentifier, for: indexPath) as? MovieCellProtocol ?? UICollectionViewCell()
-            
+        case 3:
+            guard let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopSectionCell.reuseIdentifier, for: indexPath) as? TopSectionCell else {
+                return TopSectionCell()
+            }
+            cell.topNumber = indexPath.row
+            return cell
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell ?? UICollectionViewCell()
         }
@@ -69,8 +75,16 @@ extension HomeViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeader.reuseIdentifier, for: indexPath)
         
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeader.reuseIdentifier, for: indexPath) as? HomeHeader else {
+            return HomeHeader()
+        }
+        
+        let section = GroupSections(rawValue: indexPath.section)
+        if section != .popular {
+            header.nameHeader = section
+        }
+           
         return header
     }
 }

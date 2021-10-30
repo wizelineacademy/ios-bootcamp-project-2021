@@ -7,10 +7,20 @@
 
 import Foundation
 
-enum GroupSections: String {
-    case trending = "Trending"
-    case playingNow = "Playing now"
-    case popular = "Popular"
-    case topRated = "Top rated"
-    case upcoming = "Upcoming"
+enum GroupSections: Int {
+    case popular
+    case trending
+    case playingNow
+    case topRated
+    case upcoming
+    
+    var description: String {
+        switch self {
+        case .popular: return "Popular"
+        case .trending: return "Trending"
+        case .playingNow: return "Playing now"
+        case .topRated: return "Top rated"
+        case .upcoming: return "Upcoming"
+        }
+    }
 }

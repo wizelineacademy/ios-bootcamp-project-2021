@@ -15,6 +15,7 @@ class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
         imageView.image = #imageLiteral(resourceName: "TheBatmanPoster")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 10
         return imageView
     }()
     

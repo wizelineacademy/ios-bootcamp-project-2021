@@ -11,7 +11,12 @@ class HomeHeader: UICollectionReusableView {
     
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: HomeHeader.self)
-    let headerLabel: UILabel = {
+    public var nameHeader: GroupSections? {
+        didSet {
+            configureUI()
+        }
+    }
+    private let headerLabel: UILabel = {
        let label = UILabel()
         label.text = "Category"
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -27,6 +32,11 @@ class HomeHeader: UICollectionReusableView {
     override func layoutSubviews() {
         super.layoutSubviews()
         headerLabel.frame = bounds
+    }
+    
+    private func configureUI() {
+        guard let nameHeader = self.nameHeader else {return}
+        headerLabel.text = nameHeader.description
     }
     
     required init?(coder: NSCoder) {

@@ -21,9 +21,10 @@ final class MainTabViewController: UITabBarController {
     
     private func configureUI() {
         view.backgroundColor = .red
-        UITabBar.appearance().backgroundColor = .systemGray6
-        UITabBar.appearance().isTranslucent = true
+        UITabBar.appearance().backgroundColor = .black
+        UITabBar.appearance().isTranslucent = false
         tabBar.tintColor = .label
+
     }
     
     private func configureViewControllers() {
