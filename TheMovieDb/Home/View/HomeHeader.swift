@@ -9,6 +9,8 @@ import UIKit
 
 class HomeHeader: UICollectionReusableView {
     
+    // MARK: - Properties
+    static let reuseIdentifier =  String(describing: HomeHeader.self)
     let headerLabel: UILabel = {
        let label = UILabel()
         label.text = "Category"
@@ -16,6 +18,7 @@ class HomeHeader: UICollectionReusableView {
         return label
     }()
     
+    // MARK: - Life Cycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         addSubview(headerLabel)
@@ -29,4 +32,9 @@ class HomeHeader: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Helpers
+    
+    // MARK: - Actions
+    
 }

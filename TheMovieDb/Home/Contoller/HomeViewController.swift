@@ -11,32 +11,11 @@ let categoryHomeHeaderId = "categoryHomeHeaderId"
 final class HomeViewController: UICollectionViewController {
     
     // MARK: - Properties
-    private let cellId = "homeId"
-    private let homeHeaderId = "homeHeaderId"
-   
+    
     // MARK: - Life Cycle
     
     init() {
         super.init(collectionViewLayout: HomeViewController.configureCollectionViewLayout())
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
-    }
-    
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
-    }
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
-        
-        if (indexPath.row%2) == 0 {
-            cell.backgroundColor = .red
-        } else {
-            cell.backgroundColor = .blue
-        }
-           
-        return cell
     }
     
     required init?(coder: NSCoder) {
@@ -47,25 +26,51 @@ final class HomeViewController: UICollectionViewController {
         super.viewDidLoad()
         configureUI()
         configureUICollection()
-        // Do any additional setup after loading the view.
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: homeHeaderId, for: indexPath)
-        
-        return header
     }
     
     // MARK: - Helpers
     private func configureUICollection() {
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        // register cells
+        collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reuseIdentifier)
+        collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
         
-        collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: homeHeaderId)
+        collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
     }
     private func configureUI() {
         navigationItem.title = "Movies"
         view.backgroundColor = .systemBackground
     }
     // MARK: - Actions
+    
+}
 
+// MARK: - UIControllerViewDataSource
+extension HomeViewController {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 8
+    }
+    
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 5
+    }
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        var cell = UICollectionViewCell()
+        
+        switch indexPath.section {
+        case 0:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: HightSectionCell.reuseIdentifier, for: indexPath) as? MovieCellProtocol ?? UICollectionViewCell()
+            
+        default:
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell ?? UICollectionViewCell()
+        }
+        
+        return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeader.reuseIdentifier, for: indexPath)
+        
+        return header
+    }
 }
