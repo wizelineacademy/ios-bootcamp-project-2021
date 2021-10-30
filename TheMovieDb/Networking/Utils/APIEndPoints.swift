@@ -6,15 +6,15 @@
 //
 
 enum APIEndPoints: String {
-    case TRENDING = "/trending/movie/day"
-    case NOW_PLAYING = "/movie/now_playing"
-    case POPULAR = "/movie/popular"
-    case TOP_RATED = "/movie/top_rated"
-    case UPCOMING = "/movie/upcoming"
-    case KEYWORD = "/search/keyword"
-    case SEARCH = "/search/movie"
-    case REVIEWS = "/movie/[id]/reviews"
-    case SIMILAR = "/movie/[id]/similar"
-    case RECOMMENDATIONS = "/movie/[id]/recommendations"
+    case trending = "/trending/movie/day"
+    case nowPlaying = "/movie/now_playing"
+    case popular = "/movie/popular"
+    case topRated = "/movie/top_rated"
+    case upcoming = "/movie/upcoming"
+    case keyword = "/search/keyword"
+    case search = "/search/movie"
+    case review = "/movie/[id]/reviews"
+    case similar = "/movie/[id]/similar"
+    case recommendations = "/movie/[id]/recommendations"
     
 }

@@ -27,16 +27,16 @@ struct APIBuild {
         
         switch api {
             
-        case .TRENDING, .NOW_PLAYING, .POPULAR, .TOP_RATED, .UPCOMING:
-            url = APIConst.BASE_URL + safeApi + APIConst.API_KEY + self.language + self.region + self.page
+        case .trending, .nowPlaying, .popular, .topRated, .upcoming:
+            url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.language + self.region + self.page
             
-        case .KEYWORD, .SEARCH:
+        case .keyword, .search:
             let query = "&query="+query
-            url = APIConst.BASE_URL + safeApi + APIConst.API_KEY + self.language + query
+            url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.language + query
             
-        case .REVIEWS, .SIMILAR, .RECOMMENDATIONS:
+        case .review, .similar, .recommendations:
             let reviewAPI =  safeApi.replacingOccurrences(of: "[id]", with: id)
-            url = APIConst.BASE_URL + reviewAPI + APIConst.API_KEY + self.language
+            url = APIConst.baseUrl + reviewAPI + APIConst.apiKey + self.language
         }
         
         return URL(string: url) ?? nil

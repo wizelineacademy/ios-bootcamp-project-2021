@@ -12,7 +12,6 @@ class APIService {
         let  urlBuild = APIBuild()
     
         guard let url = urlBuild.buildURL(api: typeEndpoint) else { return }
-        print("_______________________", url)
         URLSession.shared.dataTask(with: url) { data, _, error in
             
             guard let data = data, error == nil else { return }
@@ -24,7 +23,6 @@ class APIService {
                 completion(saveResults, nil)
                 
             } catch let error {
-                print("________", error.localizedDescription )
                 completion(nil, error)
             }
             
