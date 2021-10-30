@@ -16,7 +16,8 @@ class APICallsTest: XCTestCase {
         let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
         
         // 2. Exercise the asynchronous code
-        MovieAPI.shared.getReviews { (response: Result<Reviews, Error>) in
+        let parameters = APIParameters(id: "605")
+        MovieAPI.shared.getReviews(with: parameters, completion: {(response: Result<Reviews, Error>) in
             
             switch response {
             case .failure(let error):
@@ -28,7 +29,7 @@ class APICallsTest: XCTestCase {
             }
            
             expectation.fulfill()
-        }
+        })
         
         // 3. Wait for the expectation to be fulfilled
         waitForExpectations(timeout: 1) { error in

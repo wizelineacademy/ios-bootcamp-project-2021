@@ -7,36 +7,33 @@
 
 import Foundation
 
-struct APIBuild {
+class APIBuild: APIBuildProtocol {
     // MARK: - Properties
-    var language = "&language="
-    var region = "&region="
-    var page = "&page="
+    let parameters: APIParameters
+    let api: APIEndPoints
     
     // MARK: - Life Cycle
-    init(language: String = "en", region: String = "US", page: String = "1") {
-        self.language += language
-        self.region += region
-        self.page += page
+    init(with parameters: APIParameters, with api: APIEndPoints) {
+        self.parameters = parameters
+        self.api = api
     }
     
     // MARK: - Helpers
-    public func buildURL(api: APIEndPoints, query: String = "Matrix", id: String = "603") -> URL? {
-        let safeApi = api.rawValue
+    public func buildURL() -> URL? {
+        let safeApi = self.api.rawValue
         var url: String
         
         switch api {
             
         case .trending, .nowPlaying, .popular, .topRated, .upcoming:
-            url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.language + self.region + self.page
+            url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.parameters.language + self.parameters.region + self.parameters.page
             
         case .keyword, .search:
-            let query = "&query="+query
-            url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.language + query
+            url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.parameters.language + self.parameters.query + self.parameters.page
             
         case .review, .similar, .recommendations:
-            let reviewAPI =  safeApi.replacingOccurrences(of: "[id]", with: id)
-            url = APIConst.baseUrl + reviewAPI + APIConst.apiKey + self.language
+            let reviewAPI =  safeApi.replacingOccurrences(of: "[id]", with: self.parameters.id)
+            url = APIConst.baseUrl + reviewAPI + APIConst.apiKey + self.parameters.language + self.parameters.page
         }
         
         return URL(string: url) ?? nil

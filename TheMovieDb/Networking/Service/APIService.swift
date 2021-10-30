@@ -8,10 +8,10 @@ import Foundation
 
 class APIService {
     
-    func getResponse<T: Decodable>(typeEndpoint: APIEndPoints, completion: @escaping(Result<T, Error>) -> Void) {
-        let  urlBuild = APIBuild()
-        guard let url = urlBuild.buildURL(api: typeEndpoint) else { return }
-        
+    func getResponse<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters, completion: @escaping(Result<T, Error>) -> Void) {
+        let  urlBuild = APIBuild(with: parameters, with: endPoint)
+        guard let url = urlBuild.buildURL() else { return }
+        print(url)
         URLSession.shared.dataTask(with: url) { data, _, error in
             
             if let error = error {
