@@ -6,11 +6,15 @@
 //
 
 import UIKit
+protocol DetailHeaderViewDelegate: AnyObject {
+    func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie)
+}
 
 class DetailHeaderView: UICollectionReusableView {
     
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: DetailHeaderView.self)
+    weak var delegate: DetailHeaderViewDelegate?
     public var movie: Movie? {
         didSet {
             configure()
@@ -80,6 +84,7 @@ class DetailHeaderView: UICollectionReusableView {
         addSubview(reviewsButton)
         reviewsButton.anchor( left: leftAnchor, bottom: headerLabel.topAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
         reviewsButton.setHeight(30)
+        reviewsButton.addTarget(self, action: #selector(handleReview), for: .touchUpInside)
         
         addSubview(overviewLabel)
         overviewLabel.anchor(top: stack.bottomAnchor, left: leftAnchor, bottom: reviewsButton.topAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
@@ -98,4 +103,8 @@ class DetailHeaderView: UICollectionReusableView {
     }
     // MARK: - Actions
     
+    @objc func handleReview() {
+        guard let movie = movie else {return}
+        delegate?.openReviews(self, with: movie)
+    }
 }

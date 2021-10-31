@@ -22,7 +22,7 @@ final class DetailViewController: UICollectionViewController {
         self.movie = movie
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        layout.itemSize = CGSize(width: 120, height: 140)
+        layout.itemSize = CGSize(width: 100, height: 140)
         super.init(collectionViewLayout: layout)
     }
     
@@ -82,6 +82,7 @@ extension DetailViewController {
                 return DetailHeaderView()
             }
             header.movie = movie
+            header.delegate = self
             return header
         } else {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DetailHeader.reuseIdentifier, for: indexPath) as? DetailHeader else {
@@ -109,3 +110,14 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
 
     }
 }
+
+// MARK: - DetailHeaderViewDelegate
+extension DetailViewController: DetailHeaderViewDelegate {
+    func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie) {
+        let controller = ReviewsCollectionViewController()
+        let nav = UINavigationController(rootViewController: controller)
+        present(nav, animated: true, completion: nil)
+    }
+    
+}
+    
