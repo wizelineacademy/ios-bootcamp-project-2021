@@ -30,6 +30,15 @@ class DetailHeaderView: UICollectionReusableView {
     
     private let popularityLabel = TagLabel(colorBackground: .systemGreen)
     
+    private  var stack = UIStackView()
+    
+    private let headerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Recommendations"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        return label
+    }()
+    
     private let reviewsButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Reviews", for: .normal)
@@ -54,19 +63,22 @@ class DetailHeaderView: UICollectionReusableView {
     
     // MARK: - Helpers
     private func configureUI() {
-       
+        
+        addSubview(headerLabel)
+        headerLabel.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
+        
         addSubview(imageBackground)
         imageBackground.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
         imageBackground.setHeight(200)
         
-        let stack = UIStackView(arrangedSubviews: [dateLabel, votesLabel, popularityLabel])
+        stack = UIStackView(arrangedSubviews: [dateLabel, votesLabel, popularityLabel])
         addSubview(stack)
         stack.anchor(top: imageBackground.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10)
         stack.distribution = .equalSpacing
         stack.setHeight(25)
         
         addSubview(reviewsButton)
-        reviewsButton.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10)
+        reviewsButton.anchor( left: leftAnchor, bottom: headerLabel.topAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
         reviewsButton.setHeight(30)
         
         addSubview(overviewLabel)
