@@ -9,8 +9,8 @@ import UIKit
 
 let categoryHomeHeaderId = "categoryHomeHeaderId"
 final class HomeViewController: UICollectionViewController {
-    
     // MARK: - Properties
+    private var movies = [Movie]()
     
     // MARK: - Life Cycle
     
@@ -26,7 +26,11 @@ final class HomeViewController: UICollectionViewController {
         super.viewDidLoad()
         configureUI()
         configureUICollection()
-        navigationController?.hidesBarsOnSwipe = true
+        loadDataAPI()
+    }
+    // MARK: - API
+    private func loadDataAPI() {
+        movies = DataManager().fetch()
     }
     
     // MARK: - Helpers
@@ -36,6 +40,8 @@ final class HomeViewController: UICollectionViewController {
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
         collectionView.register(TopSectionCell.self, forCellWithReuseIdentifier: TopSectionCell.reuseIdentifier)
         collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
+        
+        navigationController?.hidesBarsOnSwipe = true
     }
     private func configureUI() {
         navigationItem.title = "Movies"
@@ -48,30 +54,57 @@ final class HomeViewController: UICollectionViewController {
 // MARK: - UIControllerViewDataSource
 extension HomeViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        let section = GroupSections(rawValue: section)
+        
+        switch section {
+        case .popular:
+            return movies.count
+        case .trending:
+            return movies.count
+        case .playingNow:
+            return movies.count
+        case .topRated:
+            return movies.count
+        case .upcoming:
+            return movies.count
+        case .none:
+            return 0
+        }
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 5
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        var cell = UICollectionViewCell()
-        
-        switch indexPath.section {
-        case 0:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: HightSectionCell.reuseIdentifier, for: indexPath) as? MovieCellProtocol ?? UICollectionViewCell()
-        case 3:
-            guard let  cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopSectionCell.reuseIdentifier, for: indexPath) as? TopSectionCell else {
+        let section = GroupSections(rawValue: indexPath.section)
+        let movie = movies[indexPath.row]
+        switch section {
+        case .popular:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HightSectionCell.reuseIdentifier, for: indexPath) as? HightSectionCell else {
+                return HightSectionCell()
+            }
+            
+            cell.withMovie(with: movie)
+            return cell
+        case .topRated:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopSectionCell.reuseIdentifier, for: indexPath) as? TopSectionCell else {
                 return TopSectionCell()
             }
-            cell.topNumber = indexPath.row
+            cell.numberTop = indexPath.row
+            cell.withMovie(with: movie)
             return cell
-        default:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell ?? UICollectionViewCell()
+ 
+        case .upcoming, .trending, .playingNow:
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell else {
+                return DefaultSectionCell()
+            }
+            cell.withMovie(with: movie)
+            return cell
+        case .none:
+            let cell = DefaultSectionCell()
+            return cell
         }
-        
-        return cell
+
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

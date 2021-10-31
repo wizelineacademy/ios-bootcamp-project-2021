@@ -35,6 +35,12 @@ class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
     
     // MARK: - Helpers
     
+    public func withMovie(with movie: Movie) {
+        let urlImage = MovieConst.imageCDN + (movie.posterPath ?? "")
+        let url = URL(string: urlImage )
+        imageBackground.kf.setImage(with: url)
+    }
+    
     // MARK: - Actions
     
 }

@@ -8,5 +8,5 @@
 import UIKit
 
 protocol MovieCellProtocol: UICollectionViewCell {
-    func configureUI()
+    func withMovie(with movie: Movie)
 }
