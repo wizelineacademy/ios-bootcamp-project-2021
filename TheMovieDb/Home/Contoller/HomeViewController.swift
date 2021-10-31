@@ -7,7 +7,6 @@
 
 import UIKit
 
-let categoryHomeHeaderId = "categoryHomeHeaderId"
 final class HomeViewController: UICollectionViewController {
     // MARK: - Properties
     private var movies = [Movie]()
@@ -38,7 +37,7 @@ final class HomeViewController: UICollectionViewController {
         // register cells
         collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reuseIdentifier)
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
-        collectionView.register(TopSectionCell.self, forCellWithReuseIdentifier: TopSectionCell.reuseIdentifier)
+        collectionView.register(TopRatedSectionCell.self, forCellWithReuseIdentifier: TopRatedSectionCell.reuseIdentifier)
         collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
         
         navigationController?.hidesBarsOnSwipe = true
@@ -87,8 +86,8 @@ extension HomeViewController {
             cell.withMovie(with: movie)
             return cell
         case .topRated:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopSectionCell.reuseIdentifier, for: indexPath) as? TopSectionCell else {
-                return TopSectionCell()
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopRatedSectionCell.reuseIdentifier, for: indexPath) as? TopRatedSectionCell else {
+                return TopRatedSectionCell()
             }
             cell.numberTop = indexPath.row
             cell.withMovie(with: movie)
@@ -120,4 +119,29 @@ extension HomeViewController {
            
         return header
     }
+}
+
+// MARK: - UICollectionViewControllerDelegate
+extension HomeViewController {
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let section = GroupSections(rawValue: indexPath.section)
+        let movie = movies[indexPath.row]
+        
+        switch section {
+        case .popular:
+           print("he")
+        case .trending:
+            print("he")
+        case .playingNow:
+            print("he")
+        case .topRated:
+            print("he")
+        case .upcoming:
+            print("he")
+        case .none:
+            print("No seleccionado")
+        }
+    }
+    
 }

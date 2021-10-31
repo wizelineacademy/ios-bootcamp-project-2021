@@ -6,8 +6,8 @@
 //
 
 import UIKit
-import Foundation
 
+let categoryHomeHeaderId = "categoryHomeHeaderId"
 extension HomeViewController {
     
     static func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
@@ -19,7 +19,7 @@ extension HomeViewController {
             case 0:
                 section = HomeViewController.getHightLayoutSection()
             case 3:
-                section = HomeViewController.getTopLayoutSection()
+                section = HomeViewController.getTopRatedLayoutSection()
             default:
                 section = HomeViewController.getDefaultLayoutSection()
             }
@@ -65,7 +65,7 @@ extension HomeViewController {
 
     }
     
-    static func getTopLayoutSection() -> NSCollectionLayoutSection {
+    static func getTopRatedLayoutSection() -> NSCollectionLayoutSection {
         
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))

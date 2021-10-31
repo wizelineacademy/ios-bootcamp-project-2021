@@ -8,9 +8,9 @@
 import UIKit
 import Kingfisher
 
-class TopSectionCell: UICollectionViewCell, MovieCellProtocol {
+class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
     // MARK: - Properties
-    static let reuseIdentifier =  String(describing: TopSectionCell.self)
+    static let reuseIdentifier =  String(describing: TopRatedSectionCell.self)
     
     public var numberTop = 0
     private let imageBackground: UIImageView = {
