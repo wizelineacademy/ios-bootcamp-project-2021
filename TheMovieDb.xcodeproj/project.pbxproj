@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		262B5A48272D8F2E00887232 /* HomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B5A47272D8F2E00887232 /* HomeViewCell.swift */; };
 		262B5A4B272D907300887232 /* HomeFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B5A4A272D907300887232 /* HomeFlowLayout.swift */; };
 		262B5A4D272D9B5100887232 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B5A4C272D9B5100887232 /* HomeModel.swift */; };
+		2699CC3B272F202E000F8E36 /* Kingfisher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699CC3A272F202E000F8E36 /* Kingfisher.xcframework */; };
+		2699CC3C272F202E000F8E36 /* Kingfisher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2699CC3A272F202E000F8E36 /* Kingfisher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		26D22349272E0E1D0009A395 /* ListSectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D22348272E0E1D0009A395 /* ListSectionViewController.swift */; };
 		26D2234D272E15700009A395 /* ListSectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D2234C272E15700009A395 /* ListSectionFlowLayout.swift */; };
 		26D2234F272E161E0009A395 /* ListSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26D2234E272E161E0009A395 /* ListSectionCell.swift */; };
@@ -41,10 +43,25 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2699CC3D272F202E000F8E36 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2699CC3C272F202E000F8E36 /* Kingfisher.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		262B5A47272D8F2E00887232 /* HomeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCell.swift; sourceTree = "<group>"; };
 		262B5A4A272D907300887232 /* HomeFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlowLayout.swift; sourceTree = "<group>"; };
 		262B5A4C272D9B5100887232 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		2699CC3A272F202E000F8E36 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = "<group>"; };
 		26D22348272E0E1D0009A395 /* ListSectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionViewController.swift; sourceTree = "<group>"; };
 		26D2234C272E15700009A395 /* ListSectionFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionFlowLayout.swift; sourceTree = "<group>"; };
 		26D2234E272E161E0009A395 /* ListSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionCell.swift; sourceTree = "<group>"; };
@@ -70,6 +87,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2699CC3B272F202E000F8E36 /* Kingfisher.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +143,14 @@
 			path = FlowLayout;
 			sourceTree = "<group>";
 		};
+		2699CC39272F202E000F8E36 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2699CC3A272F202E000F8E36 /* Kingfisher.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		26D22347272E0DE80009A395 /* ListSection */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +192,7 @@
 				837B4EBD258178BA003DFC67 /* TheMovieDbTests */,
 				837B4EC8258178BA003DFC67 /* TheMovieDbUITests */,
 				837B4EA5258178B6003DFC67 /* Products */,
+				2699CC39272F202E000F8E36 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -223,6 +250,7 @@
 				837B4EA0258178B6003DFC67 /* Sources */,
 				837B4EA1258178B6003DFC67 /* Frameworks */,
 				837B4EA2258178B6003DFC67 /* Resources */,
+				2699CC3D272F202E000F8E36 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
