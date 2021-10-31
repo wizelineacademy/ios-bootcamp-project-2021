@@ -12,8 +12,16 @@ final class HomeViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Home"
+        navigationController?.navigationBar.prefersLargeTitles = true
         collectionView.collectionViewLayout = HomeCollectionFlowLayout()
-        // Do any additional setup after loading the view.
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == ListSectionViewController.segueIdentifier,
+           let viewController = segue.destination as? ListSectionViewController,
+           let cell = sender as? HomeViewCell {
+            viewController.section = cell.section
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -32,7 +32,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <segue destination="wlh-9e-71D" kind="show" id="lPk-uw-ipo"/>
+                                    <segue destination="wlh-9e-71D" kind="show" identifier="go-to-list-section" id="lPk-uw-ipo"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -47,10 +47,10 @@
             </objects>
             <point key="canvasLocation" x="3631.884057971015" y="66.964285714285708"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--List Section View Controller-->
         <scene sceneID="Ldx-Lk-PUa">
             <objects>
-                <collectionViewController id="wlh-9e-71D" sceneMemberID="viewController">
+                <collectionViewController id="wlh-9e-71D" customClass="ListSectionViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="pv7-qB-m2n">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -62,7 +62,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="oCL-CV-NVE">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="list-section-cell" id="oCL-CV-NVE" customClass="ListSectionCell" customModule="TheMovieDb" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jmH-CL-PkK">
@@ -93,6 +93,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1NE-UG-7Dr">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="IUk-gn-QSw" kind="relationship" relationship="rootViewController" id="67P-p7-SwJ"/>
                     </connections>
@@ -107,6 +110,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="66g-ib-Usq" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pmA-VZ-rwk">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -120,7 +124,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="home" width="16" height="16"/>
+        <image name="home" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
