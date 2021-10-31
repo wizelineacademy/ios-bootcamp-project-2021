@@ -13,13 +13,7 @@ class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: HightSectionCell.self)
     
-    private let imageBackground: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "TheBatmanBackground")
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.masksToBounds = true
-        return imageView
-    }()
+    private let imageBackground = BackgroundImageView()
     
     private let titleLabel: UILabel = {
         let label = UILabel()

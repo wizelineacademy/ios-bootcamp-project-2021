@@ -39,12 +39,11 @@ final class HomeViewController: UICollectionViewController {
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
         collectionView.register(TopRatedSectionCell.self, forCellWithReuseIdentifier: TopRatedSectionCell.reuseIdentifier)
         collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
-        
-        navigationController?.hidesBarsOnSwipe = true
     }
+    
     private func configureUI() {
         navigationItem.title = "Movies"
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .black
     }
     // MARK: - Actions
     
@@ -125,23 +124,10 @@ extension HomeViewController {
 extension HomeViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let section = GroupSections(rawValue: indexPath.section)
-        let movie = movies[indexPath.row]
-        
-        switch section {
-        case .popular:
-           print("he")
-        case .trending:
-            print("he")
-        case .playingNow:
-            print("he")
-        case .topRated:
-            print("he")
-        case .upcoming:
-            print("he")
-        case .none:
-            print("No seleccionado")
-        }
+        let movie = movies[indexPath.row]        
+        let controller = DetailViewController(with: movie)
+        navigationController?.pushViewController(controller, animated: true)
+
     }
     
 }
