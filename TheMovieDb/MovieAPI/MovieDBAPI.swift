@@ -24,7 +24,7 @@ struct MovieDBAPI: APIClient {
     
     var dispatcher: NetworkDispatcher
     
-    init(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher.instance) {
+    init(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher()) {
         self.dispatcher = dispatcher
     }
         
