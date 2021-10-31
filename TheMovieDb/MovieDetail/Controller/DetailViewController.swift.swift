@@ -120,4 +120,16 @@ extension DetailViewController: DetailHeaderViewDelegate {
     }
     
 }
+
+// MARK: - UICollectionViewControllerDelegate
+extension DetailViewController {
     
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = movie
+        let controller = DetailViewController(with: movie)
+        navigationController?.pushViewController(controller, animated: true)
+
+    }
+    
+}
+
