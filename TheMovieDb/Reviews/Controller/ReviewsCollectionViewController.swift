@@ -13,9 +13,7 @@ class ReviewsCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties
     
-
-    // MARK: -  Life Cycle
-    
+    // MARK: - LifeCycle
     init() {
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
@@ -57,7 +55,6 @@ class ReviewsCollectionViewController: UICollectionViewController {
             return ReviewCell()
         }
         
-    
         return cell
     }
 
@@ -72,7 +69,6 @@ extension ReviewsCollectionViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
 }
-
 
 // MARK: - UICollectionViewControllerDelegate
 extension ReviewsCollectionViewController {
