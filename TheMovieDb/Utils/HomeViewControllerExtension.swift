@@ -8,7 +8,7 @@
 import UIKit
 
 let categoryHomeHeaderId = "categoryHomeHeaderId"
-extension HomeViewController {
+extension UICollectionViewController {
     
     static func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in

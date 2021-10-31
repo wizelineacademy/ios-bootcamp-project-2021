@@ -14,7 +14,7 @@ final class HomeViewController: UICollectionViewController {
     // MARK: - Life Cycle
     
     init() {
-        super.init(collectionViewLayout: HomeViewController.configureCollectionViewLayout())
+        super.init(collectionViewLayout: UICollectionViewController.configureCollectionViewLayout())
     }
     
     required init?(coder: NSCoder) {
