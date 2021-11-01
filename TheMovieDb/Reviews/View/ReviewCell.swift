@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReviewCell: UICollectionViewCell {
+final class ReviewCell: UICollectionViewCell {
     
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: ReviewCell.self)
@@ -18,6 +18,8 @@ class ReviewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 14)
         label.text = "Rotten Tomatoes"
+        label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -25,7 +27,7 @@ class ReviewCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 12)
         label.numberOfLines = 0
-        label.text = "The Martix is a great example of a movie that will live for ever or a very log time. The story and concept are out of this world. Keanu Reeves plays his role with utter brilliance, the cast was very well put together and the graphics are still to this day amazing. All in all one of the best movies of all time"
+        label.text = "The Martix is a great example of a movie that will live for ever or a very log time. The story and concept are out of this world. Keanu Reeves plays his role with utter brilliance, the cast was very well put together and the graphics are still to this day amazing. All in all one of the best movies of all times is a great example of a movie that will live for ever or a very log time. The story and concept are out of this world. Keanu Reeves plays his role with utter brilliance, the cast was very well put together and the graphics are still to this day amazing. All in all one of the best movies of all times"
         return label
     }()
     // MARK: - Life Cycle
@@ -38,16 +40,18 @@ class ReviewCell: UICollectionViewCell {
         layer.cornerRadius = 10
         backgroundColor = .darkGray
         
+        addSubview(descriptionLabel)
+        descriptionLabel.anchor(top: topAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
+        descriptionLabel.setWidth((frame.width / 3) * 2)
+        
         addSubview(logoImageView)
-        logoImageView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10)
-        logoImageView.setWidth(frame.height - 20)
+        logoImageView.anchor(left: leftAnchor, bottom: bottomAnchor, right: descriptionLabel.leftAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
+        logoImageView.setHeight(frame.width / 3)
         logoImageView.layer.cornerRadius = 10
         
         addSubview(authorNameLabel)
-        authorNameLabel.anchor(top: topAnchor, left: logoImageView.rightAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10)
-    
-        addSubview(descriptionLabel)
-        descriptionLabel.anchor(top: authorNameLabel.bottomAnchor, left: logoImageView.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
+        authorNameLabel.anchor(top: topAnchor, left: leftAnchor, right: descriptionLabel.leftAnchor, paddingTop: 10, paddingLeft: 10)
+        
     }
     
     required init?(coder: NSCoder) {

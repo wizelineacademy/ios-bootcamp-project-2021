@@ -9,7 +9,7 @@ import UIKit
 
 private let reuseIdentifier = "Cell"
 
-class ReviewsCollectionViewController: UICollectionViewController {
+final class ReviewsCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties
     
@@ -63,10 +63,13 @@ class ReviewsCollectionViewController: UICollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ReviewsCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let frame = CGRect(x: 0, y: 0, width: view.frame.width - 20, height: 50)
+        let estimatedSizeCell = ReviewCell(frame: frame)
+        estimatedSizeCell.layoutIfNeeded()
         
-        let width = view.frame.width - 20
-        let height = CGFloat(80)
-        return CGSize(width: width, height: height)
+        let targetSize = CGSize(width: view.frame.width - 20, height: 1000)
+        let estimatedSize = estimatedSizeCell.systemLayoutSizeFitting(targetSize)
+        return .init(width: view.frame.width - 20, height: estimatedSize.height)
     }
 }
 
@@ -74,8 +77,6 @@ extension ReviewsCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension ReviewsCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let controller = ReviewDescriptionViewController()
-        navigationController?.pushViewController(controller, animated: true)
 
     }
     

@@ -10,7 +10,7 @@ protocol DetailHeaderViewDelegate: AnyObject {
     func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie)
 }
 
-class DetailHeaderView: UICollectionReusableView {
+final class DetailHeaderView: UICollectionReusableView {
     
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: DetailHeaderView.self)

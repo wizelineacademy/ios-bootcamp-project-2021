@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
+final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: TopRatedSectionCell.self)
     

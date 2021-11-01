@@ -9,7 +9,11 @@ import UIKit
 
 final class HomeViewController: UICollectionViewController {
     // MARK: - Properties
-    private var movies = [Movie]()
+    private var topMovies = [Movie]()
+    private var playingNowMovies = [Movie]()
+    private var upComingMovies = [Movie]()
+    private var trendingMovies = [Movie]()
+    private var popularMovies = [Movie]()
     
     // MARK: - Life Cycle
     
@@ -29,16 +33,37 @@ final class HomeViewController: UICollectionViewController {
     }
     // MARK: - API
     private func loadDataAPI() {
-        movies = DataManager().fetch()
+        topMovies = DataManager().fetch()
+        playingNowMovies = DataManager().fetch()
+        upComingMovies = DataManager().fetch()
+        trendingMovies = DataManager().fetch()
+        popularMovies = DataManager().fetch()
     }
     
     // MARK: - Helpers
     private func configureUICollection() {
-        // register cells
         collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reuseIdentifier)
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
         collectionView.register(TopRatedSectionCell.self, forCellWithReuseIdentifier: TopRatedSectionCell.reuseIdentifier)
         collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
+    }
+    
+    private func getCurrentMovie(indexPath: IndexPath) -> Movie {
+        let section = GroupSections(rawValue: indexPath.section) ?? .trending
+        var movie: Movie
+        switch section {
+        case .popular:
+            movie = popularMovies[indexPath.row]
+        case .trending:
+            movie = trendingMovies[indexPath.row]
+        case .playingNow:
+            movie = playingNowMovies[indexPath.row]
+        case .topRated:
+            movie = topMovies[indexPath.row]
+        case .upcoming:
+            movie = upComingMovies[indexPath.row]
+        }
+        return movie
     }
     
     private func configureUI() {
@@ -52,30 +77,30 @@ final class HomeViewController: UICollectionViewController {
 // MARK: - UIControllerViewDataSource
 extension HomeViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let section = GroupSections(rawValue: section)
+        let section = GroupSections(rawValue: section) ?? .trending
         
         switch section {
         case .popular:
-            return movies.count
+            return popularMovies.count
         case .trending:
-            return movies.count
+            return trendingMovies.count
         case .playingNow:
-            return movies.count
+            return playingNowMovies.count
         case .topRated:
-            return movies.count
+            return topMovies.count
         case .upcoming:
-            return movies.count
-        case .none:
-            return 0
+            return upComingMovies.count
         }
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 5
     }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let section = GroupSections(rawValue: indexPath.section)
-        let movie = movies[indexPath.row]
+        let section = GroupSections(rawValue: indexPath.section) ?? .topRated
+        let movie = getCurrentMovie(indexPath: indexPath)
+        
         switch section {
         case .popular:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HightSectionCell.reuseIdentifier, for: indexPath) as? HightSectionCell else {
@@ -91,18 +116,15 @@ extension HomeViewController {
             cell.numberTop = indexPath.row
             cell.withMovie(with: movie)
             return cell
- 
+            
         case .upcoming, .trending, .playingNow:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell else {
                 return DefaultSectionCell()
             }
             cell.withMovie(with: movie)
             return cell
-        case .none:
-            let cell = DefaultSectionCell()
-            return cell
         }
-
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -115,7 +137,6 @@ extension HomeViewController {
         if section != .popular {
             header.nameHeader = section
         }
-           
         return header
     }
 }
@@ -124,10 +145,10 @@ extension HomeViewController {
 extension HomeViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = movies[indexPath.row]        
+        let movie = getCurrentMovie(indexPath: indexPath)
         let controller = DetailViewController(with: movie)
         navigationController?.pushViewController(controller, animated: true)
-
+        
     }
     
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
+final class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: DefaultSectionCell.self)
     private let imageBackground: UIImageView = {

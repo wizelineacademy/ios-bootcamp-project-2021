@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
+final class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
  
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: HightSectionCell.self)

@@ -7,7 +7,7 @@
 
 import UIKit.UIImageView
 
-class TagLabel: UILabel {
+final class TagLabel: UILabel {
     
     init(colorBackground: UIColor = .blue) {
         super.init(frame: .zero)

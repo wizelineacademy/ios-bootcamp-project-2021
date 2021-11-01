@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailHeader: UICollectionReusableView {
+final class DetailHeader: UICollectionReusableView {
     
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: DetailHeader.self)

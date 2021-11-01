@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReviewDescriptionViewController: UIViewController {
+final class ReviewDescriptionViewController: UIViewController {
     private let descriptionReviewLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
