@@ -89,3 +89,4 @@ fastlane/test_output
 
 iOSInjectionProject/
 .DS_Store
+TheMovieDb/Model/.DS_Store
