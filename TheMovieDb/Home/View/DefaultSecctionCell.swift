@@ -12,7 +12,7 @@ final class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
     static let reuseIdentifier =  String(describing: DefaultSectionCell.self)
     private let imageBackground: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "TheBatmanPoster")
+        imageView.image = #imageLiteral(resourceName: "noImage")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
