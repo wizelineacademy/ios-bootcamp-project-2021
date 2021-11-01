@@ -4,8 +4,8 @@
 //
 //  Created by Juan David Torres on 29/10/21.
 //
-
 //
+// The use of this class is provisional
 //  SearchBar.swift
 //  iOS Bootcamp Challenge
 //

@@ -14,7 +14,6 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
   private var trendingMovies: [Movie] = []
   
   // All categories
-  let categoriesData = ["Trending", "Now Playing", "Popular", "Top Rated", "Upcoming"]
   var circularProgressBarView: CircularProgressBarView!
   var circularViewDuration: TimeInterval = 2
   override func viewDidLoad() {
