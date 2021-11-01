@@ -9,7 +9,7 @@ import Foundation
 
 struct Movie: Decodable {
   
-  let posterPath: String // Get images with https://image.tmdb.org/t/p/w500
+  let posterPath: String? // Get images with https://image.tmdb.org/t/p/w500
   let voteAverage: Float
   let releaseDate: Date
   let title: String
@@ -31,7 +31,11 @@ struct Movie: Decodable {
   
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
-    self.posterPath = try "https://image.tmdb.org/t/p/w500" + container.decode(String.self, forKey: .poster_path)
+    do {
+       self.posterPath = try "https://image.tmdb.org/t/p/w500" + container.decode(String.self, forKey: .poster_path)
+    } catch {
+      self.posterPath = ""
+    }
     self.voteAverage = try container.decode(Float.self, forKey: .vote_average)
     let releaseDateConverted = try container.decode(String.self, forKey: .release_date)
     self.releaseDate = releaseDateConverted.changeToDate()
