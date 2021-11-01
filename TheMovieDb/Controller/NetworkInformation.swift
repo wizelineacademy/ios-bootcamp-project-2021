@@ -13,6 +13,9 @@ enum MovieListEndpoint {
     case popular
     case topRated
     case upcoming
+    case search
+    case movieDetails(id: Int)
+    case personDetails(id: Int)
     
     var path: String {
         switch self {
@@ -21,6 +24,9 @@ enum MovieListEndpoint {
         case .popular: return "movie/popular"
         case .topRated: return "movie/top_rated"
         case .upcoming: return "movie/upcoming"
+        case .search: return "search/multi"
+        case .movieDetails(let id): return "movie/\(id)"
+        case .personDetails(let id): return "person/\(id)"
         }
     }
 }
@@ -41,7 +47,5 @@ enum MovieError: Error {
 }
 
 protocol MovieService {
-    static func getMovies(endpoint: MovieListEndpoint, returnMovies: @escaping (Result<MovieResponse, MovieError>) -> Void)
+    static func get<T: Decodable>(search: String?, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void)
 }
-
-

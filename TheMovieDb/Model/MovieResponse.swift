@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct MovieResponse: Decodable {
+struct MovieResponse<T: Decodable>: Decodable {
     var page: Int?
-    var results: [Movie]?
+    var results: [T]?
     var totalPages: Int?
     var totalResults: Int?
 }

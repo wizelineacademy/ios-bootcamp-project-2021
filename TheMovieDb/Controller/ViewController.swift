@@ -28,6 +28,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         tableView.dataSource = self
         
         title = typeTitle
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         loadMovies()
     }
@@ -38,10 +39,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return
         }
         
-        MovieFacade.getMovies(endpoint: type) { [weak self] result in
+        MovieFacade.get(endpoint: type) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
             guard let self = self else { return }
             
-            switch result {
+            switch response {
             case .success(let sucessResult):
                 print(sucessResult)
                 self.pageMovie = sucessResult.page ?? 0
@@ -75,6 +76,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.textLabel?.text = resultsMovie[indexPath.row].title
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let vcMovieSelected = storyboard?.instantiateViewController(identifier: "MovieInfo") as? MovieInfoViewController {
+            vcMovieSelected.movie = resultsMovie[indexPath.row]
+            navigationController?.pushViewController(vcMovieSelected, animated: true)
+            print("You selected cell number \(indexPath.row)")
+        }
+        
+        
     }
     
 }

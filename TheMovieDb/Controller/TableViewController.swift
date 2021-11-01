@@ -20,6 +20,7 @@ class TableViewController: UITableViewController {
         
         title = "Show Movies"
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -37,6 +38,12 @@ class TableViewController: UITableViewController {
             let category = moviesCategory[indexPath.row]
             vc.type = category.type
             vc.typeTitle = category.name
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    @objc func searchTapped() {
+        if let vc = storyboard?.instantiateViewController(identifier: "Search") as? SearchTableViewController {
             navigationController?.pushViewController(vc, animated: true)
         }
     }

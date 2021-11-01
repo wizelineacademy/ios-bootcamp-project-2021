@@ -13,7 +13,7 @@ struct MovieFacade: MovieService, QueryParams {
     static var apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
     static var language = "en-US"
     
-    static func getMovies(endpoint: MovieListEndpoint, returnMovies: @escaping (Result<MovieResponse, MovieError>) -> Void) {
+    static func get<T: Decodable>(search: String? = nil, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) {
 
         var components = URLComponents()
         components.path = endpoint.path
@@ -22,8 +22,12 @@ struct MovieFacade: MovieService, QueryParams {
             .init(name: "language", value: language)
         ]
         
+        if let search = search {
+            components.queryItems?.append(.init(name: "query", value: search))
+        }
+        
         guard let url = components.url(relativeTo: baseURL) else {
-            returnMovies(.failure(.invalidUrl))
+            returnResponse(.failure(.invalidUrl))
             return
         }
         
@@ -33,7 +37,7 @@ struct MovieFacade: MovieService, QueryParams {
         let taskRequest = URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             if let error = error {
-                returnMovies(.failure(.unknownError(error: error)))
+                returnResponse(.failure(.unknownError(error: error)))
                 print("Error took place \(error.localizedDescription)")
                 return
             }
@@ -47,11 +51,10 @@ struct MovieFacade: MovieService, QueryParams {
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
-                    let moviesDecoded = try jsonDecoder.decode(MovieResponse.self, from: data)
-                    print(moviesDecoded.page ?? "Not Found")
-                    returnMovies(.success(moviesDecoded))
+                    let moviesDecoded = try jsonDecoder.decode(T.self, from: data)
+                    returnResponse(.success(moviesDecoded))
                 } catch {
-                    returnMovies(.failure(.wrongResponse))
+                    returnResponse(.failure(.wrongResponse))
                 }
             }
         }
