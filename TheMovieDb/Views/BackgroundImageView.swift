@@ -14,6 +14,7 @@ final class BackgroundImageView: UIImageView {
         image = #imageLiteral(resourceName: "TheBatmanBackground")
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
+        backgroundColor = .darkGray
     }
     
     required init?(coder: NSCoder) {

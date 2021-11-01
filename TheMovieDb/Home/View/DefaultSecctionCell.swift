@@ -16,6 +16,7 @@ final class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
+        imageView.backgroundColor = .darkGray
         return imageView
     }()
     
@@ -38,6 +39,7 @@ final class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
     public func withMovie(with movie: Movie) {
         let urlImage = MovieConst.imageCDN + (movie.posterPath ?? "")
         let url = URL(string: urlImage )
+        imageBackground.kf.indicatorType = .activity
         imageBackground.kf.setImage(with: url)
     }
     

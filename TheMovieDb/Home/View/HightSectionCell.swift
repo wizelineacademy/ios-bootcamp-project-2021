@@ -62,7 +62,9 @@ final class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
     func withMovie(with movie: Movie) {
         let urlImage = MovieConst.imageCDN + (movie.backdropPath ?? (movie.posterPath ?? ""))
         let url = URL(string: urlImage )
+        imageBackground.kf.indicatorType = .activity
         imageBackground.kf.setImage(with: url)
+        titleLabel.text = movie.title
     }
     
     // MARK: - Actions

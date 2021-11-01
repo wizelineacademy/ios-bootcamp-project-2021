@@ -14,6 +14,7 @@ final class HomeViewController: UICollectionViewController {
     private var upComingMovies = [Movie]()
     private var trendingMovies = [Movie]()
     private var popularMovies = [Movie]()
+    private var apiManager = APIManager()
     
     // MARK: - Life Cycle
     
@@ -33,11 +34,14 @@ final class HomeViewController: UICollectionViewController {
     }
     // MARK: - API
     private func loadDataAPI() {
-        topMovies = DataManager().fetch()
-        playingNowMovies = DataManager().fetch()
-        upComingMovies = DataManager().fetch()
-        trendingMovies = DataManager().fetch()
-        popularMovies = DataManager().fetch()
+        apiManager.fetch { movies in
+            self.playingNowMovies = movies["playingNowMovies"] ?? [Movie]()
+            self.upComingMovies = movies["upComingMovies"] ?? [Movie]()
+            self.trendingMovies = movies["trendingMovies"] ?? [Movie]()
+            self.popularMovies = movies["popularMovies"] ?? [Movie]()
+            self.topMovies = movies["topMovies"] ?? [Movie]()
+            self.collectionView.reloadData()
+        }
     }
     
     // MARK: - Helpers

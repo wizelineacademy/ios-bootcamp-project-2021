@@ -19,6 +19,7 @@ final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
+        imageView.backgroundColor = .darkGray
         return imageView
     }()
     
@@ -26,7 +27,7 @@ final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
         let label = UILabel()
         label.text = "1"
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.7
+        label.minimumScaleFactor = 0.2
         label.font = UIFont.boldSystemFont(ofSize: 250)
         label.numberOfLines = 0
         return label
@@ -44,17 +45,19 @@ final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
     
     // MARK: - Helpers
     internal func configureUI() {
+        
         addSubview(imageBackground)
         imageBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingLeft: 60)
         addSubview(numberTopLabel)
-        numberTopLabel.anchor(left: leftAnchor, bottom: bottomAnchor, paddingLeft: -10)
-        numberTopLabel.setDimensions(height: frame.height - 50, width: frame.width/2)
+        numberTopLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor)
+        numberTopLabel.setWidth(frame.width/2)
     }
     
     public func withMovie(with movie: Movie) {
         numberTopLabel.text = "\(numberTop + 1)"
         let urlImage = MovieConst.imageCDN + (movie.posterPath ?? "")
         let url = URL(string: urlImage )
+        imageBackground.kf.indicatorType = .activity
         imageBackground.kf.setImage(with: url)
     }
     

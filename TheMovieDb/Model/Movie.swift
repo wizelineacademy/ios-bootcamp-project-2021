@@ -51,4 +51,21 @@ struct Movie: Decodable {
         self.popularity = try container.decode(Float.self, forKey: .popularity)
         self.mediaType = try? container.decode(String.self, forKey: .mediaType)
     }
+    
+    init(id: Int, title: String, video: Bool, voteAverage: Float, overview: String, releaseDate: String, voteCount: Int, adult: Bool, backdropPath: String?, posterPath: String?, popularity: Float, mediaType: String?
+    ) {
+        self.id = id
+        self.title = title
+        self.video = video
+        self.voteAverage = voteAverage
+        self.overview = overview
+        self.releaseDate = releaseDate
+        self.voteCount = voteCount
+        self.adult = adult
+        self.backdropPath = backdropPath
+        self.posterPath = posterPath
+        self.popularity = popularity
+        self.mediaType = mediaType
+        
+    }
 }
