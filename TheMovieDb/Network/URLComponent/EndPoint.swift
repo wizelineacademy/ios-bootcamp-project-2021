@@ -20,14 +20,14 @@ extension Endpoint {
         return "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
     }
     
-  func getUrlComponents(queryItems:[URLQueryItem]?) -> URLComponents {
+  func getUrlComponents(queryItems: [URLQueryItem]?) -> URLComponents {
     var components = URLComponents(string: base)!
     components.path = path
     if var query = queryItems {
-      query.insert(URLQueryItem(name:"api_key", value: apiKey), at: 0)
+      query.insert(URLQueryItem(name: "api_key", value: apiKey), at: 0)
       components.queryItems = query
-    }else{
-      components.queryItems = [URLQueryItem(name:"api_key", value: apiKey)]
+    } else {
+      components.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
     }
     return components
   }

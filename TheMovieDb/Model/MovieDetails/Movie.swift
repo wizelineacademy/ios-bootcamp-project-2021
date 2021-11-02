@@ -28,3 +28,7 @@ struct Movie: Codable {
         
     }
 }
+
+struct MovieFeedResult: Decodable {
+    let results: [Movie]?
+}

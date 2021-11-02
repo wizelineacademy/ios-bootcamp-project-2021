@@ -12,7 +12,7 @@ enum InfoById {
   case reviews(movieId: Int)
   case credits(movieId: Int)
   case similar(movieId: Int)
-  case recommendations(movieId:Int)
+  case recommendations(movieId: Int)
   case keywords(movieId: Int)
 }
 

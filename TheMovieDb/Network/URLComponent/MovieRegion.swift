@@ -19,7 +19,7 @@ enum MovieRegion {
 extension MovieRegion {
   
   var region: String {
-      switch self{
+      switch self {
       case .BR: return "BR"
       case .CO: return "CO"
       case .ES: return "ES"

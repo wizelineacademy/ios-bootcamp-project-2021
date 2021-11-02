@@ -22,7 +22,7 @@ class FeedViewController: UICollectionViewController {
     setupNavigationController()
   }
   
-  func setupCollectionView(){
+  func setupCollectionView() {
     
     collectionView.register(MovieCollectionViewCell.nib(), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
     collectionView.backgroundColor = .init(white: 0.1, alpha: 0.8)
@@ -33,7 +33,7 @@ class FeedViewController: UICollectionViewController {
     
   }
   
-  func setupNavigationController(){
+  func setupNavigationController() {
     self.title = "Popular"
     navigationController?.navigationBar.prefersLargeTitles = true
     
@@ -48,13 +48,11 @@ class FeedViewController: UICollectionViewController {
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
   }
   
-  func didRefresh(){
+  func didRefresh() {
     self.collectionView.reloadData()
   }
   
-  
-  
-  func getData(){
+  func getData() {
     MovieDBClient.shared.getData(from: MovieFeed.popular, movieRegion: .US, movieLanguage: .en) { [weak self] (result: Result<MovieFeedResult?, ApiError>) in
       switch result {
       case .success(let movieFeedResult):
@@ -71,16 +69,16 @@ class FeedViewController: UICollectionViewController {
     return arrayMovies.count
   }
   
-  
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
-    cell.movie = arrayMovies[indexPath.item]  
+
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {return MovieCollectionViewCell()}
+    cell.movie = arrayMovies[indexPath.item]
     return cell
   }
   
 }
 
-extension FeedViewController: UICollectionViewDelegateFlowLayout{
+extension FeedViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
@@ -94,5 +92,3 @@ extension FeedViewController: UICollectionViewDelegateFlowLayout{
     return .init(top: 20, left: 20, bottom: 20, right: 20)
   }
 }
-
-

@@ -14,7 +14,7 @@ struct AuthorDetails: Codable {
   var avatarPath: String?
   var rating: Int?
   
-  private enum CodingKeys : String, CodingKey{
+  private enum CodingKeys: String, CodingKey {
     case name
     case username
     case avatarPath = "avatar_path"

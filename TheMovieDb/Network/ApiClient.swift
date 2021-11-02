@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-protocol ApiClient{
+protocol ApiClient {
     var session: URLSession { get }
     func fetch<Element: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> Element?, completion: @escaping (Result<Element, ApiError>) -> Void)
 }
@@ -17,25 +17,25 @@ extension ApiClient {
     
     typealias JSONTaskCompletionHandler = (Decodable?, ApiError?) -> Void
     
-    private func decodingTask<Element: Decodable>(with request : URLRequest, decodingType: Element.Type, completion: @escaping JSONTaskCompletionHandler ) -> URLSessionDataTask {
+    private func decodingTask<Element: Decodable>(with request: URLRequest, decodingType: Element.Type, completion: @escaping JSONTaskCompletionHandler ) -> URLSessionDataTask {
         
-        let task = session.dataTask(with: request) { data, response, error in
+        let task = session.dataTask(with: request) { ( data, response, _ ) in
             guard let httpResponse = response as? HTTPURLResponse else {
                 completion(nil, .requestFailed)
                 return
             }
             if httpResponse.statusCode == 200 {
                 if let data = data {
-                    do{
+                    do {
                         let item = try JSONDecoder().decode(decodingType, from: data)
                         completion(item, nil)
                     } catch {
                         completion(nil, .jsonConversionFailure)
                     }
-                }else {
+                } else {
                     completion(nil, .invalidData)
                 }
-            }else {
+            } else {
                 completion(nil, .responseUnsuccesful)
             }
         }
@@ -48,14 +48,14 @@ extension ApiClient {
                 guard let json = json else {
                     if let error = error {
                         completion(Result.failure(error))
-                    }else{
+                    } else {
                         completion(Result.failure(.invalidData))
                     }
                     return
                 }
-                if let value = decode(json){
+                if let value = decode(json) {
                     completion(.success(value))
-                }else{
+                } else {
                     completion(.failure(.jsonParsingFailure))
                 }
             }

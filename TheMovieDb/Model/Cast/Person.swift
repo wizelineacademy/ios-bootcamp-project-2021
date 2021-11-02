@@ -24,3 +24,7 @@ struct Person: Codable {
   }
     
 }
+
+struct Credits: Decodable {
+    let cast: [Person]?
+}

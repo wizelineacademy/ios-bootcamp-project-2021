@@ -7,17 +7,21 @@
 
 import Foundation
 
-struct RecommendedMovie: Codable{
+struct RecommendedMovie: Codable {
   
   let id: Int
   let title: String
   let posterPath: String?
   let overview: String
   
-  private enum CodingKeys: String, CodingKey{
+  private enum CodingKeys: String, CodingKey {
     case id
     case title
     case posterPath = "poster_path"
     case overview
   }
+}
+
+struct ListRecommendedMovies: Decodable {
+  let results: [RecommendedMovie]?
 }

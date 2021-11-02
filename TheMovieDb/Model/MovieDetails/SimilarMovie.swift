@@ -13,9 +13,13 @@ struct SimilarMovie: Codable {
   let title: String
   let posterPath: String?
   
-  private enum CodingKeys: String, CodingKey{
+  private enum CodingKeys: String, CodingKey {
     case id
     case title
     case posterPath = "poster_path"
   }
+}
+
+struct ListSimilarMovies: Decodable {
+  let results: [SimilarMovie]?
 }
