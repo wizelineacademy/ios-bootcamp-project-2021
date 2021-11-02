@@ -11,10 +11,13 @@ final class TagLabel: UILabel {
     
     init(colorBackground: UIColor = .blue) {
         super.init(frame: .zero)
-        backgroundColor = colorBackground
+        backgroundColor = .clear
         layer.cornerRadius = 10
         font = UIFont.boldSystemFont(ofSize: 12)
         layer.masksToBounds = true
+        layer.borderColor = colorBackground.cgColor
+        layer.borderWidth = 3.0
+        //setHeight(30)
     }
     
     required init?(coder: NSCoder) {

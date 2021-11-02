@@ -65,6 +65,7 @@ extension ReviewsCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let frame = CGRect(x: 0, y: 0, width: view.frame.width - 20, height: 50)
         let estimatedSizeCell = ReviewCell(frame: frame)
+        
         estimatedSizeCell.layoutIfNeeded()
         
         let targetSize = CGSize(width: view.frame.width - 20, height: 1000)

@@ -48,7 +48,7 @@ final class DetailHeaderView: UICollectionReusableView {
         button.setTitle("Reviews", for: .normal)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 10
-        button.backgroundColor = .blue
+        button.backgroundColor = .systemBlue
         button.tintColor = .white
         return button
     }()

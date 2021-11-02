@@ -15,6 +15,7 @@ final class BackgroundImageView: UIImageView {
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
         backgroundColor = .darkGray
+        setHeight(200)
     }
     
     required init?(coder: NSCoder) {
