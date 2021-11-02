@@ -73,9 +73,8 @@ final class ListSectionCell: UICollectionViewCell {
             movieTitle.text = movie?.title
             movieDescription.text = movie?.overview
             rating.progress = Int((movie?.voteAverage ?? 0) * 10)
-            if let url = URL(string: "https://image.tmdb.org/t/p/w185\(movie?.posterPath ?? "")") {
-                poster.kf.setImage(with: url)
-            }
+            let url = URL(string: "https://image.tmdb.org/t/p/w185\(movie?.posterPath ?? "")")
+            poster.kf.setImage(with: url, placeholder: UIImage.posterPlaceholder)
         }
     }
     

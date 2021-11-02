@@ -67,16 +67,15 @@ extension Request {
     }
 }
 
-public protocol PageableView {
-    var page: Int { get }
-    func nextPage()
-    func clearPages()
-}
-
 public protocol PageableModel {
     var page: Int { get }
     mutating func nextPage()
     mutating func clearPages()
+}
+
+public protocol SearchableModel {
+    var search: String { get }
+    mutating func searchText(_ search: String)
 }
 
 extension Encodable {

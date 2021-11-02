@@ -9,6 +9,7 @@ import Foundation
 
 struct PageModel: Decodable {
     let results: [MovieModel]
+    let totalPages: Int
 }
 
 struct MovieModel: Decodable {
