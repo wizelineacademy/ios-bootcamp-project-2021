@@ -9,12 +9,12 @@ import UIKit
 
 final class HomeViewController: UICollectionViewController {
     // MARK: - Properties
-    private var topMovies = [Movie]()
+    private var topRatedMovies = [Movie]()
     private var playingNowMovies = [Movie]()
     private var upComingMovies = [Movie]()
     private var trendingMovies = [Movie]()
     private var popularMovies = [Movie]()
-    private var apiManager = APIManager()
+    private let group = DispatchGroup()
     
     // MARK: - Life Cycle
     
@@ -30,20 +30,98 @@ final class HomeViewController: UICollectionViewController {
         super.viewDidLoad()
         configureUI()
         configureUICollection()
-        loadDataAPI()
+        fetchDataAPI()
+
     }
     // MARK: - API
-    private func loadDataAPI() {
-        apiManager.fetch { movies in
-            self.playingNowMovies = movies["playingNowMovies"] ?? [Movie]()
-            self.upComingMovies = movies["upComingMovies"] ?? [Movie]()
-            self.trendingMovies = movies["trendingMovies"] ?? [Movie]()
-            self.popularMovies = movies["popularMovies"] ?? [Movie]()
-            self.topMovies = movies["topMovies"] ?? [Movie]()
+    private func reloadCollectionView() {//(groupSection: GroupSections) {
+      //  let indexSet = IndexSet(integer: groupSection.rawValue)
+        DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
     
+    private func fetchDataAPI() {
+        fetchPopular()
+        fetchTopRated()
+        fetchNowPlaying()
+        fetchUpcoming()
+        fetchTrending()
+        group.notify(queue: .main) {
+            self.reloadCollectionView()
+        }
+    }
+    
+    public func fetchPopular() {
+        group.enter()
+        MovieAPI.shared.getPopular(completion: {(response: Result<Movies, Error>) in
+            switch response {
+            case .failure(let error):
+                debugPrint(error)
+            case .success(let res):
+                self.popularMovies = res.movies
+                //self.reloadCollectionView(groupSection: .popular)
+            }
+            self.group.leave()
+        })
+    }
+    
+    public func fetchTopRated() {
+        group.enter()
+        MovieAPI.shared.getTopRated(completion: {(response: Result<Movies, Error>) in
+            switch response {
+            case .failure(let error):
+                debugPrint(error)
+            case .success(let res):
+                self.topRatedMovies = res.movies
+               // self.reloadCollectionView(groupSection: .topRated)
+            }
+            self.group.leave()
+        })
+    }
+    
+    public func fetchNowPlaying() {
+        group.enter()
+        MovieAPI.shared.getNowPlaying(completion: {(response: Result<Movies, Error>) in
+            switch response {
+            case .failure(let error):
+                debugPrint(error)
+            case .success(let res):
+                self.playingNowMovies = res.movies
+               // self.reloadCollectionView(groupSection: .playingNow)
+            }
+            self.group.leave()
+        })
+    }
+    
+    public func fetchUpcoming() {
+        group.enter()
+        MovieAPI.shared.getUpcoming(completion: {(response: Result<Movies, Error>) in
+            switch response {
+            case .failure(let error):
+                debugPrint(error)
+            case .success(let res):
+                self.upComingMovies =  res.movies
+              //  self.reloadCollectionView(groupSection: .upcoming)
+            }
+            self.group.leave()
+        })
+    }
+    
+    public func fetchTrending() {
+        group.enter()
+         MovieAPI.shared.getTrending(completion: {(response: Result<Movies, Error>) in
+             switch response {
+             case .failure(let error):
+                 debugPrint(error)
+             case .success(let res):
+                 self.trendingMovies = res.movies
+                 //self.reloadCollectionView(groupSection: .trending)
+             }
+             self.group.leave()
+         })
+    }
+
     // MARK: - Helpers
     private func configureUICollection() {
         collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reuseIdentifier)
@@ -63,7 +141,7 @@ final class HomeViewController: UICollectionViewController {
         case .playingNow:
             movie = playingNowMovies[indexPath.row]
         case .topRated:
-            movie = topMovies[indexPath.row]
+            movie = topRatedMovies[indexPath.row]
         case .upcoming:
             movie = upComingMovies[indexPath.row]
         }
@@ -82,7 +160,6 @@ final class HomeViewController: UICollectionViewController {
 extension HomeViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let section = GroupSections(rawValue: section) ?? .trending
-        
         switch section {
         case .popular:
             return popularMovies.count
@@ -91,7 +168,7 @@ extension HomeViewController {
         case .playingNow:
             return playingNowMovies.count
         case .topRated:
-            return topMovies.count
+            return topRatedMovies.count
         case .upcoming:
             return upComingMovies.count
         }

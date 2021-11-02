@@ -7,7 +7,8 @@
 
 import Foundation
 
-class MovieAPI {
+class MovieAPI: APISearchProtocol, APIMoviesProtocol, APIReviewsProtocol {
+    
     static let shared = MovieAPI()
     private let apiService = APIService()
     
