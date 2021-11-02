@@ -8,6 +8,7 @@
 import UIKit
 import Kingfisher
 
+final class MoviesFeedCell: UICollectionViewCell {
     
     static let cellIdentifier = "MoviesFeedCell"
     

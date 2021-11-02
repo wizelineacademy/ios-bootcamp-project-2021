@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HomeView: UIViewController {
+final class HomeView: UIViewController {
     
     @IBOutlet weak var movieFeed: UICollectionView!
     
