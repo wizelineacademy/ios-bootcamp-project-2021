@@ -29,7 +29,7 @@ extension ApiClient {
                     do{
                         let item = try JSONDecoder().decode(decodingType, from: data)
                         completion(item, nil)
-                    }catch{
+                    } catch {
                         completion(nil, .jsonConversionFailure)
                     }
                 }else {
