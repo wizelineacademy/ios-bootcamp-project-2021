@@ -8,12 +8,12 @@
 import Foundation
 
 struct Person: Decodable {
-    var adult: Bool?
-    var gender: Int?
     var id: Int?
-    var knownFor: [Movie]?
+    var biography: String?
     var knownForDepartment: String?
     var name: String?
     var popularity: Double?
     var profilePath: String?
+    var birthday: String?
+    var deathday: String?
 }

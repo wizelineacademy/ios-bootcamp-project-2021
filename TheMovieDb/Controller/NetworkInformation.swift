@@ -16,6 +16,10 @@ enum MovieListEndpoint {
     case search
     case movieDetails(id: Int)
     case personDetails(id: Int)
+    case similar(id: Int)
+    case recommendations(id: Int)
+    case reviews(id: Int)
+    case credits(id: Int)
     
     var path: String {
         switch self {
@@ -27,6 +31,10 @@ enum MovieListEndpoint {
         case .search: return "search/multi"
         case .movieDetails(let id): return "movie/\(id)"
         case .personDetails(let id): return "person/\(id)"
+        case .similar(let id): return "movie/\(id)/similar"
+        case .recommendations(let id): return "movie/\(id)/recommendations"
+        case .reviews(let id): return "movie/\(id)/reviews"
+        case .credits(let id): return "movie/\(id)/credits"
         }
     }
 }

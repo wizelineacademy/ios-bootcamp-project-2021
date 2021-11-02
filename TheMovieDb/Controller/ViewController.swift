@@ -22,8 +22,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.tableFooterView = UIView()
-        
+       
         tableView.delegate = self
         tableView.dataSource = self
         

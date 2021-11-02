@@ -12,6 +12,9 @@ class MovieInfoViewController: UIViewController {
     
     var movie: Movie?
     var movieID: Int?
+    var similarMoviesNames: String?
+    var recommendedMoviesNames: String?
+    var castMovie: String?
     
     @IBOutlet weak var titleMovie: UILabel!
     
@@ -31,6 +34,13 @@ class MovieInfoViewController: UIViewController {
     
     @IBOutlet weak var releaseDateMovie: UILabel!
     
+    @IBOutlet weak var castInfoLabel: UILabel!
+    
+    @IBOutlet weak var similarMoviesLabel: UILabel!
+    
+    @IBOutlet weak var recommendationsLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,9 +48,15 @@ class MovieInfoViewController: UIViewController {
         
         if let _ = movieID {
             detailMovieID()
-        } else {
+        } else if let movie = movie {
+            movieID = movie.id
             detailMovie()
         }
+        
+        similarMovies()
+        recomendedMovies()
+        castFromMovie()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reviews", style: .plain, target: self, action: #selector(reviewsDisplay))
     }
     
     func detailMovie() {
@@ -70,5 +86,65 @@ class MovieInfoViewController: UIViewController {
             }
         }
     }
+    
+    func similarMovies() {
+        guard let id = movieID else { return }
+        MovieFacade.get(endpoint: .similar(id: id)) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
+            guard let self = self else { return }
+            switch response {
+            case.success(let movieResponse):
+                let movies = movieResponse.results
+                let movieNames = movies?.compactMap({ $0.title }).prefix(3)
+                self.similarMoviesNames = movieNames?.joined(separator: ", ")
+                DispatchQueue.main.async {
+                    self.similarMoviesLabel.text = "Similar movies: \(self.similarMoviesNames ?? "None")"
+                }
+            case .failure(let failureResult):
+                print(failureResult.localizedDescription)
+            }
+        }
+    }
+    
+    func recomendedMovies() {
+        guard let id = movieID else { return }
+        MovieFacade.get(endpoint: .recommendations(id: id)) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
+            guard let self = self else { return }
+            switch response {
+            case.success(let movieResponse):
+                let movies = movieResponse.results
+                let movieNames = movies?.compactMap({ $0.title }).prefix(3)
+                self.recommendedMoviesNames = movieNames?.joined(separator: ", ")
+                DispatchQueue.main.async {
+                    self.recommendationsLabel.text = "Recommendations: \(self.recommendedMoviesNames ?? "None")"
+                }
+            case .failure(let failureResult):
+                print(failureResult.localizedDescription)
+            }
+        }
+    }
+    
+    func castFromMovie() {
+        guard let id = movieID else { return }
+        MovieFacade.get(endpoint: .credits(id: id)) { [weak self] (response: Result<CreditsMovie, MovieError>) in
+            guard let self = self else { return }
+            switch response {
+            case.success(let creditsResponse):
+                let castMovie = creditsResponse.cast
+                let castNames = castMovie?.compactMap({ $0.name }).prefix(3)
+                self.castMovie = castNames?.joined(separator: ", ")
+                DispatchQueue.main.async {
+                    self.castInfoLabel.text = "Cast: \(self.castMovie ?? "None")"
+                }
+            case .failure(let failureResult):
+                print(failureResult.localizedDescription)
+            }
+        }
+    }
+    
+   @objc func reviewsDisplay() {
+       if let vc = storyboard?.instantiateViewController(identifier: "Reviews") as? ReviewsViewController {
+           vc.movieID = movie?.id
+           navigationController?.pushViewController(vc, animated: true)
+       }
+    }
 }
-

@@ -61,6 +61,7 @@ class SearchTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellSearch", for: indexPath)
         let row = searchResult[indexPath.row]
         if let mediaType = row.mediaType, let type = MediaType(rawValue: mediaType) {
+            cell.detailTextLabel?.text = mediaType
             switch type {
             case .movie:
                 cell.textLabel?.text = row.title
