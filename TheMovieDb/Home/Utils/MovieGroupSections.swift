@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum GroupSections: Int {
+enum MovieGroupSections: Int {
     case popular
     case trending
     case playingNow

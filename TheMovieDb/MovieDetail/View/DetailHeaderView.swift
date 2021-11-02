@@ -11,7 +11,6 @@ protocol DetailHeaderViewDelegate: AnyObject {
 }
 
 final class DetailHeaderView: UICollectionReusableView {
-    
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: DetailHeaderView.self)
     weak var delegate: DetailHeaderViewDelegate?
@@ -103,7 +102,7 @@ final class DetailHeaderView: UICollectionReusableView {
     }
     // MARK: - Actions
     
-    @objc func handleReview() {
+    @objc private func handleReview() {
         guard let movie = movie else {return}
         delegate?.openReviews(self, with: movie)
     }

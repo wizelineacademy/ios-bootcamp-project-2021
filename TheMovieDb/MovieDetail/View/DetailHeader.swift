@@ -11,7 +11,7 @@ final class DetailHeader: UICollectionReusableView {
     
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: DetailHeader.self)
-    public var nameHeader: MovieSections? {
+    public var nameHeader: RelatedMovieSections? {
         didSet {
             configure()
         }

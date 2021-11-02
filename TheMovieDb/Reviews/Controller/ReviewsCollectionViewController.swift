@@ -14,6 +14,7 @@ final class ReviewsCollectionViewController: UICollectionViewController {
     // MARK: - Properties
     public var movie: Movie
     private var reviews = [Review]()
+    
     // MARK: - LifeCycle
     init(with movie: Movie) {
         self.movie = movie
@@ -58,9 +59,10 @@ final class ReviewsCollectionViewController: UICollectionViewController {
        
         })
     }
+}
 
-    // MARK: UICollectionViewDataSource
-
+// MARK: UICollectionViewDataSource
+extension ReviewsCollectionViewController {
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -79,7 +81,6 @@ final class ReviewsCollectionViewController: UICollectionViewController {
         cell.review = review
         return cell
     }
-
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout

@@ -5,7 +5,7 @@
 //  Created by Javier Cueto on 31/10/21.
 //
 
-enum MovieSections: Int {
+enum RelatedMovieSections: Int {
     case recommendations
     case similar
 

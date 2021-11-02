@@ -40,6 +40,11 @@ final class ReviewCell: UICollectionViewCell {
         configureUI()
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Helpers
     private func configureUI() {
         layer.cornerRadius = 10
         backgroundColor = .systemGray5
@@ -76,10 +81,6 @@ final class ReviewCell: UICollectionViewCell {
         let url = URL(string: safeUrl )
         logoImageView.kf.setImage(with: url)
 
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
 }

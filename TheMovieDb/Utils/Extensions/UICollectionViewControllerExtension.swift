@@ -52,11 +52,12 @@ extension UICollectionViewController {
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.25), heightDimension: .absolute(150)))
         item.contentInsets.trailing = 16
         item.contentInsets.bottom = 16
+        
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)), subitems: [item])
+        
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets.leading = 16
         section.orthogonalScrollingBehavior = .continuous
-        
         section.boundarySupplementaryItems = [
             .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35)), elementKind: categoryHomeHeaderId, alignment: .topLeading)
         ]

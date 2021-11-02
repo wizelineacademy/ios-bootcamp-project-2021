@@ -9,6 +9,7 @@ import UIKit
 
 final class ReviewDescriptionViewController: UIViewController {
     
+    // MARK: - Properties
     public var review: Review? {
         didSet {
             configure()
@@ -22,7 +23,8 @@ final class ReviewDescriptionViewController: UIViewController {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-
+    
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -31,9 +33,11 @@ final class ReviewDescriptionViewController: UIViewController {
 
     }
     
+    // MARK: - Helpers
     private func configure() {
         guard let review = review else { return }
         navigationItem.title = review.authorDetail.username
         descriptionReviewLabel.text = review.content
     }
+    
 }

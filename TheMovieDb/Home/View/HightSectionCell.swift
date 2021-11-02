@@ -1,5 +1,5 @@
 //
-//  HighSecctionCell.swift
+//  HighSectionCell.swift
 //  TheMovieDb
 //
 //  Created by Javier Cueto on 30/10/21.
@@ -67,7 +67,5 @@ final class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
         imageBackground.kf.setImage(with: url)
         titleLabel.text = movie.title
     }
-    
-    // MARK: - Actions
     
 }

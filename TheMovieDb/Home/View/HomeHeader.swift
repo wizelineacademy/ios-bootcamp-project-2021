@@ -11,7 +11,7 @@ final class HomeHeader: UICollectionReusableView {
     
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: HomeHeader.self)
-    public var nameHeader: GroupSections? {
+    public var nameHeader: MovieGroupSections? {
         didSet {
             configureUI()
         }
@@ -34,17 +34,14 @@ final class HomeHeader: UICollectionReusableView {
         headerLabel.frame = bounds
     }
     
-    private func configureUI() {
-        guard let nameHeader = self.nameHeader else {return}
-        headerLabel.text = nameHeader.description
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Helpers
-    
-    // MARK: - Actions
+    private func configureUI() {
+        guard let nameHeader = self.nameHeader else {return}
+        headerLabel.text = nameHeader.description
+    }
     
 }

@@ -52,7 +52,7 @@ final class HomeViewController: UICollectionViewController {
         }
     }
     
-    public func fetchPopular() {
+    private func fetchPopular() {
         group.enter()
         MovieAPI.shared.getPopular(completion: {(response: Result<Movies, Error>) in
             switch response {
@@ -66,7 +66,7 @@ final class HomeViewController: UICollectionViewController {
         })
     }
     
-    public func fetchTopRated() {
+    private func fetchTopRated() {
         group.enter()
         MovieAPI.shared.getTopRated(completion: {(response: Result<Movies, Error>) in
             switch response {
@@ -80,7 +80,7 @@ final class HomeViewController: UICollectionViewController {
         })
     }
     
-    public func fetchNowPlaying() {
+    private func fetchNowPlaying() {
         group.enter()
         MovieAPI.shared.getNowPlaying(completion: {(response: Result<Movies, Error>) in
             switch response {
@@ -94,7 +94,7 @@ final class HomeViewController: UICollectionViewController {
         })
     }
     
-    public func fetchUpcoming() {
+    private func fetchUpcoming() {
         group.enter()
         MovieAPI.shared.getUpcoming(completion: {(response: Result<Movies, Error>) in
             switch response {
@@ -108,7 +108,7 @@ final class HomeViewController: UICollectionViewController {
         })
     }
     
-    public func fetchTrending() {
+    private func fetchTrending() {
         group.enter()
          MovieAPI.shared.getTrending(completion: {(response: Result<Movies, Error>) in
              switch response {
@@ -131,7 +131,7 @@ final class HomeViewController: UICollectionViewController {
     }
     
     private func getCurrentMovie(indexPath: IndexPath) -> Movie {
-        let section = GroupSections(rawValue: indexPath.section) ?? .trending
+        let section = MovieGroupSections(rawValue: indexPath.section) ?? .trending
         var movie: Movie
         switch section {
         case .popular:
@@ -152,14 +152,13 @@ final class HomeViewController: UICollectionViewController {
         navigationItem.title = "Movies"
         view.backgroundColor = .black
     }
-    // MARK: - Actions
     
 }
 
 // MARK: - UIControllerViewDataSource
 extension HomeViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let section = GroupSections(rawValue: section) ?? .trending
+        let section = MovieGroupSections(rawValue: section) ?? .trending
         switch section {
         case .popular:
             return popularMovies.count
@@ -179,7 +178,7 @@ extension HomeViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let section = GroupSections(rawValue: indexPath.section) ?? .topRated
+        let section = MovieGroupSections(rawValue: indexPath.section) ?? .topRated
         let movie = getCurrentMovie(indexPath: indexPath)
         
         switch section {
@@ -214,7 +213,7 @@ extension HomeViewController {
             return HomeHeader()
         }
         
-        let section = GroupSections(rawValue: indexPath.section)
+        let section = MovieGroupSections(rawValue: indexPath.section)
         if section != .popular {
             header.nameHeader = section
         }

@@ -45,7 +45,6 @@ final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
     
     // MARK: - Helpers
     internal func configureUI() {
-        
         addSubview(imageBackground)
         imageBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingLeft: 60)
         addSubview(numberTopLabel)
@@ -60,7 +59,4 @@ final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
         imageBackground.kf.indicatorType = .activity
         imageBackground.kf.setImage(with: url)
     }
-    
-    // MARK: - Actions
-    
 }

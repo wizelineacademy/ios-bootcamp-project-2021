@@ -26,12 +26,12 @@
 		45A64D4D2728F2DC00159CE6 /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A64D4C2728F2DC00159CE6 /* MainTabViewController.swift */; };
 		45A64D512728F8DC00159CE6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A64D502728F8DC00159CE6 /* HomeViewController.swift */; };
 		45A64D552728FA0400159CE6 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A64D542728FA0400159CE6 /* SearchViewController.swift */; };
-		45A64D592729017200159CE6 /* UITabViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A64D582729017200159CE6 /* UITabViewControllerExtension.swift */; };
+		45A64D592729017200159CE6 /* UITabBarControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45A64D582729017200159CE6 /* UITabBarControllerExtension.swift */; };
 		45BB7AA4272CEF2600DE07C3 /* APIParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AA3272CEF2600DE07C3 /* APIParameters.swift */; };
 		45BB7AA6272D019700DE07C3 /* APIBuildProtocol.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AA5272D019700DE07C3 /* APIBuildProtocol.swift.swift */; };
-		45BB7AA9272D8D0800DE07C3 /* HomeViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AA8272D8D0800DE07C3 /* HomeViewControllerExtension.swift */; };
+		45BB7AA9272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AA8272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift */; };
 		45BB7AAB272D99AC00DE07C3 /* HomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AAA272D99AC00DE07C3 /* HomeHeader.swift */; };
-		45BB7AAF272DAE3A00DE07C3 /* GroupSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AAE272DAE3A00DE07C3 /* GroupSections.swift */; };
+		45BB7AAF272DAE3A00DE07C3 /* MovieGroupSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AAE272DAE3A00DE07C3 /* MovieGroupSections.swift */; };
 		45BB7AB1272DAFDE00DE07C3 /* HightSectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AB0272DAFDE00DE07C3 /* HightSectionCell.swift */; };
 		45BB7AB3272DB24900DE07C3 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AB2272DB24900DE07C3 /* UIViewExtensions.swift */; };
 		45BB7AB5272DB5AD00DE07C3 /* MovieConst.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7AB4272DB5AD00DE07C3 /* MovieConst.swift */; };
@@ -94,12 +94,12 @@
 		45A64D4C2728F2DC00159CE6 /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		45A64D502728F8DC00159CE6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		45A64D542728FA0400159CE6 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		45A64D582729017200159CE6 /* UITabViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabViewControllerExtension.swift; sourceTree = "<group>"; };
+		45A64D582729017200159CE6 /* UITabBarControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarControllerExtension.swift; sourceTree = "<group>"; };
 		45BB7AA3272CEF2600DE07C3 /* APIParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIParameters.swift; sourceTree = "<group>"; };
 		45BB7AA5272D019700DE07C3 /* APIBuildProtocol.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBuildProtocol.swift.swift; sourceTree = "<group>"; };
-		45BB7AA8272D8D0800DE07C3 /* HomeViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerExtension.swift; sourceTree = "<group>"; };
+		45BB7AA8272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewControllerExtension.swift; sourceTree = "<group>"; };
 		45BB7AAA272D99AC00DE07C3 /* HomeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeader.swift; sourceTree = "<group>"; };
-		45BB7AAE272DAE3A00DE07C3 /* GroupSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSections.swift; sourceTree = "<group>"; };
+		45BB7AAE272DAE3A00DE07C3 /* MovieGroupSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieGroupSections.swift; sourceTree = "<group>"; };
 		45BB7AB0272DAFDE00DE07C3 /* HightSectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HightSectionCell.swift; sourceTree = "<group>"; };
 		45BB7AB2272DB24900DE07C3 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		45BB7AB4272DB5AD00DE07C3 /* MovieConst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieConst.swift; sourceTree = "<group>"; };
@@ -286,7 +286,8 @@
 		45A64D56272900E600159CE6 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				45A64D582729017200159CE6 /* UITabViewControllerExtension.swift */,
+				45BB7AA8272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift */,
+				45A64D582729017200159CE6 /* UITabBarControllerExtension.swift */,
 				45BB7AB2272DB24900DE07C3 /* UIViewExtensions.swift */,
 			);
 			path = Extensions;
@@ -295,7 +296,6 @@
 		45A64D572729012800159CE6 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				45BB7AA8272D8D0800DE07C3 /* HomeViewControllerExtension.swift */,
 				45A64D56272900E600159CE6 /* Extensions */,
 				45BB7AB4272DB5AD00DE07C3 /* MovieConst.swift */,
 			);
@@ -324,7 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				45BB7ABF272DF85F00DE07C3 /* MovieDummy.swift */,
-				45BB7AAE272DAE3A00DE07C3 /* GroupSections.swift */,
+				45BB7AAE272DAE3A00DE07C3 /* MovieGroupSections.swift */,
 				45BB7AB8272DBF9900DE07C3 /* MovieCellProtocol.swift */,
 			);
 			path = Utils;
@@ -611,7 +611,7 @@
 				45A64D552728FA0400159CE6 /* SearchViewController.swift in Sources */,
 				457931752730E19E00A79E2D /* APISearchProtocol.swift.swift in Sources */,
 				45A64D512728F8DC00159CE6 /* HomeViewController.swift in Sources */,
-				45BB7AA9272D8D0800DE07C3 /* HomeViewControllerExtension.swift in Sources */,
+				45BB7AA9272D8D0800DE07C3 /* UICollectionViewControllerExtension.swift in Sources */,
 				45D2B4E5272F236C0065DC0D /* MovieSection.swift.swift in Sources */,
 				837B4EAC258178B6003DFC67 /* ViewController.swift in Sources */,
 				4583F67D272B9C8D006E13AD /* APIConst.swift in Sources */,
@@ -628,11 +628,11 @@
 				452BD835272A4DD400F842F5 /* Movies.swift in Sources */,
 				4546A262272B848800D77147 /* APIBuild.swift in Sources */,
 				45BB7AA4272CEF2600DE07C3 /* APIParameters.swift in Sources */,
-				45A64D592729017200159CE6 /* UITabViewControllerExtension.swift in Sources */,
+				45A64D592729017200159CE6 /* UITabBarControllerExtension.swift in Sources */,
 				45BB7ABB272DDAFE00DE07C3 /* TopRatedSectionCell.swift.swift in Sources */,
 				45D2B4DE272EFD5A0065DC0D /* DetailHeaderView.swift in Sources */,
 				45D2B4E0272EFFB10065DC0D /* BackgroundImageView.swift in Sources */,
-				45BB7AAF272DAE3A00DE07C3 /* GroupSections.swift in Sources */,
+				45BB7AAF272DAE3A00DE07C3 /* MovieGroupSections.swift in Sources */,
 				45D2B4E2272F1C750065DC0D /* TagLabel.swift.swift in Sources */,
 				45BB7AC0272DF85F00DE07C3 /* MovieDummy.swift in Sources */,
 				45BB7AB1272DAFDE00DE07C3 /* HightSectionCell.swift in Sources */,
