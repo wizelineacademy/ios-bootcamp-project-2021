@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="YYc-ZL-wdS">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="KgQ-f5-FPx">
+            <objects>
+                <tabBarController id="YYc-ZL-wdS" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sSb-uB-yPJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="FQV-oU-LyT" kind="relationship" relationship="viewControllers" id="Ve7-sM-ia4"/>
+                        <segue destination="mDb-rF-rAD" kind="relationship" relationship="viewControllers" id="Ig4-9g-A4t"/>
+                        <segue destination="TK1-ds-ePG" kind="relationship" relationship="viewControllers" id="V1D-zc-CCa"/>
+                        <segue destination="gSm-Bg-o30" kind="relationship" relationship="viewControllers" id="8xE-NR-Dka"/>
+                        <segue destination="eHa-iY-Zif" kind="relationship" relationship="viewControllers" id="6S0-gN-huw"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pYF-PB-j4h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-917" y="-240"/>
+        </scene>
+        <!--Now Playing-->
+        <scene sceneID="bFZ-C2-aLi">
+            <objects>
+                <navigationController id="mDb-rF-rAD" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Now Playing" image="play.circle" catalog="system" id="rFz-gn-KgH"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ykY-a3-P4i">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y2K-Lp-MJV" kind="relationship" relationship="rootViewController" id="8Sd-Qc-D2v"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gms-4l-3lK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-19" y="-804"/>
+        </scene>
+        <!--Trending-->
+        <scene sceneID="jYh-3f-mHv">
+            <objects>
+                <navigationController id="FQV-oU-LyT" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Trending" image="chart.bar" catalog="system" id="53a-JS-VLs"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1ul-Dt-d8m">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y2K-Lp-MJV" kind="relationship" relationship="rootViewController" id="4PR-Y0-SLq"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="WcK-Ev-4VK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-20" y="-1467"/>
+        </scene>
+        <!--Popular-->
+        <scene sceneID="wnZ-Xc-cTC">
+            <objects>
+                <navigationController id="TK1-ds-ePG" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Popular" image="flame" catalog="system" id="PX1-TZ-WB5"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="luv-VW-sgn">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y2K-Lp-MJV" kind="relationship" relationship="rootViewController" id="nJd-3T-LRg"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x2c-Nt-3NV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-20" y="-128"/>
+        </scene>
+        <!--Top Rated-->
+        <scene sceneID="aD3-OO-RL9">
+            <objects>
+                <navigationController id="gSm-Bg-o30" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Top Rated" image="star.circle" catalog="system" id="NpU-UC-9Nd"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dft-aT-bRl">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y2K-Lp-MJV" kind="relationship" relationship="rootViewController" id="aMc-w1-agc"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZRL-gE-FzB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-20" y="558"/>
+        </scene>
+        <!--List View Controller-->
+        <scene sceneID="VqZ-K3-yef">
+            <objects>
+                <collectionViewController id="Y2K-Lp-MJV" customClass="ListViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Z7w-wd-zkg">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PKZ-iY-sB3">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="Y2K-Lp-MJV" id="RG1-Ri-3xk"/>
+                            <outlet property="delegate" destination="Y2K-Lp-MJV" id="Wks-s7-yZI"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="2Om-RL-yRr"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="51Q-WB-H0Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="946" y="-129"/>
+        </scene>
+        <!--Upcoming-->
+        <scene sceneID="G66-bs-0FQ">
+            <objects>
+                <navigationController id="eHa-iY-Zif" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Upcoming" image="hourglass.badge.plus" catalog="system" id="bBm-lP-38M"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="HWX-F2-7Ri">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Y2K-Lp-MJV" kind="relationship" relationship="rootViewController" id="vwc-pK-zcV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="x5K-BK-YbG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-20" y="1253"/>
+        </scene>
+    </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="vwc-pK-zcV"/>
+    </inferredMetricsTieBreakers>
+    <resources>
+        <image name="chart.bar" catalog="system" width="128" height="90"/>
+        <image name="flame" catalog="system" width="108" height="128"/>
+        <image name="hourglass.badge.plus" catalog="system" width="99" height="128"/>
+        <image name="play.circle" catalog="system" width="128" height="121"/>
+        <image name="star.circle" catalog="system" width="128" height="121"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
