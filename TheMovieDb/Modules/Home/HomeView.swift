@@ -72,7 +72,7 @@ private extension HomeView {
             collectionView: movieFeed
         ) { collectionView, indexPath, movie in
             let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "MoviesFeedCell",
+                withReuseIdentifier: MoviesFeedCell.cellIdentifier,
                 for: indexPath
             ) as? MoviesFeedCell
             cell?.updateUI(withMovie: movie)

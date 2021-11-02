@@ -8,7 +8,8 @@
 import UIKit
 import Kingfisher
 
-class MoviesFeedCell: UICollectionViewCell {
+    
+    static let cellIdentifier = "MoviesFeedCell"
     
     @IBOutlet weak var poster: UIImageView!
     
