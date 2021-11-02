@@ -62,12 +62,19 @@ struct MovieDBAPI: APIClient {
         ]
         typealias ResponseType = MovieListResponse
         
-        init(on endpoint: MoviesEndpoints, extraQueryParams: [String: String]? = nil) {
+        enum QueryParamsKeys: String {
+            case page
+        }
+        
+        init(on endpoint: MoviesEndpoints, queries: [QueryParamsKeys: String]? = nil) {
             self.path = APIConstants.baseUrl + endpoint.rawValue
-            guard let newQueries = extraQueryParams else {
+            guard let queries = queries else {
                 return
             }
-            queryParams?.merge(newQueries, uniquingKeysWith: { current, _ in current })
+            let finalQueries = queries.reduce(into: [String: String]()) { result, element in
+                result[element.key.rawValue] = element.value
+            }
+            queryParams?.merge(finalQueries, uniquingKeysWith: { current, _ in current })
         }
     }
     

@@ -42,7 +42,11 @@ final class HomeView: UIViewController {
             return
         }
         isLoading = true
-        MovieDBAPI().execute(MovieDBAPI.GetMovies(on: .trending, extraQueryParams: ["page": String(loadedPages + 1)])) { [weak self] result in
+        let request = MovieDBAPI.GetMovies(
+            on: .trending,
+            queries: [.page: String(loadedPages + 1)]
+        )
+        movieAPI.execute(request) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.loadedPages = response.page
