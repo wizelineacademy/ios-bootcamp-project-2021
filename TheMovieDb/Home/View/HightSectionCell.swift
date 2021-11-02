@@ -19,7 +19,7 @@ final class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
         let label = UILabel()
         label.text = "The Batman"
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textColor = .systemBackground
+        label.textColor = .white
         return label
     }()
     

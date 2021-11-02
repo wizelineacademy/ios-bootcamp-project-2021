@@ -17,7 +17,6 @@ final class TagLabel: UILabel {
         layer.masksToBounds = true
         layer.borderColor = colorBackground.cgColor
         layer.borderWidth = 3.0
-        //setHeight(30)
     }
     
     required init?(coder: NSCoder) {

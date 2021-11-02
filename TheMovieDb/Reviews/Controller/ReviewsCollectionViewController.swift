@@ -12,9 +12,11 @@ private let reuseIdentifier = "Cell"
 final class ReviewsCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties
-    
+    public var movie: Movie
+    private var reviews = [Review]()
     // MARK: - LifeCycle
-    init() {
+    init(with movie: Movie) {
+        self.movie = movie
         let layout = UICollectionViewFlowLayout()
         layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
         super.init(collectionViewLayout: layout)
@@ -27,6 +29,7 @@ final class ReviewsCollectionViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
+        fetchDataAPI()
     }
 
     // MARK: - Helpers
@@ -34,9 +37,27 @@ final class ReviewsCollectionViewController: UICollectionViewController {
     private func configureUI() {
         self.collectionView!.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reuseIdentifier )
         navigationItem.title = "Reviews"
+        collectionView.backgroundColor = .systemBackground
     }
     
-    // MARK: - Actions
+    // MARK: - API
+    
+    private func fetchDataAPI() {
+        let id = String(movie.id)
+        let parameter = APIParameters(id: id)
+        MovieAPI.shared.getReviews(with: parameter, completion: {(response: Result<Reviews, Error>) in
+            switch response {
+            case .failure(let error):
+                debugPrint(error)
+            case .success(let res):
+                self.reviews = res.reviews
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+       
+        })
+    }
 
     // MARK: UICollectionViewDataSource
 
@@ -47,14 +68,15 @@ final class ReviewsCollectionViewController: UICollectionViewController {
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return 30
+        return reviews.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCell.reuseIdentifier, for: indexPath) as? ReviewCell else {
             return ReviewCell()
         }
-        
+        let review = reviews[indexPath.row]
+        cell.review = review
         return cell
     }
 
@@ -63,14 +85,7 @@ final class ReviewsCollectionViewController: UICollectionViewController {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ReviewsCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let frame = CGRect(x: 0, y: 0, width: view.frame.width - 20, height: 50)
-        let estimatedSizeCell = ReviewCell(frame: frame)
-        
-        estimatedSizeCell.layoutIfNeeded()
-        
-        let targetSize = CGSize(width: view.frame.width - 20, height: 1000)
-        let estimatedSize = estimatedSizeCell.systemLayoutSizeFitting(targetSize)
-        return .init(width: view.frame.width - 20, height: estimatedSize.height)
+        return .init(width: view.frame.width - 20, height: 200)
     }
 }
 
@@ -78,7 +93,10 @@ extension ReviewsCollectionViewController: UICollectionViewDelegateFlowLayout {
 extension ReviewsCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        let review = reviews[indexPath.row]
+        let controller = ReviewDescriptionViewController()
+        controller.review = review
+        navigationController?.pushViewController(controller, animated: true)
     }
     
 }

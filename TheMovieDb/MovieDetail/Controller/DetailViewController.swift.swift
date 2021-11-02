@@ -119,7 +119,7 @@ extension DetailViewController {
         if indexPath.section == 0 {
             let movie = recommendationsMovies[indexPath.row]
             cell.withMovie(with: movie)
-        }else {
+        } else {
             let movie = similarMovies[indexPath.row]
             cell.withMovie(with: movie)
         }
@@ -161,17 +161,15 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: view.frame.height, height: 0)
         }
         
-
-        
     }
 }
 
 // MARK: - DetailHeaderViewDelegate
 extension DetailViewController: DetailHeaderViewDelegate {
     func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie) {
-        let controller = ReviewsCollectionViewController()
-        let nav = UINavigationController(rootViewController: controller)
-        present(nav, animated: true, completion: nil)
+        let controller = ReviewsCollectionViewController(with: movie)
+       // let nav = UINavigationController(rootViewController: controller)
+        navigationController?.pushViewController(controller, animated: true)
     }
     
 }

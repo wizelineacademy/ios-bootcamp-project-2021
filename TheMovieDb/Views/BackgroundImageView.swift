@@ -11,11 +11,10 @@ final class BackgroundImageView: UIImageView {
 
     init() {
         super.init(frame: .zero)
-        image = #imageLiteral(resourceName: "TheBatmanBackground")
+        image = #imageLiteral(resourceName: "noImage")
         contentMode = .scaleAspectFill
         layer.masksToBounds = true
         backgroundColor = .darkGray
-        setHeight(200)
     }
     
     required init?(coder: NSCoder) {

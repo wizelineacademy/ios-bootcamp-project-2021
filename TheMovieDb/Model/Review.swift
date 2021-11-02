@@ -13,6 +13,7 @@ struct Review: Decodable {
     let createdAt: String
     let updatedAt: String
     let url: String
+    let authorDetail: AuthorReview
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -21,6 +22,7 @@ struct Review: Decodable {
         case createdAt = "created_at"
         case updatedAt = "updated_at"
         case url
+        case authorDetail = "author_details"
     }
     
     init(from decoder: Decoder) throws {
@@ -31,5 +33,6 @@ struct Review: Decodable {
         self.createdAt = try container.decode(String.self, forKey: .createdAt)
         self.updatedAt = try container.decode(String.self, forKey: .updatedAt)
         self.url = try container.decode(String.self, forKey: .url)
+        self.authorDetail = try container.decode(AuthorReview.self, forKey: .authorDetail)
     }
 }
