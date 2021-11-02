@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ListSectionCell: UICollectionViewCell {
     static let identifier: String = "list-section-cell"
@@ -41,6 +42,7 @@ final class ListSectionCell: UICollectionViewCell {
     
     private lazy var movieDescription: UILabel = {
         let label = UILabel(frame: .zero)
+        label.numberOfLines = 2
         label.font = UIFont.preferredFont(forTextStyle: .callout, compatibleWith: nil)
         return label
     }()
@@ -51,14 +53,29 @@ final class ListSectionCell: UICollectionViewCell {
         return rating
     }()
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setup()
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setup()
     }
     
-    var progress: Int = 0 {
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        rating.progress = 0
+    }
+    
+    var movie: MovieModel? {
         didSet {
-            rating.progress = progress
+            movieTitle.text = movie?.title
+            movieDescription.text = movie?.overview
+            rating.progress = Int((movie?.voteAverage ?? 0) * 10)
+            if let url = URL(string: "https://image.tmdb.org/t/p/w185\(movie?.posterPath ?? "")") {
+                poster.kf.setImage(with: url)
+            }
         }
     }
     

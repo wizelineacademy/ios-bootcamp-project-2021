@@ -74,4 +74,19 @@ enum HomeSections: CaseIterable {
             return UIImage(named: "online-booking")
         }
     }
+    
+    var request: Request & PageableModel {
+        switch self {
+        case .trending:
+            return TrendingRequest()
+        case .nowPlaying:
+            return NowPlayingRequest()
+        case .popular:
+            return PopularRequest()
+        case .topRated:
+            return TopRatedRequest()
+        case .upcoming:
+            return UpcomingRequest()
+        }
+    }
 }

@@ -24,8 +24,10 @@ final class RatedView: UIView {
     
     var progress: Int = 53 {
         didSet {
-            progressLabel.text = String(progress)
-            setNeedsDisplay()
+            progressLabel.text = progress > 0 ? String(progress) : "--"
+            DispatchQueue.main.async {
+                self.setNeedsDisplay()
+            }
         }
     }
     
@@ -47,35 +49,39 @@ final class RatedView: UIView {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        drawBackgroundShape()
-        drawTimeLeftShape()
+        drawBackgroundShape(rect)
+        drawTimeLeftShape(rect)
     }
     
-    func drawBackgroundShape() {
-        backgroundShape.path = UIBezierPath(arcCenter: CGPoint(x: bounds.midX,
-                                                               y: bounds.midY),
-                                            radius: frame.width / 2,
+    func drawBackgroundShape(_ rect: CGRect) {
+        backgroundShape.path = UIBezierPath(arcCenter: CGPoint(x: rect.midX,
+                                                               y: rect.midY),
+                                            radius: rect.width / 2,
                                             startAngle: beginValueDegree.degreesToRadians,
                                             endAngle: endValueDegree.degreesToRadians,
                                             clockwise: true).cgPath
         backgroundShape.strokeColor = UIColor.gray.withAlphaComponent(0.5).cgColor
         backgroundShape.fillColor = UIColor.clear.cgColor
         backgroundShape.lineWidth = 5
-        layer.addSublayer(backgroundShape)
+        DispatchQueue.main.async {
+            self.layer.addSublayer(self.backgroundShape)
+        }
     }
     
-    func drawTimeLeftShape() {
+    func drawTimeLeftShape(_ rect: CGRect) {
         let advanceDegree: Int = Int(Float(completeCircleDegree) * (Float(progress) / 100)) + beginValueDegree
-        ratingShape.path = UIBezierPath(arcCenter: CGPoint(x: bounds.midX,
-                                                           y: bounds.midY),
-                                        radius: frame.width / 2,
+        ratingShape.path = UIBezierPath(arcCenter: CGPoint(x: rect.midX,
+                                                           y: rect.midY),
+                                        radius: rect.width / 2,
                                         startAngle: beginValueDegree.degreesToRadians,
                                         endAngle: advanceDegree.degreesToRadians,
                                         clockwise: true).cgPath
         ratingShape.strokeColor = UIColor.red.cgColor
         ratingShape.fillColor = UIColor.clear.cgColor
         ratingShape.lineWidth = 5
-        layer.addSublayer(ratingShape)
+        DispatchQueue.main.async {
+            self.layer.addSublayer(self.ratingShape)
+        }
     }
 }
 
