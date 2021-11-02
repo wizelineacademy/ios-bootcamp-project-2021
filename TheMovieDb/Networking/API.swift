@@ -7,13 +7,6 @@
 
 import Foundation
 
-enum HTTPMethod: String {
-  case get = "GET"
-  case post = "POST"
-  case put = "PUT"
-  case delete = "DELETE"
-}
-
 protocol LSRequest {
   var method: HTTPMethod { get }
   var parameters: [String: Any]? { get }

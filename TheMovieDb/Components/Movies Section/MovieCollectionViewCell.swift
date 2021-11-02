@@ -6,23 +6,19 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class MovieCollectionViewCell: UICollectionViewCell {
   
-  @IBOutlet weak var movieImage: UIImageView!
-  @IBOutlet weak var movieTitle: UILabel!
-  @IBOutlet weak var movieScore: UILabel!
-  
-  var circularProgressBarView: CircularProgressBarView!
-  var circularViewDuration: TimeInterval = 2
+  @IBOutlet weak var movieImageView: UIImageView?
+  @IBOutlet weak var movieLabel: UILabel?
+  @IBOutlet weak var scoreLabel: UILabel?
   
   static let identifier = "MovieCollectionViewCell"
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    // Initialization code
     setupUI()
-    setUpCircularProgressBarView()
   }
   
   static func nib() -> UINib {
@@ -31,37 +27,32 @@ final class MovieCollectionViewCell: UICollectionViewCell {
   
   func setupUI() {
     // Movie Image
-    movieImage.contentMode = .scaleAspectFill
-    movieImage.layer.cornerRadius = 10
-    movieImage.clipsToBounds = true
+    movieImageView?.contentMode = .scaleAspectFill
+    movieImageView?.layer.cornerRadius = 10
+    movieImageView?.clipsToBounds = true
     // Movie Title
-    movieTitle.textColor = .black
-    movieTitle.font = UIFont.movieTitle
-    
-    // Movie Title View
-//    movieTitleView.backgroundColor = UIColor.movieTitleViewGrey
-//    movieTitleView.clipsToBounds = true
-//    movieTitleView.layer.cornerRadius = 2
-    
+    movieLabel?.textColor = .label
+    movieLabel?.font = UIFont.movieTitle
     // Movie Score
-    movieScore.font = UIFont.movieScore
+    scoreLabel?.font = UIFont.movieScore
+    scoreLabel?.text = ""
+  }
+  func setupImage(posterPath: String) {
+    print(posterPath)
+    if let url = URL(string: posterPath) {
+      movieImageView?.kf.setImage(with: url)
+      print("Done")
+    }
+    
   }
   
-  func setUpCircularProgressBarView() {
-    // set view
-    circularProgressBarView = CircularProgressBarView(frame: .zero)
-    // align to the center of the screen
-    circularProgressBarView.center = self.center
-    // call the animation with circularViewDuration
-    circularProgressBarView.progressAnimation(duration: circularViewDuration)
-    // add this view to the view controller
-    self.addSubview(circularProgressBarView)
-  }
-  
-  func configure(movieTitle: String, movieScore: Float) {
-    self.movieTitle.text = movieTitle
-    self.movieScore.text = "\(movieScore)"
-//    self.movieImage.image = movieImage
+  func configure(movieTitle: String, movieScore: Float, posterPath: String) {
+    self.movieLabel?.text = movieTitle
+    if movieScore != 0 {
+      self.scoreLabel?.text = "\(movieScore)"
+    }
+    self.setupImage(posterPath: posterPath)
+    
   }
   
 }

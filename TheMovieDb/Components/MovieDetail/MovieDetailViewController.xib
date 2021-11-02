@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MovieDetailViewController" customModule="TheMovieDb" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jwt-Gm-uwM">
+                    <rect key="frame" x="0.0" y="44" width="414" height="378"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Qbd-s4-h1u">
+                            <rect key="frame" x="10" y="48" width="394" height="230"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="230" id="JPj-P8-AtW"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="Qbd-s4-h1u" secondAttribute="trailing" constant="10" id="Fqp-1M-4fZ"/>
+                        <constraint firstItem="Qbd-s4-h1u" firstAttribute="top" secondItem="Jwt-Gm-uwM" secondAttribute="top" constant="48" id="pp1-RZ-JjB"/>
+                        <constraint firstItem="Qbd-s4-h1u" firstAttribute="leading" secondItem="Jwt-Gm-uwM" secondAttribute="leading" constant="10" id="x3A-kl-iBq"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DUI-Dy-Hmt">
+                    <rect key="frame" x="0.0" y="422" width="414" height="440"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="440" id="E3B-4c-8yl"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="DUI-Dy-Hmt" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="2I9-YN-i3X"/>
+                <constraint firstItem="DUI-Dy-Hmt" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="5po-1e-eTj"/>
+                <constraint firstItem="Jwt-Gm-uwM" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="H8X-ok-4ea"/>
+                <constraint firstItem="DUI-Dy-Hmt" firstAttribute="top" secondItem="Jwt-Gm-uwM" secondAttribute="bottom" id="eUn-QN-KTl"/>
+                <constraint firstItem="DUI-Dy-Hmt" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="hIM-Pe-tAZ"/>
+                <constraint firstItem="Jwt-Gm-uwM" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="mTM-95-5Lp"/>
+                <constraint firstItem="Jwt-Gm-uwM" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ocA-sl-leg"/>
+            </constraints>
+            <point key="canvasLocation" x="137.68115942028987" y="53.571428571428569"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

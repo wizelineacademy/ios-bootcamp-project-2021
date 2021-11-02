@@ -9,18 +9,17 @@ import UIKit
 
 final class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
   
-  @IBOutlet weak var tableView: UITableView!
+  @IBOutlet weak var tableView: UITableView?
   
   private var trendingMovies: [Movie] = []
   
   // All categories
-  var circularProgressBarView: CircularProgressBarView!
+  
   var circularViewDuration: TimeInterval = 2
   override func viewDidLoad() {
     super.viewDidLoad()
     configureNavigationController()
     setupTableView()
-    setUpCircularProgressBarView()
   }
   
   lazy private var searchController: SearchBar = {
@@ -30,22 +29,11 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
       return searchController
   }()
   
-  func setUpCircularProgressBarView() {
-    // set view
-    circularProgressBarView = CircularProgressBarView(frame: .zero)
-    // align to the center of the screen
-    circularProgressBarView.center = view.center
-    // call the animation with circularViewDuration
-    circularProgressBarView.progressAnimation(duration: circularViewDuration)
-    // add this view to the view controller
-    view.addSubview(circularProgressBarView)
-  }
-  
   // Navigation controller setup
   func configureNavigationController() {
     guard let navigationBar = self.navigationController?.navigationBar else { return }
     navigationBar.tintColor = .black
-    navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
+//    navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
     navigationBar.prefersLargeTitles = true
     self.title = "Movies"
     navigationItem.searchController = searchController
@@ -53,12 +41,15 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
   
   // TableView Configuration
   func setupTableView() {
-    tableView.dataSource = self
-    tableView.delegate = self
-    self.tableView.separatorStyle = .none
-    self.tableView.showsVerticalScrollIndicator = false
-    self.tableView.showsHorizontalScrollIndicator = false
-    self.tableView.register(CategoryTableViewCell.nib(), forCellReuseIdentifier: CategoryTableViewCell.identifier)
+    if self.tableView != nil {
+      self.tableView?.dataSource = self
+      self.tableView?.delegate = self
+      self.tableView?.separatorStyle = .none
+      self.tableView?.showsVerticalScrollIndicator = false
+      self.tableView?.showsHorizontalScrollIndicator = false
+      self.tableView?.register(CategoryTableViewCell.nib(), forCellReuseIdentifier: CategoryTableViewCell.identifier)
+    }
+    
   }
     
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,8 +57,10 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = self.tableView.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier) as? CategoryTableViewCell
-    cell?.configure(categoryTitle: CategoriesText.allCases[indexPath.row].rawValue, categories: Categories.allCases[indexPath.row])
-    return cell!
+    guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier) as? CategoryTableViewCell else {
+      return CategoryTableViewCell()
+    }
+    cell.configure(categoryTitle: CategoriesText.allCases[indexPath.row].rawValue, categories: Categories.allCases[indexPath.row])
+    return cell
   }
 }

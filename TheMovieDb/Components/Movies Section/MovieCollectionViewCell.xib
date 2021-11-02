@@ -55,9 +55,9 @@
             </constraints>
             <size key="customSize" width="141" height="207"/>
             <connections>
-                <outlet property="movieImage" destination="sMt-pv-TFe" id="fHN-py-esI"/>
-                <outlet property="movieScore" destination="cvh-FX-4Js" id="Mo3-YK-xCc"/>
-                <outlet property="movieTitle" destination="Q8N-Fb-3ko" id="95x-ch-e4r"/>
+                <outlet property="movieImageView" destination="sMt-pv-TFe" id="fHN-py-esI"/>
+                <outlet property="movieLabel" destination="Q8N-Fb-3ko" id="95x-ch-e4r"/>
+                <outlet property="scoreLabel" destination="cvh-FX-4Js" id="Mo3-YK-xCc"/>
             </connections>
             <point key="canvasLocation" x="202.17391304347828" y="133.92857142857142"/>
         </collectionViewCell>

@@ -9,8 +9,8 @@ import UIKit
 
 final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
   
-  @IBOutlet weak var categoryTitle: UILabel!
-  @IBOutlet weak var collectionView: UICollectionView!
+  @IBOutlet weak var categoryLabel: UILabel?
+  @IBOutlet weak var collectionView: UICollectionView?
   
   private var trendingMovies: [Movie] = []
   private var nowPlayingMovies: [Movie] = []
@@ -18,109 +18,26 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
   private var topRatedMovies: [Movie] = []
   private var upcomingMovies: [Movie] = []
   
+  private var movies: [Categories: [Movie]] = [:]
+  
   private var categories: Categories = .trendingMovies
   
   static let identifier = "CategoryTableViewCell"
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     setUpUI()
     setupCollectionView()
     requestAPI()
-    // Initialization code
-//    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//      self.collectionView.reloadData()
-//    }
-  }
-  
-  // Request for trending movies
-  private func requestAPITrending() {
-    let completion: (Result<MovieList, Error>) -> Void = { [weak self] result in
-        debugPrint(result)
-        switch result {
-        case .success(let response):
-          self?.trendingMovies = response.results
-          print(response)
-          self?.collectionView.reloadData()
-          
-        default:
-          self?.trendingMovies = []
-        }
-    }
-    API.getTrendingMovies.resume(completion: completion)
-  }
-  
-  private func requestAPINowPlaying() {
-    let completion: (Result<MovieList, Error>) -> Void = { [weak self] result in
-        debugPrint(result)
-        switch result {
-        case .success(let response):
-          self?.nowPlayingMovies = response.results
-          print(response)
-          self?.collectionView.reloadData()
-          
-        default:
-          self?.nowPlayingMovies = []
-        }
-    }
-    API.getNowPlayingMovies.resume(completion: completion)
-  }
-  
-  private func requestAPIPopular() {
-    let completion: (Result<MovieList, Error>) -> Void = { [weak self] result in
-        debugPrint(result)
-        switch result {
-        case .success(let response):
-          self?.popularMovies = response.results
-          print(response)
-          self?.collectionView.reloadData()
-          
-        default:
-          self?.popularMovies = []
-        }
-    }
-    API.getPopularMovies.resume(completion: completion)
-  }
-  
-  private func requestAPITopRated() {
-    let completion: (Result<MovieList, Error>) -> Void = { [weak self] result in
-        debugPrint(result)
-        switch result {
-        case .success(let response):
-          self?.topRatedMovies = response.results
-          print(response)
-          self?.collectionView.reloadData()
-          
-        default:
-          self?.topRatedMovies = []
-        }
-    }
-    API.getTopRatedMovies.resume(completion: completion)
-  }
-  
-  private func requestAPIUpcoming() {
-    let completion: (Result<MovieList, Error>) -> Void = { [weak self] result in
-        debugPrint(result)
-        switch result {
-        case .success(let response):
-          print("Upcoming \(response)")
-          self?.upcomingMovies = response.results
-          print(response)
-          self?.collectionView.reloadData()
-          
-        default:
-          print("Upcoming not found")
-          self?.upcomingMovies = []
-        }
-    }
-    API.getUpcomingMovies.resume(completion: completion)
   }
   
   private func requestAPI() {
-    requestAPITrending()
-    requestAPIPopular()
-    requestAPIUpcoming()
-    requestAPITopRated()
-    requestAPINowPlaying()
+    Requester().requestAPI { movies in
+      self.movies = movies
+      print("MAIN")
+      print(movies)
+      self.collectionView?.reloadData()
+    }
   }
   
   static func nib() -> UINib {
@@ -128,7 +45,7 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
   }
   
   func configure(categoryTitle: String, categories: Categories) {
-    self.categoryTitle.text = categoryTitle
+    self.categoryLabel?.text = categoryTitle
     self.categories = categories
   }
   
@@ -137,49 +54,54 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
   }
   
   func setUpUI() {
-    categoryTitle.font = UIFont.boldSystemFont(ofSize: 20)
-    categoryTitle.textColor = .black
+    categoryLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+    categoryLabel?.textColor = .label
   }
   
   func setupCollectionView() {
-    collectionView.dataSource = self
-    collectionView.delegate = self
-    collectionView.showsHorizontalScrollIndicator = false
-    collectionView.showsVerticalScrollIndicator = false
-    self.collectionView.register(MovieCollectionViewCell.nib(), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
+    self.collectionView?.dataSource = self
+    self.collectionView?.delegate = self
+    self.collectionView?.showsHorizontalScrollIndicator = false
+    self.collectionView?.showsVerticalScrollIndicator = false
+    self.collectionView?.register(MovieCollectionViewCell.nib(), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
+    self.collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "default")
   }
   
   // Collection View
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = self.collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell
+    
+    guard let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
+      return MovieCollectionViewCell()
+    }
     switch self.categories {
     case .trendingMovies:
-      cell?.configure(movieTitle: trendingMovies[indexPath.row].title, movieScore: trendingMovies[indexPath.row].voteAverage)
+      cell.configure(movieTitle: movies[.trendingMovies]?[indexPath.row].title ?? "", movieScore: movies[.trendingMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.trendingMovies]?[indexPath.row].posterPath ?? "")
+      
     case .nowPlayingMovies:
-      cell?.configure(movieTitle: nowPlayingMovies[indexPath.row].title, movieScore: nowPlayingMovies[indexPath.row].voteAverage)
+      cell.configure(movieTitle: movies[.nowPlayingMovies]?[indexPath.row].title ?? "", movieScore: movies[.nowPlayingMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.nowPlayingMovies]?[indexPath.row].posterPath ?? "")
     case .popularMovies:
-      cell?.configure(movieTitle: popularMovies[indexPath.row].title, movieScore: popularMovies[indexPath.row].voteAverage)
+      cell.configure(movieTitle: movies[.popularMovies]?[indexPath.row].title ?? "", movieScore: movies[.popularMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.popularMovies]?[indexPath.row].posterPath ?? "")
     case .topRatedMovies:
-      cell?.configure(movieTitle: topRatedMovies[indexPath.row].title, movieScore: topRatedMovies[indexPath.row].voteAverage)
+      cell.configure(movieTitle: movies[.topRatedMovies]?[indexPath.row].title ?? "", movieScore: movies[.topRatedMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.topRatedMovies]?[indexPath.row].posterPath ?? "")
     case .upcomingMovies:
-      cell?.configure(movieTitle: upcomingMovies[indexPath.row].title, movieScore: upcomingMovies[indexPath.row].voteAverage)
+      cell.configure(movieTitle: movies[.upcomingMovies]?[indexPath.row].title ?? "", movieScore: movies[.upcomingMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.upcomingMovies]?[indexPath.row].posterPath ?? "")
     }
     
-    return cell!
+    return cell
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     switch self.categories {
     case .trendingMovies:
-      return trendingMovies.count
+      return movies[.trendingMovies]?.count ?? 0
     case .nowPlayingMovies:
-      return nowPlayingMovies.count
+      return movies[.nowPlayingMovies]?.count ?? 0
     case .popularMovies:
-      return popularMovies.count
+      return movies[.popularMovies]?.count ?? 0
     case .topRatedMovies:
-      return topRatedMovies.count
+      return movies[.topRatedMovies]?.count ?? 0
     case .upcomingMovies:
-      return upcomingMovies.count
+      return movies[.upcomingMovies]?.count ?? 0
     }
   }
 }
