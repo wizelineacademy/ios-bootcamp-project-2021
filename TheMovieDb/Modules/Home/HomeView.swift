@@ -17,11 +17,13 @@ final class HomeView: UIViewController {
         case all
     }
     
-    var loadedPages = 0
+    private var loadedPages = 0
     
-    var isLoading = false
+    private var isLoading = false
     
-    var movies = [Movie]()
+    private var movies = [Movie]()
+    
+    private let movieAPI = MovieDBAPI()
     
     override func viewDidLoad() {
         super.viewDidLoad()
