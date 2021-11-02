@@ -9,9 +9,10 @@ import Foundation
 
 struct MovieDBAPI: APIClient {
     
-    private struct APIConstants {
+    struct APIConstants {
         static let baseUrl = "https://api.themoviedb.org/"
         static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
+        static let imageUrl = "https://image.tmdb.org/t/p/w500/"
     }
     
     enum MoviesEndpoints: String {

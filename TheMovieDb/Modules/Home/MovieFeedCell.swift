@@ -16,7 +16,7 @@ final class MoviesFeedCell: UICollectionViewCell {
     
     func updateUI(withMovie movie: Movie) {
         if let posterpath = movie.posterPath,
-           let posterURL = URL(string: "https://image.tmdb.org/t/p/w500/\(posterpath)") {
+           let posterURL = URL(string: MovieDBAPI.APIConstants.imageUrl + posterpath) {
             poster.kf.setImage(with: posterURL)
         }
     }
