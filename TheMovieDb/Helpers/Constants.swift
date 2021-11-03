@@ -8,20 +8,23 @@
 import Foundation
 
 struct Constants {
-    static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
-    static let language = "en-US"
-    static let reviewsTitleBarButton = "Reviews"
+    // MARK: - Storyboard Ids
+    static let viewControllerID = "ListMoviesViewController"
+    static let searchTableViewControllerID = "SearchTableViewController"
+    static let movieInfoViewControllerID = "MovieInfoViewController"
+    static let reviewsViewControllerID = "ReviewsViewController"
+    static let reviewDetailID = "reviewsDetailViewController"
+    static let personDetailViewControllerID = "PersonDetailViewController"
+    
+    // MARK: - Cell
     static let cellIdentifier = "cell"
-    static let reviewDetailStoryboardID = "reviewsDetailID"
-    static let viewControllerStoryboardID = "Detail"
-    static let searchTableViewControllerID = "Search"
-    static let movieInfoViewControllerID = "MovieInfo"
-    static let reviewsViewControllerID = "Reviews"
+    
+    // MARK: - Titles/Messages
+    static let reviewsTitleBarButton = "Reviews"
     static let titleInitialTableView = "Show Movies"
     static let searchBarPlaceholder = "Search for movies or person"
-    static let personDetailViewControllerID = "PersonDetail"
-    static let errorAlertTitle = "Error"
-    static let errorAlertMessage = "Service Failure"
-    static let errorAlertButton = "Dismiss"
+    static let alertButton = "Dismiss"
+    
+    // MARK: - ImageURL
     static let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
 }

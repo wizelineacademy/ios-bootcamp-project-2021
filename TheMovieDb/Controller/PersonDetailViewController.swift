@@ -50,17 +50,8 @@ final class PersonDetailViewController: UIViewController {
             case.success(let person):
                 self.person = person
             case .failure(let failureResult):
-                print(failureResult.localizedDescription)
-                self.showErrorAlert()
+                self.showErrorAlert(failureResult)
             }
-        }
-    }
-    
-    func showErrorAlert() {
-        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
-        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
-        DispatchQueue.main.async {
-            self.present(errorAlert, animated: true)
         }
     }
 

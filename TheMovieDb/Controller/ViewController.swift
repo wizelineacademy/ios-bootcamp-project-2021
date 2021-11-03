@@ -52,24 +52,15 @@ final class ViewController: UIViewController {
             switch response {
             case .success(let sucessResult):
                 guard let results = sucessResult.results else {
-                    self.showErrorAlert()
+                    self.showErrorAlert(.invalidResponse)
                     return
                 }
                 self.resultsMovie = results
                 print(sucessResult.results ?? [])
                 
             case .failure(let failureResult):
-                print(failureResult.localizedDescription)
-                self.showErrorAlert()
+                self.showErrorAlert(failureResult)
             }
-        }
-    }
-    
-    func showErrorAlert() {
-        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
-        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
-        DispatchQueue.main.async {
-            self.present(errorAlert, animated: true)
         }
     }
 }

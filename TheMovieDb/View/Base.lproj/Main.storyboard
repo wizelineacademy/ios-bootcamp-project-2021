@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="Detail" id="BYZ-38-t0r" customClass="ViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ListMoviesViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -52,7 +52,7 @@
         <!--Movie Info View Controller-->
         <scene sceneID="QgJ-3B-gEQ">
             <objects>
-                <viewController storyboardIdentifier="MovieInfo" id="cIW-Ir-9Ff" customClass="MovieInfoViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MovieInfoViewController" id="cIW-Ir-9Ff" customClass="MovieInfoViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="umy-np-bkQ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -63,7 +63,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9U0-ec-kIk">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="9U0-ec-kIk">
                                 <rect key="frame" x="132" y="77.5" width="150" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="Myy-Dl-Ami"/>
@@ -181,7 +181,7 @@
         <!--Person Detail View Controller-->
         <scene sceneID="U3A-sc-XY5">
             <objects>
-                <viewController storyboardIdentifier="PersonDetail" id="urs-cI-jGS" customClass="PersonDetailViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonDetailViewController" id="urs-cI-jGS" customClass="PersonDetailViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dQk-yV-CCo">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -192,7 +192,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GPV-2T-uZz">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GPV-2T-uZz">
                                 <rect key="frame" x="82" y="87.5" width="250" height="250"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="250" id="PiM-di-6dK"/>
@@ -279,7 +279,7 @@
         <!--Reviews View Controller-->
         <scene sceneID="R60-Iz-kC6">
             <objects>
-                <viewController storyboardIdentifier="Reviews" id="aNC-6L-O5G" customClass="ReviewsViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ReviewsViewController" id="aNC-6L-O5G" customClass="ReviewsViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="GTX-IJ-0Uk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -336,7 +336,7 @@
         <!--Reviews Detail View Controller-->
         <scene sceneID="RaE-Ds-yA5">
             <objects>
-                <viewController storyboardIdentifier="reviewsDetailID" id="2O1-Ak-7aS" customClass="ReviewsDetailViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="reviewsDetailViewController" id="2O1-Ak-7aS" customClass="ReviewsDetailViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8r0-mx-pLe">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -409,7 +409,7 @@
         <!--Search Table View Controller-->
         <scene sceneID="XMN-SE-z76">
             <objects>
-                <tableViewController storyboardIdentifier="Search" id="gLD-xe-fms" customClass="SearchTableViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchTableViewController" id="gLD-xe-fms" customClass="SearchTableViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="7FR-RY-in4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

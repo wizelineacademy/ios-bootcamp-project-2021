@@ -9,8 +9,9 @@ import UIKit
 
 extension UIImageView {
     func setImage(path: String?) {
-        
         guard let path = path, let url = URL(string: Constants.imageBaseUrl + path) else {
+            let image = UIImage(named: "ImagePlaceholder")
+            self.image = image
             return
         }
         

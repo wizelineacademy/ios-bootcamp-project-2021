@@ -34,8 +34,7 @@ final class ReviewsViewController: UIViewController  {
                     self.reviewsTableView.reloadData()
                 }
             case .failure(let failureResult):
-                print(failureResult.localizedDescription)
-                self.showErrorAlert()
+                self.showErrorAlert(failureResult)
             }
         }
     }
@@ -61,18 +60,10 @@ extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let viewControllerReviewsDetail = storyboard?.instantiateViewController(identifier: Constants.reviewDetailStoryboardID) as? ReviewsDetailViewController {
+        if let viewControllerReviewsDetail = storyboard?.instantiateViewController(identifier: Constants.reviewDetailID) as? ReviewsDetailViewController {
             let reviewSelected = reviews[indexPath.row]
             viewControllerReviewsDetail.review = reviewSelected
             navigationController?.pushViewController(viewControllerReviewsDetail, animated: true)
-        }
-    }
-    
-    func showErrorAlert() {
-        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
-        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
-        DispatchQueue.main.async {
-            self.present(errorAlert, animated: true)
         }
     }
 }

@@ -42,7 +42,7 @@ final class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let viewControllerMoviesList = storyboard?.instantiateViewController(identifier: Constants.viewControllerStoryboardID) as? ViewController {
+        if let viewControllerMoviesList = storyboard?.instantiateViewController(identifier: Constants.viewControllerID) as? ViewController {
             let category = moviesCategory[indexPath.row]
             viewControllerMoviesList.type = category.type
             viewControllerMoviesList.typeTitle = category.name

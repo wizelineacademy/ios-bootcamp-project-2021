@@ -43,10 +43,31 @@ enum HTTPMethod: String {
     case get, post, put, patch, delete, options, head
 }
 
+struct RequestParams {
+    static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
+    static let language = "en-US"
+}
+
 enum MovieError: Error {
     case invalidUrl
-    case wrongResponse
+    case invalidResponse
+    case wrongResponse(status: Int)
     case unknownError(error: Error)
+    
+    var titleError: String {
+        switch self {
+        case .invalidUrl, .invalidResponse, .wrongResponse, .unknownError: return "Error"
+        }
+    }
+    
+    var messageError: String {
+        switch self {
+        case .invalidUrl: return "Invalid URL"
+        case .invalidResponse: return "Unavailable Response"
+        case .wrongResponse(let status): return "Service failured with status code \(status)"
+        case .unknownError(let error): return "Error \(error.localizedDescription)"
+        }
+    }
 }
 
 protocol MovieService {

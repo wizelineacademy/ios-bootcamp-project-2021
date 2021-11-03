@@ -53,9 +53,8 @@ final class SearchTableViewController: UITableViewController {
                     }
                 }
                 self.searchResult = searchArray
-            case .failure(let error):
-                print(error.localizedDescription)
-                self.showErrorAlert()
+            case .failure(let failureResult):
+                self.showErrorAlert(failureResult)
             }
         }
     }
@@ -121,13 +120,5 @@ extension SearchTableViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchResult.removeAll()
-    }
-    
-    func showErrorAlert() {
-        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
-        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
-        DispatchQueue.main.async {
-            self.present(errorAlert, animated: true)
-        }
     }
 }

@@ -16,8 +16,8 @@ struct MovieFacade: MovieService {
         var components = URLComponents()
         components.path = endpoint.path
         components.queryItems = [
-            .init(name: "api_key", value: Constants.apiKey),
-            .init(name: "language", value: Constants.language)
+            .init(name: "api_key", value: RequestParams.apiKey),
+            .init(name: "language", value: RequestParams.language)
         ]
         
         if let search = search {
@@ -40,8 +40,9 @@ struct MovieFacade: MovieService {
                 return
             }
             
-            if let response = response as? HTTPURLResponse {
-                print("Response HTTP Status code: \(response.statusCode)")
+            guard let response = response as? HTTPURLResponse else {
+                returnResponse(.failure(.invalidResponse))
+                return
             }
             
             if let data = data {
@@ -52,7 +53,7 @@ struct MovieFacade: MovieService {
                     let moviesDecoded = try jsonDecoder.decode(T.self, from: data)
                     returnResponse(.success(moviesDecoded))
                 } catch {
-                    returnResponse(.failure(.wrongResponse))
+                    returnResponse(.failure(.wrongResponse(status: response.statusCode)))
                 }
             }
         }

@@ -110,8 +110,7 @@ final class MovieInfoViewController: UIViewController {
             case.success(let movie):
                 self.movie = movie
             case .failure(let failureResult):
-                print(failureResult.localizedDescription)
-                self.showErrorAlert()
+                self.showErrorAlert(failureResult)
             }
         }
     }
@@ -126,8 +125,7 @@ final class MovieInfoViewController: UIViewController {
                 let movieNames = movies?.compactMap({ $0.title }).prefix(3)
                 self.similarMoviesNames = movieNames?.joined(separator: ", ")
             case .failure(let failureResult):
-                print(failureResult.localizedDescription)
-                self.showErrorAlert()
+                self.showErrorAlert(failureResult)
             }
         }
     }
@@ -142,8 +140,7 @@ final class MovieInfoViewController: UIViewController {
                 let movieNames = movies?.compactMap({ $0.title }).prefix(3)
                 self.recommendedMoviesNames = movieNames?.joined(separator: ", ")
             case .failure(let failureResult):
-                print(failureResult.localizedDescription)
-                self.showErrorAlert()
+                self.showErrorAlert(failureResult)
             }
         }
     }
@@ -161,8 +158,7 @@ final class MovieInfoViewController: UIViewController {
                     self.castInfoLabel.text = "Cast: \(self.castMovie ?? "None")"
                 }
             case .failure(let failureResult):
-                print(failureResult.localizedDescription)
-                self.showErrorAlert()
+                self.showErrorAlert(failureResult)
             }
         }
     }
@@ -172,13 +168,5 @@ final class MovieInfoViewController: UIViewController {
            viewControllerReviews.movieID = movie?.id
            navigationController?.pushViewController(viewControllerReviews, animated: true)
        }
-    }
-    
-    func showErrorAlert() {
-        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
-        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
-        DispatchQueue.main.async {
-            self.present(errorAlert, animated: true)
-        }
     }
 }
