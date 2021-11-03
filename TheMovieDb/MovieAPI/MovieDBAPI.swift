@@ -9,9 +9,10 @@ import Foundation
 
 struct MovieDBAPI: APIClient {
     
-    private struct APIConstants {
+    struct APIConstants {
         static let baseUrl = "https://api.themoviedb.org/"
         static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
+        static let imageUrl = "https://image.tmdb.org/t/p/w500/"
     }
     
     enum MoviesEndpoints: String {
@@ -24,7 +25,7 @@ struct MovieDBAPI: APIClient {
     
     var dispatcher: NetworkDispatcher
     
-    init(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher.instance) {
+    init(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher()) {
         self.dispatcher = dispatcher
     }
         
@@ -62,12 +63,19 @@ struct MovieDBAPI: APIClient {
         ]
         typealias ResponseType = MovieListResponse
         
-        init(on endpoint: MoviesEndpoints, extraQueryParams: [String: String]? = nil) {
+        enum QueryParamsKeys: String {
+            case page
+        }
+        
+        init(on endpoint: MoviesEndpoints, queries: [QueryParamsKeys: String]? = nil) {
             self.path = APIConstants.baseUrl + endpoint.rawValue
-            guard let newQueries = extraQueryParams else {
+            guard let queries = queries else {
                 return
             }
-            queryParams?.merge(newQueries, uniquingKeysWith: { current, _ in current })
+            let finalQueries = queries.reduce(into: [String: String]()) { result, element in
+                result[element.key.rawValue] = element.value
+            }
+            queryParams?.merge(finalQueries, uniquingKeysWith: { current, _ in current })
         }
     }
     

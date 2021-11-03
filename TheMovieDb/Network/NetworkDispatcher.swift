@@ -21,9 +21,11 @@ protocol NetworkDispatcher {
 
 struct URLSessionNetworkDispatcher: NetworkDispatcher {
     
-    static let instance = URLSessionNetworkDispatcher()
+    private let urlSession: URLSession
     
-    private init() {}
+    init(urlSession: URLSession = URLSession.shared) {
+        self.urlSession = urlSession
+    }
     
     func dispatch<RequestType: Request>(
         request: RequestType,
@@ -33,7 +35,7 @@ struct URLSessionNetworkDispatcher: NetworkDispatcher {
             completion(.failure(NetworkError.invalidRequest))
             return
         }
-        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+        urlSession.dataTask(with: urlRequest) { (data, _, error) in
             if let error = error {
                 completion(.failure(error))
                 return
