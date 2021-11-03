@@ -48,30 +48,30 @@ enum HomeSections: CaseIterable {
     var color: UIColor? {
         switch self {
         case .trending:
-            return UIColor(named: "trending-color")
+            return UIColor.trending
         case .nowPlaying:
-            return UIColor(named: "playing-color")
+            return UIColor.nowPlaying
         case .popular:
-            return UIColor(named: "popular-color")
+            return UIColor.popular
         case .topRated:
-            return UIColor(named: "top-rated-color")
+            return UIColor.topRated
         case .upcoming:
-            return UIColor(named: "upcoming-color")
+            return UIColor.upcoming
         }
     }
     
     var image: UIImage? {
         switch self {
         case .trending:
-            return UIImage(named: "trending-topic")
+            return UIImage.trending
         case .nowPlaying:
-            return UIImage(named: "play")
+            return UIImage.nowPlaying
         case .popular:
-            return UIImage(named: "popularity")
+            return UIImage.popular
         case .topRated:
-            return UIImage(named: "stars")
+            return UIImage.topRated
         case .upcoming:
-            return UIImage(named: "online-booking")
+            return UIImage.upcoming
         }
     }
     

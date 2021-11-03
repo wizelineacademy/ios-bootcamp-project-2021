@@ -17,6 +17,7 @@ public enum HTTPMethod: String {
 public protocol Request {
     var base: String { get }
     var endpoint: String { get }
+    var apiKey: String { get }
     var method: HTTPMethod { get }
     var contentType: String { get }
     var query: [String: String]? { get }
@@ -25,6 +26,10 @@ public protocol Request {
 }
 
 extension Request {
+    var apiKey: String {
+        return "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
+    }
+    
     var method: HTTPMethod {
         return .get
     }
@@ -45,7 +50,7 @@ extension Request {
         var components = URLComponents(string: base)
         components?.path = endpoint
         components?.queryItems = query?.map({ (key: String, value: String) in
-            let escapedQuery = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+            let escapedQuery = value
             return URLQueryItem(name: key, value: escapedQuery)
         })
         return components
@@ -64,22 +69,5 @@ extension Request {
     
     var decodingKey: JSONDecoder.KeyDecodingStrategy {
         return .useDefaultKeys
-    }
-}
-
-public protocol PageableModel {
-    var page: Int { get }
-    mutating func nextPage()
-    mutating func clearPages()
-}
-
-public protocol SearchableModel {
-    var search: String { get }
-    mutating func searchText(_ search: String)
-}
-
-extension Encodable {
-    func toData() -> Data? {
-        return try? JSONEncoder().encode(self)
     }
 }

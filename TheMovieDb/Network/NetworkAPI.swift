@@ -15,10 +15,10 @@ final class NetworkAPI {
     
     private init() {}
     
-    func execute<D: Decodable>(request: Request,
+    func execute<D: Decodable>(request: Request?,
                                onSuccess: @escaping (D?) -> Void,
                                onError: @escaping (Error?) -> Void) {
-        guard let requestURL = request.urlEndpoint else {
+        guard let requestURL = request?.urlEndpoint else {
             return
         }
         let task = URLSession.shared.dataTask(with: requestURL) { data, response, error in
@@ -31,7 +31,7 @@ final class NetworkAPI {
                   }
             do {
                 let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = request.decodingKey
+                decoder.keyDecodingStrategy = request?.decodingKey ?? .useDefaultKeys
                 let object = try decoder.decode(D.self, from: data)
                 onSuccess(object)
             } catch let error {

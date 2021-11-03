@@ -8,8 +8,7 @@
 import Foundation
 
 struct TrendingRequest: Request, PageableModel {
-    
-    private(set) var page: Int = 1
+    var page: Int = 1
     
     var base: String {
         return EndpointConstants.baseURL
@@ -21,7 +20,7 @@ struct TrendingRequest: Request, PageableModel {
     
     var query: [String : String]? {
         return [
-            "api_key": "f6cd5c1a9e6c6b965fdcab0fa6ddd38a",
+            "api_key": apiKey,
             "language": "en",
             "region": "US",
             "page": String(page)
@@ -30,13 +29,5 @@ struct TrendingRequest: Request, PageableModel {
     
     var decodingKey: JSONDecoder.KeyDecodingStrategy {
         return .convertFromSnakeCase
-    }
-    
-    mutating func nextPage() {
-        self.page += 1
-    }
-    
-    mutating func clearPages() {
-        self.page = 1
     }
 }
