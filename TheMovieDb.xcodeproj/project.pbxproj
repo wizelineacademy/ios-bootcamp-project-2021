@@ -12,6 +12,8 @@
 		26150DBA27331B5A0028A207 /* Encodable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26150DB927331B590028A207 /* Encodable+Extensions.swift */; };
 		26150DBC27331CA50028A207 /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26150DBB27331CA50028A207 /* Color+Extensions.swift */; };
 		26150DC0273333680028A207 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26150DBF273333680028A207 /* ToastView.swift */; };
+		26150DC227334D3E0028A207 /* SearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26150DC127334D3E0028A207 /* SearchCell.swift */; };
+		26150DC5273351250028A207 /* SearchFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26150DC4273351250028A207 /* SearchFlowLayout.swift */; };
 		2626B2572731B5350059F9D7 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2626B2562731B5350059F9D7 /* SearchViewController.swift */; };
 		262B5A48272D8F2E00887232 /* HomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B5A47272D8F2E00887232 /* HomeViewCell.swift */; };
 		262B5A4B272D907300887232 /* HomeFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B5A4A272D907300887232 /* HomeFlowLayout.swift */; };
@@ -80,6 +82,8 @@
 		26150DB927331B590028A207 /* Encodable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+Extensions.swift"; sourceTree = "<group>"; };
 		26150DBB27331CA50028A207 /* Color+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extensions.swift"; sourceTree = "<group>"; };
 		26150DBF273333680028A207 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		26150DC127334D3E0028A207 /* SearchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCell.swift; sourceTree = "<group>"; };
+		26150DC4273351250028A207 /* SearchFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchFlowLayout.swift; sourceTree = "<group>"; };
 		2626B2562731B5350059F9D7 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		262B5A47272D8F2E00887232 /* HomeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCell.swift; sourceTree = "<group>"; };
 		262B5A4A272D907300887232 /* HomeFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlowLayout.swift; sourceTree = "<group>"; };
@@ -161,9 +165,18 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		26150DC32733510F0028A207 /* FlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				26150DC4273351250028A207 /* SearchFlowLayout.swift */,
+			);
+			path = FlowLayout;
+			sourceTree = "<group>";
+		};
 		2626B2542731B5070059F9D7 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				26150DC32733510F0028A207 /* FlowLayout */,
 				26EAB4202731E9C7001FB7D9 /* Requests */,
 				2626B2552731B51D0059F9D7 /* View */,
 			);
@@ -174,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				2626B2562731B5350059F9D7 /* SearchViewController.swift */,
+				26150DC127334D3E0028A207 /* SearchCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -486,6 +500,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26150DC5273351250028A207 /* SearchFlowLayout.swift in Sources */,
 				837B4EAC258178B6003DFC67 /* HomeViewController.swift in Sources */,
 				262B5A48272D8F2E00887232 /* HomeViewCell.swift in Sources */,
 				26EED578272F5B17005BED5A /* NetworkModel.swift in Sources */,
@@ -503,6 +518,7 @@
 				2626B2572731B5350059F9D7 /* SearchViewController.swift in Sources */,
 				262B5A4B272D907300887232 /* HomeFlowLayout.swift in Sources */,
 				26150DC0273333680028A207 /* ToastView.swift in Sources */,
+				26150DC227334D3E0028A207 /* SearchCell.swift in Sources */,
 				26D22354272EF3620009A395 /* RatedView.swift in Sources */,
 				26D2234D272E15700009A395 /* ListSectionFlowLayout.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,

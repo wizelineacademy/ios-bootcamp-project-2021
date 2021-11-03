@@ -22,7 +22,7 @@ final class SearchViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionView.collectionViewLayout = ListSectionFlowLayout()
+        collectionView.collectionViewLayout = SearchFlowLayout()
         navigationItem.title = "Search"
         navigationItem.searchController = searchController
         navigationController?.navigationBar.prefersLargeTitles = true
@@ -30,8 +30,8 @@ final class SearchViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: ListSectionCell.identifier,
-                                     for: indexPath) as? ListSectionCell else {
+                .dequeueReusableCell(withReuseIdentifier: SearchCell.cellIdentifier,
+                                     for: indexPath) as? SearchCell else {
                     return UICollectionViewCell()
                 }
         let movie = items[indexPath.row]
@@ -44,7 +44,7 @@ final class SearchViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? ListSectionCell {
+        if let cell = cell as? SearchCell {
             let movie = items[indexPath.row]
             cell.movie = movie
         }
