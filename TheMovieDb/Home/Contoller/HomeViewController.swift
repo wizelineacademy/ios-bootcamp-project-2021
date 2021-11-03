@@ -34,8 +34,7 @@ final class HomeViewController: UICollectionViewController {
 
     }
     // MARK: - API
-    private func reloadCollectionView() {//(groupSection: GroupSections) {
-      //  let indexSet = IndexSet(integer: groupSection.rawValue)
+    private func reloadCollectionView() {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -60,7 +59,6 @@ final class HomeViewController: UICollectionViewController {
                 debugPrint(error)
             case .success(let res):
                 self.popularMovies = res.movies
-                //self.reloadCollectionView(groupSection: .popular)
             }
             self.group.leave()
         })
@@ -74,7 +72,6 @@ final class HomeViewController: UICollectionViewController {
                 debugPrint(error)
             case .success(let res):
                 self.topRatedMovies = res.movies
-               // self.reloadCollectionView(groupSection: .topRated)
             }
             self.group.leave()
         })
@@ -88,7 +85,6 @@ final class HomeViewController: UICollectionViewController {
                 debugPrint(error)
             case .success(let res):
                 self.playingNowMovies = res.movies
-               // self.reloadCollectionView(groupSection: .playingNow)
             }
             self.group.leave()
         })
@@ -102,7 +98,6 @@ final class HomeViewController: UICollectionViewController {
                 debugPrint(error)
             case .success(let res):
                 self.upComingMovies =  res.movies
-              //  self.reloadCollectionView(groupSection: .upcoming)
             }
             self.group.leave()
         })
@@ -116,7 +111,6 @@ final class HomeViewController: UICollectionViewController {
                  debugPrint(error)
              case .success(let res):
                  self.trendingMovies = res.movies
-                 //self.reloadCollectionView(groupSection: .trending)
              }
              self.group.leave()
          })
