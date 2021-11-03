@@ -18,38 +18,37 @@ class MovieCollectionViewCell: UICollectionViewCell {
   }
   
   static let identifier = "movieCollectionViewCell"
+  // base url provided for the api for downloading images
   var baseUrlImage = "https://image.tmdb.org/t/p/w500/"
-  
-  @IBOutlet var posterImage: UIImageView!
-  @IBOutlet var movieTitle: UILabel!
-  @IBOutlet var releaseDate: UILabel!
-  
+  // UI var conections with the nib
+  @IBOutlet private weak var posterImage: UIImageView!
+  @IBOutlet private weak var movieTitle: UILabel!
+  @IBOutlet private weak var releaseDate: UILabel!
+ 
   override func awakeFromNib() {
     super.awakeFromNib()
   }
-  
+  // setup UI
   func setupView() {
-    backgroundColor = .white
-    layer.borderColor = UIColor.lightGray.cgColor
-    layer.borderWidth = 0.2
+    
+    backgroundColor = DesignColor.whiteDirt.color
     layer.cornerRadius = 20
     clipsToBounds = true
+    
     guard let title = movie?.title, let releaseDate = movie?.releaseDate, let posterPath = movie?.poster else { return }
     let date = releaseDate.components(separatedBy: "-")
-    
+    let month = SetMonth.Jan
+    // set info title
     self.movieTitle.text = title
-    self.releaseDate.text = setMonth(date: date)
+    self.movieTitle.textColor = DesignColor.darkGray.color
+    // set info release date
+    self.releaseDate.text = month.setMonth(date: date)
+    self.releaseDate.textColor = DesignColor.gray.color
+    // set image with url and kingFisher
     let url = URL(string: "\(baseUrlImage)\(posterPath)")
     let imageProvider = ImageResource(downloadURL: url!)
     self.posterImage.kf.setImage(with: imageProvider)
     
-  }
-  
-  func setMonth(date: [String]) -> String {
-    let suffix = (date[1].prefix(1) != "0") ? 2 : 1
-    let month = String(date[1].suffix(suffix))
-    guard let newMonth = SetMonth(rawValue: Int(month)!) else { return "no month" }
-    return "\(newMonth.month) \(date[2]), \(date[0])"
   }
    
   static func nib() -> UINib {
@@ -57,5 +56,3 @@ class MovieCollectionViewCell: UICollectionViewCell {
   }
   
 }
-
-

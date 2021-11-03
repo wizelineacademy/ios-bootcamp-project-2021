@@ -13,19 +13,15 @@ class FeedViewController: UICollectionViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    setupNavigationController()
     setupCollectionView()
     getData()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    setupNavigationController()
   }
   
   func setupCollectionView() {
     
     collectionView.register(MovieCollectionViewCell.nib(), forCellWithReuseIdentifier: MovieCollectionViewCell.identifier)
-    collectionView.backgroundColor = .init(white: 0.1, alpha: 0.8)
+    collectionView.backgroundColor = DesignColor.black.color
     collectionView.delegate = self
     collectionView.dataSource = self
     let layout = UICollectionViewFlowLayout()
@@ -35,14 +31,15 @@ class FeedViewController: UICollectionViewController {
   
   func setupNavigationController() {
     self.title = "Popular"
-    navigationController?.navigationBar.prefersLargeTitles = true
-    
+    navigationController?.navigationBar.isTranslucent = false
+    let backBarButtonItem = UIBarButtonItem(title: "", style: .done, target: nil, action: nil)
+    navigationItem.backBarButtonItem = backBarButtonItem
     let appearance = UINavigationBarAppearance()
-    appearance.backgroundColor = .black
-    appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-    appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+    appearance.backgroundColor = DesignColor.black.color
+    appearance.titleTextAttributes = [.foregroundColor: DesignColor.white.color]
+    appearance.largeTitleTextAttributes = [.foregroundColor: DesignColor.white.color]
     
-    navigationController?.navigationBar.tintColor = .white
+    navigationController?.navigationBar.tintColor = DesignColor.white.color
     navigationController?.navigationBar.standardAppearance = appearance
     navigationController?.navigationBar.compactAppearance = appearance
     navigationController?.navigationBar.scrollEdgeAppearance = appearance
@@ -52,6 +49,7 @@ class FeedViewController: UICollectionViewController {
     self.collectionView.reloadData()
   }
   
+  // get data from the network to fill the feed
   func getData() {
     MovieDBClient.shared.getData(from: MovieFeed.popular, movieRegion: .US, movieLanguage: .en) { [weak self] (result: Result<MovieFeedResult?, ApiError>) in
       switch result {
@@ -65,15 +63,39 @@ class FeedViewController: UICollectionViewController {
     }
   }
   
+  func getDetailMovie(movieId: Int) {
+    MovieDBClient.shared.getData(from: InfoById.movieDetails(movieId: movieId), movieRegion: .US, movieLanguage: .en) { [weak self] (result: Result<MovieDetails?, ApiError>) in
+      switch result {
+      case .success(let movieDetails):
+        guard let movieResults = movieDetails else { return }
+        self?.showDetailMovie(movieDetails: movieResults)
+      case .failure(let error):
+        print("the error \(error)")
+      }
+    }
+  }
+  
+  func showDetailMovie(movieDetails: MovieDetails) {
+    if let detailView = storyboard?.instantiateViewController(withIdentifier: "DetailView") as? DetailViewController {
+      detailView.movie = movieDetails
+      navigationController?.pushViewController(detailView, animated: true)
+    }
+  }
+  
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return arrayMovies.count
   }
   
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
+    
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {return MovieCollectionViewCell()}
     cell.movie = arrayMovies[indexPath.item]
     return cell
+  }
+  
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let movie = arrayMovies[indexPath.item]
+    self.getDetailMovie(movieId: movie.id)
   }
   
 }

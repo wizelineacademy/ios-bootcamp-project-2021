@@ -14,6 +14,7 @@ enum InfoById {
   case similar(movieId: Int)
   case recommendations(movieId: Int)
   case keywords(movieId: Int)
+  case movieDetails(movieId: Int)
 }
 
 extension InfoById: Endpoint {
@@ -26,6 +27,7 @@ extension InfoById: Endpoint {
     case .reviews(let movieId): return "/3/movie/\(movieId)/reviews"
     case .similar(let movieId): return "/3/movie/\(movieId)/similar"
     case .keywords(let movieId): return "/3/movie/\(movieId)/keywords"
+    case .movieDetails(let movieId): return "/3/movie/\(movieId)"
     }
   }
 }
