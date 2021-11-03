@@ -7,6 +7,29 @@
 
 import Foundation
 
+public enum NetworkError: Error {
+    case requestFailed
+    case jsonConversionFailed
+    case invalidData
+    case noResponse
+    case jsonParsingFailed
+    
+    var localizedDescription: String {
+        switch self {
+        case .requestFailed:
+            return "Request call failed."
+        case .jsonConversionFailed:
+            return "JSON conversion failed."
+        case .invalidData:
+            return "Data is not valid."
+        case .noResponse:
+            return "Service response failed."
+        case .jsonParsingFailed:
+            return "JSON parsing failed"
+        }
+    }
+}
+
 public enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
@@ -63,6 +86,7 @@ extension Request {
         }
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
+        request.timeoutInterval = 15
         request.httpBody = params?.toData()
         return request
     }

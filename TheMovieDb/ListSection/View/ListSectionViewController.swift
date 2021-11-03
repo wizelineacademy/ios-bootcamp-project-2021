@@ -84,7 +84,6 @@ final class ListSectionViewController: UICollectionViewController {
                 self?.isPaginationEnabled = false
                 self?.items.append(contentsOf: response?.results ?? [])
                 DispatchQueue.main.async {
-                    Toast.showToast(title: "show toas message")
                     self?.refreshControl.endRefreshing()
                     self?.collectionView.reloadData()
                 }
@@ -92,7 +91,12 @@ final class ListSectionViewController: UICollectionViewController {
                 self?.isPaginationEnabled = false
                 DispatchQueue.main.async {
                     self?.refreshControl.endRefreshing()
-                    
+                }
+                guard let error = error as? NetworkError else {
+                    return
+                }
+                DispatchQueue.main.async {
+                    Toast.showToast(title: error.localizedDescription)
                 }
         })
     }

@@ -19,6 +19,7 @@ final class NetworkAPI {
                                onSuccess: @escaping (D?) -> Void,
                                onError: @escaping (Error?) -> Void) {
         guard let requestURL = request?.urlEndpoint else {
+            onError(NetworkError.invalidData)
             return
         }
         let task = URLSession.shared.dataTask(with: requestURL) { data, response, error in
@@ -26,7 +27,7 @@ final class NetworkAPI {
                   let response = response as? HTTPURLResponse,
                   200 ..< 300 ~= response.statusCode,
                   error == nil else {
-                      onError(error)
+                      onError(NetworkError.requestFailed)
                       return
                   }
             do {
@@ -34,8 +35,10 @@ final class NetworkAPI {
                 decoder.keyDecodingStrategy = request?.decodingKey ?? .useDefaultKeys
                 let object = try decoder.decode(D.self, from: data)
                 onSuccess(object)
-            } catch let error {
-                onError(error)
+                return
+            } catch {
+                onError(NetworkError.jsonParsingFailed)
+                return
             }
         }
         task.resume()
