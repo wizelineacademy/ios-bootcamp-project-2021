@@ -7,6 +7,18 @@
 
 import Foundation
 
+private extension FeedTypes {
+    var endpoint: MovieDBAPI.MoviesEndpoints {
+        switch self {
+        case .trending: return .trending
+        case .nowPlaying: return .nowPlaying
+        case .popular: return .popular
+        case .topRated: return .topRated
+        case .upcoming: return .upcoming
+        }
+    }
+}
+
 struct MovieDBAPI: APIClient {
     
     struct APIConstants {
@@ -67,8 +79,8 @@ struct MovieDBAPI: APIClient {
             case page
         }
         
-        init(on endpoint: MoviesEndpoints, queries: [QueryParamsKeys: String]? = nil) {
-            self.path = APIConstants.baseUrl + endpoint.rawValue
+        init(on feed: FeedTypes, queries: [QueryParamsKeys: String]? = nil) {
+            self.path = APIConstants.baseUrl + feed.endpoint.rawValue
             guard let queries = queries else {
                 return
             }
