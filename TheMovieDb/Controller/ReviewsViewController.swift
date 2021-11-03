@@ -7,42 +7,20 @@
 
 import UIKit
 
-class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class ReviewsViewController: UIViewController  {
     
     var movieID: Int?
     var movie: Movie?
     var reviews: [ReviewsDetails] = []
-    var reviewsIdentifier = "cell"
+    
 
     @IBOutlet weak var reviewsTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        reviewsTableView.register(UITableViewCell.self, forCellReuseIdentifier: reviewsIdentifier)
-        
-        reviewsTableView.delegate = self
-        reviewsTableView.dataSource = self
-        
+    
+        configureTableView()
         reviewsMovie()
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reviews.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (self.reviewsTableView.dequeueReusableCell(withIdentifier: reviewsIdentifier) as UITableViewCell?)!
-        cell.textLabel?.text = reviews[indexPath.row].content
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let vc = storyboard?.instantiateViewController(identifier: "ReviewsDetail") as? ReviewsDetailViewController {
-            let reviewSelected = reviews[indexPath.row]
-            vc.review = reviewSelected
-            navigationController?.pushViewController(vc, animated: true)
-        }
     }
     
     func reviewsMovie() {
@@ -57,7 +35,44 @@ class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewD
                 }
             case .failure(let failureResult):
                 print(failureResult.localizedDescription)
+                self.showErrorAlert()
             }
+        }
+    }
+    
+    func configureTableView() {
+        reviewsTableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
+        reviewsTableView.delegate = self
+        reviewsTableView.dataSource = self
+    }
+    
+}
+
+extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return reviews.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = (self.reviewsTableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as UITableViewCell?)!
+        cell.textLabel?.text = reviews[indexPath.row].content
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let viewControllerReviewsDetail = storyboard?.instantiateViewController(identifier: Constants.reviewDetailStoryboardID) as? ReviewsDetailViewController {
+            let reviewSelected = reviews[indexPath.row]
+            viewControllerReviewsDetail.review = reviewSelected
+            navigationController?.pushViewController(viewControllerReviewsDetail, animated: true)
+        }
+    }
+    
+    func showErrorAlert() {
+        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
+        DispatchQueue.main.async {
+            self.present(errorAlert, animated: true)
         }
     }
 }

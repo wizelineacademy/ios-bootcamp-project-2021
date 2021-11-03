@@ -7,48 +7,55 @@
 
 import UIKit
 
-class SearchTableViewController: UITableViewController {
+final class SearchTableViewController: UITableViewController {
 
-    var searchResult: [SearchObject] = []
-    let searchController = UISearchController(searchResultsController: nil)
-    var isSearchBarEmpty: Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
+    var searchResult: [SearchObject] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
-
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupSearchController()
+        setupNavigation()
+    }
+    
+    func setupSearchController() {
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search for movies or person"
+        searchController.searchBar.placeholder = Constants.searchBarPlaceholder
+    }
+    
+    func setupNavigation() {
         navigationItem.hidesSearchBarWhenScrolling = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     func searchObjects(with text: String) {
         MovieFacade.get(search: text, endpoint: .search) { [weak self] (response: Result<MovieResponse<SearchObject>, MovieError>) in
             guard let self = self else { return }
-            
+
             switch response {
             case .success(let movieResponse):
                 guard let resultObject = movieResponse.results else { return }
+                var searchArray: [SearchObject] = []
                 for object in resultObject {
                     if object.mediaType != "tv" {
-                        self.searchResult.append(object)
+                        searchArray.append(object)
                     }
                 }
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-                
+                self.searchResult = searchArray
             case .failure(let error):
                 print(error.localizedDescription)
-                
+                self.showErrorAlert()
             }
         }
     }
@@ -58,7 +65,7 @@ class SearchTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellSearch", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
         let row = searchResult[indexPath.row]
         if let mediaType = row.mediaType, let type = MediaType(rawValue: mediaType) {
             cell.detailTextLabel?.text = mediaType
@@ -76,23 +83,30 @@ class SearchTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let searchObjectSelected = searchResult[indexPath.row]
+        guard let idSelected = searchObjectSelected.id else { return }
         if let mediaType = searchObjectSelected.mediaType, let type = MediaType(rawValue: mediaType) {
             switch type {
             case .person:
-                if let vcPersonSelected = storyboard?.instantiateViewController(withIdentifier: "PersonDetail") as? PersonDetailViewController {
-                    guard let idSelected = searchObjectSelected.id else { return }
-                    vcPersonSelected.personID = idSelected
-                    navigationController?.pushViewController(vcPersonSelected, animated: true)
-                }
+                navigationPersonDetailViewController(id: idSelected)
             case .movie:
-            if let vcMovieSelected = storyboard?.instantiateViewController(identifier: "MovieInfo") as? MovieInfoViewController {
-                guard let idSelected = searchObjectSelected.id else { return }
-                vcMovieSelected.movieID = idSelected
-                navigationController?.pushViewController(vcMovieSelected, animated: true)
-            }
+                navigationPersonDetailViewController(id: idSelected)
             case .tv:
                 return
             }
+        }
+    }
+    
+    func navigationPersonDetailViewController(id: Int) {
+        if let PersonDetailViewController = storyboard?.instantiateViewController(withIdentifier: Constants.personDetailViewControllerID) as? PersonDetailViewController {
+            PersonDetailViewController.personID = id
+            navigationController?.pushViewController(PersonDetailViewController, animated: true)
+        }
+    }
+    
+    func navigationMovieInfoViewController(id: Int) {
+        if let MovieInfoViewController = storyboard?.instantiateViewController(withIdentifier: Constants.movieInfoViewControllerID) as? MovieInfoViewController {
+            MovieInfoViewController.movieID = id
+            navigationController?.pushViewController(MovieInfoViewController, animated: true)
         }
     }
 }
@@ -107,9 +121,13 @@ extension SearchTableViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchResult.removeAll()
-        
+    }
+    
+    func showErrorAlert() {
+        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.present(errorAlert, animated: true)
         }
     }
 }

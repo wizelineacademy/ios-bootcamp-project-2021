@@ -7,9 +7,15 @@
 
 import UIKit
 
-class PersonDetailViewController: UIViewController {
+final class PersonDetailViewController: UIViewController {
     
-    var person: Person?
+    var person: Person? {
+        didSet {
+            DispatchQueue.main.async {
+                self.setupUI()
+            }
+        }
+    }
     var personID: Int?
     
     @IBOutlet weak var personName: UILabel!
@@ -30,9 +36,8 @@ class PersonDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationController?.navigationBar.prefersLargeTitles = false
         
+        configureUIDetailPerson()
         detailPersonID()
         
     }
@@ -44,20 +49,33 @@ class PersonDetailViewController: UIViewController {
             switch response {
             case.success(let person):
                 self.person = person
-                DispatchQueue.main.async {
-                    self.personName.text = person.name
-                    self.imagePerson.setImage(path: person.profilePath)
-                    self.idLabel.text = "ID: \(person.id ?? 0)"
-                    self.popularityLabel.text = "Popularity: \(person.popularity ?? 0.0)"
-                    self.knownForDepartmentLabel.text = "Known for Department: \(person.knownForDepartment ?? "Unavailable")"
-                    self.textPerson.text = "Biography: \(person.biography ?? "Unavailable")"
-                    self.birthdayLabel.text = "Birthday: \(person.birthday ?? "Unavailable")"
-                    self.deathdayLabel.text = "Deathday: \(person.deathday ?? "Alive")"
-                }
             case .failure(let failureResult):
                 print(failureResult.localizedDescription)
+                self.showErrorAlert()
             }
         }
     }
+    
+    func showErrorAlert() {
+        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
+        DispatchQueue.main.async {
+            self.present(errorAlert, animated: true)
+        }
+    }
 
+    func configureUIDetailPerson() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+    
+    func setupUI() {
+        personName.text = person?.name
+        imagePerson.setImage(path: person?.profilePath)
+        idLabel.text = "ID: \(person?.id ?? 0)"
+        popularityLabel.text = "Popularity: \(person?.popularity ?? 0.0)"
+        knownForDepartmentLabel.text = "Known for Department: \(person?.knownForDepartment ?? "Unavailable")"
+        textPerson.text = "Biography: \(person?.biography ?? "Unavailable")"
+        birthdayLabel.text = "Birthday: \(person?.birthday ?? "Unavailable")"
+        deathdayLabel.text = "Deathday: \(person?.deathday ?? "Alive")"
+    }
 }

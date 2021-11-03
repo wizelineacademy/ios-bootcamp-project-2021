@@ -7,19 +7,17 @@
 
 import Foundation
 
-struct MovieFacade: MovieService, QueryParams {
+struct MovieFacade: MovieService {
     
     static let baseURL = URL(string:"https://api.themoviedb.org/3/")!
-    static var apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
-    static var language = "en-US"
     
     static func get<T: Decodable>(search: String? = nil, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) {
 
         var components = URLComponents()
         components.path = endpoint.path
         components.queryItems = [
-            .init(name: "api_key", value: apiKey),
-            .init(name: "language", value: language)
+            .init(name: "api_key", value: Constants.apiKey),
+            .init(name: "language", value: Constants.language)
         ]
         
         if let search = search {

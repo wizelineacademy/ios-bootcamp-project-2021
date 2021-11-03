@@ -9,8 +9,8 @@ import UIKit
 
 extension UIImageView {
     func setImage(path: String?) {
-        let imageBaseUrl = "https://image.tmdb.org/t/p/w500"
-        guard let path = path, let url = URL(string: imageBaseUrl + path) else {
+        
+        guard let path = path, let url = URL(string: Constants.imageBaseUrl + path) else {
             return
         }
         

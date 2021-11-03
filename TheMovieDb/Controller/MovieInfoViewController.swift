@@ -8,12 +8,31 @@
 import UIKit
 import Kingfisher
 
-class MovieInfoViewController: UIViewController {
+final class MovieInfoViewController: UIViewController {
     
-    var movie: Movie?
     var movieID: Int?
-    var similarMoviesNames: String?
-    var recommendedMoviesNames: String?
+    var movie: Movie? {
+        didSet {
+            DispatchQueue.main.async {
+                self.setupMovieInfoUI()
+            }
+        }
+    }
+    
+    var similarMoviesNames: String? {
+        didSet {
+            DispatchQueue.main.async {
+                self.similarMoviesLabel.text = "Similar movies: \(self.similarMoviesNames ?? "None")"
+            }
+        }
+    }
+    var recommendedMoviesNames: String? {
+        didSet {
+            DispatchQueue.main.async {
+                self.recommendationsLabel.text = "Recommendations: \(self.recommendedMoviesNames ?? "None")"
+            }
+        }
+    }
     var castMovie: String?
     
     @IBOutlet weak var titleMovie: UILabel!
@@ -44,22 +63,34 @@ class MovieInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationController?.navigationBar.prefersLargeTitles = false
-        
-        if let _ = movieID {
-            detailMovieID()
-        } else if let movie = movie {
-            movieID = movie.id
-            detailMovie()
-        }
-        
+        setupNavigationBar()
+        setupMovie()
         similarMovies()
         recomendedMovies()
         castFromMovie()
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Reviews", style: .plain, target: self, action: #selector(reviewsDisplay))
+        
     }
     
-    func detailMovie() {
+    override func viewWillAppear(_ animated: Bool) {
+        setupNavigationBar()
+    }
+    
+    func setupNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = false
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.reviewsTitleBarButton, style: .plain, target: self, action: #selector(reviewsDisplay))
+    }
+    
+    func setupMovie() {
+        if let _ = movieID {
+            getMovieDetail()
+        } else if let movie = movie {
+            movieID = movie.id
+            setupMovieInfoUI()
+        }
+    }
+    
+    func setupMovieInfoUI() {
         titleMovie.text = movie?.title
         imageMovie.setImage(path: movie?.posterPath)
         textOverview.text = "Overview: \(movie?.overview ?? "Unavailable")"
@@ -71,18 +102,16 @@ class MovieInfoViewController: UIViewController {
         releaseDateMovie.text = "Release Date: \(movie?.releaseDate ?? "Unavailable")"
     }
     
-    func detailMovieID() {
+    func getMovieDetail() {
         guard let id = movieID else { return }
         MovieFacade.get(endpoint: .movieDetails(id: id)) { [weak self] (response: Result<Movie, MovieError>) in
             guard let self = self else { return }
             switch response {
             case.success(let movie):
                 self.movie = movie
-                DispatchQueue.main.async {
-                    self.detailMovie()
-                }
             case .failure(let failureResult):
                 print(failureResult.localizedDescription)
+                self.showErrorAlert()
             }
         }
     }
@@ -96,11 +125,9 @@ class MovieInfoViewController: UIViewController {
                 let movies = movieResponse.results
                 let movieNames = movies?.compactMap({ $0.title }).prefix(3)
                 self.similarMoviesNames = movieNames?.joined(separator: ", ")
-                DispatchQueue.main.async {
-                    self.similarMoviesLabel.text = "Similar movies: \(self.similarMoviesNames ?? "None")"
-                }
             case .failure(let failureResult):
                 print(failureResult.localizedDescription)
+                self.showErrorAlert()
             }
         }
     }
@@ -114,11 +141,9 @@ class MovieInfoViewController: UIViewController {
                 let movies = movieResponse.results
                 let movieNames = movies?.compactMap({ $0.title }).prefix(3)
                 self.recommendedMoviesNames = movieNames?.joined(separator: ", ")
-                DispatchQueue.main.async {
-                    self.recommendationsLabel.text = "Recommendations: \(self.recommendedMoviesNames ?? "None")"
-                }
             case .failure(let failureResult):
                 print(failureResult.localizedDescription)
+                self.showErrorAlert()
             }
         }
     }
@@ -137,14 +162,23 @@ class MovieInfoViewController: UIViewController {
                 }
             case .failure(let failureResult):
                 print(failureResult.localizedDescription)
+                self.showErrorAlert()
             }
         }
     }
     
    @objc func reviewsDisplay() {
-       if let vc = storyboard?.instantiateViewController(identifier: "Reviews") as? ReviewsViewController {
-           vc.movieID = movie?.id
-           navigationController?.pushViewController(vc, animated: true)
+       if let viewControllerReviews = storyboard?.instantiateViewController(identifier: Constants.reviewsViewControllerID) as? ReviewsViewController {
+           viewControllerReviews.movieID = movie?.id
+           navigationController?.pushViewController(viewControllerReviews, animated: true)
        }
+    }
+    
+    func showErrorAlert() {
+        let errorAlert = UIAlertController(title: Constants.errorAlertTitle, message: Constants.errorAlertMessage, preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: Constants.errorAlertButton, style: .default))
+        DispatchQueue.main.async {
+            self.present(errorAlert, animated: true)
+        }
     }
 }

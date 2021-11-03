@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReviewsDetailViewController: UIViewController {
+final class ReviewsDetailViewController: UIViewController {
 
     @IBOutlet weak var reviewCompletedText: UITextView!
     
@@ -18,6 +18,10 @@ class ReviewsDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupUI()
+    }
+    
+    func setupUI() {
         reviewCompletedText.text = review?.content
         authorLabel.text = "Author: \(review?.author ?? "Unavailable")"
     }

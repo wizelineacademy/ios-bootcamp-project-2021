@@ -39,11 +39,6 @@ enum MovieListEndpoint {
     }
 }
 
-protocol QueryParams {
-    static var apiKey: String { get set }
-    static var language: String { get set }
-}
-
 enum HTTPMethod: String {
     case get, post, put, patch, delete, options, head
 }
