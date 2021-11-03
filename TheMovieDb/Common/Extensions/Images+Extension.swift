@@ -32,4 +32,8 @@ extension UIImage {
     static var posterPlaceholder: UIImage? {
         return UIImage(named: "poster-placeholder")
     }
+    
+    static var warning: UIImage? {
+        return UIImage(named: "warning")
+    }
 }
