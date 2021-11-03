@@ -9,7 +9,6 @@ import UIKit
 
 final class ListSectionViewController: UICollectionViewController {
     
-    private(set) var page: Int = 1
     static let segueIdentifier: String = "go-to-list-section"
     private var isPaginationEnabled: Bool = true
     private var request: (Request & PageableModel)?

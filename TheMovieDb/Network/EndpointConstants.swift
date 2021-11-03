@@ -31,4 +31,8 @@ enum EndpointConstants {
     static var upcoming: String {
         return "/3/movie/upcoming"
     }
+    
+    static var search: String {
+        return "/3/search/movie"
+    }
 }
