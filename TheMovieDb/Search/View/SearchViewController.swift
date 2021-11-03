@@ -55,7 +55,7 @@ final class SearchViewController: UICollectionViewController {
                 actualPage <= totalOfPages else { return }
         NetworkAPI
             .shared
-            .execute(request: request!,
+            .execute(request: request,
                      onSuccess: { [weak self] (data: PageModel?) in
                 self?.isPaginationEnabled = false
                 self?.totalOfPages = data?.totalPages ?? 0

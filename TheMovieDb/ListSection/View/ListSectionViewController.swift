@@ -28,7 +28,6 @@ final class ListSectionViewController: UICollectionViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        request?.clearPages()
         navigationItem.title = section?.title
         collectionView.refreshControl = refreshControl
         collectionView.collectionViewLayout = ListSectionFlowLayout()
@@ -62,7 +61,6 @@ final class ListSectionViewController: UICollectionViewController {
             (collectionView.contentSize.height - collectionView.bounds.size.height) {
             if !isPaginationEnabled {
                 isPaginationEnabled = true
-                request?.nextPage()
                 callService()
             }
         }
@@ -80,8 +78,9 @@ final class ListSectionViewController: UICollectionViewController {
     private func callService() {
         NetworkAPI
             .shared
-            .execute(request: self.request!,
+            .execute(request: self.request,
                      onSuccess: { [weak self] (response: PageModel?) in
+                self?.request?.nextPage()
                 self?.isPaginationEnabled = false
                 self?.items.append(contentsOf: response?.results ?? [])
                 DispatchQueue.main.async {
@@ -92,8 +91,8 @@ final class ListSectionViewController: UICollectionViewController {
                 self?.isPaginationEnabled = false
                 DispatchQueue.main.async {
                     self?.refreshControl.endRefreshing()
+                    
                 }
-                print("error in response")
         })
     }
 }
