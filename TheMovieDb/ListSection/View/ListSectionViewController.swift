@@ -11,12 +11,9 @@ final class ListSectionViewController: UICollectionViewController {
     
     static let segueIdentifier: String = "go-to-list-section"
     private var isPaginationEnabled: Bool = true
+    
+    private let navigationTitle: String
     private var request: (Request & PageableModel)?
-    var section: HomeSections? {
-        didSet {
-            request = section?.request
-        }
-    }
     
     private var items: [MovieModel] = []
     
@@ -25,10 +22,20 @@ final class ListSectionViewController: UICollectionViewController {
         refresh.addTarget(self, action: #selector(clearList), for: .valueChanged)
         return refresh
     }()
-
+    
+    init?(title: String, request: (Request & PageableModel)?, coder: NSCoder) {
+        self.navigationTitle = title
+        self.request = request
+        super.init(coder: coder)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = section?.title
+        navigationItem.title = navigationTitle
         collectionView.refreshControl = refreshControl
         collectionView.collectionViewLayout = ListSectionFlowLayout()
         callService()

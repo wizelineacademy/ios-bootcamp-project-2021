@@ -32,7 +32,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
                                 <connections>
-                                    <segue destination="wlh-9e-71D" kind="show" identifier="go-to-list-section" id="lPk-uw-ipo"/>
+                                    <segue destination="wlh-9e-71D" kind="show" identifier="go-to-list-section" destinationCreationSelector="goToListSectionActionSegue:sender:" id="lPk-uw-ipo"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
