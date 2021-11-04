@@ -29,4 +29,12 @@ extension UIColor {
     static var upcoming: UIColor? {
         return UIColor(named: "upcoming-color")
     }
+    
+    static var ratingFilled: UIColor? {
+        return UIColor(named: "rating-filled")
+    }
+    
+    static var ratingNotFilled: UIColor? {
+        return UIColor(named: "rating-filled")?.withAlphaComponent(0.25)
+    }
 }

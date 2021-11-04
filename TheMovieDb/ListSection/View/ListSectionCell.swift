@@ -48,7 +48,10 @@ final class ListSectionCell: UICollectionViewCell {
     }()
     
     private lazy var rating: RatedView = {
-        let rating = RatedView()
+        let rating = RatedView(frame: .zero, maxValue: 10.0, placeholderText: "--")
+        rating.strokeWidth = 5
+        rating.strokeColor = UIColor.ratingFilled
+        rating.backStrokeColor = UIColor.ratingNotFilled
         rating.translatesAutoresizingMaskIntoConstraints = false
         return rating
     }()
@@ -65,14 +68,14 @@ final class ListSectionCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        rating.progress = 0
+        rating.value = 0.0
     }
     
     var movie: MovieModel? {
         didSet {
             movieTitle.text = movie?.title
             movieDescription.text = movie?.overview
-            rating.progress = Int((movie?.voteAverage ?? 0) * 10)
+            rating.value = movie?.voteAverage ?? 0
             let url = URL(string: "https://image.tmdb.org/t/p/w185\(movie?.posterPath ?? "")")
             poster.kf.setImage(with: url, placeholder: UIImage.posterPlaceholder)
         }

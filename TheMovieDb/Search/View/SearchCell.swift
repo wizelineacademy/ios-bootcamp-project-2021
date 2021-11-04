@@ -20,7 +20,10 @@ final class SearchCell: UICollectionViewCell {
     }()
     
     private lazy var ratingView: RatedView = {
-        let rating = RatedView(frame: .zero)
+        let rating = RatedView(frame: .zero, maxValue: 10.0, placeholderText: "--")
+        rating.strokeWidth = 3.0
+        rating.strokeColor = UIColor.ratingFilled
+        rating.backStrokeColor = UIColor.ratingNotFilled
         rating.translatesAutoresizingMaskIntoConstraints = false
         return rating
     }()
@@ -34,7 +37,7 @@ final class SearchCell: UICollectionViewCell {
     
     var movie: MovieModel? {
         didSet {
-            ratingView.progress = Int(Float(movie?.voteAverage ?? 0) * 10.0)
+            ratingView.value = movie?.voteAverage ?? 0
             titleLabel.text = movie?.title
         }
     }
@@ -70,8 +73,8 @@ private extension SearchCell {
     private func addRatingViewConstraints() {
         ratingView.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
         ratingView.rightAnchor.constraint(equalTo: rightAnchor, constant: -8).isActive = true
-        ratingView.widthAnchor.constraint(equalToConstant: 36).isActive = true
-        ratingView.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        ratingView.widthAnchor.constraint(equalToConstant: 48).isActive = true
+        ratingView.heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
     
     private func addDividerConstraints() {
