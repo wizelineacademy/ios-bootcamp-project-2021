@@ -8,10 +8,14 @@
 import UIKit
 import Kingfisher
 
-final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
+final class TopRatedSectionCell: UICollectionViewCell {
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: TopRatedSectionCell.self)
-    
+    public var viewModel: MovieViewModel? {
+        didSet {
+            configure()
+        }
+    }
     public var numberTop = 0
     private let imageBackground: UIImageView = {
         let imageView = UIImageView()
@@ -44,7 +48,7 @@ final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
     }
     
     // MARK: - Helpers
-    internal func configureUI() {
+    private func configureUI() {
         addSubview(imageBackground)
         imageBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingLeft: 60)
         addSubview(numberTopLabel)
@@ -52,11 +56,9 @@ final class TopRatedSectionCell: UICollectionViewCell, MovieCellProtocol {
         numberTopLabel.setWidth(frame.width/2)
     }
     
-    public func withMovie(with movie: Movie) {
-        numberTopLabel.text = "\(numberTop + 1)"
-        let urlImage = MovieConst.imageCDN + (movie.posterPath ?? "")
-        let url = URL(string: urlImage )
-        imageBackground.kf.indicatorType = .activity
-        imageBackground.kf.setImage(with: url)
+    private func configure() {
+        guard let viewModel = viewModel else { return }
+        imageBackground.kf.setImage(with: viewModel.imageUrl)
+        numberTopLabel.text = viewModel.topNumber
     }
 }

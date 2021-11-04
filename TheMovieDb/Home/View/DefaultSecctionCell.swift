@@ -7,9 +7,16 @@
 
 import UIKit
 
-final class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
+final class DefaultSectionCell: UICollectionViewCell {
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: DefaultSectionCell.self)
+    
+    public var viewModel: MovieViewModel? {
+        didSet {
+            configure()
+        }
+    }
+    
     private let imageBackground: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "noImage")
@@ -26,19 +33,18 @@ final class DefaultSectionCell: UICollectionViewCell, MovieCellProtocol {
         configureUI()
     }
     
-    internal func configureUI() {
-        addSubview(imageBackground)
-        imageBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
-    }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Helpers
-    public func withMovie(with movie: Movie) {
-        let urlImage = MovieConst.imageCDN + (movie.posterPath ?? "")
-        let url = URL(string: urlImage )
-        imageBackground.kf.indicatorType = .activity
-        imageBackground.kf.setImage(with: url)
+    private func configureUI() {
+        addSubview(imageBackground)
+        imageBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
+    }
+    
+    public func configure() {
+        guard let viewModel = viewModel else { return }
+        imageBackground.kf.setImage(with: viewModel.imageUrl)
     }
 }

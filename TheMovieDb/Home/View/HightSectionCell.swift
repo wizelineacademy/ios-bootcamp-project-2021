@@ -8,10 +8,15 @@
 import Foundation
 import UIKit
 
-final class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
+final class HightSectionCell: UICollectionViewCell {
  
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: HightSectionCell.self)
+    public var viewModel: MovieViewModel? {
+        didSet {
+            configure()
+        }
+    }
     
     private let imageBackground = BackgroundImageView()
     
@@ -46,7 +51,7 @@ final class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
     }
     
     // MARK: - Helpers
-    internal func configureUI() {
+    private func configureUI() {
         addSubview(imageBackground)
         imageBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
         
@@ -60,12 +65,10 @@ final class HightSectionCell: UICollectionViewCell, MovieCellProtocol {
         
     }
     
-    func withMovie(with movie: Movie) {
-        let urlImage = MovieConst.imageCDN + (movie.backdropPath ?? (movie.posterPath ?? ""))
-        let url = URL(string: urlImage )
-        imageBackground.kf.indicatorType = .activity
-        imageBackground.kf.setImage(with: url)
-        titleLabel.text = movie.title
+    private func configure() {
+        guard let viewModel = viewModel else { return }
+        imageBackground.kf.setImage(with: viewModel.imageUrl)
+        titleLabel.text = viewModel.title
     }
     
 }

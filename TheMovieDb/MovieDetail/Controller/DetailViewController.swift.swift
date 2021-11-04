@@ -91,9 +91,10 @@ extension DetailViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell else {
             return DefaultSectionCell()
         }
-        
+
         let movie =   movies[indexPath.row]
-        cell.withMovie(with: movie)
+        let viewModel = MovieViewModel(movie: movie)
+        cell.viewModel = viewModel
    
         return cell
         

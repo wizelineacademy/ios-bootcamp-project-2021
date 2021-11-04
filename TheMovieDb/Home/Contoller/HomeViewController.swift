@@ -96,22 +96,26 @@ extension HomeViewController {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HightSectionCell.reuseIdentifier, for: indexPath) as? HightSectionCell else {
                 return HightSectionCell()
             }
-            
-            cell.withMovie(with: movie)
+            var viewModel = MovieViewModel(movie: movie)
+            viewModel.isHighSection = true
+            cell.viewModel = viewModel
             return cell
         case .topRated:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopRatedSectionCell.reuseIdentifier, for: indexPath) as? TopRatedSectionCell else {
                 return TopRatedSectionCell()
             }
-            cell.numberTop = indexPath.row
-            cell.withMovie(with: movie)
+          
+            var viewModel = MovieViewModel(movie: movie)
+            viewModel.numerTop = indexPath.row
+            cell.viewModel = viewModel
             return cell
             
         case .upcoming, .trending, .playingNow:
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell else {
                 return DefaultSectionCell()
             }
-            cell.withMovie(with: movie)
+            let viewModel = MovieViewModel(movie: movie)
+            cell.viewModel = viewModel
             return cell
         }
         
