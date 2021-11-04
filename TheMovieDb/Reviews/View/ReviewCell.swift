@@ -21,8 +21,7 @@ final class ReviewCell: UICollectionViewCell {
     
     private let authorNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        label.text = "Rotten Tomatoes"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.numberOfLines = 0
         label.adjustsFontSizeToFitWidth = true
         return label
@@ -30,7 +29,7 @@ final class ReviewCell: UICollectionViewCell {
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.numberOfLines = 0
         return label
     }()
@@ -55,8 +54,8 @@ final class ReviewCell: UICollectionViewCell {
         
         addSubview(logoImageView)
         logoImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 10, paddingLeft: 10)
-        logoImageView.setWidth((frame.height / 2) - 20)
-        logoImageView.setHeight((frame.height / 2) - 20)
+        logoImageView.setWidth((frame.height / 2) - 30)
+        logoImageView.setHeight((frame.height / 2) - 30)
         
         logoImageView.layer.cornerRadius = 10
         

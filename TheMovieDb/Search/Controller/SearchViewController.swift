@@ -98,7 +98,7 @@ extension SearchViewController: UISearchBarDelegate {
         guard let text = searchBar.text else {return}
         
         let parameter = APIParameters(query: text)
-        MovieAPI.shared.getBySearching(with: parameter, completion: {(response: Result<Movies, Error>) in
+        MovieAPI.shared.fetchData(endPoint: .search, with: parameter, completion: {(response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)

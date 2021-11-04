@@ -10,8 +10,7 @@ import UIKit
 final class DetailViewController: UICollectionViewController {
     // MARK: - Properties
     public var movie: Movie
-    private var similarMovies = [Movie]()
-    private var recommendationsMovies = [Movie]()
+    var movies: [RelatedMovieSections: [Movie]] = [:]
     private let group = DispatchGroup()
     
     // MARK: - Life Cycle
@@ -20,14 +19,6 @@ final class DetailViewController: UICollectionViewController {
         super.viewDidLoad()
         configureUI()
         fetchDataAPI()
-    }
-    
-    private func fetchDataAPI() {
-        fetchSimilar()
-        fetchRecommendation()
-        group.notify(queue: .main) {
-            self.reloadCollectionView()
-        }
     }
         
     init(with movie: Movie) {
@@ -44,28 +35,22 @@ final class DetailViewController: UICollectionViewController {
     
     // MARK: - API
     
-    private func fetchSimilar() {
-        group.enter()
-        MovieAPI.shared.getRecommendations(completion: {(response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let res):
-                self.recommendationsMovies = res.movies
-            }
-            self.group.leave()
-        })
+    private func fetchDataAPI() {
+        fetchData(typeMovieSection: .recommendations)
+        fetchData(typeMovieSection: .similar)
+        group.notify(queue: .main) {
+            self.reloadCollectionView()
+        }
     }
     
-    private func fetchRecommendation() {
+    private func fetchData(typeMovieSection: RelatedMovieSections) {
         group.enter()
-        MovieAPI.shared.getSimilar(completion: {(response: Result<Movies, Error>) in
+        MovieAPI.shared.fetchData(endPoint: typeMovieSection.path, completion: {(response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)
             case .success(let res):
-                self.similarMovies = res.movies
-                // self.reloadCollectionView(groupSection: .topRated)
+                self.movies[typeMovieSection] = res.movies
             }
             self.group.leave()
         })
@@ -81,7 +66,6 @@ final class DetailViewController: UICollectionViewController {
     private func configureUI() {
         collectionView.register(DetailHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeaderView.reuseIdentifier)
         collectionView.register(DetailHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeader.reuseIdentifier)
-        
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
         
         navigationItem.title = movie.title
@@ -92,34 +76,25 @@ final class DetailViewController: UICollectionViewController {
 // MARK: - UICollectionViewDataSource
 extension DetailViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let section = RelatedMovieSections(rawValue: section)
-        
-        switch section {
-        case .recommendations:
-            return recommendationsMovies.count
-        case .similar:
-            return similarMovies.count
-        case .none:
-            return 0
-        }
-        
+        let section = RelatedMovieSections(rawValue: section) ?? .similar
+        guard let movies = movies[section] else { return 0}
+        return movies.count
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        return RelatedMovieSections.allCases.count
     }
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let section = RelatedMovieSections(rawValue: indexPath.section) ?? .similar
+        guard let movies = movies[section] else { return DefaultSectionCell() }
+
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell else {
             return DefaultSectionCell()
         }
-        if indexPath.section == 0 {
-            let movie = recommendationsMovies[indexPath.row]
-            cell.withMovie(with: movie)
-        } else {
-            let movie = similarMovies[indexPath.row]
-            cell.withMovie(with: movie)
-        }
         
+        let movie =   movies[indexPath.row]
+        cell.withMovie(with: movie)
+   
         return cell
         
     }
@@ -163,8 +138,8 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
 extension DetailViewController: DetailHeaderViewDelegate {
     func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie) {
         let controller = ReviewsCollectionViewController(with: movie)
-       // let nav = UINavigationController(rootViewController: controller)
-        navigationController?.pushViewController(controller, animated: true)
+        let nav = UINavigationController(rootViewController: controller)
+        present(nav, animated: true)
     }
     
 }
@@ -173,12 +148,9 @@ extension DetailViewController: DetailHeaderViewDelegate {
 extension DetailViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie: Movie
-        if indexPath.section == 0 {
-            movie = recommendationsMovies[indexPath.row]
-        } else {
-            movie = similarMovies[indexPath.row]
-        }
+        let section = RelatedMovieSections(rawValue: indexPath.section) ?? .similar
+        guard let movies = movies[section] else { return }
+        let movie =   movies[indexPath.row]
         
         let controller = DetailViewController(with: movie)
         navigationController?.pushViewController(controller, animated: true)

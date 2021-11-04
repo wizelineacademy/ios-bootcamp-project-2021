@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+/*
 let categoryHomeHeaderId = "categoryHomeHeaderId"
 extension UICollectionViewController {
     
@@ -91,3 +91,4 @@ extension UICollectionViewController {
     }
 
 }
+*/

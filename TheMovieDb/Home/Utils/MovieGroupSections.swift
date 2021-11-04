@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MovieGroupSections: Int {
+enum MovieGroupSections: Int, CaseIterable {
     case popular
     case trending
     case playingNow
@@ -21,6 +21,16 @@ enum MovieGroupSections: Int {
         case .playingNow: return "Playing now"
         case .topRated: return "Top rated"
         case .upcoming: return "Upcoming"
+        }
+    }
+    
+    var path: APIEndPoints {
+        switch self {
+        case .popular: return .popular
+        case .trending: return .trending
+        case .playingNow: return .nowPlaying
+        case .topRated: return .topRated
+        case .upcoming: return .upcoming
         }
     }
 }

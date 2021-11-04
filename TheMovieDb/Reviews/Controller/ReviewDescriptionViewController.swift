@@ -16,28 +16,28 @@ final class ReviewDescriptionViewController: UIViewController {
         }
     }
     
-    private let descriptionReviewLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.numberOfLines = 0
-        label.adjustsFontSizeToFitWidth = true
-        return label
+    private let descriptionReviewTextView: UITextView = {
+        let textView = UITextView()
+        textView.font = UIFont.boldSystemFont(ofSize: 16)
+        textView.isEditable = false
+        textView.textContainerInset = .init(top: 0, left: 20, bottom: 0, right: 20)
+        return textView
     }()
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        view.addSubview(descriptionReviewLabel)
-        descriptionReviewLabel.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 20, paddingRight: 20)
+        view.addSubview(descriptionReviewTextView)
+        descriptionReviewTextView.frame = view.frame
 
     }
     
     // MARK: - Helpers
     private func configure() {
         guard let review = review else { return }
-        navigationItem.title = review.authorDetail.username
-        descriptionReviewLabel.text = review.content
+        descriptionReviewTextView.text = review.content
     }
     
 }
+

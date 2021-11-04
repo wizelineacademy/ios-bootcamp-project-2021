@@ -46,7 +46,7 @@ final class ReviewsCollectionViewController: UICollectionViewController {
     private func fetchDataAPI() {
         let id = String(movie.id)
         let parameter = APIParameters(id: id)
-        MovieAPI.shared.getReviews(with: parameter, completion: {(response: Result<Reviews, Error>) in
+        MovieAPI.shared.fetchData(endPoint: .review, with: parameter, completion: {(response: Result<Reviews, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)

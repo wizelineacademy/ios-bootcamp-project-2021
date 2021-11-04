@@ -9,17 +9,14 @@ import UIKit
 
 final class HomeViewController: UICollectionViewController {
     // MARK: - Properties
-    private var topRatedMovies = [Movie]()
-    private var playingNowMovies = [Movie]()
-    private var upComingMovies = [Movie]()
-    private var trendingMovies = [Movie]()
-    private var popularMovies = [Movie]()
     private let group = DispatchGroup()
+    
+    var movies: [MovieGroupSections: [Movie]] = [:]
     
     // MARK: - Life Cycle
     
-    init() {
-        super.init(collectionViewLayout: UICollectionViewController.configureCollectionViewLayout())
+    init(with layout: UICollectionViewCompositionalLayout) {
+        super.init(collectionViewLayout: layout)
     }
     
     required init?(coder: NSCoder) {
@@ -31,7 +28,6 @@ final class HomeViewController: UICollectionViewController {
         configureUI()
         configureUICollection()
         fetchDataAPI()
-
     }
     // MARK: - API
     private func reloadCollectionView() {
@@ -41,105 +37,35 @@ final class HomeViewController: UICollectionViewController {
     }
     
     private func fetchDataAPI() {
-        fetchPopular()
-        fetchTopRated()
-        fetchNowPlaying()
-        fetchUpcoming()
-        fetchTrending()
+        fetchData(typeMovieSection: .popular)
+        fetchData(typeMovieSection: .upcoming)
+        fetchData(typeMovieSection: .topRated)
+        fetchData(typeMovieSection: .playingNow)
+        fetchData(typeMovieSection: .trending)
         group.notify(queue: .main) {
             self.reloadCollectionView()
         }
     }
     
-    private func fetchPopular() {
+    private func fetchData(typeMovieSection: MovieGroupSections) {
         group.enter()
-        MovieAPI.shared.getPopular(completion: {(response: Result<Movies, Error>) in
+        MovieAPI.shared.fetchData(endPoint: typeMovieSection.path, completion: {(response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)
             case .success(let res):
-                self.popularMovies = res.movies
+                self.movies[typeMovieSection] = res.movies
             }
             self.group.leave()
         })
     }
     
-    private func fetchTopRated() {
-        group.enter()
-        MovieAPI.shared.getTopRated(completion: {(response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let res):
-                self.topRatedMovies = res.movies
-            }
-            self.group.leave()
-        })
-    }
-    
-    private func fetchNowPlaying() {
-        group.enter()
-        MovieAPI.shared.getNowPlaying(completion: {(response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let res):
-                self.playingNowMovies = res.movies
-            }
-            self.group.leave()
-        })
-    }
-    
-    private func fetchUpcoming() {
-        group.enter()
-        MovieAPI.shared.getUpcoming(completion: {(response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let res):
-                self.upComingMovies =  res.movies
-            }
-            self.group.leave()
-        })
-    }
-    
-    private func fetchTrending() {
-        group.enter()
-         MovieAPI.shared.getTrending(completion: {(response: Result<Movies, Error>) in
-             switch response {
-             case .failure(let error):
-                 debugPrint(error)
-             case .success(let res):
-                 self.trendingMovies = res.movies
-             }
-             self.group.leave()
-         })
-    }
-
     // MARK: - Helpers
     private func configureUICollection() {
         collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reuseIdentifier)
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
         collectionView.register(TopRatedSectionCell.self, forCellWithReuseIdentifier: TopRatedSectionCell.reuseIdentifier)
         collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
-    }
-    
-    private func getCurrentMovie(indexPath: IndexPath) -> Movie {
-        let section = MovieGroupSections(rawValue: indexPath.section) ?? .trending
-        var movie: Movie
-        switch section {
-        case .popular:
-            movie = popularMovies[indexPath.row]
-        case .trending:
-            movie = trendingMovies[indexPath.row]
-        case .playingNow:
-            movie = playingNowMovies[indexPath.row]
-        case .topRated:
-            movie = topRatedMovies[indexPath.row]
-        case .upcoming:
-            movie = upComingMovies[indexPath.row]
-        }
-        return movie
     }
     
     private func configureUI() {
@@ -153,27 +79,17 @@ final class HomeViewController: UICollectionViewController {
 extension HomeViewController {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let section = MovieGroupSections(rawValue: section) ?? .trending
-        switch section {
-        case .popular:
-            return popularMovies.count
-        case .trending:
-            return trendingMovies.count
-        case .playingNow:
-            return playingNowMovies.count
-        case .topRated:
-            return topRatedMovies.count
-        case .upcoming:
-            return upComingMovies.count
-        }
+        return movies[section]?.count ?? 0
     }
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 5
+        return MovieGroupSections.allCases.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let section = MovieGroupSections(rawValue: indexPath.section) ?? .topRated
-        let movie = getCurrentMovie(indexPath: indexPath)
+        guard let movies = movies[section] else { return DefaultSectionCell() }
+        let movie =  movies[indexPath.row]
         
         switch section {
         case .popular:
@@ -219,10 +135,94 @@ extension HomeViewController {
 extension HomeViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = getCurrentMovie(indexPath: indexPath)
+        let section = MovieGroupSections(rawValue: indexPath.section) ?? .topRated
+        guard let movies = movies[section] else { return }
+        let movie = movies[indexPath.row]
         let controller = DetailViewController(with: movie)
         navigationController?.pushViewController(controller, animated: true)
         
     }
     
+}
+
+extension HomeViewController {
+     func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+        let sectionProvider = { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            
+            var section: NSCollectionLayoutSection?
+            
+            switch sectionIndex {
+            case 0:
+                section = HomeViewController.getHightLayoutSection()
+            case 3:
+                section = HomeViewController.getTopRatedLayoutSection()
+            default:
+                section = HomeViewController.getDefaultLayoutSection()
+            }
+            return section
+        }
+        return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
+    }
+
+    static func getHightLayoutSection() -> NSCollectionLayoutSection {
+        // item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+
+        // group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.5))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        // section
+        let seccion = NSCollectionLayoutSection(group: group)
+        seccion.orthogonalScrollingBehavior = .paging
+        seccion.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        
+        return seccion
+        
+    }
+
+    static func getDefaultLayoutSection() -> NSCollectionLayoutSection {
+        
+        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.25), heightDimension: .absolute(150)))
+        item.contentInsets.trailing = 16
+        item.contentInsets.bottom = 16
+        
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)), subitems: [item])
+        
+        let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets.leading = 16
+        section.orthogonalScrollingBehavior = .continuous
+        section.boundarySupplementaryItems = [
+            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35)), elementKind: categoryHomeHeaderId, alignment: .topLeading)
+        ]
+        
+        return section
+
+    }
+
+    static func getTopRatedLayoutSection() -> NSCollectionLayoutSection {
+        
+        // item
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+
+        // group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(180))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        
+        // section
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
+        
+        section.boundarySupplementaryItems = [
+            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35)), elementKind: categoryHomeHeaderId, alignment: .topLeading)
+        ]
+        
+        return section
+
+    }
 }
