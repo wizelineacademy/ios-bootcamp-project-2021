@@ -7,75 +7,80 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class ViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var type: MovieListEndpoint?
     var typeTitle = ""
-    var pageMovie = 0
-    var resultsMovie: [Movie] = []
-    var totalPagesMovie = 0
-    var totalResultsMovie = 0
-    let cellReuseIdentifier = "cell"
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-        tableView.tableFooterView = UIView()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-        title = typeTitle
-        
-        loadMovies()
-    }
-    
-    
-    private func loadMovies() {
-        guard let type = type else {
-            return
-        }
-        
-        MovieFacade.getMovies(endpoint: type) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case .success(let sucessResult):
-                print(sucessResult)
-                self.pageMovie = sucessResult.page ?? 0
-                print(sucessResult.page ?? 0)
-                
-                self.resultsMovie = sucessResult.results ?? []
-                print(sucessResult.results ?? [])
-                
-                self.totalPagesMovie = sucessResult.totalPages ?? 0
-                print(sucessResult.totalPages ?? 0)
-                
-                self.totalResultsMovie = sucessResult.totalResults ?? 0
-                print(sucessResult.totalResults ?? 0)
-                
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            case .failure(let failureResult):
-                print(failureResult.localizedDescription)
+    var resultsMovie: [Movie] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
+   
+    override func viewDidLoad() {
+        super.viewDidLoad()
     
+        title = typeTitle
+        configureTableView()
+        setupNavigationBar()
+        loadMovies()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupNavigationBar()
+    }
+    
+    func configureTableView() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
+        tableView.delegate = self
+        tableView.dataSource = self
+    }
+    
+    func setupNavigationBar() {
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    private func loadMovies() {
+        guard let type = type else { return }
+        
+        MovieFacade.get(endpoint: type) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
+            guard let self = self else { return }
+            
+            switch response {
+            case .success(let sucessResult):
+                guard let results = sucessResult.results else {
+                    self.showErrorAlert(.invalidResponse)
+                    return
+                }
+                self.resultsMovie = results
+                print(sucessResult.results ?? [])
+                
+            case .failure(let failureResult):
+                self.showErrorAlert(failureResult)
+            }
+        }
+    }
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return resultsMovie.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (self.tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell?)!
-        
+        let cell: UITableViewCell = (self.tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as UITableViewCell?)!
         cell.textLabel?.text = resultsMovie[indexPath.row].title
-        
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let viewControllerMovieInfo = storyboard?.instantiateViewController(identifier: Constants.movieInfoViewControllerID) as? MovieInfoViewController {
+            viewControllerMovieInfo.movie = resultsMovie[indexPath.row]
+            navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
+        }
+    }
 }
 

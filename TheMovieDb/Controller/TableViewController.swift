@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
+final class TableViewController: UITableViewController {
     
     var moviesCategory: [(name: String, type: MovieListEndpoint)] = [("Trending", .trending),
                                         ("Now Playing", .nowPlaying),
@@ -18,8 +18,17 @@ class TableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Show Movies"
+        title = Constants.titleInitialTableView
+        setupNavigationBar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupNavigationBar()
+    }
+    
+    func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -27,18 +36,23 @@ class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CellIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
         cell.textLabel?.text = moviesCategory[indexPath.row].name
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let vc = storyboard?.instantiateViewController(identifier: "Detail") as? ViewController {
+        if let viewControllerMoviesList = storyboard?.instantiateViewController(identifier: Constants.viewControllerID) as? ViewController {
             let category = moviesCategory[indexPath.row]
-            vc.type = category.type
-            vc.typeTitle = category.name
-            navigationController?.pushViewController(vc, animated: true)
+            viewControllerMoviesList.type = category.type
+            viewControllerMoviesList.typeTitle = category.name
+            navigationController?.pushViewController(viewControllerMoviesList, animated: true)
         }
     }
-
+    
+    @objc func searchTapped() {
+        if let searchTableViewController = storyboard?.instantiateViewController(identifier: Constants.searchTableViewControllerID) as? SearchTableViewController {
+            navigationController?.pushViewController(searchTableViewController, animated: true)
+        }
+    }
 }

@@ -7,23 +7,25 @@
 
 import Foundation
 
-struct MovieFacade: MovieService, QueryParams {
+struct MovieFacade: MovieService {
     
     static let baseURL = URL(string:"https://api.themoviedb.org/3/")!
-    static var apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
-    static var language = "en-US"
     
-    static func getMovies(endpoint: MovieListEndpoint, returnMovies: @escaping (Result<MovieResponse, MovieError>) -> Void) {
+    static func get<T: Decodable>(search: String? = nil, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) {
 
         var components = URLComponents()
         components.path = endpoint.path
         components.queryItems = [
-            .init(name: "api_key", value: apiKey),
-            .init(name: "language", value: language)
+            .init(name: "api_key", value: RequestParams.apiKey),
+            .init(name: "language", value: RequestParams.language)
         ]
         
+        if let search = search {
+            components.queryItems?.append(.init(name: "query", value: search))
+        }
+        
         guard let url = components.url(relativeTo: baseURL) else {
-            returnMovies(.failure(.invalidUrl))
+            returnResponse(.failure(.invalidUrl))
             return
         }
         
@@ -33,13 +35,14 @@ struct MovieFacade: MovieService, QueryParams {
         let taskRequest = URLSession.shared.dataTask(with: request) { (data, response, error) in
             
             if let error = error {
-                returnMovies(.failure(.unknownError(error: error)))
+                returnResponse(.failure(.unknownError(error: error)))
                 print("Error took place \(error.localizedDescription)")
                 return
             }
             
-            if let response = response as? HTTPURLResponse {
-                print("Response HTTP Status code: \(response.statusCode)")
+            guard let response = response as? HTTPURLResponse else {
+                returnResponse(.failure(.invalidResponse))
+                return
             }
             
             if let data = data {
@@ -47,11 +50,10 @@ struct MovieFacade: MovieService, QueryParams {
                 jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                 
                 do {
-                    let moviesDecoded = try jsonDecoder.decode(MovieResponse.self, from: data)
-                    print(moviesDecoded.page ?? "Not Found")
-                    returnMovies(.success(moviesDecoded))
+                    let moviesDecoded = try jsonDecoder.decode(T.self, from: data)
+                    returnResponse(.success(moviesDecoded))
                 } catch {
-                    returnMovies(.failure(.wrongResponse))
+                    returnResponse(.failure(.wrongResponse(status: response.statusCode)))
                 }
             }
         }
