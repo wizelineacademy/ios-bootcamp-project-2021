@@ -9,7 +9,7 @@ import UIKit
 
 final class RatedView: UIView {
     
-    private lazy var progressLabel: UILabel = {
+    private lazy var valueLabel: UILabel = {
         let label: UILabel = UILabel(frame: .zero)
         label.font = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: nil)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -21,30 +21,39 @@ final class RatedView: UIView {
     private let beginValueDegree: Int = -90
     private let endValueDegree: Int = 270
     private let completeCircleDegree: Int = 360
+    private var placeholderText: String = ""
+    private var maxValue: Float = 0.0
     
-    var progress: Int = 53 {
+    var strokeWidth: CGFloat = 1
+    var strokeColor: UIColor? = UIColor.black
+    var backStrokeColor: UIColor? = UIColor.black.withAlphaComponent(0.5)
+    
+    var value: Float = 0.0 {
         didSet {
-            progressLabel.text = progress > 0 ? String(progress) : "--"
+            valueLabel.text = value == 0 ? placeholderText : String(value)
             DispatchQueue.main.async {
                 self.setNeedsDisplay()
             }
         }
     }
     
-    override init(frame: CGRect) {
+    init(frame: CGRect,
+         maxValue: Float = 100,
+         placeholderText: String = "--") {
         super.init(frame: frame)
-        setup()
+        setup(placeholder: placeholderText, maxValue: maxValue)
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        setup()
+        fatalError("init(coder:) failed")
     }
     
-    func setup() {
-        addSubview(progressLabel)
-        progressLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-        progressLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+    func setup(placeholder: String, maxValue: Float) {
+        self.placeholderText = placeholder
+        self.maxValue = maxValue
+        addSubview(valueLabel)
+        valueLabel.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+        valueLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
     }
     
     override func draw(_ rect: CGRect) {
@@ -60,25 +69,25 @@ final class RatedView: UIView {
                                             startAngle: beginValueDegree.degreesToRadians,
                                             endAngle: endValueDegree.degreesToRadians,
                                             clockwise: true).cgPath
-        backgroundShape.strokeColor = UIColor.gray.withAlphaComponent(0.5).cgColor
+        backgroundShape.strokeColor = backStrokeColor?.cgColor
         backgroundShape.fillColor = UIColor.clear.cgColor
-        backgroundShape.lineWidth = 5
+        backgroundShape.lineWidth = strokeWidth
         DispatchQueue.main.async {
             self.layer.addSublayer(self.backgroundShape)
         }
     }
     
     func drawTimeLeftShape(_ rect: CGRect) {
-        let advanceDegree: Int = Int(Float(completeCircleDegree) * (Float(progress) / 100)) + beginValueDegree
+        let advanceDegree: Int = Int(Float(completeCircleDegree) * (value / maxValue)) + beginValueDegree
         ratingShape.path = UIBezierPath(arcCenter: CGPoint(x: rect.midX,
                                                            y: rect.midY),
                                         radius: rect.width / 2,
                                         startAngle: beginValueDegree.degreesToRadians,
                                         endAngle: advanceDegree.degreesToRadians,
                                         clockwise: true).cgPath
-        ratingShape.strokeColor = UIColor.red.cgColor
+        ratingShape.strokeColor = strokeColor?.cgColor
         ratingShape.fillColor = UIColor.clear.cgColor
-        ratingShape.lineWidth = 5
+        ratingShape.lineWidth = strokeWidth
         DispatchQueue.main.async {
             self.layer.addSublayer(self.ratingShape)
         }

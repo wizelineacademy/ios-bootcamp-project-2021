@@ -23,6 +23,6 @@ final class SearchFlowLayout: UICollectionViewFlowLayout {
                                     right: verticalContentInset + safeAreaRight)
         let cellWidth: CGFloat = collectionWidth - safeAreaLeft - safeAreaRight
         itemSize = CGSize(width: cellWidth - (verticalContentInset * 2),
-                          height: 56)
+                          height: 64)
     }
 }
