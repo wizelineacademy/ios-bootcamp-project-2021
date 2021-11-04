@@ -9,11 +9,15 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    let service = NetworkManager(urlSession: URLSession.shared)
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        let url = "/3/trending/movie/day"
+        service.get(path: url) { response in
+            print(response as MovieList)
+        }
     }
-
-
 }
 
