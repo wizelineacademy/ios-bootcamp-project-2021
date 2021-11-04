@@ -21,8 +21,6 @@ struct MovieDetails: Codable {
   let genres: [Genres]
   let revenue: Int
   let originalLanguage: String
-  let imdbId: String?
-  let tagline: String?
   let status: String
   
   private enum CodingKeys: String, CodingKey {
@@ -38,8 +36,6 @@ struct MovieDetails: Codable {
     case genres
     case revenue
     case originalLanguage = "original_language"
-    case imdbId = "imdb_id"
-    case tagline
     case status
     
   }

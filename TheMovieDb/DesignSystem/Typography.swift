@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 
 enum TextStyle {
+  
   case title, subtitle, headline, subheadline, caption, paragraph
   
   var size: CGFloat {

@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  TheMovieDb
 //
-//  Created by Jose Antonio Trejo Flores on 09/12/20.
+//  Created by Michael do Prado on 09/12/20.
 //
 
 import UIKit
@@ -11,6 +11,17 @@ class FeedViewController: UICollectionViewController {
   
   var arrayMovies = [Movie]()
   
+  var databaseManager: ApiClient?
+  
+//  init(databaseManager: ApiClient) {
+//    self.databaseManager = databaseManager
+//    super.init(nibName: "Main", bundle: Bundle.main)
+//  }
+//
+//  required init?(coder: NSCoder) {
+//    fatalError("init(coder:) has not been implemented")
+//  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     setupNavigationController()
@@ -46,12 +57,15 @@ class FeedViewController: UICollectionViewController {
   }
   
   func didRefresh() {
-    self.collectionView.reloadData()
+    DispatchQueue.main.async {
+      self.collectionView.reloadData()
+    }
+    
   }
   
   // get data from the network to fill the feed
   func getData() {
-    MovieDBClient.shared.getData(from: MovieFeed.popular, movieRegion: .US, movieLanguage: .en) { [weak self] (result: Result<MovieFeedResult?, ApiError>) in
+    databaseManager?.getData(from: MovieFeed.popular, movieRegion: .US, movieLanguage: .en) { [weak self] (result: Result<MovieFeedResult?, ApiError>) in
       switch result {
       case .success(let movieFeedResult):
         guard let movieResults = movieFeedResult?.results else { return }
@@ -63,8 +77,9 @@ class FeedViewController: UICollectionViewController {
     }
   }
   
+  // get movie details and showing the detailView
   func getDetailMovie(movieId: Int) {
-    MovieDBClient.shared.getData(from: InfoById.movieDetails(movieId: movieId), movieRegion: .US, movieLanguage: .en) { [weak self] (result: Result<MovieDetails?, ApiError>) in
+    databaseManager?.getData(from: InfoById.movieDetails(movieId: movieId), movieRegion: .US, movieLanguage: .en) { [weak self] (result: Result<MovieDetails?, ApiError>) in
       switch result {
       case .success(let movieDetails):
         guard let movieResults = movieDetails else { return }

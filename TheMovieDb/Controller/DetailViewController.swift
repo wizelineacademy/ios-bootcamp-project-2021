@@ -12,6 +12,7 @@ import Kingfisher
 class DetailViewController: UIViewController {
   
   var movie: MovieDetails?
+  var cast: [Person]?
   
   var baseUrlImage = "https://image.tmdb.org/t/p/w500/"
   
@@ -35,7 +36,17 @@ class DetailViewController: UIViewController {
     setupDetailMovie()
   }
   
-  func setupDetailMovie() {
+  private func setImages(_ heroImage: String, _ backgroudImage: String) {
+    let urlPost = URL(string: "\(baseUrlImage)\(heroImage)")
+    let imageProvider = ImageResource(downloadURL: urlPost!)
+    self.heroImage.kf.setImage(with: imageProvider)
+    let urlBackground = URL(string: "\(baseUrlImage)\(backgroudImage)")
+    let backgroundProvider = ImageResource(downloadURL: urlBackground!)
+    self.backgroundImage.kf.setImage(with: backgroundProvider)
+    self.backgroundInfo.backgroundColor = DesignColor.black.color
+  }
+  
+  private func setupDetailMovie() {
     
     guard let title = movie?.title,
           let heroImage = movie?.poster,
@@ -59,20 +70,30 @@ class DetailViewController: UIViewController {
     self.titleLabel.text = title
     self.heroImage.layer.cornerRadius = 10
     self.releaseDateLabel.text = month.setMonth(date: date)
-    let urlPost = URL(string: "\(baseUrlImage)\(heroImage)")
-    let imageProvider = ImageResource(downloadURL: urlPost!)
-    self.heroImage.kf.setImage(with: imageProvider)
-    let urlBackground = URL(string: "\(baseUrlImage)\(backgroudImage)")
-    let backgroundProvider = ImageResource(downloadURL: urlBackground!)
-    self.backgroundImage.kf.setImage(with: backgroundProvider)
-    self.backgroundInfo.backgroundColor = DesignColor.black.color
+    self.setImages(heroImage, backgroudImage)
     self.scoreLabel.text = String(score)
     self.descriptionLabel.text = description
     self.languageLabel.text = originalLanguage
     self.statusLabel.text = status
-    self.budgetLabel.text = "$\(budget)"
-    self.revenueLabel.text = "$\(revenue)"
+    self.budgetLabel.text = "$\(addCommaToNumber(number: budget))"
+    self.revenueLabel.text = "$\(addCommaToNumber(number: revenue))"
     
+  }
+  
+  func addCommaToNumber(number: Int) -> String {
+    let arrayNumber = Array(String(number).reversed())
+    var newString = ""
+    var count = 1
+    for (index, num) in arrayNumber.enumerated() {
+      if count != 1 && count.isMultiple(of: 3) && index < (arrayNumber.count - 1) {
+        newString += "\(num),"
+        count += 1
+      } else {
+        newString += "\(num)"
+        count += 1
+      }
+    }
+    return String(Array(newString).reversed())
   }
   
 }

@@ -147,14 +147,14 @@
 		837B4EA6258178B6003DFC67 /* TheMovieDb */ = {
 			isa = PBXGroup;
 			children = (
+				837B4EA7258178B6003DFC67 /* AppDelegate.swift */,
+				837B4EA9258178B6003DFC67 /* SceneDelegate.swift */,
 				D3F283EB27318542003A3A13 /* DesignSystem */,
 				D3F283E827318459003A3A13 /* Helpers */,
 				D3E012212730200F00882F27 /* Controller */,
 				D3E012202730200600882F27 /* View */,
 				D3E0121F27301FF500882F27 /* Model */,
 				D3E0120F27301E3F00882F27 /* Network */,
-				837B4EA7258178B6003DFC67 /* AppDelegate.swift */,
-				837B4EA9258178B6003DFC67 /* SceneDelegate.swift */,
 				837B4EAD258178B6003DFC67 /* Main.storyboard */,
 				837B4EB0258178B9003DFC67 /* Assets.xcassets */,
 				837B4EB2258178B9003DFC67 /* LaunchScreen.storyboard */,
