@@ -15,25 +15,60 @@ class ListViewController: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        movieClient = MovieClient()
+        
+        guard let tabIndex = self.tabBarController?.selectedIndex, let movieFeed = MovieFeed(rawValue: tabIndex) else {
+            return
+        }
+        
+        setupUI(movieFeed: movieFeed)
+        
+        fetchData(movieFeed: movieFeed)
+        
+    }
+    
+    private func setupUI(movieFeed: MovieFeed) {
         let cellNib = UINib(nibName: MovieCell.cellIdentifier, bundle: nil)
         collectionView.register(cellNib, forCellWithReuseIdentifier: MovieCell.cellIdentifier)
-        //collectionView.reloadData()
+        
+        title = movieFeed.getNavigationTitle()
 
-        movieClient = MovieClient()
+        // Customize navigation bar.
+        guard let navbar = self.navigationController?.navigationBar else { return }
 
-        // TODO: Make this call asynchronous
-        if let tabIndex = self.tabBarController?.selectedIndex, let movieFeed = MovieFeed(rawValue: tabIndex) {
-            self.movieClient.getFeed(from: movieFeed, searchId: nil, params: [
-                "language": "en",
-                "region": "US"
-            ]) { result in
+        navbar.tintColor = .black
+        navbar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navbar.prefersLargeTitles = true
+        
+        // Set up the collection view.
+        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collectionView.alwaysBounceVertical = true
+        collectionView.indicatorStyle = .white
+
+        // Set up the refresh control as part of the collection view when it's pulled to refresh.
+        let refreshControl = UIRefreshControl()
+        collectionView.refreshControl = refreshControl
+        collectionView.sendSubviewToBack(refreshControl)
+    }
+    
+    private func fetchData(movieFeed: MovieFeed) {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.movieClient.getFeed(from: movieFeed, searchId: nil, params: [:]) { result in
                 switch result {
                 case .success(let movieList):
                     guard let movieList = movieList else {
                         return
                     }
                     self.movieList = movieList
-                    self.collectionView.reloadData()
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {
+                            return
+                        }
+                        self.collectionView.reloadData()
+                    }
                 case .failure(let error):
                     print("The error \(error.localizedDescription)")
                 }

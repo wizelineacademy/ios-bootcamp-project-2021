@@ -9,6 +9,7 @@ import Foundation
 
 protocol EndPoint {
     var base: String { get }
+    var defaultParams: [String: String] { get }
     func getPath(searchId: String?) -> String
 }
 
@@ -21,16 +22,17 @@ extension EndPoint {
     func getUrlComponents(movieId: String? = nil, params: [String: String]) -> URLComponents {
         var components = URLComponents(string: base)!
         components.path = getPath(searchId: movieId)
-        components.queryItems = [
-            URLQueryItem(name: "api_key", value: Constants.apiKey)
-        ]
-        
+        components.queryItems = addParams(params: defaultParams)
+        components.queryItems?.append(contentsOf: addParams(params: params))
+        return components
+    }
+    
+    private func addParams(params: [String: String]) -> [URLQueryItem] {
+        var queryItems: [URLQueryItem] = []
         for param in params {
-            components.queryItems?.append(
-                URLQueryItem(name: param.key, value: param.value)
+            queryItems.append(URLQueryItem(name: param.key, value: param.value)
             )
         }
-        
-        return components
+        return queryItems
     }
 }

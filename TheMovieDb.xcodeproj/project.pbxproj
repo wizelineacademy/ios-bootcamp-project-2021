@@ -27,6 +27,7 @@
 		FC7326382731E0FD009900ED /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7326372731E0FD009900ED /* ListViewController.swift */; };
 		FC94C47B2731043000E5BB5E /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FC94C47A2731043000E5BB5E /* MovieCell.xib */; };
 		FC94C47D273107CF00E5BB5E /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC94C47C273107CF00E5BB5E /* MovieCell.swift */; };
+		FCB40F2227339F1100F39478 /* ColumnFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB40F2127339F1100F39478 /* ColumnFlowLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +76,7 @@
 		FC7326372731E0FD009900ED /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		FC94C47A2731043000E5BB5E /* MovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
 		FC94C47C273107CF00E5BB5E /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		FCB40F2127339F1100F39478 /* ColumnFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnFlowLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 		837B4EA6258178B6003DFC67 /* TheMovieDb */ = {
 			isa = PBXGroup;
 			children = (
+				FCB40F2027339F0300F39478 /* Layouts */,
 				FC3E402D272F105C002E207D /* Networking */,
 				FC39A11C272BB1B10098E033 /* Helpers */,
 				FC39A11B272BB1350098E033 /* Model */,
@@ -223,6 +226,14 @@
 				FC3E4038272F1F10002E207D /* MovieClient.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		FCB40F2027339F0300F39478 /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				FCB40F2127339F1100F39478 /* ColumnFlowLayout.swift */,
+			);
+			path = Layouts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -409,7 +420,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which ${PODS_ROOT}/SwiftLint/swiftlint >/dev/null; then\n  ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -419,6 +430,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FC94C47D273107CF00E5BB5E /* MovieCell.swift in Sources */,
+				FCB40F2227339F1100F39478 /* ColumnFlowLayout.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				FC3E4031272F1091002E207D /* EndPoint.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,

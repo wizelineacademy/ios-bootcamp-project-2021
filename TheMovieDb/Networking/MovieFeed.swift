@@ -25,6 +25,14 @@ extension MovieFeed: EndPoint {
         return Constants.apiBaseURL
     }
     
+    var defaultParams: [String: String] {
+        [
+            "language": "en",
+            "region": "US",
+            "api_key": Constants.apiKey
+        ]
+    }
+    
     func getPath(searchId: String?) -> String {
         switch self {
         case .trending:
@@ -47,6 +55,33 @@ extension MovieFeed: EndPoint {
             return "/3/movie/\(searchId ?? "")/similar"
         case .recommendations:
             return "/3/movie/\(searchId ?? "")/recommendations"
+        }
+    }
+}
+
+extension MovieFeed {
+    func getNavigationTitle() -> String {
+        switch self {
+        case .trending:
+            return "Trending"
+        case .nowPlaying:
+            return "Now Playing"
+        case .popular:
+            return "Popular"
+        case .topRated:
+            return "Top Rated"
+        case .upcoming:
+            return "Upcoming"
+        case .keyword:
+            return "Keyword"
+        case .search:
+            return "Search"
+        case .reviews:
+            return "Reviews"
+        case .similar:
+            return "Similar"
+        case .recommendations:
+            return "Recommendations"
         }
     }
 }
