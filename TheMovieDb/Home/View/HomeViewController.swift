@@ -16,14 +16,6 @@ final class HomeViewController: UICollectionViewController {
         collectionView.collectionViewLayout = HomeCollectionFlowLayout()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == ListSectionViewController.segueIdentifier,
-           let viewController = segue.destination as? ListSectionViewController,
-           let cell = sender as? HomeViewCell {
-            viewController.section = cell.section
-        }
-    }
-    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewCell.identifier, for: indexPath) as? HomeViewCell else {
             return UICollectionViewCell()
@@ -34,6 +26,16 @@ final class HomeViewController: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return HomeSections.allCases.count
+    }
+    
+    
+    @IBSegueAction func goToListSectionActionSegue(_ coder: NSCoder, sender: Any?) -> ListSectionViewController? {
+        guard let cell = sender as? HomeViewCell,
+              let section = cell.section else {
+                  return nil
+              }
+        return ListSectionViewController(title: section.title,
+                                         request: section.request, coder: coder)
     }
 }
 
