@@ -7,21 +7,14 @@
 
 import UIKit
 
-final class HomeViewController: UICollectionViewController {
+final class HomeViewController: UIViewController {
     // MARK: - Properties
     private let group = DispatchGroup()
+    private var collectionView: UICollectionView!
     
     var movies: [MovieGroupSections: [Movie]] = [:]
     
     // MARK: - Life Cycle
-    
-    init(with layout: UICollectionViewCompositionalLayout) {
-        super.init(collectionViewLayout: layout)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,31 +55,37 @@ final class HomeViewController: UICollectionViewController {
     
     // MARK: - Helpers
     private func configureUICollection() {
+        let layout = configureCollectionViewLayout()
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        view.addSubview(collectionView)
+        collectionView.anchor(top: view.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor)
         collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reuseIdentifier)
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
         collectionView.register(TopRatedSectionCell.self, forCellWithReuseIdentifier: TopRatedSectionCell.reuseIdentifier)
         collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
+        collectionView.delegate = self
+        collectionView.dataSource = self
     }
     
     private func configureUI() {
         navigationItem.title = "Movies"
-        view.backgroundColor = .black
+        view.backgroundColor = .systemBackground
     }
     
 }
 
-// MARK: - UIControllerViewDataSource
-extension HomeViewController {
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+// MARK: - UICollectionViewDataSource
+extension HomeViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let section = MovieGroupSections(rawValue: section) ?? .trending
         return movies[section]?.count ?? 0
     }
     
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return MovieGroupSections.allCases.count
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let section = MovieGroupSections(rawValue: indexPath.section) ?? .topRated
         guard let movies = movies[section] else { return DefaultSectionCell() }
         let movie =  movies[indexPath.row]
@@ -121,7 +120,7 @@ extension HomeViewController {
         
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeader.reuseIdentifier, for: indexPath) as? HomeHeader else {
             return HomeHeader()
@@ -135,10 +134,10 @@ extension HomeViewController {
     }
 }
 
-// MARK: - UICollectionViewControllerDelegate
-extension HomeViewController {
+// MARK: - UICollectionViewDelegate
+extension HomeViewController: UICollectionViewDelegate {
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = MovieGroupSections(rawValue: indexPath.section) ?? .topRated
         guard let movies = movies[section] else { return }
         let movie = movies[indexPath.row]
@@ -150,25 +149,25 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
-     func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+    private func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             
             var section: NSCollectionLayoutSection?
             
             switch sectionIndex {
             case 0:
-                section = HomeViewController.getHightLayoutSection()
+                section = self.getHightLayoutSection()
             case 3:
-                section = HomeViewController.getTopRatedLayoutSection()
+                section = self.getTopRatedLayoutSection()
             default:
-                section = HomeViewController.getDefaultLayoutSection()
+                section = self.getDefaultLayoutSection()
             }
             return section
         }
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
 
-    static func getHightLayoutSection() -> NSCollectionLayoutSection {
+    private func getHightLayoutSection() -> NSCollectionLayoutSection {
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -187,7 +186,7 @@ extension HomeViewController {
         
     }
 
-    static func getDefaultLayoutSection() -> NSCollectionLayoutSection {
+    private  func getDefaultLayoutSection() -> NSCollectionLayoutSection {
         
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.25), heightDimension: .absolute(150)))
         item.contentInsets.trailing = 16
@@ -206,7 +205,7 @@ extension HomeViewController {
 
     }
 
-    static func getTopRatedLayoutSection() -> NSCollectionLayoutSection {
+    private func getTopRatedLayoutSection() -> NSCollectionLayoutSection {
         
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
