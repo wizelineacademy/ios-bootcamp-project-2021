@@ -11,6 +11,7 @@ final class HomeViewController: UIViewController {
     // MARK: - Properties
     private let group = DispatchGroup()
     private var collectionView: UICollectionView!
+    let categoryHomeHeaderId = "categoryHomeHeaderId"
     
     var movies: [MovieGroupSections: [Movie]] = [:]
     

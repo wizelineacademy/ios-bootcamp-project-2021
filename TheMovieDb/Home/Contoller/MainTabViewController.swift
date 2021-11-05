@@ -7,8 +7,8 @@
 
 import UIKit
 
-let categoryHomeHeaderId = "categoryHomeHeaderId"
 final class MainTabViewController: UITabBarController {
+    // MARK: - Properties
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
