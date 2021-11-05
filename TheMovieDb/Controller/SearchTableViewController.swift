@@ -88,7 +88,7 @@ final class SearchTableViewController: UITableViewController {
             case .person:
                 navigationPersonDetailViewController(id: idSelected)
             case .movie:
-                navigationPersonDetailViewController(id: idSelected)
+                navigationMovieInfoViewController(id: idSelected)
             case .tv:
                 return
             }
