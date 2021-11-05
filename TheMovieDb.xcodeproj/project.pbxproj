@@ -125,13 +125,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2E17B95D2733285100D12D8A /* Networwork */ = {
+		2E17B95D2733285100D12D8A /* Network */ = {
 			isa = PBXGroup;
 			children = (
 				2E9BAA12272CA90400B0A9E4 /* NetworkInformation.swift */,
 				2E86F8B227273F68005DB3E2 /* MovieFacade.swift */,
 			);
-			path = Networwork;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		2E86F8AD272732E7005DB3E2 /* Model */ = {
@@ -158,7 +158,7 @@
 		2E86F8AF2727331B005DB3E2 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2E17B95D2733285100D12D8A /* Networwork */,
+				2E17B95D2733285100D12D8A /* Network */,
 				2E0BDB7D2728644500DC4011 /* TableViewController.swift */,
 				837B4EAB258178B6003DFC67 /* ViewController.swift */,
 				2EAABCB82728A0AF0074BD5D /* MovieInfoViewController.swift */,
