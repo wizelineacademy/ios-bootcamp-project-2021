@@ -19,7 +19,9 @@ class APIService {
              }
             
             do {
-                let result = try JSONDecoder().decode(T.self, from: data!)
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let result = try decoder.decode(T.self, from: data!)
                 completion(.success(result))
             } catch let error {
                 completion(.failure(error))

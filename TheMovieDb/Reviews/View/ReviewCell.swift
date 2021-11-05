@@ -71,7 +71,7 @@ final class ReviewCell: UICollectionViewCell {
         descriptionLabel.text = review.content
         authorNameLabel.text = review.author
         
-        guard var safeUrl = review.authorDetail.avatarPath else {return}
+        guard var safeUrl = review.authorDetails.avatarPath else {return}
         
         if safeUrl.prefix(1) == "/" {
             safeUrl.removeFirst()
