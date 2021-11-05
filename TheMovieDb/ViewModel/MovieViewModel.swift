@@ -9,7 +9,7 @@ import UIKit
 
 struct MovieViewModel {
     
-    var movie: Movie
+    let movie: Movie
     
     var isHighSection = false
     
