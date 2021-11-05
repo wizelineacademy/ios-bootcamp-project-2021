@@ -34,4 +34,3 @@ struct Movie: Decodable {
         case popularity
     }
 }
-
