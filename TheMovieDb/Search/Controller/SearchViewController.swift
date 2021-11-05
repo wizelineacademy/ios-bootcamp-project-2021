@@ -8,15 +8,17 @@
 import UIKit
 
 final class SearchViewController: UITableViewController {
- 
+    
     // MARK: - Properties
     private let reuseIdentifier = "SearchCell"
     private let searchController = UISearchController(searchResultsController: nil)
     private var moviesSearch: [Movie] = []
+    public let searchData: SearchingDataProtocol
     
     // MARK: - Life Cycle
-    init() {
+    init(searchData: SearchingDataProtocol ) {
         let style = UITableView.Style.insetGrouped
+        self.searchData = searchData
         super.init(style: style )
     }
     
@@ -29,7 +31,7 @@ final class SearchViewController: UITableViewController {
         super.viewDidLoad()
         configureSearchController()
         configureTableView()
-       
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -53,7 +55,7 @@ final class SearchViewController: UITableViewController {
         navigationItem.searchController = searchController
         navigationItem.titleView?.isHidden = true
         definesPresentationContext = false
-
+        
     }
     
     // MARK: - API
@@ -62,7 +64,7 @@ final class SearchViewController: UITableViewController {
 
 // MARK: - UITableViewDataSource
 extension SearchViewController {
-   
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return moviesSearch.count
     }
@@ -97,19 +99,11 @@ extension SearchViewController: UISearchControllerDelegate {
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else {return}
-        
+    
         let parameter = APIParameters(query: text)
-        MovieAPI.shared.fetchData(endPoint: .search, with: parameter, completion: {(response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let res):
-                self.moviesSearch = res.movies
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
-       
-        })
+        self.moviesSearch = searchData.getMovie(with: parameter)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 protocol DetailHeaderViewDelegate: AnyObject {
     func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie)
 }
@@ -27,11 +28,11 @@ final class DetailHeaderView: UICollectionReusableView {
         return label
     }()
     
-    private let dateLabel = TagLabel()
+    private let dateLabel = UILabel()
     
-    private let votesLabel = TagLabel(colorBackground: .systemPurple)
+    private let votesLabel = UILabel()
     
-    private let popularityLabel = TagLabel(colorBackground: .systemGreen)
+    private let popularityLabel = UILabel()
     
     private  var stack = UIStackView()
     
@@ -81,6 +82,10 @@ final class DetailHeaderView: UICollectionReusableView {
         stack.distribution = .equalSpacing
         stack.setHeight(25)
         
+        configureLabelToTag(label: dateLabel)
+        configureLabelToTag(label: votesLabel, colorBackground: .systemPurple)
+        configureLabelToTag(label: popularityLabel, colorBackground: .systemGreen)
+        
         addSubview(reviewsButton)
         reviewsButton.anchor( left: leftAnchor, bottom: headerLabel.topAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
         reviewsButton.setHeight(30)
@@ -97,9 +102,18 @@ final class DetailHeaderView: UICollectionReusableView {
         let url = URL(string: urlImage )
         imageBackground.kf.setImage(with: url)
         overviewLabel.text = movie.overview
-        dateLabel.text = "   \(movie.releaseDate)   "
+        dateLabel.text = "   \(movie.releaseDate ?? "")   "
         popularityLabel.text = "   \(Int(movie.popularity))%   "
         votesLabel.text = "   Votes: \(movie.voteCount)   "
+    }
+    
+    private func configureLabelToTag(label: UILabel, colorBackground: UIColor = .blue) {
+        label.backgroundColor = .clear
+        label.layer.cornerRadius = 10
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.layer.masksToBounds = true
+        label.layer.borderColor = colorBackground.cgColor
+        label.layer.borderWidth = 3.0
     }
     // MARK: - Actions
     
