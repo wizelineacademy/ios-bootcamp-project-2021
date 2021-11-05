@@ -10,8 +10,7 @@ import UIKit
 final class ReviewCell: UICollectionViewCell, Reusable {
 
     // MARK: - Properties
-
-    public var review: Review? {
+    public var viewModel: ReviewViewModel? {
         didSet {
             configure()
         }
@@ -38,6 +37,8 @@ final class ReviewCell: UICollectionViewCell, Reusable {
         configureUI()
     }
     
+    @available(*, unavailable)
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -64,20 +65,10 @@ final class ReviewCell: UICollectionViewCell, Reusable {
     }
     
     private func configure() {
-        guard let review = review else {
-            return
-        }
-        descriptionLabel.text = review.content
-        authorNameLabel.text = review.author
-        
-        guard var safeUrl = review.authorDetails.avatarPath else {return}
-        
-        if safeUrl.prefix(1) == "/" {
-            safeUrl.removeFirst()
-        }
-        
-        let url = URL(string: safeUrl )
-        logoImageView.kf.setImage(with: url)
+        guard let viewModel = viewModel else { return }
+        descriptionLabel.text = viewModel.content
+        authorNameLabel.text = viewModel.author
+        logoImageView.kf.setImage(with: viewModel.imageUrl)
 
     }
     

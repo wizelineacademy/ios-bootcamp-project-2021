@@ -23,6 +23,7 @@ final class ReviewsCollectionViewController: UICollectionViewController {
         super.init(collectionViewLayout: layout)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -74,7 +75,8 @@ extension ReviewsCollectionViewController {
             return ReviewCell()
         }
         let review = reviews[indexPath.row]
-        cell.review = review
+        let viewModel = ReviewViewModel(review: review)
+        cell.viewModel = viewModel
         return cell
     }
 }

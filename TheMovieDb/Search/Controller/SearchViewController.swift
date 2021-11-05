@@ -20,6 +20,7 @@ final class SearchViewController: UITableViewController {
         super.init(style: style )
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

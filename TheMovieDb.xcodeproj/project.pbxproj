@@ -16,6 +16,7 @@
 		452BD839272A5C4700F842F5 /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452BD838272A5C4700F842F5 /* Reviews.swift */; };
 		4546A262272B848800D77147 /* APIBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546A261272B848800D77147 /* APIBuild.swift */; };
 		455C5ACF2734DE3D00ADE036 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5ACE2734DE3D00ADE036 /* Reusable.swift */; };
+		455C5AD12734E20400ADE036 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5AD02734E20400ADE036 /* ReviewViewModel.swift */; };
 		457931732730E00F00A79E2D /* APIMoviesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457931722730E00F00A79E2D /* APIMoviesProtocol.swift */; };
 		457931752730E19E00A79E2D /* APISearchProtocol.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457931742730E19E00A79E2D /* APISearchProtocol.swift.swift */; };
 		457931772730E1B800A79E2D /* APIReviewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457931762730E1B800A79E2D /* APIReviewsProtocol.swift */; };
@@ -83,6 +84,7 @@
 		452BD838272A5C4700F842F5 /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
 		4546A261272B848800D77147 /* APIBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBuild.swift; sourceTree = "<group>"; };
 		455C5ACE2734DE3D00ADE036 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		455C5AD02734E20400ADE036 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
 		457931722730E00F00A79E2D /* APIMoviesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMoviesProtocol.swift; sourceTree = "<group>"; };
 		457931742730E19E00A79E2D /* APISearchProtocol.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISearchProtocol.swift.swift; sourceTree = "<group>"; };
 		457931762730E1B800A79E2D /* APIReviewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIReviewsProtocol.swift; sourceTree = "<group>"; };
@@ -365,6 +367,7 @@
 			isa = PBXGroup;
 			children = (
 				45C8C8462733B196001FB82E /* MovieViewModel.swift */,
+				455C5AD02734E20400ADE036 /* ReviewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				45BB7AAF272DAE3A00DE07C3 /* MovieGroupSections.swift in Sources */,
 				45D2B4E2272F1C750065DC0D /* TagLabel.swift.swift in Sources */,
 				45BB7AB1272DAFDE00DE07C3 /* HightSectionCell.swift in Sources */,
+				455C5AD12734E20400ADE036 /* ReviewViewModel.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
 				45BB7AB3272DB24900DE07C3 /* UIViewExtensions.swift in Sources */,
 				45D2B4F0272F51F80065DC0D /* ReviewDescriptionViewController.swift in Sources */,

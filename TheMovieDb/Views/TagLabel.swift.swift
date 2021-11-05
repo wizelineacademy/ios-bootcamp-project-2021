@@ -19,6 +19,7 @@ final class TagLabel: UILabel {
         layer.borderWidth = 3.0
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
