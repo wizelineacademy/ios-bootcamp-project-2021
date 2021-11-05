@@ -55,4 +55,7 @@ class DetailViewController: UIViewController {
 
     }
 
+    @IBAction func closeView(_ sender: UIButton) {
+        dismiss(animated: true)
+    }
 }
