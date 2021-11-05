@@ -8,13 +8,13 @@
 import Foundation
 
 struct Person: Codable {
-    
-    let id: Int
-    let name: String
-    let profilePath: String?
-    let character: String
-    let popularity: Float
-
+  
+  let id: Int
+  let name: String
+  let profilePath: String?
+  let character: String
+  let popularity: Float
+  
   private enum CodingKeys: String, CodingKey {
     case id
     case name
@@ -22,9 +22,9 @@ struct Person: Codable {
     case character
     case popularity
   }
-    
+  
 }
 
 struct Credits: Decodable {
-    let cast: [Person]?
+  let cast: [Person]?
 }

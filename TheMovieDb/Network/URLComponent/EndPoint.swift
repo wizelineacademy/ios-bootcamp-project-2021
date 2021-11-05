@@ -8,18 +8,18 @@
 import Foundation
 
 protocol Endpoint {
-    var path: String { get }
+  var path: String { get }
 }
 
 extension Endpoint {
   
-    var base: String {
-      return "https://api.themoviedb.org"
-    }
-    var apiKey: String {
-        return "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
-    }
-    
+  var base: String {
+    return ApiPath.baseUrl.path
+  }
+  var apiKey: String {
+    return ApiPath.apiKey.path
+  }
+  
   func getUrlComponents(queryItems: [URLQueryItem]?) -> URLComponents {
     var components = URLComponents(string: base)!
     components.path = path
@@ -31,9 +31,12 @@ extension Endpoint {
     }
     return components
   }
-    
-    func request(urlComponents: URLComponents) -> URLRequest {
-        return URLRequest(url: urlComponents.url!)
+  
+  func request(urlComponents: URLComponents) -> URLRequest {
+    guard urlComponents.url != nil else {
+      fatalError("UrlComponents fail creating the url")
     }
-
+    return URLRequest(url: urlComponents.url!)
+  }
+  
 }

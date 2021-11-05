@@ -14,7 +14,7 @@ class DetailViewController: UIViewController {
   var movie: MovieDetails?
   var cast: [Person]?
   
-  var baseUrlImage = "https://image.tmdb.org/t/p/w500/"
+  //  var baseUrlImage = "https://image.tmdb.org/t/p/w500/"
   
   @IBOutlet private weak var heroImage: UIImageView!
   @IBOutlet private weak var titleLabel: UILabel!
@@ -36,51 +36,54 @@ class DetailViewController: UIViewController {
     setupDetailMovie()
   }
   
-  private func setImages(_ heroImage: String, _ backgroudImage: String) {
-    let urlPost = URL(string: "\(baseUrlImage)\(heroImage)")
-    let imageProvider = ImageResource(downloadURL: urlPost!)
+  private func setImages() {
+    
+    guard let heroImage = movie?.poster,
+          let backgroudImage = movie?.backDropPath,
+          let urlBackground = URL(string: "\(ApiPath.baseUrlImage.path)\(backgroudImage)"),
+          let urlPost = URL(string: "\(ApiPath.baseUrlImage.path)\(heroImage)")
+    else { return }
+    
+    let imageProvider = ImageResource(downloadURL: urlPost)
     self.heroImage.kf.setImage(with: imageProvider)
-    let urlBackground = URL(string: "\(baseUrlImage)\(backgroudImage)")
-    let backgroundProvider = ImageResource(downloadURL: urlBackground!)
+    let backgroundProvider = ImageResource(downloadURL: urlBackground)
     self.backgroundImage.kf.setImage(with: backgroundProvider)
     self.backgroundInfo.backgroundColor = DesignColor.black.color
+    
   }
   
   private func setupDetailMovie() {
     
     guard let title = movie?.title,
-          let heroImage = movie?.poster,
           let releaseDate = movie?.releaseDate,
           let score = movie?.voteAverage,
           let description = movie?.overview,
           let originalLanguage = movie?.originalLanguage,
           let status = movie?.status,
           let budget = movie?.budget,
-          let revenue = movie?.revenue,
-          let backgroudImage = movie?.backDropPath
-            
+          let revenue = movie?.revenue
     else { return }
     
     self.title = title
     
     let date = releaseDate.components(separatedBy: "-")
     let month = SetMonth.Jan
-
+    
     self.starIcon.tintColor = DesignColor.white.color
     self.titleLabel.text = title
     self.heroImage.layer.cornerRadius = 10
     self.releaseDateLabel.text = month.setMonth(date: date)
-    self.setImages(heroImage, backgroudImage)
+    self.setImages()
     self.scoreLabel.text = String(score)
     self.descriptionLabel.text = description
     self.languageLabel.text = originalLanguage
     self.statusLabel.text = status
-    self.budgetLabel.text = "$\(addCommaToNumber(number: budget))"
-    self.revenueLabel.text = "$\(addCommaToNumber(number: revenue))"
+    self.budgetLabel.text = addCommaToNumber(number: budget)
+    self.revenueLabel.text = addCommaToNumber(number: revenue)
     
   }
   
-  func addCommaToNumber(number: Int) -> String {
+  private func addCommaToNumber(number: Int) -> String {
     let arrayNumber = Array(String(number).reversed())
     var newString = ""
     var count = 1
@@ -93,7 +96,8 @@ class DetailViewController: UIViewController {
         count += 1
       }
     }
-    return String(Array(newString).reversed())
+    let completeNumber = "$\(String(Array(newString).reversed()))"
+    return completeNumber
   }
   
 }

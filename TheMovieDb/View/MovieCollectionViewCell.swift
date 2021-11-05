@@ -19,12 +19,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
   
   static let identifier = "movieCollectionViewCell"
   // base url provided for the api for downloading images
-  var baseUrlImage = "https://image.tmdb.org/t/p/w500/"
+  
   // UI var conections with the nib
   @IBOutlet private weak var posterImage: UIImageView!
   @IBOutlet private weak var movieTitle: UILabel!
   @IBOutlet private weak var releaseDate: UILabel!
- 
+  
   override func awakeFromNib() {
     super.awakeFromNib()
   }
@@ -32,7 +32,7 @@ class MovieCollectionViewCell: UICollectionViewCell {
   func setupView() {
     
     backgroundColor = DesignColor.whiteDirt.color
-    layer.cornerRadius = 20
+    layer.cornerRadius = 10
     clipsToBounds = true
     
     guard let title = movie?.title, let releaseDate = movie?.releaseDate, let posterPath = movie?.poster else { return }
@@ -45,14 +45,14 @@ class MovieCollectionViewCell: UICollectionViewCell {
     self.releaseDate.text = month.setMonth(date: date)
     self.releaseDate.textColor = DesignColor.gray.color
     // set image with url and kingFisher
-    let url = URL(string: "\(baseUrlImage)\(posterPath)")
+    let url = URL(string: "\(ApiPath.baseUrlImage.path)\(posterPath)")
     let imageProvider = ImageResource(downloadURL: url!)
     self.posterImage.kf.setImage(with: imageProvider)
     
   }
-   
+  
   static func nib() -> UINib {
-      return UINib(nibName: "MovieCollectionViewCell", bundle: nil)
+    return UINib(nibName: "MovieCollectionViewCell", bundle: nil)
   }
   
 }

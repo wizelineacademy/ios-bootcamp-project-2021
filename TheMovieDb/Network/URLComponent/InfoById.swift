@@ -18,7 +18,7 @@ enum InfoById {
 }
 
 extension InfoById: Endpoint {
-
+  
   var path: String {
     switch self {
     case .credits(let movieId): return "/3/movie/\(movieId)/credits"

@@ -8,23 +8,23 @@
 import Foundation
 
 enum MovieRegion {
-    case US
-    case CO
-    case BR
-    case MX
-    case ES
-
+  case US
+  case CO
+  case BR
+  case MX
+  case ES
+  
 }
 
 extension MovieRegion {
   
   var region: String {
-      switch self {
-      case .BR: return "BR"
-      case .CO: return "CO"
-      case .ES: return "ES"
-      case .MX: return "MX"
-      case .US: return "US"
-      }
+    switch self {
+    case .BR: return "BR"
+    case .CO: return "CO"
+    case .ES: return "ES"
+    case .MX: return "MX"
+    case .US: return "US"
+    }
   }
 }

@@ -14,9 +14,9 @@ enum TextStyle {
   
   var size: CGFloat {
     switch self {
-    case .title: return 22
-    case .subtitle: return 20
-    case .headline: return 18
+    case .title: return 24
+    case .subtitle: return 18
+    case .headline: return 20
     case .subheadline: return 16
     case .caption: return 12
     case .paragraph: return 14

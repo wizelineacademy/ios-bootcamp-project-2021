@@ -11,17 +11,8 @@ class FeedViewController: UICollectionViewController {
   
   var arrayMovies = [Movie]()
   
-  var databaseManager: ApiClient?
+  var databaseManager: MovieDBClient?
   
-//  init(databaseManager: ApiClient) {
-//    self.databaseManager = databaseManager
-//    super.init(nibName: "Main", bundle: Bundle.main)
-//  }
-//
-//  required init?(coder: NSCoder) {
-//    fatalError("init(coder:) has not been implemented")
-//  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
     setupNavigationController()
@@ -97,6 +88,10 @@ class FeedViewController: UICollectionViewController {
     }
   }
   
+}
+
+extension FeedViewController: UICollectionViewDelegateFlowLayout {
+  
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return arrayMovies.count
   }
@@ -112,10 +107,6 @@ class FeedViewController: UICollectionViewController {
     let movie = arrayMovies[indexPath.item]
     self.getDetailMovie(movieId: movie.id)
   }
-  
-}
-
-extension FeedViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
     
