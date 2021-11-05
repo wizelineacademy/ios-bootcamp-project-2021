@@ -18,6 +18,7 @@ enum MovieFeed: Int {
     case reviews
     case similar
     case recommendations
+    case configuration
 }
 
 extension MovieFeed: EndPoint {
@@ -55,6 +56,8 @@ extension MovieFeed: EndPoint {
             return "/3/movie/\(searchId ?? "")/similar"
         case .recommendations:
             return "/3/movie/\(searchId ?? "")/recommendations"
+        case .configuration:
+            return "/3/configuration"
         }
     }
 }
@@ -72,16 +75,8 @@ extension MovieFeed {
             return "Top Rated"
         case .upcoming:
             return "Upcoming"
-        case .keyword:
-            return "Keyword"
-        case .search:
-            return "Search"
-        case .reviews:
-            return "Reviews"
-        case .similar:
-            return "Similar"
-        case .recommendations:
-            return "Recommendations"
+        default:
+            return ""
         }
     }
 }

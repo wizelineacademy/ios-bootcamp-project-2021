@@ -12,5 +12,5 @@ struct Constants {
     static let apiBaseURL = "https://api.themoviedb.org"
     static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
     static let apiLanguage = "en"
-    
+    static let defaultPosterSize = "wp500"
 }
