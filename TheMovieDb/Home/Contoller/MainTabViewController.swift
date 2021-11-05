@@ -21,16 +21,27 @@ final class MainTabViewController: UITabBarController {
     
     private func configureUI() {
         view.backgroundColor = .red
-        UITabBar.appearance().backgroundColor = .systemGray6
-        UITabBar.appearance().isTranslucent = true
+        UITabBar.appearance().backgroundColor = .systemBackground
+        UITabBar.appearance().isTranslucent = false
         tabBar.tintColor = .label
+
     }
     
     private func configureViewControllers() {
         
-        let home = templateNavigationController(unselectedImage: UIImage(systemName: "house")!, selectedImage: UIImage(systemName: "house.fill")!, title: "Home", rootViewController: HomeViewController())
+        let home = templateNavigationController(
+            unselectedImage: UIImage(systemName: "house")!,
+            selectedImage: UIImage(systemName: "house.fill")!,
+            title: "Home",
+            rootViewController: HomeViewController()
+            )
         
-        let search = templateNavigationController(unselectedImage: UIImage(systemName: "magnifyingglass")!, selectedImage: UIImage(systemName: "text.magnifyingglass")!, title: "Search", rootViewController: SearchViewController())
+        let searchData = SearchManager()
+        let search = templateNavigationController(
+            unselectedImage: UIImage(systemName: "magnifyingglass")!,
+            selectedImage: UIImage(systemName: "text.magnifyingglass")!,
+            title: "Search",
+            rootViewController: SearchViewController(searchData: searchData) )
         
         viewControllers = [home, search]
     }
