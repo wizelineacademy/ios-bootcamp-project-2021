@@ -39,11 +39,6 @@ class ListViewController: UICollectionViewController {
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.alwaysBounceVertical = true
         collectionView.indicatorStyle = .white
-
-        // Set up the refresh control as part of the collection view when it's pulled to refresh.
-        let refreshControl = UIRefreshControl()
-        collectionView.refreshControl = refreshControl
-        collectionView.sendSubviewToBack(refreshControl)
     }
     
     private func setupUINavigation(movieFeed: MovieFeed) {
@@ -57,8 +52,6 @@ class ListViewController: UICollectionViewController {
         navbar.titleTextAttributes = [.foregroundColor: UIColor.systemIndigo]
         navbar.prefersLargeTitles = true
 
-        // Set up the searchController parameters.
-        
         // Customize tab bar
         guard let tabBar = self.tabBarController?.tabBar else {
             return
@@ -129,12 +122,12 @@ class ListViewController: UICollectionViewController {
         self.activityIndicator.isHidden = true
     }
     
+    // MARK: - CollectionView DataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movieList?.results?.count ?? 0
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        print("\(#function) for indexPath: \(indexPath.row)")
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.cellIdentifier, for: indexPath) as? MovieCell else {
             preconditionFailure("Failed to load collection view cell")
         }
@@ -147,5 +140,10 @@ class ListViewController: UICollectionViewController {
         cell.configurationImages = configuration?.images
         
         return cell
+    }
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
     }
 }
