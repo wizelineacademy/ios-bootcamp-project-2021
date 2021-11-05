@@ -17,6 +17,7 @@
 		4546A262272B848800D77147 /* APIBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546A261272B848800D77147 /* APIBuild.swift */; };
 		455C5ACF2734DE3D00ADE036 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5ACE2734DE3D00ADE036 /* Reusable.swift */; };
 		455C5AD12734E20400ADE036 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5AD02734E20400ADE036 /* ReviewViewModel.swift */; };
+		455C5AD32734ECE700ADE036 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5AD22734ECE700ADE036 /* BackgroundImageView.swift */; };
 		457931732730E00F00A79E2D /* APIMoviesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457931722730E00F00A79E2D /* APIMoviesProtocol.swift */; };
 		457931752730E19E00A79E2D /* APISearchProtocol.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457931742730E19E00A79E2D /* APISearchProtocol.swift.swift */; };
 		457931772730E1B800A79E2D /* APIReviewsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457931762730E1B800A79E2D /* APIReviewsProtocol.swift */; };
@@ -42,7 +43,6 @@
 		45BB7ACB272E67A300DE07C3 /* DetailViewController.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45BB7ACA272E67A300DE07C3 /* DetailViewController.swift.swift */; };
 		45C8C8472733B196001FB82E /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C8C8462733B196001FB82E /* MovieViewModel.swift */; };
 		45D2B4DE272EFD5A0065DC0D /* DetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4DD272EFD5A0065DC0D /* DetailHeaderView.swift */; };
-		45D2B4E0272EFFB10065DC0D /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4DF272EFFB10065DC0D /* BackgroundImageView.swift */; };
 		45D2B4E2272F1C750065DC0D /* TagLabel.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4E1272F1C740065DC0D /* TagLabel.swift.swift */; };
 		45D2B4E5272F236C0065DC0D /* MovieSection.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4E4272F236C0065DC0D /* MovieSection.swift.swift */; };
 		45D2B4E7272F34ED0065DC0D /* DetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4E6272F34ED0065DC0D /* DetailHeader.swift */; };
@@ -85,6 +85,7 @@
 		4546A261272B848800D77147 /* APIBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBuild.swift; sourceTree = "<group>"; };
 		455C5ACE2734DE3D00ADE036 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		455C5AD02734E20400ADE036 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
+		455C5AD22734ECE700ADE036 /* BackgroundImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 		457931722730E00F00A79E2D /* APIMoviesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMoviesProtocol.swift; sourceTree = "<group>"; };
 		457931742730E19E00A79E2D /* APISearchProtocol.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APISearchProtocol.swift.swift; sourceTree = "<group>"; };
 		457931762730E1B800A79E2D /* APIReviewsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIReviewsProtocol.swift; sourceTree = "<group>"; };
@@ -109,7 +110,6 @@
 		45BB7ACA272E67A300DE07C3 /* DetailViewController.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift.swift; sourceTree = "<group>"; };
 		45C8C8462733B196001FB82E /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		45D2B4DD272EFD5A0065DC0D /* DetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderView.swift; sourceTree = "<group>"; };
-		45D2B4DF272EFFB10065DC0D /* BackgroundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 		45D2B4E1272F1C740065DC0D /* TagLabel.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagLabel.swift.swift; sourceTree = "<group>"; };
 		45D2B4E4272F236C0065DC0D /* MovieSection.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSection.swift.swift; sourceTree = "<group>"; };
 		45D2B4E6272F34ED0065DC0D /* DetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeader.swift; sourceTree = "<group>"; };
@@ -230,7 +230,7 @@
 		45A64D472728ECDD00159CE6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				45D2B4DF272EFFB10065DC0D /* BackgroundImageView.swift */,
+				455C5AD22734ECE700ADE036 /* BackgroundImageView.swift */,
 				45D2B4E1272F1C740065DC0D /* TagLabel.swift.swift */,
 			);
 			path = Views;
@@ -637,6 +637,7 @@
 				457931732730E00F00A79E2D /* APIMoviesProtocol.swift in Sources */,
 				452BD82B272A364800F842F5 /* APIEndPoints.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
+				455C5AD32734ECE700ADE036 /* BackgroundImageView.swift in Sources */,
 				452BD82F272A3A5700F842F5 /* APIService.swift in Sources */,
 				452BD839272A5C4700F842F5 /* Reviews.swift in Sources */,
 				4583F684272BAFA7006E13AD /* ResultSearch.swift in Sources */,
@@ -648,7 +649,6 @@
 				45A64D592729017200159CE6 /* UITabBarControllerExtension.swift in Sources */,
 				45BB7ABB272DDAFE00DE07C3 /* TopRatedSectionCell.swift.swift in Sources */,
 				45D2B4DE272EFD5A0065DC0D /* DetailHeaderView.swift in Sources */,
-				45D2B4E0272EFFB10065DC0D /* BackgroundImageView.swift in Sources */,
 				45BB7AAF272DAE3A00DE07C3 /* MovieGroupSections.swift in Sources */,
 				45D2B4E2272F1C750065DC0D /* TagLabel.swift.swift in Sources */,
 				45BB7AB1272DAFDE00DE07C3 /* HightSectionCell.swift in Sources */,
