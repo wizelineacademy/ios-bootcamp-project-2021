@@ -19,6 +19,8 @@ class DetailViewController: UIViewController {
     var configurationImages: ConfigurationImages?
     var movieItem: MovieItem?
     
+    static let segueIdentifier = "goToMovieDetalSegue"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

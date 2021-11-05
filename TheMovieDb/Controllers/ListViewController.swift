@@ -13,6 +13,7 @@ class ListViewController: UICollectionViewController {
     var movieClient: MovieClient!
     var movieList: MovieList?
     var configuration: ConfigurationWelcome?
+    var selectedMovie: MovieItem?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,7 @@ class ListViewController: UICollectionViewController {
     }
     
     private func setupUICollectionView() {
-        let cellNib = UINib(nibName: MovieCell.cellIdentifier, bundle: nil)
+        let cellNib = UINib(nibName: MovieCell.cellIdentifier, bundle: .main)
         collectionView.register(cellNib, forCellWithReuseIdentifier: MovieCell.cellIdentifier)
         
         // Set up the collection view.
@@ -51,7 +52,7 @@ class ListViewController: UICollectionViewController {
         navbar.largeTitleTextAttributes = [.foregroundColor: UIColor.systemIndigo]
         navbar.titleTextAttributes = [.foregroundColor: UIColor.systemIndigo]
         navbar.prefersLargeTitles = true
-
+        
         // Customize tab bar
         guard let tabBar = self.tabBarController?.tabBar else {
             return
@@ -142,8 +143,21 @@ class ListViewController: UICollectionViewController {
         return cell
     }
     
+    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        guard let movie = movieList?.results?[indexPath.row] else {
+            return false
+        }
+        self.selectedMovie = movie
+        performSegue(withIdentifier: DetailViewController.segueIdentifier, sender: self)
+        return true
+    }
+    
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+        if segue.identifier == DetailViewController.segueIdentifier {
+            let detailViewController = segue.destination as? DetailViewController
+            detailViewController?.movieItem = selectedMovie
+            detailViewController?.configurationImages = configuration?.images
+        }
     }
 }
