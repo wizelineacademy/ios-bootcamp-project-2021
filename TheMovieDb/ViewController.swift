@@ -11,7 +11,6 @@ class ViewController: UIViewController {
 
     let service = NetworkManager(urlSession: URLSession.shared)
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         let url = "/3/trending/movie/day"

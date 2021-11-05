@@ -11,6 +11,7 @@ struct Results<T: Decodable>: Decodable {
     let page: Int
     let results: [T]
 }
+
 struct Movie: Decodable, Hashable {
     
     let id: Int
