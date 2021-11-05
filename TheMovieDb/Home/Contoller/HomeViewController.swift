@@ -151,13 +151,13 @@ extension HomeViewController: UICollectionViewDelegate {
 extension HomeViewController {
     private func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            
+            let sectionGroup = MovieGroupSections(rawValue: sectionIndex)
             var section: NSCollectionLayoutSection?
             
-            switch sectionIndex {
-            case 0:
+            switch sectionGroup {
+            case .popular:
                 section = self.getHightLayoutSection()
-            case 3:
+            case .topRated:
                 section = self.getTopRatedLayoutSection()
             default:
                 section = self.getDefaultLayoutSection()
