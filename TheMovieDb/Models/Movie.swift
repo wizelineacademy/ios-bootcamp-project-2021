@@ -37,25 +37,5 @@ struct Movie: Decodable, Hashable {
 struct MovieList: Decodable {
     let page: Int
     let results : [Movie]
-    //let total_pages: Int
-    //let total_results: Int
 }
 
-//struct Movie: Decodable {
-//    let adult: Bool
-//    let backdropPath: String?
-//    let genres_id: [Int]
-//    let id: Int
-//    let original_language: String
-//    let originalTitle: String
-//
-//    let overview: String
-//    let posterPath: String?
-//    let releaseDate: String
-//    let title: String
-//    let video: Bool
-//    let voteAverage: Double
-//    let voteCount: Int
-//    let popularity: Double
-//    let mediaType: String
-//}
