@@ -40,12 +40,8 @@ extension MovieFeed: EndPoint {
             return "/3/trending/movie/day"
         case .nowPlaying:
             return "/3/movie/now_playing"
-        case .popular:
-            return "/3/movie/popular"
         case .topRated:
             return "/3/movie/top_rated"
-        case .upcoming:
-            return "/3/movie/upcoming"
         case .keyword:
             return "/3/search/keyword"
         case .search:
@@ -58,6 +54,8 @@ extension MovieFeed: EndPoint {
             return "/3/movie/\(searchId ?? "")/recommendations"
         case .configuration:
             return "/3/configuration"
+        default:
+            return "/3/movie/\(self)"
         }
     }
 }
