@@ -21,6 +21,4 @@ struct Movie: Decodable {
     let popularity: Float
     let mediaType: String?
     
-
-    
 }
