@@ -59,10 +59,10 @@ final class HomeViewController: UIViewController {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         view.addSubview(collectionView)
         collectionView.anchor(top: view.topAnchor, left: view.safeAreaLayoutGuide.leftAnchor, bottom: view.bottomAnchor, right: view.safeAreaLayoutGuide.rightAnchor)
-        collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reuseIdentifier)
-        collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reuseIdentifier)
-        collectionView.register(TopRatedSectionCell.self, forCellWithReuseIdentifier: TopRatedSectionCell.reuseIdentifier)
-        collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reuseIdentifier)
+        collectionView.register(HightSectionCell.self, forCellWithReuseIdentifier: HightSectionCell.reusableIdentifier)
+        collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reusableIdentifier)
+        collectionView.register(TopRatedSectionCell.self, forCellWithReuseIdentifier: TopRatedSectionCell.reusableIdentifier)
+        collectionView.register(HomeHeader.self, forSupplementaryViewOfKind: categoryHomeHeaderId, withReuseIdentifier: HomeHeader.reusableIdentifier)
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -92,7 +92,7 @@ extension HomeViewController: UICollectionViewDataSource {
         
         switch section {
         case .popular:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HightSectionCell.reuseIdentifier, for: indexPath) as? HightSectionCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HightSectionCell.reusableIdentifier, for: indexPath) as? HightSectionCell else {
                 return HightSectionCell()
             }
             var viewModel = MovieViewModel(movie: movie)
@@ -100,7 +100,7 @@ extension HomeViewController: UICollectionViewDataSource {
             cell.viewModel = viewModel
             return cell
         case .topRated:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopRatedSectionCell.reuseIdentifier, for: indexPath) as? TopRatedSectionCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopRatedSectionCell.reusableIdentifier, for: indexPath) as? TopRatedSectionCell else {
                 return TopRatedSectionCell()
             }
           
@@ -110,7 +110,7 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
             
         case .upcoming, .trending, .playingNow:
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reuseIdentifier, for: indexPath) as? DefaultSectionCell else {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reusableIdentifier, for: indexPath) as? DefaultSectionCell else {
                 return DefaultSectionCell()
             }
             let viewModel = MovieViewModel(movie: movie)
@@ -122,7 +122,7 @@ extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeader.reuseIdentifier, for: indexPath) as? HomeHeader else {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HomeHeader.reusableIdentifier, for: indexPath) as? HomeHeader else {
             return HomeHeader()
         }
         

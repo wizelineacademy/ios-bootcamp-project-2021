@@ -7,10 +7,8 @@
 
 import UIKit
 
-final class DefaultSectionCell: UICollectionViewCell {
-    // MARK: - Properties
-    static let reuseIdentifier =  String(describing: DefaultSectionCell.self)
-    
+final class DefaultSectionCell: UICollectionViewCell, Reusable {
+    // MARK: - Properties    
     public var viewModel: MovieViewModel? {
         didSet {
             configure()

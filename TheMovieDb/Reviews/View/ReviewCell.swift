@@ -7,10 +7,9 @@
 
 import UIKit
 
-final class ReviewCell: UICollectionViewCell {
-    
+final class ReviewCell: UICollectionViewCell, Reusable {
+
     // MARK: - Properties
-    static let reuseIdentifier =  String(describing: ReviewCell.self)
 
     public var review: Review? {
         didSet {

@@ -36,7 +36,7 @@ final class ReviewsCollectionViewController: UICollectionViewController {
     // MARK: - Helpers
     
     private func configureUI() {
-        self.collectionView!.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reuseIdentifier )
+        self.collectionView!.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reusableIdentifier )
         navigationItem.title = "Reviews"
         collectionView.backgroundColor = .systemBackground
     }
@@ -70,7 +70,7 @@ extension ReviewsCollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCell.reuseIdentifier, for: indexPath) as? ReviewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCell.reusableIdentifier, for: indexPath) as? ReviewCell else {
             return ReviewCell()
         }
         let review = reviews[indexPath.row]

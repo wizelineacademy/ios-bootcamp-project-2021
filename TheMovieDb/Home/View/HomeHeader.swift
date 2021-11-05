@@ -7,15 +7,15 @@
 
 import UIKit
 
-final class HomeHeader: UICollectionReusableView {
+final class HomeHeader: UICollectionReusableView, Reusable {
     
     // MARK: - Properties
-    static let reuseIdentifier =  String(describing: HomeHeader.self)
     public var nameHeader: MovieGroupSections? {
         didSet {
             configureUI()
         }
     }
+    
     private let headerLabel: UILabel = {
        let label = UILabel()
         label.text = "Category"

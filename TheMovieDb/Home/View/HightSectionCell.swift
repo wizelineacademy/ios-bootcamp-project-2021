@@ -8,10 +8,9 @@
 import Foundation
 import UIKit
 
-final class HightSectionCell: UICollectionViewCell {
+final class HightSectionCell: UICollectionViewCell, Reusable {
  
     // MARK: - Properties
-    static let reuseIdentifier =  String(describing: HightSectionCell.self)
     public var viewModel: MovieViewModel? {
         didSet {
             configure()

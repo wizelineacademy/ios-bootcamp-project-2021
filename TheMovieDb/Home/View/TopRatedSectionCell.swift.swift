@@ -8,9 +8,8 @@
 import UIKit
 import Kingfisher
 
-final class TopRatedSectionCell: UICollectionViewCell {
+final class TopRatedSectionCell: UICollectionViewCell, Reusable {
     // MARK: - Properties
-    static let reuseIdentifier =  String(describing: TopRatedSectionCell.self)
     public var viewModel: MovieViewModel? {
         didSet {
             configure()
