@@ -7,10 +7,10 @@
 
 import UIKit
 
-private let reuseIdentifier = "SearchCell"
 final class SearchViewController: UITableViewController {
  
     // MARK: - Properties
+    private let reuseIdentifier = "SearchCell"
     private let searchController = UISearchController(searchResultsController: nil)
     private var moviesSearch: [Movie] = []
     
