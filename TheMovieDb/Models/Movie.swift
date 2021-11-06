@@ -13,7 +13,6 @@ struct Results<T: Decodable>: Decodable {
 }
 
 struct Movie: Decodable, Hashable {
-    
     let id: Int
     let title: String
     let voteAverage: Decimal
@@ -37,6 +36,5 @@ struct Movie: Decodable, Hashable {
 
 struct MovieList: Decodable {
     let page: Int
-    let results : [Movie]
+    let results: [Movie]
 }
-

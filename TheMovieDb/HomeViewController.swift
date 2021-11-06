@@ -2,19 +2,12 @@
 //  ViewController.swift
 //  TheMovieDb
 //
-//  Created by Jose Antonio Trejo Flores on 09/12/20.
+//  Created by Sandra Herrera on 09/12/20.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDelegate {
-    
-    var titleLabel: UILabel!
-    var trendingTitleLabel: UILabel!
-    var nowPlayingTitleLabel: UILabel!
-    var popularTitleLabel: UILabel!
-    var topRatedTitleLabel: UILabel!
-    var upcomingTitleLabel: UILabel!
+class HomeViewController: UIViewController, UICollectionViewDelegate {
     var viewMoreButton = UIButton()
     var collectionView: UICollectionView!
     let service = NetworkManager(urlSession: URLSession.shared)
@@ -26,8 +19,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        let layout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 25, left: 20, bottom: 10, right: 25)
         layout.itemSize = CGSize(width: 150, height: 200)
         collectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
@@ -50,7 +42,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionView
-extension ViewController: UICollectionViewDataSource {
+extension HomeViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         movies.count
     }
@@ -65,7 +57,7 @@ extension ViewController: UICollectionViewDataSource {
 }
 
 extension UIView {
-    func anchor(top: NSLayoutYAxisAnchor, leading: NSLayoutXAxisAnchor, bottom: NSLayoutYAxisAnchor, trailing: NSLayoutXAxisAnchor, padding: UIEdgeInsets = .zero){
+    func anchor(top: NSLayoutYAxisAnchor, leading: NSLayoutXAxisAnchor, bottom: NSLayoutYAxisAnchor, trailing: NSLayoutXAxisAnchor, padding: UIEdgeInsets = .zero) {
         translatesAutoresizingMaskIntoConstraints = false
         topAnchor.constraint(equalTo: top, constant: padding.top).isActive = true
         leadingAnchor.constraint(equalTo: leading, constant: padding.left).isActive = true

@@ -8,7 +8,6 @@
 import Foundation
 
 final class NetworkManager {
-    
     let urlSession: URLSession
     private let baseURL = "https://api.themoviedb.org"
     private let apiKey = "api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
@@ -17,8 +16,7 @@ final class NetworkManager {
         self.urlSession = urlSession
     }
     
-    func request(path:String) -> URLRequest {
-        
+    func request(path: String) -> URLRequest {
         let queryItemApiKey = URLQueryItem(name: "api_key", value: "f6cd5c1a9e6c6b965fdcab0fa6ddd38a")
         let queryItemLanguage = URLQueryItem(name: "language", value: "en")
         let queryItemRegion = URLQueryItem(name: "region", value: "US")
@@ -36,16 +34,13 @@ final class NetworkManager {
         ]
         
         guard let url = components.url else { fatalError("Error: invalid url") }
-        let request = URLRequest (url: url)
+        let request = URLRequest(url: url)
         return request
     }
-    
-    
-    
+
     func get<Response: Decodable>(path: String, completion: @escaping (Response) -> Void ) {
         let urlRequest = request(path: path)
         let task = urlSession.dataTask(with: urlRequest) { data, response, error in
-            
             if let error = error {
                 fatalError("Error: \(error.localizedDescription)")
             }
@@ -62,14 +57,10 @@ final class NetworkManager {
                 let decoder = JSONDecoder()
                 let posts = try decoder.decode(Response.self, from: data)
                 completion(posts)
-            }
-            catch {
+            } catch {
                 print("Error: \(error.localizedDescription)")
             }
         }
         task.resume()
     }
 }
-
-
-

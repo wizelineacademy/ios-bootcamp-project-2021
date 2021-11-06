@@ -8,7 +8,6 @@ import UIKit
 import Foundation
 
 class MovieCell: UICollectionViewCell {
-    
     var imageView: UIImageView?
     var label: UILabel?
     
@@ -16,13 +15,17 @@ class MovieCell: UICollectionViewCell {
         super.init(frame: frame)
         
         imageView = UIImageView(frame: self.bounds)
-        //customise imageview
-        imageView?.backgroundColor = UIColor.purple
-        contentView.addSubview(imageView!)
+        guard let imageViewColor = imageView else {
+            return
+        }
+        imageViewColor.backgroundColor = UIColor.purple
+        contentView.addSubview(imageViewColor)
         label = UILabel(frame: CGRect(x: 20, y: 20, width: self.bounds.width - 50, height: 20))
-        //Customsize label
-        label?.textColor = UIColor.white
-        contentView.addSubview(label!)
+        guard let labelTitle = label else {
+            return
+        }
+        labelTitle.textColor = UIColor.white
+        contentView.addSubview(labelTitle)
     }
     
     required init?(coder aDecoder: NSCoder) {
