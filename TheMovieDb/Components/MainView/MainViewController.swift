@@ -9,8 +9,6 @@ import UIKit
 
 final class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ChangeViewDelegate, UISearchResultsUpdating {
   
-  
- 
   @IBOutlet weak var tableView: UITableView?
   
   private var trendingMovies: [Movie] = []
