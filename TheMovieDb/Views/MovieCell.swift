@@ -8,20 +8,30 @@ import UIKit
 import Foundation
 
 class MovieCell: UICollectionViewCell {
-    // must call super
+    
+    var imageView: UIImageView?
+    var label: UILabel?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
+        imageView = UIImageView(frame: self.bounds)
+        //customise imageview
+        imageView?.backgroundColor = UIColor.purple
+        contentView.addSubview(imageView!)
+        label = UILabel(frame: CGRect(x: 20, y: 20, width: self.bounds.width - 50, height: 20))
+        //Customsize label
+        label?.textColor = UIColor.white
+        contentView.addSubview(label!)
     }
     
-    // we have to implement this initializer, but will only ever use this class programmatically
-    required init?(coder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(colour: UIColor, title: String) {
-        self.backgroundColor = colour
-        let titleLabel = UILabel()
-        titleLabel.text = "Hello"
-        addSubview(titleLabel)
+    override var bounds: CGRect {
+        didSet {
+            contentView.frame = bounds
+        }
     }
 }

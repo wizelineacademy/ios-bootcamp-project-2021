@@ -28,6 +28,7 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+<<<<<<< HEAD
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -48,6 +49,8 @@
                ReferencedContainer = "container:TheMovieDb.xcodeproj">
             </BuildableReference>
          </TestableReference>
+=======
+>>>>>>> sandra-herrera-add-network-layer
       </Testables>
    </TestAction>
    <LaunchAction

@@ -7,9 +7,7 @@
 
 import Foundation
 
-
-
-class NetworkManager {
+final class NetworkManager {
     
     let urlSession: URLSession
     private let baseURL = "https://api.themoviedb.org"
@@ -52,7 +50,7 @@ class NetworkManager {
                 fatalError("Error: \(error.localizedDescription)")
             }
             
-            guard let response = response as? HTTPURLResponse, response.statusCode <= 200 else {
+            guard let response = response as? HTTPURLResponse, (200...299).contains(response.statusCode) else {
                 fatalError("Error: invalid HTTP response code")
             }
             
