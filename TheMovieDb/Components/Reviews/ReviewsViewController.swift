@@ -59,5 +59,10 @@ class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewD
     cell.configure(author: self.reviews?[indexPath.row].author ?? "", rating: self.reviews?[indexPath.row].rating ?? 0, content: self.reviews?[indexPath.row].content ?? "")
     return cell
   }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let review = self.reviews?[indexPath.row]
+    coordinator?.showReviewDetail(author: review?
+                                    .author ?? "", rating: review?.rating ?? 0, content: review?.content ?? "")
+  }
    
 }

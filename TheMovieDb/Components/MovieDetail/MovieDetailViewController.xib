@@ -73,7 +73,7 @@
                                                 <constraint firstAttribute="height" constant="31" id="DqJ-N1-JTR"/>
                                             </constraints>
                                             <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="filled" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="filled" title="Reviews"/>
                                             <connections>
                                                 <action selector="reviewsTapped:" destination="-1" eventType="touchUpInside" id="Yhh-jd-O6Z"/>
                                             </connections>

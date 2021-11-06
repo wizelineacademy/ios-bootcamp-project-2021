@@ -32,4 +32,10 @@ class MainCoordinator: Coordinator {
     vc.coordinator = self
     navigationController.pushViewController(vc, animated: true)
   }
+  
+  func showReviewDetail(author: String, rating: Float, content: String) {
+    let vc = DetailReviewViewController(author: author, rating: rating, content: content)
+    vc.coordinator = self
+    navigationController.pushViewController(vc, animated: true)
+  }
 }
