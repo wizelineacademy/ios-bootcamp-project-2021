@@ -15,6 +15,8 @@ private extension FeedTypes {
         case .popular: return .popular
         case .topRated: return .topRated
         case .upcoming: return .upcoming
+        case .search: return .search
+        case .keyword: return .keyword
         }
     }
 }
@@ -33,6 +35,8 @@ struct MovieDBAPI: APIClient {
         case popular = "3/movie/popular"
         case topRated = "3/movie/top_rated"
         case upcoming = "3/movie/upcoming"
+        case search = "3/search/movie"
+        case keyword = "3/search/keyword"
     }
     
     var dispatcher: NetworkDispatcher
@@ -77,6 +81,7 @@ struct MovieDBAPI: APIClient {
         
         enum QueryParamsKeys: String {
             case page
+            case query
         }
         
         init(on feed: FeedTypes, queries: [QueryParamsKeys: String]? = nil) {
@@ -84,10 +89,13 @@ struct MovieDBAPI: APIClient {
             guard let queries = queries else {
                 return
             }
-            let finalQueries = queries.reduce(into: [String: String]()) { result, element in
-                result[element.key.rawValue] = element.value
+            queries.forEach { key, value in
+                addNewQueryParam(value, forKey: key)
             }
-            queryParams?.merge(finalQueries, uniquingKeysWith: { current, _ in current })
+        }
+        
+        mutating func addNewQueryParam(_ value: String, forKey key: QueryParamsKeys) {
+            queryParams?[key.rawValue] = value
         }
     }
     
