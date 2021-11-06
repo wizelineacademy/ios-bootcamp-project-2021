@@ -20,7 +20,6 @@
 		B1AFD81F2730C089001182D9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD81E2730C089001182D9 /* Request.swift */; };
 		B1AFD8252734A35F001182D9 /* SearchByIdRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD8242734A35F001182D9 /* SearchByIdRepository.swift */; };
 		B1AFD82727350031001182D9 /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82627350031001182D9 /* MovieList.swift */; };
-		B1AFD82C2735DFE1001182D9 /* ReviewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82B2735DFE1001182D9 /* ReviewsRepository.swift */; };
 		B1AFD82E273611ED001182D9 /* PathComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82D273611ED001182D9 /* PathComposer.swift */; };
 		B1AFD830273623AE001182D9 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82F273623AE001182D9 /* MovieCell.swift */; };
 /* End PBXBuildFile section */
@@ -61,7 +60,6 @@
 		B1AFD81E2730C089001182D9 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		B1AFD8242734A35F001182D9 /* SearchByIdRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByIdRepository.swift; sourceTree = "<group>"; };
 		B1AFD82627350031001182D9 /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
-		B1AFD82B2735DFE1001182D9 /* ReviewsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsRepository.swift; sourceTree = "<group>"; };
 		B1AFD82D273611ED001182D9 /* PathComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathComposer.swift; sourceTree = "<group>"; };
 		B1AFD82F273623AE001182D9 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -170,7 +168,6 @@
 			isa = PBXGroup;
 			children = (
 				B1AFD8242734A35F001182D9 /* SearchByIdRepository.swift */,
-				B1AFD82B2735DFE1001182D9 /* ReviewsRepository.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -335,7 +332,6 @@
 			files = (
 				B1AFD82E273611ED001182D9 /* PathComposer.swift in Sources */,
 				837B4EAC258178B6003DFC67 /* ViewController.swift in Sources */,
-				B1AFD82C2735DFE1001182D9 /* ReviewsRepository.swift in Sources */,
 				B1AFD81F2730C089001182D9 /* Request.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				B1AFD8252734A35F001182D9 /* SearchByIdRepository.swift in Sources */,
