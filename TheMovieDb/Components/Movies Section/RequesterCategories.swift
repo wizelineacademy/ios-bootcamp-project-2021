@@ -7,18 +7,16 @@
 
 import Foundation
 
-protocol MovieRequest {
+protocol MovieCategoriesRequest {
   func requestAPITrending()
   func requestAPINowPlaying()
   func requestAPIPopular()
   func requestAPITopRated()
   func requestAPIUpcoming()
   func requestAPI(completion: @escaping ([Categories: [Movie]]) -> Void)
-  var movies: [Categories: [Movie]] { get }
-  
 }
 
-final class Requester: MovieRequest {
+final class RequesterCategories: MovieCategoriesRequest {
   
   let group = DispatchGroup()
   

@@ -6,6 +6,9 @@
 //
 
 import Foundation
+protocol sectionMod {
+  
+}
 
 enum CategoriesText: String, CaseIterable {
   case trendingMoviesText = "Trending Movies"

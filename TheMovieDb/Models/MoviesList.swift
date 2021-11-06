@@ -17,6 +17,7 @@ struct Movie: Decodable {
   let genreIds: [Int]
   let overview: String
   let voteCount: Int
+  let id: Int
   
   enum CodingKeys: CodingKey {
     case poster_path
@@ -27,6 +28,7 @@ struct Movie: Decodable {
     case genre_ids
     case overview
     case vote_count
+    case id
   }
   
   init(from decoder: Decoder) throws {
@@ -44,6 +46,7 @@ struct Movie: Decodable {
     self.genreIds = try container.decode([Int].self, forKey: .genre_ids)
     self.overview = try container.decode(String.self, forKey: .overview)
     self.voteCount = try container.decode(Int.self, forKey: .vote_count)
+    self.id = try container.decode(Int.self, forKey: .id)
   }
   
 }

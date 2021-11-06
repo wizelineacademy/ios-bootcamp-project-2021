@@ -19,7 +19,7 @@ protocol LSRequest {
 extension API: LSRequest {
   var method: HTTPMethod {
     switch self {
-    case .getNowPlayingMovies, .getPopularMovies, .getTrendingMovies, .getUpcomingMovies, .getTopRatedMovies:
+    case .getNowPlayingMovies, .getPopularMovies, .getTrendingMovies, .getUpcomingMovies, .getTopRatedMovies, .getRecommendedMovies, .getSimilarMovies, .getReviews, .searchMovies:
       return .get
     }
   }
@@ -28,6 +28,10 @@ extension API: LSRequest {
     switch self {
     case .getTrendingMovies, .getPopularMovies, .getTopRatedMovies, .getUpcomingMovies, .getNowPlayingMovies:
       return nil
+    case .getRecommendedMovies, .getSimilarMovies, .getReviews:
+      return nil
+    case .searchMovies
+    
     }
   }
   
@@ -43,6 +47,14 @@ extension API: LSRequest {
       return "\(baseURL)/movie/top_rated?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&page=1&region=US"
     case .getUpcomingMovies:
       return "\(baseURL)/movie/upcoming?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&region=US&page=1"
+    case .getRecommendedMovies(let id):
+      return "\(baseURL)/movie/\(id)/recommendations?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en"
+    case .getSimilarMovies(let id):
+      return "\(baseURL)/movie/\(id)/similar?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en"
+    case .getReviews(let id):
+      return "\(baseURL)/movie/\(id)/reviews?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&language=en-US"
+    case .searchMovies(let search):
+      return "\(baseURL)/search/movie?api_key=\(Bundle.main.infoDictionary?["APIKEY"] ?? "")&language=en&page=2&query=\(search)"
     }
   }
   

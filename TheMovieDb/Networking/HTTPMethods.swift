@@ -7,14 +7,6 @@
 
 import Foundation
 
-enum API {
-  case getTrendingMovies
-  case getNowPlayingMovies
-  case getPopularMovies
-  case getTopRatedMovies
-  case getUpcomingMovies
-}
-
 enum HTTPMethod: String {
   case get = "GET"
   case post = "POST"

@@ -15,7 +15,8 @@ final class MovieCollectionViewCell: UICollectionViewCell {
   @IBOutlet weak var scoreLabel: UILabel?
   
   static let identifier = "MovieCollectionViewCell"
-  
+  private var overview = ""
+  private var id = 0
   override func awakeFromNib() {
     super.awakeFromNib()
     setupUI()
@@ -41,17 +42,17 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     print(posterPath)
     if let url = URL(string: posterPath) {
       movieImageView?.kf.setImage(with: url)
-      print("Done")
     }
-    
   }
   
-  func configure(movieTitle: String, movieScore: Float, posterPath: String) {
+  func configure(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
     self.movieLabel?.text = movieTitle
     if movieScore != 0 {
       self.scoreLabel?.text = "\(movieScore)"
     }
     self.setupImage(posterPath: posterPath)
+    self.overview = overview
+    self.id = id
     
   }
   

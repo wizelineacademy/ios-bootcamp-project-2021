@@ -7,24 +7,28 @@
 
 import UIKit
 
-final class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+final class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ChangeViewDelegate, UISearchResultsUpdating {
   
+  
+ 
   @IBOutlet weak var tableView: UITableView?
   
   private var trendingMovies: [Movie] = []
   
   // All categories
+  weak var coordinator: MainCoordinator?
   
   var circularViewDuration: TimeInterval = 2
   override func viewDidLoad() {
     super.viewDidLoad()
     configureNavigationController()
     setupTableView()
+    setupSearch()
   }
   
   lazy private var searchController: SearchBar = {
       let searchController = SearchBar("Search a movie or an actor", delegate: nil)
-//      searchController.text = latestSearch
+
       searchController.showsCancelButton = !searchController.isSearchBarEmpty
       return searchController
   }()
@@ -39,6 +43,9 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
     navigationItem.searchController = searchController
   }
   
+  func setupSearch() {
+    searchController.searchResultsUpdater = self
+  }
   // TableView Configuration
   func setupTableView() {
     if self.tableView != nil {
@@ -51,7 +58,11 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
     }
     
   }
+  
+  func setupShowDetail() {
     
+  }
+  
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return CategoriesText.allCases.count
   }
@@ -60,7 +71,28 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
     guard let cell = self.tableView?.dequeueReusableCell(withIdentifier: CategoryTableViewCell.identifier) as? CategoryTableViewCell else {
       return CategoryTableViewCell()
     }
+    cell.delegate = self
     cell.configure(categoryTitle: CategoriesText.allCases[indexPath.row].rawValue, categories: Categories.allCases[indexPath.row])
     return cell
+  }
+  
+  func changeDetailVC(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
+    coordinator?.showDetailMovie(movieTitle: movieTitle, movieScore: movieScore, posterPath: posterPath, overview: overview, id: id)
+  }
+  func updateSearchResults(for searchController: UISearchController) {
+      guard let text = searchController.searchBar.text else { return }
+      filterContentForSearchText(text)
+    }
+
+  private func filterContentForSearchText(_ searchText: String) {
+      // filter with a simple contains searched text
+      resultPokemons = pokemons.filter {
+              searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased())
+          }
+          .sorted {
+              $0.id < $1.id
+          }
+
+    tableView?.reloadData()
   }
 }

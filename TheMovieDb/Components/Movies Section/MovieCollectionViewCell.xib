@@ -28,6 +28,9 @@
                     </label>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="moviePoster" translatesAutoresizingMaskIntoConstraints="NO" id="sMt-pv-TFe">
                         <rect key="frame" x="4" y="0.0" width="133" height="190"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="190" id="fb1-7I-qxG"/>
+                        </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvh-FX-4Js">
                         <rect key="frame" x="94" y="0.0" width="39" height="20"/>

@@ -12,17 +12,14 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
   @IBOutlet weak var categoryLabel: UILabel?
   @IBOutlet weak var collectionView: UICollectionView?
   
-  private var trendingMovies: [Movie] = []
-  private var nowPlayingMovies: [Movie] = []
-  private var popularMovies: [Movie] = []
-  private var topRatedMovies: [Movie] = []
-  private var upcomingMovies: [Movie] = []
-  
   private var movies: [Categories: [Movie]] = [:]
+  private var recommendedMovies: [Recommendations: [Movie]] = [:]
   
-  private var categories: Categories = .trendingMovies
+  private var category: Categories?
+  private var movieId: Int?
   
   static let identifier = "CategoryTableViewCell"
+  weak var delegate: ChangeViewDelegate?
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -32,10 +29,8 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
   }
   
   private func requestAPI() {
-    Requester().requestAPI { movies in
+    RequesterCategories().requestAPI { movies in
       self.movies = movies
-      print("MAIN")
-      print(movies)
       self.collectionView?.reloadData()
     }
   }
@@ -44,9 +39,12 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
     return UINib(nibName: "CategoryTableViewCell", bundle: nil)
   }
   
-  func configure(categoryTitle: String, categories: Categories) {
+  func configure(categoryTitle: String, categories: Categories?) {
     self.categoryLabel?.text = categoryTitle
-    self.categories = categories
+    
+    if let categoriesVar = categories {
+      self.category = categoriesVar
+    }
   }
   
   override func setSelected(_ selected: Bool, animated: Bool) {
@@ -69,29 +67,52 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
   
   // Collection View
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    
+    var movie: Movie?
     guard let cell = self.collectionView?.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as? MovieCollectionViewCell else {
       return MovieCollectionViewCell()
     }
-    switch self.categories {
+  
+    switch self.category {
     case .trendingMovies:
-      cell.configure(movieTitle: movies[.trendingMovies]?[indexPath.row].title ?? "", movieScore: movies[.trendingMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.trendingMovies]?[indexPath.row].posterPath ?? "")
-      
+      movie = movies[.trendingMovies]?[indexPath.row]
     case .nowPlayingMovies:
-      cell.configure(movieTitle: movies[.nowPlayingMovies]?[indexPath.row].title ?? "", movieScore: movies[.nowPlayingMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.nowPlayingMovies]?[indexPath.row].posterPath ?? "")
+      movie = movies[.nowPlayingMovies]?[indexPath.row]
     case .popularMovies:
-      cell.configure(movieTitle: movies[.popularMovies]?[indexPath.row].title ?? "", movieScore: movies[.popularMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.popularMovies]?[indexPath.row].posterPath ?? "")
+      movie = movies[.popularMovies]?[indexPath.row]
     case .topRatedMovies:
-      cell.configure(movieTitle: movies[.topRatedMovies]?[indexPath.row].title ?? "", movieScore: movies[.topRatedMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.topRatedMovies]?[indexPath.row].posterPath ?? "")
+      movie = movies[.topRatedMovies]?[indexPath.row]
     case .upcomingMovies:
-      cell.configure(movieTitle: movies[.upcomingMovies]?[indexPath.row].title ?? "", movieScore: movies[.upcomingMovies]?[indexPath.row].voteAverage ?? 0.0, posterPath: movies[.upcomingMovies]?[indexPath.row].posterPath ?? "")
+      movie = movies[.upcomingMovies]?[indexPath.row]
+    case .none:
+      movie = movies[.upcomingMovies]?[indexPath.row]
     }
     
+    cell.configure(movieTitle: movie?.title ?? "", movieScore: movie?.voteAverage ?? 0.0, posterPath: movie?.posterPath ?? "", overview: movie?.overview ?? "", id: movie?.id ?? 0)
     return cell
+  }
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    var movie: Movie?
+    switch self.category {
+    case .popularMovies:
+      movie = movies[.popularMovies]?[indexPath.row]
+    case .trendingMovies:
+      movie = movies[.trendingMovies]?[indexPath.row]
+    case .nowPlayingMovies:
+      movie = movies[.nowPlayingMovies]?[indexPath.row]
+    case .topRatedMovies:
+      movie = movies[.topRatedMovies]?[indexPath.row]
+    case .upcomingMovies:
+      movie = movies[.upcomingMovies]?[indexPath.row]
+    case .none:
+      movie = movies[.upcomingMovies]?[indexPath.row]
+    }
+    
+    delegate?.changeDetailVC(movieTitle: movie?.title ?? "", movieScore: movie?.voteAverage ?? 0, posterPath: movie?.posterPath ?? "", overview: movie?.overview ?? "", id: movie?.id ?? 0)
+    
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    switch self.categories {
+    switch self.category {
     case .trendingMovies:
       return movies[.trendingMovies]?.count ?? 0
     case .nowPlayingMovies:
@@ -102,6 +123,9 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
       return movies[.topRatedMovies]?.count ?? 0
     case .upcomingMovies:
       return movies[.upcomingMovies]?.count ?? 0
+    case .none:
+      return 0
     }
   }
+  
 }
