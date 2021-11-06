@@ -63,6 +63,7 @@ class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewD
     let review = self.reviews?[indexPath.row]
     coordinator?.showReviewDetail(author: review?
                                     .author ?? "", rating: review?.rating ?? 0, content: review?.content ?? "")
+    tableView.deselectRow(at: indexPath, animated: true)
   }
    
 }

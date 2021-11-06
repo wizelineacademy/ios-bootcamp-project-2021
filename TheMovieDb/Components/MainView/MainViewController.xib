@@ -11,6 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="TheMovieDb" customModuleProvider="target">
             <connections>
+                <outlet property="resultTableView" destination="PaG-bG-eio" id="bLB-TL-gSM"/>
                 <outlet property="tableView" destination="39m-F8-OYb" id="gcG-Mb-68j"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -24,14 +25,22 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PaG-bG-eio">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="39m-F8-OYb" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="BDd-0r-zHj"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PaG-bG-eio" secondAttribute="trailing" id="Hh2-IG-8Ak"/>
                 <constraint firstItem="39m-F8-OYb" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="R5x-lM-vFE"/>
                 <constraint firstItem="39m-F8-OYb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="VLN-1M-IK8"/>
+                <constraint firstItem="PaG-bG-eio" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="doc-YD-xIR"/>
                 <constraint firstItem="39m-F8-OYb" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="leT-J3-Ypd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PaG-bG-eio" secondAttribute="bottom" id="oq3-Ue-n0m"/>
+                <constraint firstItem="PaG-bG-eio" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="p2g-s2-Ihf"/>
             </constraints>
             <point key="canvasLocation" x="158" y="41"/>
         </view>

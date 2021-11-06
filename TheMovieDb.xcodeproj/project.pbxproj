@@ -40,6 +40,8 @@
 		7490CD6B27364A2100BE44C3 /* DetailReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7490CD6927364A2100BE44C3 /* DetailReviewViewController.swift */; };
 		7490CD6C27364A2100BE44C3 /* DetailReviewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7490CD6A27364A2100BE44C3 /* DetailReviewViewController.xib */; };
 		7490CD6E27364D2800BE44C3 /* SearchRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7490CD6D27364D2800BE44C3 /* SearchRequester.swift */; };
+		7490CD7827365C0C00BE44C3 /* ResultSearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7490CD7627365C0C00BE44C3 /* ResultSearchTableViewCell.swift */; };
+		7490CD7927365C0C00BE44C3 /* ResultSearchTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7490CD7727365C0C00BE44C3 /* ResultSearchTableViewCell.xib */; };
 		74C375CB2734E00800118BFC /* RecommendedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C375C92734E00800118BFC /* RecommendedTableViewCell.swift */; };
 		74C375CC2734E00800118BFC /* RecommendedTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 74C375CA2734E00800118BFC /* RecommendedTableViewCell.xib */; };
 		74C375CE2734F04500118BFC /* ChangeViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C375CD2734F04500118BFC /* ChangeViewProtocol.swift */; };
@@ -106,6 +108,8 @@
 		7490CD6927364A2100BE44C3 /* DetailReviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailReviewViewController.swift; sourceTree = "<group>"; };
 		7490CD6A27364A2100BE44C3 /* DetailReviewViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailReviewViewController.xib; sourceTree = "<group>"; };
 		7490CD6D27364D2800BE44C3 /* SearchRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequester.swift; sourceTree = "<group>"; };
+		7490CD7627365C0C00BE44C3 /* ResultSearchTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultSearchTableViewCell.swift; sourceTree = "<group>"; };
+		7490CD7727365C0C00BE44C3 /* ResultSearchTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultSearchTableViewCell.xib; sourceTree = "<group>"; };
 		74C375C92734E00800118BFC /* RecommendedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedTableViewCell.swift; sourceTree = "<group>"; };
 		74C375CA2734E00800118BFC /* RecommendedTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RecommendedTableViewCell.xib; sourceTree = "<group>"; };
 		74C375CD2734F04500118BFC /* ChangeViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeViewProtocol.swift; sourceTree = "<group>"; };
@@ -205,6 +209,7 @@
 		7484A54C272CD02B000CF837 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				7490CD71273655BA00BE44C3 /* Search */,
 				7490CD5C2736220500BE44C3 /* Reviews */,
 				741A762E272F9A020067D3E9 /* MovieDetail */,
 				74E2DAB1272F2E0900D78AC3 /* MainView */,
@@ -241,6 +246,15 @@
 				7490CD6A27364A2100BE44C3 /* DetailReviewViewController.xib */,
 			);
 			path = Reviews;
+			sourceTree = "<group>";
+		};
+		7490CD71273655BA00BE44C3 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				7490CD7627365C0C00BE44C3 /* ResultSearchTableViewCell.swift */,
+				7490CD7727365C0C00BE44C3 /* ResultSearchTableViewCell.xib */,
+			);
+			path = Search;
 			sourceTree = "<group>";
 		};
 		74D896B72728D49A002EFC1B /* Models */ = {
@@ -437,6 +451,7 @@
 				837B4EB1258178B9003DFC67 /* Assets.xcassets in Resources */,
 				742E35EC272CF95300EBDF53 /* CategoryTableViewCell.xib in Resources */,
 				7490CD602736223000BE44C3 /* ReviewsViewController.xib in Resources */,
+				7490CD7927365C0C00BE44C3 /* ResultSearchTableViewCell.xib in Resources */,
 				74C375CC2734E00800118BFC /* RecommendedTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,6 +509,7 @@
 				741A7631272F9A250067D3E9 /* MovieDetailViewController.swift in Sources */,
 				742E35F1272CF9ED00EBDF53 /* MovieCollectionViewCell.swift in Sources */,
 				7490CD6427363AC500BE44C3 /* ReviewsRequester.swift in Sources */,
+				7490CD7827365C0C00BE44C3 /* ResultSearchTableViewCell.swift in Sources */,
 				7490CD622736260600BE44C3 /* Review.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
 				742E35F4272CFEBC00EBDF53 /* UIColorExtension.swift in Sources */,

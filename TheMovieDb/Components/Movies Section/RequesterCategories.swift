@@ -31,9 +31,7 @@ final class RequesterCategories: MovieCategoriesRequest {
         switch result {
         case .success(let response):
           self?.movies[.trendingMovies] = response.results
-          print(response)
           self?.group.leave()
-          
         default:
           self?.movies[.trendingMovies] = []
           self?.group.leave()
@@ -49,9 +47,7 @@ final class RequesterCategories: MovieCategoriesRequest {
         switch result {
         case .success(let response):
           self?.movies[.nowPlayingMovies] = response.results
-          print(response)
           self?.group.leave()
-          
         default:
           self?.movies[.nowPlayingMovies] = []
           self?.group.leave()
@@ -67,7 +63,6 @@ final class RequesterCategories: MovieCategoriesRequest {
         switch result {
         case .success(let response):
           self?.movies[.popularMovies] = response.results
-          print(response)
           self?.group.leave()
           
         default:
@@ -85,7 +80,6 @@ final class RequesterCategories: MovieCategoriesRequest {
         switch result {
         case .success(let response):
           self?.movies[.topRatedMovies] = response.results
-          print(response)
           self?.group.leave()
           
         default:
@@ -103,7 +97,6 @@ final class RequesterCategories: MovieCategoriesRequest {
         switch result {
         case .success(let response):
           self?.movies[.upcomingMovies] = response.results
-          print(response)
           self?.group.leave()
           
         default:
@@ -121,7 +114,6 @@ final class RequesterCategories: MovieCategoriesRequest {
     requestAPITopRated()
     requestAPINowPlaying()
     group.notify(queue: .main) {
-      print("Notify")
       completion(self.movies)
     }
   }

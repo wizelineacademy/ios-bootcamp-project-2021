@@ -65,7 +65,6 @@ class MovieDetailViewController: UIViewController, UITableViewDelegate, UITableV
   }
   
   func setupImage(posterPath: String) {
-    print(posterPath)
     if let url = URL(string: posterPath) {
       posterImageView?.kf.setImage(with: url)
     }

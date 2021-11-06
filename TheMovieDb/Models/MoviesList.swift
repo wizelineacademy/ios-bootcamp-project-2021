@@ -11,7 +11,7 @@ struct Movie: Decodable {
   
   let posterPath: String? // Get images with https://image.tmdb.org/t/p/w500
   let voteAverage: Float
-  let releaseDate: Date
+  let releaseDate: Date?
   let title: String
   let originalLanguage: String
   let genreIds: [Int]
@@ -40,7 +40,10 @@ struct Movie: Decodable {
     }
     self.voteAverage = try container.decode(Float.self, forKey: .vote_average)
     let releaseDateConverted = try container.decode(String.self, forKey: .release_date)
-    self.releaseDate = releaseDateConverted.changeToDate()
+    do {
+      self.releaseDate = releaseDateConverted.changeToDate()
+    } 
+    
     self.title = try container.decode(String.self, forKey: .title)
     self.originalLanguage = try container.decode(String.self, forKey: .original_language)
     self.genreIds = try container.decode([Int].self, forKey: .genre_ids)

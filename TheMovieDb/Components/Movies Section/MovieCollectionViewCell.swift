@@ -39,7 +39,6 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     scoreLabel?.text = ""
   }
   func setupImage(posterPath: String) {
-    print(posterPath)
     if let url = URL(string: posterPath) {
       movieImageView?.kf.setImage(with: url)
     }

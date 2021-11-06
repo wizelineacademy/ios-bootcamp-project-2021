@@ -27,7 +27,6 @@ class ReviewTableViewCell: UITableViewCell {
     self.authorLabel?.text = author
     self.ratingLabel?.text = "\(rating)"
     self.contentLabel?.text = content
-    print(author, rating, content)
   }
   
   override func setSelected(_ selected: Bool, animated: Bool) {
