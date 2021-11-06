@@ -30,7 +30,8 @@ extension API: LSRequest {
       return nil
     case .getRecommendedMovies, .getSimilarMovies, .getReviews:
       return nil
-    case .searchMovies
+    case .searchMovies:
+      return nil
     
     }
   }

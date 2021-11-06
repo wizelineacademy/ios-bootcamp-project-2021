@@ -81,18 +81,18 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
   }
   func updateSearchResults(for searchController: UISearchController) {
       guard let text = searchController.searchBar.text else { return }
-      filterContentForSearchText(text)
+//      filterContentForSearchText(text)
     }
 
-  private func filterContentForSearchText(_ searchText: String) {
-      // filter with a simple contains searched text
-      resultPokemons = pokemons.filter {
-              searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased())
-          }
-          .sorted {
-              $0.id < $1.id
-          }
-
-    tableView?.reloadData()
-  }
+//  private func filterContentForSearchText(_ searchText: String) {
+//      // filter with a simple contains searched text
+//      resultPokemons = pokemons.filter {
+//              searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased())
+//          }
+//          .sorted {
+//              $0.id < $1.id
+//          }
+//
+//    tableView?.reloadData()
+//  }
 }
