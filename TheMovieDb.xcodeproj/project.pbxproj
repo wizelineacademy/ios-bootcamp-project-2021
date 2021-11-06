@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,14 @@
 		837B4EB4258178B9003DFC67 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 837B4EB2258178B9003DFC67 /* LaunchScreen.storyboard */; };
 		837B4EBF258178BA003DFC67 /* TheMovieDbTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EBE258178BA003DFC67 /* TheMovieDbTests.swift */; };
 		837B4ECA258178BA003DFC67 /* TheMovieDbUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EC9258178BA003DFC67 /* TheMovieDbUITests.swift */; };
+		B11E2E1D272E702F005DD81B /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = B11E2E1C272E702F005DD81B /* Kingfisher */; };
+		B1AFD81D2730BC2D001182D9 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD81C2730BC2D001182D9 /* Movie.swift */; };
+		B1AFD81F2730C089001182D9 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD81E2730C089001182D9 /* Request.swift */; };
+		B1AFD8252734A35F001182D9 /* SearchByIdRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD8242734A35F001182D9 /* SearchByIdRepository.swift */; };
+		B1AFD82727350031001182D9 /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82627350031001182D9 /* MovieList.swift */; };
+		B1AFD82C2735DFE1001182D9 /* ReviewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82B2735DFE1001182D9 /* ReviewsRepository.swift */; };
+		B1AFD82E273611ED001182D9 /* PathComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82D273611ED001182D9 /* PathComposer.swift */; };
+		B1AFD830273623AE001182D9 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82F273623AE001182D9 /* MovieCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +57,13 @@
 		837B4EC5258178BA003DFC67 /* TheMovieDbUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TheMovieDbUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		837B4EC9258178BA003DFC67 /* TheMovieDbUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TheMovieDbUITests.swift; sourceTree = "<group>"; };
 		837B4ECB258178BA003DFC67 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B1AFD81C2730BC2D001182D9 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		B1AFD81E2730C089001182D9 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		B1AFD8242734A35F001182D9 /* SearchByIdRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchByIdRepository.swift; sourceTree = "<group>"; };
+		B1AFD82627350031001182D9 /* MovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieList.swift; sourceTree = "<group>"; };
+		B1AFD82B2735DFE1001182D9 /* ReviewsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsRepository.swift; sourceTree = "<group>"; };
+		B1AFD82D273611ED001182D9 /* PathComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathComposer.swift; sourceTree = "<group>"; };
+		B1AFD82F273623AE001182D9 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B11E2E1D272E702F005DD81B /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,9 +115,12 @@
 		837B4EA6258178B6003DFC67 /* TheMovieDb */ = {
 			isa = PBXGroup;
 			children = (
+				B1AFD8212731DEE5001182D9 /* Models */,
+				B1AFD8202730C9F1001182D9 /* Network */,
 				837B4EA7258178B6003DFC67 /* AppDelegate.swift */,
 				837B4EA9258178B6003DFC67 /* SceneDelegate.swift */,
 				837B4EAB258178B6003DFC67 /* ViewController.swift */,
+				B1AFD82F273623AE001182D9 /* MovieCell.swift */,
 				837B4EAD258178B6003DFC67 /* Main.storyboard */,
 				837B4EB0258178B9003DFC67 /* Assets.xcassets */,
 				837B4EB2258178B9003DFC67 /* LaunchScreen.storyboard */,
@@ -128,6 +147,34 @@
 			path = TheMovieDbUITests;
 			sourceTree = "<group>";
 		};
+		B1AFD8202730C9F1001182D9 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				B1AFD82827350057001182D9 /* Repositories */,
+				B1AFD81E2730C089001182D9 /* Request.swift */,
+				B1AFD82D273611ED001182D9 /* PathComposer.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		B1AFD8212731DEE5001182D9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B1AFD81C2730BC2D001182D9 /* Movie.swift */,
+				B1AFD82627350031001182D9 /* MovieList.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B1AFD82827350057001182D9 /* Repositories */ = {
+			isa = PBXGroup;
+			children = (
+				B1AFD8242734A35F001182D9 /* SearchByIdRepository.swift */,
+				B1AFD82B2735DFE1001182D9 /* ReviewsRepository.swift */,
+			);
+			path = Repositories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -135,6 +182,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 837B4ECE258178BA003DFC67 /* Build configuration list for PBXNativeTarget "TheMovieDb" */;
 			buildPhases = (
+				B1313C35272D10B7008DF4A4 /* Run Swiflint */,
 				837B4EA0258178B6003DFC67 /* Sources */,
 				837B4EA1258178B6003DFC67 /* Frameworks */,
 				837B4EA2258178B6003DFC67 /* Resources */,
@@ -144,6 +192,9 @@
 			dependencies = (
 			);
 			name = TheMovieDb;
+			packageProductDependencies = (
+				B11E2E1C272E702F005DD81B /* Kingfisher */,
+			);
 			productName = TheMovieDb;
 			productReference = 837B4EA4258178B6003DFC67 /* TheMovieDb.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +266,9 @@
 				Base,
 			);
 			mainGroup = 837B4E9B258178B6003DFC67;
+			packageReferences = (
+				B11E2E1B272E702F005DD81B /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 837B4EA5258178B6003DFC67 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -253,14 +307,42 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B1313C35272D10B7008DF4A4 /* Run Swiflint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiflint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if test -d \"/opt/homebrew/bin/\"; then\n  PATH=\"/opt/homebrew/bin/:${PATH}\"\nfi\n\nexport PATH\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		837B4EA0258178B6003DFC67 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1AFD82E273611ED001182D9 /* PathComposer.swift in Sources */,
 				837B4EAC258178B6003DFC67 /* ViewController.swift in Sources */,
+				B1AFD82C2735DFE1001182D9 /* ReviewsRepository.swift in Sources */,
+				B1AFD81F2730C089001182D9 /* Request.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
+				B1AFD8252734A35F001182D9 /* SearchByIdRepository.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
+				B1AFD81D2730BC2D001182D9 /* Movie.swift in Sources */,
+				B1AFD830273623AE001182D9 /* MovieCell.swift in Sources */,
+				B1AFD82727350031001182D9 /* MovieList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -587,6 +669,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B11E2E1B272E702F005DD81B /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B11E2E1C272E702F005DD81B /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B11E2E1B272E702F005DD81B /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 837B4E9C258178B6003DFC67 /* Project object */;
 }
