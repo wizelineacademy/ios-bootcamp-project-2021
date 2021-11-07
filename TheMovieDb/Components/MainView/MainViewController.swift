@@ -71,7 +71,6 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
     if self.searchController.isSearchBarEmpty {
       self.tableView?.isHidden = false
       self.resultTableView?.isHidden = true
-      self.tableView?.reloadData()
     } else {
       self.tableView?.isHidden = true
       self.resultTableView?.isHidden = false
@@ -106,7 +105,9 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
       guard let cell = self.resultTableView?.dequeueReusableCell(withIdentifier: ResultSearchTableViewCell.identifier) as? ResultSearchTableViewCell else {
         return CategoryTableViewCell()
       }
-      cell.configure(movieTitle: resultSearch?[indexPath.row].title ?? "", posterPath: resultSearch?[indexPath.row].posterPath ?? "")
+      if !searchController.isSearchBarEmpty {
+        cell.configure(movieTitle: resultSearch?[indexPath.row].title ?? "", posterPath: resultSearch?[indexPath.row].posterPath ?? "")
+      }
       
       return cell
       
