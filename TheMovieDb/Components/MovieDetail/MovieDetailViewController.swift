@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MovieDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChangeViewDelegate {
+final class MovieDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChangeViewDelegate {
   
   @IBOutlet weak var posterImageView: UIImageView?
   @IBOutlet weak var informationView: UIView?

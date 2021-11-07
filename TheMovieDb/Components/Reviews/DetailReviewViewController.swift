@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailReviewViewController: UIViewController {
+final class DetailReviewViewController: UIViewController {
   
   @IBOutlet weak var ratingLabel: UILabel?
   @IBOutlet weak var authorLabel: UILabel?

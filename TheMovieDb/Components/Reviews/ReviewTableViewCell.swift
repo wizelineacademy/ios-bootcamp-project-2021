@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReviewTableViewCell: UITableViewCell {
+final class ReviewTableViewCell: UITableViewCell {
   
   @IBOutlet weak var authorLabel: UILabel?
   @IBOutlet weak var contentLabel: UILabel?

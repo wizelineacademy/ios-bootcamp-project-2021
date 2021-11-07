@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecommendedTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
+final class RecommendedTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
   
   @IBOutlet weak var typeLabel: UILabel?
   @IBOutlet weak var collectionView: UICollectionView?

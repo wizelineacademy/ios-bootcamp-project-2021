@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultSearchTableViewCell: UITableViewCell {
+final class ResultSearchTableViewCell: UITableViewCell {
   
   @IBOutlet weak var titleLabel: UILabel?
   @IBOutlet weak var imageResult: UIImageView?

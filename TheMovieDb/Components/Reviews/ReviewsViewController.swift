@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
   @IBOutlet weak var tableView: UITableView?
   private var reviews: [Review]?
