@@ -31,21 +31,21 @@ class MovieCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func showStar(value:Int ) ->String{
+    func showStar(value:Int ) ->String {
         var star:String = ""
-        if value < 20 && value >= 0{
+        if value < 20 && value >= 0 {
             star = "★☆☆☆☆"
         }
-        else if value < 50 {
+        else if value < 40 {
             star = "★★☆☆☆"
         }
-        else if value < 70 {
+        else if value < 50 {
             star = "★★★☆☆"
         }
-        else if value < 90 {
+        else if value < 70 {
             star = "★★★★☆"
         }
-        else if value <= 100{
+        else if value < 90 && value <= 100 {
             star = "★★★★★"
         }
         else {
@@ -68,7 +68,7 @@ class MovieCell: UITableViewCell {
         self.movieOverviewLabel.text = overview
         
         guard let posterPath = poster else { return }
-        urlString = "https://image.tmdb.org/t/p/w500\(posterPath)"
+        urlString = "\(K.URLS.imageURL)\(posterPath)"
         
         if let imageURL = URL(string: urlString){
             movieImageView.posterFetcher(url: imageURL)

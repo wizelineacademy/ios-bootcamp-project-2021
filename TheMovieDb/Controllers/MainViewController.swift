@@ -14,12 +14,12 @@ class MainViewController: UIViewController{
     @IBOutlet weak var mainTableView: UITableView!
     
     var movieManager = MovieManager()
-    var movieType = "now_playing"
+    var movieType = K.MovieLaunch.nowPlaying
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTableView.dataSource = self
-        mainTableView.register(UINib(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
+        mainTableView.register(UINib(nibName: K.cellXibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
         loadPopularMoviesData()
         
     }
@@ -37,16 +37,16 @@ extension MainViewController {
     @IBAction func mainSegmentedControlPressed(_ sender: UISegmentedControl) {
         switch mainSegmentedControl.selectedSegmentIndex {
         case 0:
-            movieType = "now_playing"
+            movieType = K.MovieLaunch.nowPlaying
             loadPopularMoviesData()
         case 1:
-            movieType = "popular"
+            movieType = K.MovieLaunch.popular
             loadPopularMoviesData()
         case 2:
-            movieType = "top_rated"
+            movieType = K.MovieLaunch.topRated
             loadPopularMoviesData()
         case 3:
-            movieType = "upcoming"
+            movieType = K.MovieLaunch.upcoming
             loadPopularMoviesData()
         default:
             break
@@ -60,7 +60,7 @@ extension MainViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! MovieCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MovieCell
         let movie = movieManager.cellForRowAt(indexPath: indexPath)
         cell.setCellWithValuesOf(movie)
         return cell
