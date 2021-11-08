@@ -9,62 +9,43 @@ import UIKit
 
 
 class PopularTableView: UITableViewController {
-    var populator: MovieResults?
+    //var populator = [Movie]()
     var movieManager = MovieManager()
     //This is just for testing
     var movieType = "popular"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        movieManager.delegate = self
-        movieManager.fetchMovies(movieType: movieType)
         
-    }
-
-
-}
-
-// MARK: - Delegate fills populator with results
-
-extension PopularTableView: MovieManagerDelegate{
-    func didMoviesUpdate(_ movieManager: MovieManager, results: MovieResults) {
-        populator = results
+        tableView.register(UINib(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "ReusableCell")
+        //movieManager.delegate = self
+        //movieManager.fetchMovies(movieType: movieType)
+        //tableView.reloadData()
+        loadPopularMoviesData()
     }
     
-    func didFailWithError(error: Error) {
-        print(error)
+    private func loadPopularMoviesData(){
+        movieManager.fetchMoviesData(type: movieType) { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
-    
-}
 
-// MARK: - Extension table view populating
-
-extension PopularTableView {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // return the number of rows, just for testing, incomplete
-
-        if let num_rows = populator?.movies.count {
-            return num_rows
-        }else{
-            return 20
-        }
+           // return the number of rows, just for testing, incomplete
+        movieManager.numberOfRowsInSection(section: section)
         
-    }
+           
+       }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell", for: indexPath) as! MovieCell
-        if let movie = populator?.movies[indexPath.row] {
-            cell.setMovieInfo(movie: movie)
-        }
-        
-        return cell
-    }
-
+       override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+           
+           let cell = tableView.dequeueReusableCell(withIdentifier: "ReusableCell", for: indexPath) as! MovieCell
+           
+           let movie = movieManager.cellForRowAt(indexPath: indexPath)
+           cell.setCellWithValuesOf(movie)
+           return cell
+       }
     
-
-    
-    
-
     
 }
+

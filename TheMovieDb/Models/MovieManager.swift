@@ -7,62 +7,40 @@
 
 import Foundation
 
-
-
-protocol MovieManagerDelegate{
-    func didMoviesUpdate(_ movieManager: MovieManager, results: MovieResults)
-    func didFailWithError(error: Error)
-}
-
-
-struct MovieManager{
+class MovieManager{
     let movieBaseURL = "https://api.themoviedb.org/3/movie/"
-    let apiKey = "api_key=444cd656b00475d785aa41a9c43b2e44"
-    var delegate: MovieManagerDelegate?
+    let apiKey = "?api_key=444cd656b00475d785aa41a9c43b2e44"
+    var apiService = APIService()
+    var popularMovies = [Movie]()
+    //var delegate: MovieManagerDelegate?
     
-    func fetchMovies(movieType: String){
-        let urlString = "\(movieBaseURL)\(movieType)?\(apiKey)"
-        performRequest(with: urlString)
-    }
-    
-    // MARK: - Request movie results
-    
-    func performRequest(with urlString: String){
-        if let url = URL(string: urlString){
-            let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) { data, response, error in
-                if error != nil{
-                    self.delegate?.didFailWithError(error: error!)
-                    return
-                }
-                if let safeData = data{
-                    if let movie = self.parseJSON(safeData){
-                        self.delegate?.didMoviesUpdate(self, results: movie)
-                    }
-                }
-            }
-            task.resume()
-        }
-    }
-    
-    // MARK: - Parse movie Results
-    
-    func parseJSON(_ movieResultsData: Data) -> MovieResults? {
-        let decoder = JSONDecoder()
-        do{
-            let decodedData = try decoder.decode(MovieResults.self, from: movieResultsData)
-            let page = decodedData.page
-            let numResults = decodedData.numResults
-            let numPages = decodedData.numPages
-            let movieInfo = decodedData.movies
-            let movie = MovieResults(page: page, numResults: numResults, numPages: numPages, movies: movieInfo)
-            return movie
+    func fetchMoviesData(type: String, completion: @escaping () -> ()) {
+    let urlString = "\(movieBaseURL)\(type)\(apiKey)"
+        // weak self - prevent retain cycles
+        apiService.getMoviesData(url: urlString) { [weak self] (result) in
             
-        } catch {
-            delegate?.didFailWithError(error: error)
-            return nil
+            switch result {
+            case .success(let listOf):
+                self?.popularMovies = listOf.movies
+                completion()
+            case .failure(let error):
+                // Something is wrong with the JSON file or the model
+                print("Error processing json data: \(error)")
+            }
         }
+        
+        //performRequest(with: urlString)
+    }
     
+    func numberOfRowsInSection(section: Int) -> Int {
+        //if popularMovies.count != 0 {
+        //    return popularMovies.count
+        //}
+        return popularMovies.count
+    }
+    
+    func cellForRowAt (indexPath: IndexPath) -> Movie {
+        return popularMovies[indexPath.row]
     }
     
 }
