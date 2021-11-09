@@ -51,7 +51,7 @@ final class HomeView: UIViewController {
     
     let searchFeeds: [FeedTypes] = [.search, .keyword]
     
-    private var loadedPages = 0
+    private var loadedPages: Int = .zero
     
     private var isLoading = false {
         didSet {
@@ -145,7 +145,7 @@ final class HomeView: UIViewController {
     
     func resetFeed() {
         movies.removeAll()
-        loadedPages = 0
+        loadedPages = .zero
         updateFeed()
     }
     
