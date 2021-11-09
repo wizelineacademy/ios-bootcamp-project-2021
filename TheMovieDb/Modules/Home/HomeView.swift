@@ -207,7 +207,14 @@ extension HomeView: UICollectionViewDelegate {
     ) {
         switch collectionView {
         case movieFeed:
-            break
+            guard let selectedMovie = moviesDataSource.itemIdentifier(for: indexPath) else {
+                return
+            }
+            let viewModel = DetailViewModel(
+                dependencies: DetailViewModel.Dependencies(movie: selectedMovie)
+            )
+            let vc = DetailView(viewModel: viewModel)
+            navigationController?.pushViewController(vc, animated: true)
         case feedType:
             currentFeed = isSearching ? searchFeeds[indexPath.row] : normalFeeds[indexPath.row]
         default:
