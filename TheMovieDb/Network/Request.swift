@@ -10,7 +10,7 @@ import Foundation
 protocol Request {
     var path: String { get }
     var method: HTTPMethod { get }
-    var queryParams: [String: String]? { get }
+    var queryParams: [String: String]? { get set }
     var params: [String: Any?]? { get }
     var headers: [String: String]? { get }
     associatedtype ResponseType: Decodable
@@ -46,5 +46,9 @@ extension Request {
             return nil
         }
         return urlRequest
+    }
+    
+    mutating func addNewQueryParam(_ value: String, forKey key: String) {
+        queryParams?[key] = value
     }
 }
