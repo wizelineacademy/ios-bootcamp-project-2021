@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct MovieCastResponse: Decodable {
+    let id: Int
+    let cast: [CastMember]
+}

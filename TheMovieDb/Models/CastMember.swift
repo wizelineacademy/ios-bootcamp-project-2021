@@ -6,3 +6,8 @@
 //
 
 import Foundation
+
+struct CastMember: Decodable {
+    let name: String
+    let character: String
+}
