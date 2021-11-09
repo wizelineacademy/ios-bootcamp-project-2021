@@ -13,6 +13,8 @@
 		5E4712362730CA0B00BA0D72 /* FeedTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4712352730CA0B00BA0D72 /* FeedTypeCell.swift */; };
 		5E4FB871272C686600FF68A4 /* MovieFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E4FB870272C686600FF68A4 /* MovieFeedCell.swift */; };
 		5E4FB874272C784A00FF68A4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 5E4FB873272C784A00FF68A4 /* Kingfisher */; };
+		5E6F873F27374FC100CA652D /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6F873E27374FC100CA652D /* DetailView.swift */; };
+		5E6F87412737625500CA652D /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6F87402737625500CA652D /* DetailViewModel.swift */; };
 		5EAA31862732140100F7ECE8 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA31852732140100F7ECE8 /* LoadingViewController.swift */; };
 		5EAA318927321D0500F7ECE8 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA318827321D0500F7ECE8 /* UIViewController.swift */; };
 		5EE80098272A0609003DD525 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE80097272A0609003DD525 /* Request.swift */; };
@@ -53,6 +55,8 @@
 		5E0B4D83273AFAD20018AE5E /* MovieCastResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCastResponse.swift; sourceTree = "<group>"; };
 		5E4712352730CA0B00BA0D72 /* FeedTypeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTypeCell.swift; sourceTree = "<group>"; };
 		5E4FB870272C686600FF68A4 /* MovieFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFeedCell.swift; sourceTree = "<group>"; };
+		5E6F873E27374FC100CA652D /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		5E6F87402737625500CA652D /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		5EAA31852732140100F7ECE8 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		5EAA318827321D0500F7ECE8 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		5EE80097272A0609003DD525 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
@@ -111,6 +115,15 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		5E6F873D27374F7A00CA652D /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				5E6F873E27374FC100CA652D /* DetailView.swift */,
+				5E6F87402737625500CA652D /* DetailViewModel.swift */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
 		5EAA31842732133800F7ECE8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +156,7 @@
 		5EEA20FE272E252D0038D3C9 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				5E6F873D27374F7A00CA652D /* Detail */,
 				5EEA20FF272E25350038D3C9 /* Home */,
 			);
 			path = Modules;
@@ -375,6 +389,7 @@
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				5E0B4D84273AFAD20018AE5E /* MovieCastResponse.swift in Sources */,
 				5E4712362730CA0B00BA0D72 /* FeedTypeCell.swift in Sources */,
+				5E6F873F27374FC100CA652D /* DetailView.swift in Sources */,
 				5EE80098272A0609003DD525 /* Request.swift in Sources */,
 				5EE8009D272A08C2003DD525 /* MovieDBAPI.swift in Sources */,
 				5E4FB871272C686600FF68A4 /* MovieFeedCell.swift in Sources */,
@@ -384,6 +399,7 @@
 				5EE8009F272A2461003DD525 /* MovieListResponse.swift in Sources */,
 				5E06585F2727700D00F1DF9A /* Movie.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
+				5E6F87412737625500CA652D /* DetailViewModel.swift in Sources */,
 				5E0B4D82273AFA5B0018AE5E /* CastMember.swift in Sources */,
 				5EAA31862732140100F7ECE8 /* LoadingViewController.swift in Sources */,
 			);
