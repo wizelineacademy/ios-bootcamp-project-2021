@@ -14,6 +14,7 @@ final class SearchViewController: UITableViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var moviesSearch: [Movie] = []
     public let searchData: SearchingDataProtocol
+    private let globalTread = DispatchQueue.global(qos: .userInitiated)
     
     // MARK: - Life Cycle
     init(searchData: SearchingDataProtocol ) {
@@ -99,11 +100,15 @@ extension SearchViewController: UISearchControllerDelegate {
 extension SearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else {return}
-    
         let parameter = APIParameters(query: text)
-        self.moviesSearch = searchData.getMovie(with: parameter)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        showSpinner(onView: self.view)
+        globalTread.async {
+            self.moviesSearch = self.searchData.getMovie(with: parameter)
+            self.removeSpinner()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
+       
     }
 }
