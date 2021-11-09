@@ -43,7 +43,7 @@ final class SearchViewController: UITableViewController {
     // MARK: - Helpers
     
     func configureTableView() {
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.reusableIdentifier)
         tableView.rowHeight = 64
     }
     
@@ -70,11 +70,12 @@ extension SearchViewController {
         return moviesSearch.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-        cell.textLabel?.text = moviesSearch[indexPath.row].title
-        let url = URL(string: MovieConst.imageCDN + (moviesSearch[indexPath.row].posterPath ?? "") )
-        cell.imageView?.kf.setImage(with: url)
-        cell.imageView?.contentMode = .scaleAspectFit
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.reusableIdentifier, for: indexPath) as? SearchCell else {
+            return SearchCell()
+        }
+        let movie = moviesSearch[indexPath.row]
+        let viewModel = MovieViewModel(movie: movie)
+        cell.viewModel = viewModel
         return cell
     }
 }
