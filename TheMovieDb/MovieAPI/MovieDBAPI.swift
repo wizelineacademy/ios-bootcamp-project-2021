@@ -21,8 +21,25 @@ private extension FeedTypes {
     }
 }
 
+private extension RelatedMovieTypes {
+    var endpoint: MovieDBAPI.MoviesEndpoints {
+        switch self {
+        case .recommendation: return .recommendations
+        case .similar: return .similarMovies
+        }
+    }
+}
+
 protocol MovieFeedRepository {
     func getMovieFeed(on feed: FeedTypes, page: Int, query: String?, completion: @escaping (Result<MovieListResponse, Error>) -> Void)
+}
+
+protocol RelatedMoviesRepository {
+    func getRelatedMovies(for movie: Movie, on related: RelatedMovieTypes, completion: @escaping (Result<MovieListResponse, Error>) -> Void)
+}
+
+protocol MovieCastRepository {
+    func getMovieCast(for movie: Movie, completion: @escaping (Result<MovieCastResponse, Error>) -> Void)
 }
 
 struct MovieDBAPI: APIClient {
@@ -41,6 +58,9 @@ struct MovieDBAPI: APIClient {
         case upcoming = "3/movie/upcoming"
         case search = "3/search/movie"
         case keyword = "3/search/keyword"
+        case recommendations = "3/movie/{movie_id}/recommendations"
+        case similarMovies = "3/movie/{movie_id}/similar"
+        case cast = "3/movie/{movie_id}/credits"
     }
     
     let dispatcher: NetworkDispatcher
@@ -99,6 +119,18 @@ struct MovieDBAPI: APIClient {
         }
     }
     
+    struct GetCast: Request {
+        var path: String
+        var queryParams: [String: String]? = [
+            "api_key": APIConstants.apiKey
+        ]
+        typealias ResponseType = MovieCastResponse
+        
+        init(on path: String) {
+            self.path = APIConstants.baseUrl + path
+        }
+    }
+    
 }
 
 extension MovieDBAPI: MovieFeedRepository {
@@ -115,13 +147,37 @@ extension MovieDBAPI: MovieFeedRepository {
         if let query = query {
             request.addNewQueryParam(query, forKey: GetMovies.QueryParamsKeys.query.rawValue)
         }
-        execute(request) { result in
-            switch result {
-            case .success(let data):
-                completion(.success(data))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
+        execute(request, completion: completion)
+    }
+}
+
+extension MovieDBAPI: RelatedMoviesRepository {
+    func getRelatedMovies(
+        for movie: Movie,
+        on related: RelatedMovieTypes,
+        completion: @escaping (Result<MovieListResponse, Error>) -> Void
+    ) {
+        let path = related.endpoint
+            .rawValue
+            .replacingOccurrences(
+                of: "{movie_id}",
+                with: String(movie.id)
+            )
+        execute(GetMovies(on: path), completion: completion)
+    }
+}
+
+extension MovieDBAPI: MovieCastRepository {
+    func getMovieCast(
+        for movie: Movie,
+        completion: @escaping (Result<MovieCastResponse, Error>) -> Void
+    ) {
+        let path = MoviesEndpoints.cast
+            .rawValue
+            .replacingOccurrences(
+                of: "{movie_id}",
+                with: String(movie.id)
+            )
+        execute(GetCast(on: path), completion: completion)
     }
 }
