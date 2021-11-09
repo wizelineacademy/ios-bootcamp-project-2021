@@ -126,14 +126,11 @@ final class HomeView: UIViewController {
             return
         }
         isLoading = true
-        var request = MovieDBAPI.GetMovies(
+        movieAPI.getMovieFeed(
             on: currentFeed,
-            queries: [.page: String(loadedPages + 1)]
-        )
-        if let search = search {
-            request.addNewQueryParam(search, forKey: .query)
-        }
-        movieAPI.execute(request) { [weak self] result in
+            page: loadedPages + 1,
+            query: search
+        ) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.loadedPages = response.page

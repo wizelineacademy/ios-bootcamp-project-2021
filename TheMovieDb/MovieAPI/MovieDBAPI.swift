@@ -21,6 +21,10 @@ private extension FeedTypes {
     }
 }
 
+protocol MovieFeedRepository {
+    func getMovieFeed(on feed: FeedTypes, page: Int, query: String?, completion: @escaping (Result<MovieListResponse, Error>) -> Void)
+}
+
 struct MovieDBAPI: APIClient {
     
     struct APIConstants {
@@ -39,7 +43,7 @@ struct MovieDBAPI: APIClient {
         case keyword = "3/search/keyword"
     }
     
-    var dispatcher: NetworkDispatcher
+    let dispatcher: NetworkDispatcher
     
     init(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher()) {
         self.dispatcher = dispatcher
@@ -84,19 +88,40 @@ struct MovieDBAPI: APIClient {
             case query
         }
         
-        init(on feed: FeedTypes, queries: [QueryParamsKeys: String]? = nil) {
-            self.path = APIConstants.baseUrl + feed.endpoint.rawValue
+        init(on path: String, queries: [QueryParamsKeys: String]? = nil) {
+            self.path = APIConstants.baseUrl + path
             guard let queries = queries else {
                 return
             }
             queries.forEach { key, value in
-                addNewQueryParam(value, forKey: key)
+                addNewQueryParam(value, forKey: key.rawValue)
             }
-        }
-        
-        mutating func addNewQueryParam(_ value: String, forKey key: QueryParamsKeys) {
-            queryParams?[key.rawValue] = value
         }
     }
     
+}
+
+extension MovieDBAPI: MovieFeedRepository {
+    func getMovieFeed(
+        on feed: FeedTypes,
+        page: Int,
+        query: String? = nil,
+        completion: @escaping (Result<MovieListResponse, Error>) -> Void
+    ) {
+        var request = GetMovies(
+            on: feed.endpoint.rawValue,
+            queries: [.page: String(page)]
+        )
+        if let query = query {
+            request.addNewQueryParam(query, forKey: GetMovies.QueryParamsKeys.query.rawValue)
+        }
+        execute(request) { result in
+            switch result {
+            case .success(let data):
+                completion(.success(data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
 }
