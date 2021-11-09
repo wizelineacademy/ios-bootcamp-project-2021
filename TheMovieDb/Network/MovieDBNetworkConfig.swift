@@ -11,8 +11,7 @@ final class MovieDBNetworkConfig {
 
     static let shared = MovieDBNetworkConfig()
 
-    private (set) var apiKey = ""
-    private (set) var readAccessToken = ""
+    private (set) var apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
 
     var baseAPIURLString: String {
         return "https://api.themoviedb.org"
@@ -20,9 +19,8 @@ final class MovieDBNetworkConfig {
 
     init() {}
 
-    func configure(with apiKey: String, and readAccessToken: String) {
+    func configure(with apiKey: String) {
         self.apiKey = apiKey
-        self.readAccessToken = readAccessToken
     }
 
 }
