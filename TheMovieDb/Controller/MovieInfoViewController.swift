@@ -33,51 +33,125 @@ final class MovieInfoViewController: UIViewController {
             }
         }
     }
-    var castMovie: String?
+    var castMovie: String? {
+        didSet {
+            DispatchQueue.main.async {
+                self.castInfoLabel.text = "Cast: \(self.castMovie ?? "None")"
+            }
+        }
+    }
     
-    @IBOutlet weak var titleMovie: UILabel!
+    let titleMovie = UILabel()
+    let imageMovie = UIImageView()
+    let textOverview = UITextView()
+    let idMovie = UILabel()
+    let originalTitleMovie = UILabel()
+    let originalLanguageMovie = UILabel()
+    let popularityMovie = UILabel()
+    let adultMovie = UILabel()
+    let releaseDateMovie = UILabel()
+    let castInfoLabel = UILabel()
+    let similarMoviesLabel = UILabel()
+    let recommendationsLabel = UILabel()
     
-    @IBOutlet weak var imageMovie: UIImageView!
-    
-    @IBOutlet weak var textOverview: UITextView!
-    
-    @IBOutlet weak var idMovie: UILabel!
-    
-    @IBOutlet weak var originalTitleMovie: UILabel!
-    
-    @IBOutlet weak var originalLanguageMovie: UILabel!
-    
-    @IBOutlet weak var popularityMovie: UILabel!
-    
-    @IBOutlet weak var adultMovie: UILabel!
-    
-    @IBOutlet weak var releaseDateMovie: UILabel!
-    
-    @IBOutlet weak var castInfoLabel: UILabel!
-    
-    @IBOutlet weak var similarMoviesLabel: UILabel!
-    
-    @IBOutlet weak var recommendationsLabel: UILabel!
-    
+    let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
+        addAllViews()
+        setupTitleMovieLabel()
+        setupImageMovie()
+        setupTextOverview()
+        setupStackView()
         setupMovie()
         similarMovies()
         recomendedMovies()
         castFromMovie()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupNavigationBar()
     }
     
+    private func addAllViews() {
+        view.addSubview(titleMovie)
+        view.addSubview(imageMovie)
+        view.addSubview(textOverview)
+        view.addSubview(stackView)
+        view.backgroundColor = .white
+    }
+    
+    private func setupTitleMovieLabel() {
+        titleMovie.translatesAutoresizingMaskIntoConstraints = false
+        titleMovie.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
+        titleMovie.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        titleMovie.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 20).isActive = true
+        titleMovie.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        titleMovie.textAlignment = .center
+        titleMovie.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        titleMovie.numberOfLines = 2
+    }
+    
+    private func setupImageMovie() {
+        imageMovie.translatesAutoresizingMaskIntoConstraints = false
+        imageMovie.topAnchor.constraint(equalTo: titleMovie.bottomAnchor, constant: 10).isActive = true
+        imageMovie.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        imageMovie.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 20).isActive = true
+        imageMovie.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        imageMovie.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        imageMovie.heightAnchor.constraint(equalTo: imageMovie.widthAnchor, multiplier: 1.5).isActive = true
+    }
+    
+    private func setupTextOverview() {
+        textOverview.translatesAutoresizingMaskIntoConstraints = false
+        textOverview.topAnchor.constraint(equalTo: imageMovie.bottomAnchor, constant: 10).isActive = true
+        textOverview.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: textOverview.trailingAnchor, constant: 20).isActive = true
+        textOverview.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        textOverview.isEditable = false
+        textOverview.font = .systemFont(ofSize: 15)
+        castInfoLabel.numberOfLines = 2
+        similarMoviesLabel.numberOfLines = 2
+        recommendationsLabel.numberOfLines = 2
+    }
+    
+    private func setupStackView() {
+        idMovie.translatesAutoresizingMaskIntoConstraints = false
+        originalTitleMovie.translatesAutoresizingMaskIntoConstraints = false
+        originalLanguageMovie.translatesAutoresizingMaskIntoConstraints = false
+        popularityMovie.translatesAutoresizingMaskIntoConstraints = false
+        adultMovie.translatesAutoresizingMaskIntoConstraints = false
+        releaseDateMovie.translatesAutoresizingMaskIntoConstraints = false
+        castInfoLabel.translatesAutoresizingMaskIntoConstraints = false
+        similarMoviesLabel.translatesAutoresizingMaskIntoConstraints = false
+        recommendationsLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        stackView.topAnchor.constraint(equalTo: textOverview.bottomAnchor, constant: 10).isActive = true
+        view.safeAreaLayoutGuide.bottomAnchor.constraint(greaterThanOrEqualTo: stackView.bottomAnchor, constant: 20).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
+        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: stackView.trailingAnchor, constant: 20).isActive = true
+        
+        stackView.addArrangedSubview(idMovie)
+        stackView.addArrangedSubview(originalTitleMovie)
+        stackView.addArrangedSubview(originalLanguageMovie)
+        stackView.addArrangedSubview(popularityMovie)
+        stackView.addArrangedSubview(adultMovie)
+        stackView.addArrangedSubview(releaseDateMovie)
+        stackView.addArrangedSubview(castInfoLabel)
+        stackView.addArrangedSubview(similarMoviesLabel)
+        stackView.addArrangedSubview(recommendationsLabel)
+    }
+    
     func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = false
-
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.reviewsTitleBarButton, style: .plain, target: self, action: #selector(reviewsDisplay))
     }
     
@@ -136,6 +210,7 @@ final class MovieInfoViewController: UIViewController {
             guard let self = self else { return }
             switch response {
             case.success(let movieResponse):
+                guard movieResponse.results?.count ?? 0 > 0 else { return }
                 let movies = movieResponse.results
                 let movieNames = movies?.compactMap({ $0.title }).prefix(3)
                 self.recommendedMoviesNames = movieNames?.joined(separator: ", ")
@@ -154,9 +229,6 @@ final class MovieInfoViewController: UIViewController {
                 let castMovie = creditsResponse.cast
                 let castNames = castMovie?.compactMap({ $0.name }).prefix(3)
                 self.castMovie = castNames?.joined(separator: ", ")
-                DispatchQueue.main.async {
-                    self.castInfoLabel.text = "Cast: \(self.castMovie ?? "None")"
-                }
             case .failure(let failureResult):
                 self.showErrorAlert(failureResult)
             }
@@ -164,9 +236,8 @@ final class MovieInfoViewController: UIViewController {
     }
     
    @objc func reviewsDisplay() {
-       if let viewControllerReviews = storyboard?.instantiateViewController(identifier: Constants.reviewsViewControllerID) as? ReviewsViewController {
-           viewControllerReviews.movieID = movie?.id
-           navigationController?.pushViewController(viewControllerReviews, animated: true)
+       let viewControllerReviews = ReviewsViewController()
+       viewControllerReviews.movieID = movie?.id
+       navigationController?.pushViewController(viewControllerReviews, animated: true)
        }
-    }
 }

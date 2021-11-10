@@ -13,12 +13,16 @@ final class ReviewsViewController: UIViewController  {
     var movie: Movie?
     var reviews: [ReviewsDetails] = []
     
-
-    @IBOutlet weak var reviewsTableView: UITableView!
+    private var reviewsTableView: UITableView = {
+        let reviewsTableView = UITableView()
+        reviewsTableView.translatesAutoresizingMaskIntoConstraints = false
+        return reviewsTableView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        configureUI()
         configureTableView()
         reviewsMovie()
     }
@@ -39,10 +43,20 @@ final class ReviewsViewController: UIViewController  {
         }
     }
     
-    func configureTableView() {
+    private func configureUI() {
+        view.backgroundColor = .systemRed
+        view.addSubview(reviewsTableView)
         reviewsTableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
-        reviewsTableView.delegate = self
+        
+        reviewsTableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        reviewsTableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        reviewsTableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        reviewsTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    private func configureTableView() {
         reviewsTableView.dataSource = self
+        reviewsTableView.delegate = self
     }
     
 }
@@ -60,10 +74,9 @@ extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let viewControllerReviewsDetail = storyboard?.instantiateViewController(identifier: Constants.reviewDetailID) as? ReviewsDetailViewController {
-            let reviewSelected = reviews[indexPath.row]
-            viewControllerReviewsDetail.review = reviewSelected
-            navigationController?.pushViewController(viewControllerReviewsDetail, animated: true)
-        }
+        let viewControllerReviewsDetail = ReviewsDetailViewController()
+        let reviewSelected = reviews[indexPath.row]
+        viewControllerReviewsDetail.review = reviewSelected
+        navigationController?.pushViewController(viewControllerReviewsDetail, animated: true)
     }
 }
