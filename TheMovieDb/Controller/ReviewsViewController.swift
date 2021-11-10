@@ -10,8 +10,8 @@ import UIKit
 final class ReviewsViewController: UIViewController  {
     
     var movieID: Int?
-    var movie: Movie?
-    var reviews: [ReviewsDetails] = []
+    private var movie: Movie?
+    private var reviews: [ReviewsDetails] = []
     
     private var reviewsTableView: UITableView = {
         let reviewsTableView = UITableView()

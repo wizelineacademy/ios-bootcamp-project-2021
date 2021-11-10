@@ -34,7 +34,6 @@ final class ReviewsDetailViewController: UIViewController {
         reviewCompletedText.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         reviewCompletedText.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
         view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: reviewCompletedText.trailingAnchor, constant: 20).isActive = true
-//        reviewCompletedText.heightAnchor.constraint(equalToConstant: 100).isActive = true
         reviewCompletedText.isEditable = false
         reviewCompletedText.font = .systemFont(ofSize: 15)
     }
