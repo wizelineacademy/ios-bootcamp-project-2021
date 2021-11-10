@@ -25,6 +25,7 @@ struct Movie: Decodable {
     let rate: Double?
     let posterImage: String?
     let overview: String?
+    //let genre: [Int]?
     
     private enum CodingKeys: String, CodingKey {
         case title, overview

@@ -9,22 +9,22 @@ import UIKit
 
 class MainViewController: UIViewController{
     
-    
+
     @IBOutlet weak var mainSegmentedControl: UISegmentedControl!
     @IBOutlet weak var mainTableView: UITableView!
     
     var movieManager = MovieManager()
-    var movieType = K.MovieLaunch.nowPlaying
+    var movieType = Constant.MovieLaunch.nowPlaying
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTableView.dataSource = self
-        mainTableView.register(UINib(nibName: K.cellXibName, bundle: nil), forCellReuseIdentifier: K.cellIdentifier)
-        loadPopularMoviesData()
+        mainTableView.register(UINib(nibName: Constant.cellXibName, bundle: nil), forCellReuseIdentifier: Constant.cellIdentifier)
+        loadMoviesData()
         
     }
     
-    private func loadPopularMoviesData(){
+    private func loadMoviesData(){
         movieManager.fetchMoviesData(type: movieType) { [weak self] in
             self?.mainTableView.reloadData()
         }
@@ -37,20 +37,19 @@ extension MainViewController {
     @IBAction func mainSegmentedControlPressed(_ sender: UISegmentedControl) {
         switch mainSegmentedControl.selectedSegmentIndex {
         case 0:
-            movieType = K.MovieLaunch.nowPlaying
-            loadPopularMoviesData()
+            movieType = Constant.MovieLaunch.nowPlaying
         case 1:
-            movieType = K.MovieLaunch.popular
-            loadPopularMoviesData()
+            movieType = Constant.MovieLaunch.popular
         case 2:
-            movieType = K.MovieLaunch.topRated
-            loadPopularMoviesData()
+            movieType = Constant.MovieLaunch.topRated
         case 3:
-            movieType = K.MovieLaunch.upcoming
-            loadPopularMoviesData()
+            movieType = Constant.MovieLaunch.upcoming
+        case 4:
+            movieType = Constant.MovieLaunch.trending
         default:
             break
         }
+        loadMoviesData()
     }
 }
 
@@ -60,9 +59,10 @@ extension MainViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: K.cellIdentifier, for: indexPath) as! MovieCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constant.cellIdentifier, for: indexPath) as! MovieCell
         let movie = movieManager.cellForRowAt(indexPath: indexPath)
         cell.setCellWithValuesOf(movie)
+        //print(movie)
         return cell
     }
 }

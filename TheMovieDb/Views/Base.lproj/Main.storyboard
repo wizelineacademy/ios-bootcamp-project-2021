@@ -32,13 +32,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="j9Y-ZK-C1L">
+                            <segmentedControl opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="j9Y-ZK-C1L">
                                 <rect key="frame" x="0.0" y="44" width="414" height="32"/>
                                 <segments>
                                     <segment title="Now Playing"/>
                                     <segment title="Popular"/>
                                     <segment title="Top Rated"/>
                                     <segment title="Upcoming"/>
+                                    <segment title="Trending"/>
                                 </segments>
                                 <connections>
                                     <action selector="mainSegmentedControlPressed:" destination="m5s-he-XVc" eventType="valueChanged" id="8O7-hu-zmI"/>

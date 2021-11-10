@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct K {
+struct Constant  { //constants
     static let cellIdentifier: String = "ReusableCell"
     static let cellXibName: String = "MovieCell"
     
@@ -16,6 +16,7 @@ struct K {
         static let popular: String = "popular"
         static let topRated: String = "top_rated"
         static let upcoming: String = "upcoming"
+        static let trending: String = "trending"
     }
     
     struct URLS{

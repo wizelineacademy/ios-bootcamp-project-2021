@@ -8,19 +8,25 @@
 import Foundation
 
 class MovieManager{
-    let movieBaseURL = "https://api.themoviedb.org/3/movie/"
+    let movieBaseURL = "https://api.themoviedb.org/3"
     let apiKey = "?api_key=444cd656b00475d785aa41a9c43b2e44"
     var apiService = APIService()
-    var popularMovies = [Movie]()
+    var movies = [Movie]()
     
     func fetchMoviesData(type: String, completion: @escaping () -> ()) {
-    let urlString = "\(movieBaseURL)\(type)\(apiKey)"
+        let urlString: String
+        
+        if type == "trending" {
+            urlString = "\(movieBaseURL)/\(type)/movie/day\(apiKey)"
+        } else {
+            urlString = "\(movieBaseURL)/movie/\(type)\(apiKey)"
+        }
         // weak self - prevent retain cycles
         apiService.getMoviesData(url: urlString) { [weak self] (result) in
             
             switch result {
             case .success(let listOf):
-                self?.popularMovies = listOf.movies
+                self?.movies = listOf.movies
                 completion()
             case .failure(let error):
                 // Something is wrong with the JSON file or the model
@@ -34,11 +40,11 @@ class MovieManager{
         //if popularMovies.count != 0 {
         //    return popularMovies.count
         //}
-        return popularMovies.count
+        return movies.count
     }
     
     func cellForRowAt (indexPath: IndexPath) -> Movie {
-        return popularMovies[indexPath.row]
+        return movies[indexPath.row]
     }
     
 }

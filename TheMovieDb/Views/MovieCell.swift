@@ -31,7 +31,7 @@ class MovieCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func showStar(value:Int ) ->String {
+    func showStar(value: Int) -> String {
         var star:String = ""
         if value < 20 && value >= 0 {
             star = "★☆☆☆☆"
@@ -68,7 +68,7 @@ class MovieCell: UITableViewCell {
         self.movieOverviewLabel.text = overview
         
         guard let posterPath = poster else { return }
-        urlString = "\(K.URLS.imageURL)\(posterPath)"
+        urlString = "\(Constant.URLS.imageURL)\(posterPath)"
         
         if let imageURL = URL(string: urlString){
             movieImageView.posterFetcher(url: imageURL)
