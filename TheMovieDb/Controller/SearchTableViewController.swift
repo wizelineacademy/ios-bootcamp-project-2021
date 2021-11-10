@@ -22,8 +22,13 @@ final class SearchTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupTableViewUI()
         setupSearchController()
         setupNavigation()
+    }
+    
+    func setupTableViewUI() {
+        tableView.register(SearchSubtitleTableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
     }
     
     func setupSearchController() {
@@ -96,17 +101,15 @@ final class SearchTableViewController: UITableViewController {
     }
     
     func navigationPersonDetailViewController(id: Int) {
-        if let PersonDetailViewController = storyboard?.instantiateViewController(withIdentifier: Constants.personDetailViewControllerID) as? PersonDetailViewController {
-            PersonDetailViewController.personID = id
-            navigationController?.pushViewController(PersonDetailViewController, animated: true)
-        }
+        let PersonDetailViewController = PersonDetailViewController()
+        PersonDetailViewController.personID = id
+        navigationController?.pushViewController(PersonDetailViewController, animated: true)
     }
     
     func navigationMovieInfoViewController(id: Int) {
-        if let MovieInfoViewController = storyboard?.instantiateViewController(withIdentifier: Constants.movieInfoViewControllerID) as? MovieInfoViewController {
-            MovieInfoViewController.movieID = id
-            navigationController?.pushViewController(MovieInfoViewController, animated: true)
-        }
+        let MovieInfoViewController = MovieInfoViewController()
+        MovieInfoViewController.movieID = id
+        navigationController?.pushViewController(MovieInfoViewController, animated: true)
     }
 }
 

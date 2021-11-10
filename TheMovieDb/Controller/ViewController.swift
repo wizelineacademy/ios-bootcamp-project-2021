@@ -9,7 +9,6 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    @IBOutlet weak var tableView: UITableView!
     var type: MovieListEndpoint?
     var typeTitle = ""
     var resultsMovie: [Movie] = [] {
@@ -19,12 +18,18 @@ final class ViewController: UIViewController {
             }
         }
     }
+    
+    private var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        return tableView
+    }()
    
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        title = typeTitle
         configureTableView()
+        configureUI()
         setupNavigationBar()
         loadMovies()
     }
@@ -33,10 +38,24 @@ final class ViewController: UIViewController {
         setupNavigationBar()
     }
     
-    func configureTableView() {
+    private func configureUI() {
+        title = typeTitle
+        view.backgroundColor = .systemRed
+        view.addSubview(tableView)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
-        tableView.delegate = self
+        setupTableViewConstraints()
+    }
+    
+    private func setupTableViewConstraints() {
+        tableView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        tableView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    private func configureTableView() {
         tableView.dataSource = self
+        tableView.delegate = self
     }
     
     func setupNavigationBar() {
@@ -56,7 +75,6 @@ final class ViewController: UIViewController {
                     return
                 }
                 self.resultsMovie = results
-                print(sucessResult.results ?? [])
                 
             case .failure(let failureResult):
                 self.showErrorAlert(failureResult)
@@ -77,10 +95,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let viewControllerMovieInfo = storyboard?.instantiateViewController(identifier: Constants.movieInfoViewControllerID) as? MovieInfoViewController {
-            viewControllerMovieInfo.movie = resultsMovie[indexPath.row]
-            navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
-        }
+        let viewControllerMovieInfo = MovieInfoViewController()
+        viewControllerMovieInfo.movie = resultsMovie[indexPath.row]
+        navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
     }
 }
 

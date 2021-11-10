@@ -20,10 +20,15 @@ final class TableViewController: UITableViewController {
         
         title = Constants.titleInitialTableView
         setupNavigationBar()
+        setupTableViewUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupNavigationBar()
+    }
+    
+    func setupTableViewUI() {
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
     }
     
     func setupNavigationBar() {
@@ -42,17 +47,15 @@ final class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let viewControllerMoviesList = storyboard?.instantiateViewController(identifier: Constants.viewControllerID) as? ViewController {
-            let category = moviesCategory[indexPath.row]
-            viewControllerMoviesList.type = category.type
-            viewControllerMoviesList.typeTitle = category.name
-            navigationController?.pushViewController(viewControllerMoviesList, animated: true)
-        }
+        let viewControllerMoviesList = ViewController()
+        let category = moviesCategory[indexPath.row]
+        viewControllerMoviesList.type = category.type
+        viewControllerMoviesList.typeTitle = category.name
+        navigationController?.pushViewController(viewControllerMoviesList, animated: true)
     }
     
     @objc func searchTapped() {
-        if let searchTableViewController = storyboard?.instantiateViewController(identifier: Constants.searchTableViewControllerID) as? SearchTableViewController {
-            navigationController?.pushViewController(searchTableViewController, animated: true)
-        }
+        let searchTableViewController = SearchTableViewController()
+        navigationController?.pushViewController(searchTableViewController, animated: true)
     }
 }
