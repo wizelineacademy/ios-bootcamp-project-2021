@@ -31,15 +31,19 @@ private extension RelatedMovieTypes {
 }
 
 protocol MovieFeedRepository {
-    func getMovieFeed(on feed: FeedTypes, page: Int, query: String?, completion: @escaping (Result<MovieListResponse, Error>) -> Void)
+    func getMovieFeed(on feed: FeedTypes, page: Int, query: String?, completion: @escaping (Result<MovieDBAPIListResponse<Movie>, Error>) -> Void)
 }
 
 protocol RelatedMoviesRepository {
-    func getRelatedMovies(for movie: Movie, on related: RelatedMovieTypes, completion: @escaping (Result<MovieListResponse, Error>) -> Void)
+    func getRelatedMovies(for movie: Movie, on related: RelatedMovieTypes, completion: @escaping (Result<MovieDBAPIListResponse<Movie>, Error>) -> Void)
 }
 
 protocol MovieCastRepository {
     func getMovieCast(for movie: Movie, completion: @escaping (Result<MovieCastResponse, Error>) -> Void)
+}
+
+protocol MovieReviewsRepository {
+    func getMoviewReviews(for movie: Movie, page: Int, completion: @escaping (Result<MovieDBAPIListResponse<Review>, Error>) -> Void)
 }
 
 struct MovieDBAPI: APIClient {
@@ -61,6 +65,7 @@ struct MovieDBAPI: APIClient {
         case recommendations = "3/movie/{movie_id}/recommendations"
         case similarMovies = "3/movie/{movie_id}/similar"
         case cast = "3/movie/{movie_id}/credits"
+        case reviews = "3/movie/{movie_id}/reviews"
     }
     
     let dispatcher: NetworkDispatcher
@@ -96,12 +101,12 @@ struct MovieDBAPI: APIClient {
         }
     }
     
-    struct GetMovies: Request {
+    struct GetList<Model: Decodable>: Request {
         var path: String
         var queryParams: [String: String]? = [
             "api_key": APIConstants.apiKey
         ]
-        typealias ResponseType = MovieListResponse
+        typealias ResponseType = MovieDBAPIListResponse<Model>
         
         enum QueryParamsKeys: String {
             case page
@@ -138,14 +143,14 @@ extension MovieDBAPI: MovieFeedRepository {
         on feed: FeedTypes,
         page: Int,
         query: String? = nil,
-        completion: @escaping (Result<MovieListResponse, Error>) -> Void
+        completion: @escaping (Result<MovieDBAPIListResponse<Movie>, Error>) -> Void
     ) {
-        var request = GetMovies(
+        var request = GetList<Movie>(
             on: feed.endpoint.rawValue,
             queries: [.page: String(page)]
         )
         if let query = query {
-            request.addNewQueryParam(query, forKey: GetMovies.QueryParamsKeys.query.rawValue)
+            request.addNewQueryParam(query, forKey: GetList<Movie>.QueryParamsKeys.query.rawValue)
         }
         execute(request, completion: completion)
     }
@@ -155,7 +160,7 @@ extension MovieDBAPI: RelatedMoviesRepository {
     func getRelatedMovies(
         for movie: Movie,
         on related: RelatedMovieTypes,
-        completion: @escaping (Result<MovieListResponse, Error>) -> Void
+        completion: @escaping (Result<MovieDBAPIListResponse<Movie>, Error>) -> Void
     ) {
         let path = related.endpoint
             .rawValue
@@ -163,7 +168,7 @@ extension MovieDBAPI: RelatedMoviesRepository {
                 of: "{movie_id}",
                 with: String(movie.id)
             )
-        execute(GetMovies(on: path), completion: completion)
+        execute(GetList(on: path), completion: completion)
     }
 }
 
@@ -179,5 +184,21 @@ extension MovieDBAPI: MovieCastRepository {
                 with: String(movie.id)
             )
         execute(GetCast(on: path), completion: completion)
+    }
+}
+
+extension MovieDBAPI: MovieReviewsRepository {
+    func getMoviewReviews(
+        for movie: Movie,
+        page: Int,
+        completion: @escaping (Result<MovieDBAPIListResponse<Review>, Error>) -> Void
+    ) {
+        let path = MoviesEndpoints.reviews
+            .rawValue
+            .replacingOccurrences(
+                of: "{movie_id}",
+                with: String(movie.id)
+            )
+        execute(GetList(on: path), completion: completion)
     }
 }

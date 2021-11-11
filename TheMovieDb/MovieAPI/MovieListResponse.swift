@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct MovieListResponse: Decodable {
+struct MovieDBAPIListResponse<Model: Decodable>: Decodable {
     let page: Int
-    let results: [Movie]
+    let results: [Model]
     let totalPages: Int
     let totalResults: Int
 }

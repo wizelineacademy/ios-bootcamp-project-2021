@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SwiftUI
 
 enum RelatedMovieTypes {
     case recommendation
@@ -98,6 +99,7 @@ final class DetailView: UIViewController {
         super.loadView()
         setupUI()
         addConstraints()
+        configureNavigationBar()
         requestRelatedMovieData()
     }
     
@@ -160,6 +162,28 @@ final class DetailView: UIViewController {
         similarMovies.text = viewModel.getSimilarMovies()
         recommendationMovies.text = viewModel.getRecommendationMovies()
         movieCast.text = viewModel.getCast()
+    }
+    
+    func configureNavigationBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "Reviews",
+            style: .plain,
+            target: self,
+            action: #selector(onTapReviews)
+        )
+    }
+    
+    @objc func onTapReviews() {
+        let view = ReviewsView(
+            viewModel: ReviewsViewModel(
+                dependencies: ReviewsViewModel.Dependencies(
+                    movie: viewModel.getMovie()
+                )
+            )
+        )
+        let vc = UIHostingController(rootView: view)
+        vc.title = "Reviews"
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }
