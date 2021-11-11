@@ -37,6 +37,10 @@ class DetailViewModel: ViewModel {
         self.dependencies = dependencies
     }
     
+    func getMovie() -> Movie {
+        dependencies.movie
+    }
+    
     func getMovieTitle() -> String {
         dependencies.movie.title
     }
