@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct Review: Decodable, Identifiable {
+    var author: String
+    let content: String
+    let id: String
+}
