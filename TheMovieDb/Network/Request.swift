@@ -35,6 +35,7 @@ class NetworkManager {
         
         guard let url = urlComponents.url else { fatalError("Error: invalid request") }
         let request = URLRequest(url: url)
+        print(url)
         return request
     }
     
@@ -54,7 +55,6 @@ class NetworkManager {
             do {
                 let decoder = JSONDecoder()
                 let posts = try decoder.decode(Response.self, from: data)
-                
                 completion(posts)
             } catch {
                 print("Error: \(error.localizedDescription)")

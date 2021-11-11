@@ -4,6 +4,7 @@
 //
 //  Created by Antonio Hernandez Ambrocio on 05/11/21.
 //
+// Class to compose the different paths possible to include on the request for MovieDb api
 
 import Foundation
 
@@ -19,11 +20,9 @@ enum RequestPaths {
     case similarMovies(movieId: Int)
     case recommendations(movieId: Int)
     case searchById(movieId: Int)
-}
-
-class PathComposer {
-    func composePath(for option: RequestPaths) -> String {
-        switch option {
+    
+    var path: String {
+        switch self {
         case .trending:
             return "/3/trending/movie/day"
         case .nowPlaying:
@@ -47,6 +46,5 @@ class PathComposer {
         case .searchById(movieId: let movieId):
             return "/3/movie/" + String(movieId)
         }
-        
     }
 }

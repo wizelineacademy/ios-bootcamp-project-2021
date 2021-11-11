@@ -11,21 +11,31 @@ import UIKit
 class MovieCell: UICollectionViewCell {
     static let identifier = "MovieCell"
     
-    var titleLabel: UILabel?
+    let titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.textColor = .blue
+        titleLabel.textAlignment = .center
+        return titleLabel
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        titleLabel = UILabel(frame: CGRect(x: 30, y: 30, width: self.bounds.width - 50, height: 20))
-        guard let titleLabel = titleLabel else {
-            return
-        }
-        titleLabel.textColor = UIColor.blue
-        titleLabel.textAlignment = .center
         contentView.addSubview(titleLabel)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        // titleLabel.frame = CGRect(x: 30, y: 30, width: 200, height: 50)
+        titleLabel.frame = contentView.bounds
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        titleLabel.text = nil
     }
     
 }
