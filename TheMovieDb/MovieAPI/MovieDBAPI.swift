@@ -42,6 +42,10 @@ protocol MovieCastRepository {
     func getMovieCast(for movie: Movie, completion: @escaping (Result<MovieCastResponse, Error>) -> Void)
 }
 
+protocol MovieReviewsRepository {
+    func getMoviewReviews(for movie: Movie, page: Int, completion: @escaping (Result<MovieDBAPIListResponse<Review>, Error>) -> Void)
+}
+
 struct MovieDBAPI: APIClient {
     
     struct APIConstants {
@@ -61,6 +65,7 @@ struct MovieDBAPI: APIClient {
         case recommendations = "3/movie/{movie_id}/recommendations"
         case similarMovies = "3/movie/{movie_id}/similar"
         case cast = "3/movie/{movie_id}/credits"
+        case reviews = "3/movie/{movie_id}/reviews"
     }
     
     let dispatcher: NetworkDispatcher
@@ -179,5 +184,21 @@ extension MovieDBAPI: MovieCastRepository {
                 with: String(movie.id)
             )
         execute(GetCast(on: path), completion: completion)
+    }
+}
+
+extension MovieDBAPI: MovieReviewsRepository {
+    func getMoviewReviews(
+        for movie: Movie,
+        page: Int,
+        completion: @escaping (Result<MovieDBAPIListResponse<Review>, Error>) -> Void
+    ) {
+        let path = MoviesEndpoints.reviews
+            .rawValue
+            .replacingOccurrences(
+                of: "{movie_id}",
+                with: String(movie.id)
+            )
+        execute(GetList(on: path), completion: completion)
     }
 }
