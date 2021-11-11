@@ -70,7 +70,7 @@ class FeedViewController: UICollectionViewController {
   
   // get movie details and showing the detailView
   func getDetailMovie(movieId: Int) {
-    databaseManager?.getData(from: InfoById.movieDetails(movieId: movieId), movieRegion: .US, movieLanguage: .en) { [weak self] (result: Result<MovieDetails?, ApiError>) in
+    databaseManager?.getData(from: InfoById.movieDetails(movieId: movieId), movieRegion: nil, movieLanguage: nil) { [weak self] (result: Result<MovieDetails?, ApiError>) in
       switch result {
       case .success(let movieDetails):
         guard let movieResults = movieDetails else { return }

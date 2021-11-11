@@ -1,11 +1,10 @@
 //
-//  Typography.swift
+//  TextStyle.swift
 //  TheMovieDb
 //
 //  Created by Michael do Prado on 11/2/21.
 //
 
-import Foundation
 import UIKit
 
 enum TextStyle {

@@ -41,6 +41,34 @@ struct MovieDetails: Codable {
   }
 }
 
+extension MovieDetails {
+  
+  func getDate() -> Date? {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd"
+    return formatter.date(from: releaseDate )
+  }
+  
+  func getMovieReleaseDateFormat() -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MMM dd, yyyy"
+    guard let movieReleaseDate = getDate() else { return ""}
+    return formatter.string(from: movieReleaseDate)
+  }
+  
+  func numberFormat(dollars: Int) -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .currency
+    formatter.maximumFractionDigits = 0
+    formatter.usesGroupingSeparator = true
+    if let result = formatter.string(from: NSNumber(value: dollars)) {
+      return result
+    }
+    return "0"
+  }
+  
+}
+
 struct Genres: Codable {
   let name: String
 }

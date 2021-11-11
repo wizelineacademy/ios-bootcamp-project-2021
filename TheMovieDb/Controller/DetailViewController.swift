@@ -55,49 +55,29 @@ class DetailViewController: UIViewController {
   private func setupDetailMovie() {
     
     guard let title = movie?.title,
-          let releaseDate = movie?.releaseDate,
+          let releaseDate = movie?.getMovieReleaseDateFormat(),
           let score = movie?.voteAverage,
           let description = movie?.overview,
           let originalLanguage = movie?.originalLanguage,
           let status = movie?.status,
-          let budget = movie?.budget,
-          let revenue = movie?.revenue
+          let budget = movie?.numberFormat(dollars: movie?.budget ?? 0),
+          let revenue = movie?.numberFormat(dollars: movie?.revenue ?? 0)
     else { return }
     
     self.title = title
     
-    let date = releaseDate.components(separatedBy: "-")
-    let month = SetMonth.Jan
-    
     self.starIcon.tintColor = DesignColor.white.color
     self.titleLabel.text = title
     self.heroImage.layer.cornerRadius = 10
-    self.releaseDateLabel.text = month.setMonth(date: date)
+    self.releaseDateLabel.text = releaseDate
     self.setImages()
     self.scoreLabel.text = String(score)
     self.descriptionLabel.text = description
     self.languageLabel.text = originalLanguage
     self.statusLabel.text = status
-    self.budgetLabel.text = addCommaToNumber(number: budget)
-    self.revenueLabel.text = addCommaToNumber(number: revenue)
+    self.budgetLabel.text = budget
+    self.revenueLabel.text = revenue
     
-  }
-  
-  private func addCommaToNumber(number: Int) -> String {
-    let arrayNumber = Array(String(number).reversed())
-    var newString = ""
-    var count = 1
-    for (index, num) in arrayNumber.enumerated() {
-      if count != 1 && count.isMultiple(of: 3) && index < (arrayNumber.count - 1) {
-        newString += "\(num),"
-        count += 1
-      } else {
-        newString += "\(num)"
-        count += 1
-      }
-    }
-    let completeNumber = "$\(String(Array(newString).reversed()))"
-    return completeNumber
   }
   
 }

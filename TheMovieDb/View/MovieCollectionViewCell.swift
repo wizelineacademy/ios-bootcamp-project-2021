@@ -35,14 +35,12 @@ class MovieCollectionViewCell: UICollectionViewCell {
     layer.cornerRadius = 10
     clipsToBounds = true
     
-    guard let title = movie?.title, let releaseDate = movie?.releaseDate, let posterPath = movie?.poster else { return }
-    let date = releaseDate.components(separatedBy: "-")
-    let month = SetMonth.Jan
+    guard let title = movie?.title, let releaseDate = movie?.getMovieReleaseDateFormat(), let posterPath = movie?.poster else { return }
     // set info title
     self.movieTitle.text = title
     self.movieTitle.textColor = DesignColor.darkGray.color
     // set info release date
-    self.releaseDate.text = month.setMonth(date: date)
+    self.releaseDate.text = releaseDate
     self.releaseDate.textColor = DesignColor.gray.color
     // set image with url and kingFisher
     let url = URL(string: "\(ApiPath.baseUrlImage.path)\(posterPath)")

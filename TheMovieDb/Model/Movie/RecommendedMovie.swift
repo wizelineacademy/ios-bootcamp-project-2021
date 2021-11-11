@@ -12,15 +12,11 @@ struct RecommendedMovie: Codable {
   let id: Int
   let title: String
   let posterPath: String?
-  let overview: String
-  let voteAverage: Float
   
   private enum CodingKeys: String, CodingKey {
     case id
     case title
     case posterPath = "poster_path"
-    case overview
-    case voteAverage = "vote_average"
   }
 }
 

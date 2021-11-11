@@ -20,14 +20,20 @@ class MovieDBClient: ApiClient {
     self.session = URLSession(configuration: configuration)
   }
   
-  func getData<Element: Decodable>(from: Endpoint, movieRegion: MovieRegion, movieLanguage: MovieLanguage, completion: @escaping (Result<Element?, ApiError>) -> Void) {
+  func getData<Element: Decodable>(from: Endpoint, movieRegion: MovieRegion?, movieLanguage: MovieLanguage?, completion: @escaping (Result<Element?, ApiError>) -> Void) {
     
     let endPoint = from
-    let query = [
-      URLQueryItem(name: "language", value: movieLanguage.language),
-      URLQueryItem(name: "region", value: movieRegion.region),
-      URLQueryItem(name: "page", value: "1")
-    ]
+    let query: [URLQueryItem]?
+    
+    if movieRegion != nil && movieLanguage != nil {
+      query = [
+        URLQueryItem(name: "language", value: movieLanguage?.language),
+        URLQueryItem(name: "region", value: movieRegion?.region)
+      ]
+    } else {
+      query = nil
+    }
+    
     let urlComponents = endPoint.getUrlComponents(queryItems: query)
     let request = endPoint.request(urlComponents: urlComponents)
     
