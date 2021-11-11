@@ -21,6 +21,27 @@ private extension FeedTypes {
     }
 }
 
+private extension RelatedMovieTypes {
+    var endpoint: MovieDBAPI.MoviesEndpoints {
+        switch self {
+        case .recommendation: return .recommendations
+        case .similar: return .similarMovies
+        }
+    }
+}
+
+protocol MovieFeedRepository {
+    func getMovieFeed(on feed: FeedTypes, page: Int, query: String?, completion: @escaping (Result<MovieListResponse, Error>) -> Void)
+}
+
+protocol RelatedMoviesRepository {
+    func getRelatedMovies(for movie: Movie, on related: RelatedMovieTypes, completion: @escaping (Result<MovieListResponse, Error>) -> Void)
+}
+
+protocol MovieCastRepository {
+    func getMovieCast(for movie: Movie, completion: @escaping (Result<MovieCastResponse, Error>) -> Void)
+}
+
 struct MovieDBAPI: APIClient {
     
     struct APIConstants {
@@ -37,9 +58,12 @@ struct MovieDBAPI: APIClient {
         case upcoming = "3/movie/upcoming"
         case search = "3/search/movie"
         case keyword = "3/search/keyword"
+        case recommendations = "3/movie/{movie_id}/recommendations"
+        case similarMovies = "3/movie/{movie_id}/similar"
+        case cast = "3/movie/{movie_id}/credits"
     }
     
-    var dispatcher: NetworkDispatcher
+    let dispatcher: NetworkDispatcher
     
     init(dispatcher: NetworkDispatcher = URLSessionNetworkDispatcher()) {
         self.dispatcher = dispatcher
@@ -84,19 +108,76 @@ struct MovieDBAPI: APIClient {
             case query
         }
         
-        init(on feed: FeedTypes, queries: [QueryParamsKeys: String]? = nil) {
-            self.path = APIConstants.baseUrl + feed.endpoint.rawValue
+        init(on path: String, queries: [QueryParamsKeys: String]? = nil) {
+            self.path = APIConstants.baseUrl + path
             guard let queries = queries else {
                 return
             }
             queries.forEach { key, value in
-                addNewQueryParam(value, forKey: key)
+                addNewQueryParam(value, forKey: key.rawValue)
             }
-        }
-        
-        mutating func addNewQueryParam(_ value: String, forKey key: QueryParamsKeys) {
-            queryParams?[key.rawValue] = value
         }
     }
     
+    struct GetCast: Request {
+        var path: String
+        var queryParams: [String: String]? = [
+            "api_key": APIConstants.apiKey
+        ]
+        typealias ResponseType = MovieCastResponse
+        
+        init(on path: String) {
+            self.path = APIConstants.baseUrl + path
+        }
+    }
+    
+}
+
+extension MovieDBAPI: MovieFeedRepository {
+    func getMovieFeed(
+        on feed: FeedTypes,
+        page: Int,
+        query: String? = nil,
+        completion: @escaping (Result<MovieListResponse, Error>) -> Void
+    ) {
+        var request = GetMovies(
+            on: feed.endpoint.rawValue,
+            queries: [.page: String(page)]
+        )
+        if let query = query {
+            request.addNewQueryParam(query, forKey: GetMovies.QueryParamsKeys.query.rawValue)
+        }
+        execute(request, completion: completion)
+    }
+}
+
+extension MovieDBAPI: RelatedMoviesRepository {
+    func getRelatedMovies(
+        for movie: Movie,
+        on related: RelatedMovieTypes,
+        completion: @escaping (Result<MovieListResponse, Error>) -> Void
+    ) {
+        let path = related.endpoint
+            .rawValue
+            .replacingOccurrences(
+                of: "{movie_id}",
+                with: String(movie.id)
+            )
+        execute(GetMovies(on: path), completion: completion)
+    }
+}
+
+extension MovieDBAPI: MovieCastRepository {
+    func getMovieCast(
+        for movie: Movie,
+        completion: @escaping (Result<MovieCastResponse, Error>) -> Void
+    ) {
+        let path = MoviesEndpoints.cast
+            .rawValue
+            .replacingOccurrences(
+                of: "{movie_id}",
+                with: String(movie.id)
+            )
+        execute(GetCast(on: path), completion: completion)
+    }
 }

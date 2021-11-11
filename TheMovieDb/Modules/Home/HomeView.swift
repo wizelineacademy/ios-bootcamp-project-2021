@@ -51,7 +51,7 @@ final class HomeView: UIViewController {
     
     let searchFeeds: [FeedTypes] = [.search, .keyword]
     
-    private var loadedPages = 0
+    private var loadedPages: Int = .zero
     
     private var isLoading = false {
         didSet {
@@ -126,14 +126,11 @@ final class HomeView: UIViewController {
             return
         }
         isLoading = true
-        var request = MovieDBAPI.GetMovies(
+        movieAPI.getMovieFeed(
             on: currentFeed,
-            queries: [.page: String(loadedPages + 1)]
-        )
-        if let search = search {
-            request.addNewQueryParam(search, forKey: .query)
-        }
-        movieAPI.execute(request) { [weak self] result in
+            page: loadedPages + 1,
+            query: search
+        ) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.loadedPages = response.page
@@ -148,7 +145,7 @@ final class HomeView: UIViewController {
     
     func resetFeed() {
         movies.removeAll()
-        loadedPages = 0
+        loadedPages = .zero
         updateFeed()
     }
     
@@ -210,7 +207,14 @@ extension HomeView: UICollectionViewDelegate {
     ) {
         switch collectionView {
         case movieFeed:
-            break
+            guard let selectedMovie = moviesDataSource.itemIdentifier(for: indexPath) else {
+                return
+            }
+            let viewModel = DetailViewModel(
+                dependencies: DetailViewModel.Dependencies(movie: selectedMovie)
+            )
+            let vc = DetailView(viewModel: viewModel)
+            navigationController?.pushViewController(vc, animated: true)
         case feedType:
             currentFeed = isSearching ? searchFeeds[indexPath.row] : normalFeeds[indexPath.row]
         default:
