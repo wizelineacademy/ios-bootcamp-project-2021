@@ -7,13 +7,9 @@
 
 import Foundation
 
-enum MovieFeed {
+enum MovieFeed: CaseIterable {
   
-  case trending
-  case nowPlaying
-  case popular
-  case topRated
-  case upcoming
+  case nowPlaying, popular, topRated, trending, upcoming
   
 }
 
@@ -27,6 +23,21 @@ extension MovieFeed: Endpoint {
     case .popular: return "/3/movie/popular"
     case .upcoming: return "/3/movie/upcoming"
       
+    }
+  }
+  
+  var title: String {
+    switch self {
+    case .trending:
+      return "Trending"
+    case .nowPlaying:
+      return "Now Playing"
+    case .popular:
+      return "Popular"
+    case .topRated:
+      return "Top Rated"
+    case .upcoming:
+      return "Upcoming"
     }
   }
 }

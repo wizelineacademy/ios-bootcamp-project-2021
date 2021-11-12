@@ -12,18 +12,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
   
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-    
-    //    guard let windowScene = (scene as? UIWindowScene) else { return }
-    let databaseManager =  MovieDBClient.shared
-    guard let feedViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "FeedViewController") as? FeedViewController else { fatalError("Unable to Instatiate FeedViewController")}
-    
-    feedViewController.databaseManager = databaseManager
+    guard let windowScene = (scene as? UIWindowScene) else { return }
+    let window = UIWindow(windowScene: windowScene)
+    SetFirstViewController(window)
+  }
+  
+  fileprivate func SetFirstViewController(_ window: UIWindow) {
+    let feedViewController = FeedViewController()
+    let moviePresenter =  MoviePresenter(view: feedViewController)
+    feedViewController.moviePresenter = moviePresenter
     let navigationController = UINavigationController()
     navigationController.viewControllers = [feedViewController]
-    //    let window = UIWindow(windowScene: windowScene)
-    window?.rootViewController = navigationController
-    window?.makeKeyAndVisible()
-    
+    navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+    navigationController.navigationBar.barTintColor = DesignColor.black.color
+    navigationController.navigationBar.isTranslucent = true
+    window.rootViewController = navigationController
+    window.makeKeyAndVisible()
+    self.window = window
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {

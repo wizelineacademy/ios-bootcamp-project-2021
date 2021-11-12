@@ -31,7 +31,7 @@ extension DesignColor {
     case .darkCyan:
       return UIColor(red: 39/255, green: 152/255, blue: 176/255, alpha: 1)
     case .black:
-      return UIColor(red: 31/255, green: 31/255, blue: 31/255, alpha: 1)
+      return UIColor(red: 25/255, green: 25/255, blue: 25/255, alpha: 1)
     case .whiteDirt:
       return UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
     }

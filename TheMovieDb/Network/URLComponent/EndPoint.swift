@@ -30,7 +30,6 @@ extension Endpoint {
     } else {
       components.queryItems = [URLQueryItem(name: "api_key", value: apiKey)]
     }
-    print(components)
     return components
   }
   

@@ -13,6 +13,10 @@ class SectionBuilder {
   var group: NSCollectionLayoutGroup?
   var section: NSCollectionLayoutSection?
   
+  enum Axis {
+    case horizontal, vertical
+  }
+  
   func createItem(width: CGFloat, height: CGFloat) -> SectionBuilder {
     self.item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .fractionalHeight(height)))
     return self
@@ -22,19 +26,13 @@ class SectionBuilder {
     self.item?.contentInsets = .init(top: top, leading: leading, bottom: bottom, trailing: trailing)
     return self
   }
-  
-  func createGroupHorizontal(width: CGFloat, height: CGFloat) -> SectionBuilder {
+
+  func createGroup(width: CGFloat, height: CGFloat, axis: Axis) -> SectionBuilder {
     guard let item = self.item else { fatalError("you need to create first the item") }
-    self.group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .estimated(height)), subitems: [item])
+    self.group = axis == .horizontal ? NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .estimated(height)), subitems: [item]) : NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .estimated(height)), subitems: [item])
     return self
   }
-  
-  func createGroupVertical(width: CGFloat, height: CGFloat, estimated: Bool) -> SectionBuilder {
-    guard let item = self.item else { fatalError("you need to create first the item") }
-    self.group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: estimated ? .estimated(height) : .fractionalHeight(height)), subitems: [item])
-    return self
-  }
-  
+
   func groupConstraints(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> SectionBuilder {
     self.group?.contentInsets = .init(top: top, leading: leading, bottom: bottom, trailing: trailing)
     return self
@@ -66,5 +64,5 @@ class SectionBuilder {
     guard let section = self.section else { fatalError("you need to create first the section") }
     return section
   }
-  
+
 }

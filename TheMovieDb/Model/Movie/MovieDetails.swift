@@ -18,7 +18,6 @@ struct MovieDetails: Codable {
   let popularity: Float
   let budget: Int
   let backDropPath: String?
-  let genres: [Genres]
   let revenue: Int
   let originalLanguage: String
   let status: String
@@ -33,7 +32,6 @@ struct MovieDetails: Codable {
     case popularity
     case budget
     case backDropPath = "backdrop_path"
-    case genres
     case revenue
     case originalLanguage = "original_language"
     case status
@@ -56,7 +54,7 @@ extension MovieDetails {
     return formatter.string(from: movieReleaseDate)
   }
   
-  func numberFormat(dollars: Int) -> String {
+  func getNumberFormat(dollars: Int) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .currency
     formatter.maximumFractionDigits = 0
@@ -67,8 +65,4 @@ extension MovieDetails {
     return "0"
   }
   
-}
-
-struct Genres: Codable {
-  let name: String
 }
