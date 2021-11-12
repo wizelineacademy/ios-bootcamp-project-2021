@@ -9,16 +9,12 @@ import UIKit
 
 final class TableViewController: UITableViewController {
     
-    var moviesCategory: [(name: String, type: MovieListEndpoint)] = [("Trending", .trending),
-                                        ("Now Playing", .nowPlaying),
-                                        ("Popular", .popular),
-                                        ("Top Rated", .topRated),
-                                        ("Upcoming", .upcoming)]
+    var viewModel: MoviesOptionsViewModel = .init()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = Constants.titleInitialTableView
+        title = viewModel.title
         setupNavigationBar()
         setupTableViewUI()
     }
@@ -37,20 +33,19 @@ final class TableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moviesCategory.count
+        return viewModel.movieOptions.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
-        cell.textLabel?.text = moviesCategory[indexPath.row].name
+        cell.textLabel?.text = viewModel.movieOptions[indexPath.row].title
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewControllerMoviesList = ViewController()
-        let category = moviesCategory[indexPath.row]
-        viewControllerMoviesList.type = category.type
-        viewControllerMoviesList.typeTitle = category.name
+        let category = viewModel.movieOptions[indexPath.row]
+        viewControllerMoviesList.viewModel.movieListOption = category
         navigationController?.pushViewController(viewControllerMoviesList, animated: true)
     }
     
