@@ -166,7 +166,7 @@ final class DetailView: UIViewController {
     
     func configureNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Reviews",
+            title: "detail.navigation.reviewsButton".localized,
             style: .plain,
             target: self,
             action: #selector(onTapReviews)
@@ -182,7 +182,7 @@ final class DetailView: UIViewController {
             )
         )
         let vc = UIHostingController(rootView: view)
-        vc.title = "Reviews"
+        vc.title = "reviews.navigation.title".localized
         navigationController?.pushViewController(vc, animated: true)
     }
     
