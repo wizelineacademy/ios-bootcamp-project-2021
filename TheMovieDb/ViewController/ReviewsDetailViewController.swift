@@ -7,11 +7,6 @@
 
 import UIKit
 
-final class ReviewsDetailViewModel {
-    
-    var review: ReviewsDetails?
-}
-
 final class ReviewsDetailViewController: UIViewController {
     
     var viewModel: ReviewsDetailViewModel = .init()
