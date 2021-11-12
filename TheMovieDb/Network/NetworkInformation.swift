@@ -71,5 +71,5 @@ enum MovieError: Error {
 }
 
 protocol MovieService {
-    static func get<T: Decodable>(search: String?, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void)
+    func get<T: Decodable>(search: String?, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void)
 }

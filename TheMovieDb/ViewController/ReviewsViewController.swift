@@ -9,10 +9,8 @@ import UIKit
 
 final class ReviewsViewController: UIViewController  {
     
-    var movieID: Int?
-    private var movie: Movie?
-    private var reviews: [ReviewsDetails] = []
-    
+    var viewModel: ReviewsViewModel = .init(facade: MovieFacade())
+   
     private var reviewsTableView: UITableView = {
         let reviewsTableView = UITableView()
         reviewsTableView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,23 +22,8 @@ final class ReviewsViewController: UIViewController  {
     
         configureUI()
         configureTableView()
-        reviewsMovie()
-    }
-    
-    func reviewsMovie() {
-        guard let id = movieID else { return }
-        MovieFacade.get(endpoint: .reviews(id: id)) { [weak self] (response: Result<MovieResponse<ReviewsDetails>, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let reviewsResponse):
-                self.reviews = reviewsResponse.results ?? []
-                DispatchQueue.main.async {
-                    self.reviewsTableView.reloadData()
-                }
-            case .failure(let failureResult):
-                self.showErrorAlert(failureResult)
-            }
-        }
+        viewModel.reloadData = { [weak self] in self?.reviewsTableView.reloadData() }
+        viewModel.reviewsMovie()
     }
     
     private func configureUI() {
@@ -64,19 +47,19 @@ final class ReviewsViewController: UIViewController  {
 extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reviews.count
+        return viewModel.reviews.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (self.reviewsTableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as UITableViewCell?)!
-        cell.textLabel?.text = reviews[indexPath.row].content
+        cell.textLabel?.text = viewModel.reviews[indexPath.row].content
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewControllerReviewsDetail = ReviewsDetailViewController()
-        let reviewSelected = reviews[indexPath.row]
-        viewControllerReviewsDetail.review = reviewSelected
+        let reviewSelected = viewModel.reviews[indexPath.row]
+        viewControllerReviewsDetail.viewModel.review = reviewSelected
         navigationController?.pushViewController(viewControllerReviewsDetail, animated: true)
     }
 }

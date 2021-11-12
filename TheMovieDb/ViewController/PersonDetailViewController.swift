@@ -9,15 +9,7 @@ import UIKit
 
 final class PersonDetailViewController: UIViewController {
     
-    var person: Person? {
-        didSet {
-            DispatchQueue.main.async {
-                self.setupUI()
-            }
-        }
-    }
-    var personID: Int?
-
+    var viewModel: PersonDetailViewModel = .init(facade: MovieFacade())
     let personName = UILabel()
     let imagePerson = UIImageView()
     let textPerson = UITextView()
@@ -39,13 +31,13 @@ final class PersonDetailViewController: UIViewController {
         super.viewDidLoad()
         
         addAllViews()
+        viewModel.loadPerson = { [weak self] in self?.setupUI() }
         setupPersonNameLabel()
         setupImagePerson()
         setupTextPerson()
         setupStackView()
         configureUIDetailPerson()
-        detailPersonID()
-        
+        viewModel.detailPersonID()
     }
     
     private func addAllViews() {
@@ -106,31 +98,18 @@ final class PersonDetailViewController: UIViewController {
         stackView.addArrangedSubview(popularityLabel)
     }
     
-    func detailPersonID() {
-        guard let id = personID else { return }
-        MovieFacade.get(endpoint: .personDetails(id: id)) { [weak self] (response: Result<Person, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let person):
-                self.person = person
-            case .failure(let failureResult):
-                self.showErrorAlert(failureResult)
-            }
-        }
-    }
-
     func configureUIDetailPerson() {
         navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     func setupUI() {
-        personName.text = person?.name
-        imagePerson.setImage(path: person?.profilePath)
-        idLabel.text = "ID: \(person?.id ?? 0)"
-        popularityLabel.text = "Popularity: \(person?.popularity ?? 0.0)"
-        knownForDepartmentLabel.text = "Known for Department: \(person?.knownForDepartment ?? "Unavailable")"
-        textPerson.text = "Biography: \(person?.biography ?? "Unavailable")"
-        birthdayLabel.text = "Birthday: \(person?.birthday ?? "Unavailable")"
-        deathdayLabel.text = "Deathday: \(person?.deathday ?? "Alive")"
+        personName.text = viewModel.person?.name
+        imagePerson.setImage(path: viewModel.person?.profilePath)
+        idLabel.text = "ID: \(viewModel.person?.id ?? 0)"
+        popularityLabel.text = "Popularity: \(viewModel.person?.popularity ?? 0.0)"
+        knownForDepartmentLabel.text = "Known for Department: \(viewModel.person?.knownForDepartment ?? "Unavailable")"
+        textPerson.text = "Biography: \(viewModel.person?.biography ?? "Unavailable")"
+        birthdayLabel.text = "Birthday: \(viewModel.person?.birthday ?? "Unavailable")"
+        deathdayLabel.text = "Deathday: \(viewModel.person?.deathday ?? "Alive")"
     }
 }

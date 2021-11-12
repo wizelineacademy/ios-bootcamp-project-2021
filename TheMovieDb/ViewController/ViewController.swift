@@ -9,15 +9,7 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-    var type: MovieListEndpoint?
-    var typeTitle = ""
-    var resultsMovie: [Movie] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
+    var viewModel: MovieListViewModel = .init(facade: MovieFacade())
     
     private var tableView: UITableView = {
         let tableView = UITableView()
@@ -31,7 +23,9 @@ final class ViewController: UIViewController {
         configureTableView()
         configureUI()
         setupNavigationBar()
-        loadMovies()
+        viewModel.reloadData = { [weak self] in self?.tableView.reloadData() }
+        viewModel.loadMovies()
+        viewModel.showError = { [weak self] error in self?.showErrorAlert(error) }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +33,7 @@ final class ViewController: UIViewController {
     }
     
     private func configureUI() {
-        title = typeTitle
+        title = viewModel.movieListOption.title
         view.backgroundColor = .systemRed
         view.addSubview(tableView)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
@@ -61,42 +55,22 @@ final class ViewController: UIViewController {
     func setupNavigationBar() {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
-    
-    private func loadMovies() {
-        guard let type = type else { return }
-        
-        MovieFacade.get(endpoint: type) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
-            guard let self = self else { return }
-            
-            switch response {
-            case .success(let sucessResult):
-                guard let results = sucessResult.results else {
-                    self.showErrorAlert(.invalidResponse)
-                    return
-                }
-                self.resultsMovie = results
-                
-            case .failure(let failureResult):
-                self.showErrorAlert(failureResult)
-            }
-        }
-    }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resultsMovie.count
+        return viewModel.movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = (self.tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as UITableViewCell?)!
-        cell.textLabel?.text = resultsMovie[indexPath.row].title
+        cell.textLabel?.text = viewModel.movies[indexPath.row].title
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewControllerMovieInfo = MovieInfoViewController()
-        viewControllerMovieInfo.movie = resultsMovie[indexPath.row]
+        viewControllerMovieInfo.viewModel.movieID = viewModel.movies[indexPath.row].id
         navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
     }
 }

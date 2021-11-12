@@ -9,10 +9,10 @@ import UIKit
 
 final class ReviewsDetailViewController: UIViewController {
     
+    var viewModel: ReviewsDetailViewModel = .init()
+    
     let reviewCompletedText = UITextView()
     let authorLabel = UILabel()
-    
-    var review: ReviewsDetails?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +50,7 @@ final class ReviewsDetailViewController: UIViewController {
     }
     
     func setupUI() {
-        reviewCompletedText.text = review?.content
-        authorLabel.text = "Author: \(review?.author ?? "Unavailable")"
+        reviewCompletedText.text = viewModel.review?.content
+        authorLabel.text = "Author: \(viewModel.review?.author ?? "Unavailable")"
     }
 }

@@ -8,14 +8,8 @@
 import UIKit
 
 final class SearchTableViewController: UITableViewController {
-
-    var searchResult: [SearchObject] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-    }
+    
+    var viewModel: SearchViewModel = .init(facade: MovieFacade())
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -25,6 +19,8 @@ final class SearchTableViewController: UITableViewController {
         setupTableViewUI()
         setupSearchController()
         setupNavigation()
+        viewModel.loadSearch = { [weak self] in self?.tableView.reloadData() }
+        viewModel.showError = { [weak self] error in self?.showErrorAlert(error) }
     }
     
     func setupTableViewUI() {
@@ -43,34 +39,14 @@ final class SearchTableViewController: UITableViewController {
         definesPresentationContext = true
         navigationController?.navigationBar.prefersLargeTitles = false
     }
-    
-    func searchObjects(with text: String) {
-        MovieFacade.get(search: text, endpoint: .search) { [weak self] (response: Result<MovieResponse<SearchObject>, MovieError>) in
-            guard let self = self else { return }
-
-            switch response {
-            case .success(let movieResponse):
-                guard let resultObject = movieResponse.results else { return }
-                var searchArray: [SearchObject] = []
-                for object in resultObject {
-                    if object.mediaType != "tv" {
-                        searchArray.append(object)
-                    }
-                }
-                self.searchResult = searchArray
-            case .failure(let failureResult):
-                self.showErrorAlert(failureResult)
-            }
-        }
-    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResult.count
+        return viewModel.searchResult.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
-        let row = searchResult[indexPath.row]
+        let row = viewModel.searchResult[indexPath.row]
         if let mediaType = row.mediaType, let type = MediaType(rawValue: mediaType) {
             cell.detailTextLabel?.text = mediaType
             switch type {
@@ -86,7 +62,7 @@ final class SearchTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let searchObjectSelected = searchResult[indexPath.row]
+        let searchObjectSelected = viewModel.searchResult[indexPath.row]
         guard let idSelected = searchObjectSelected.id else { return }
         if let mediaType = searchObjectSelected.mediaType, let type = MediaType(rawValue: mediaType) {
             switch type {
@@ -102,13 +78,13 @@ final class SearchTableViewController: UITableViewController {
     
     func navigationPersonDetailViewController(id: Int) {
         let PersonDetailViewController = PersonDetailViewController()
-        PersonDetailViewController.personID = id
+        PersonDetailViewController.viewModel.personID = id
         navigationController?.pushViewController(PersonDetailViewController, animated: true)
     }
     
     func navigationMovieInfoViewController(id: Int) {
         let MovieInfoViewController = MovieInfoViewController()
-        MovieInfoViewController.movieID = id
+        MovieInfoViewController.viewModel.movieID = id
         navigationController?.pushViewController(MovieInfoViewController, animated: true)
     }
 }
@@ -117,11 +93,14 @@ extension SearchTableViewController: UISearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         let searchBar = searchController.searchBar
         
-        guard let text = searchBar.text else { return }
-        searchObjects(with: text)
+        guard let text = searchBar.text, !text.isEmpty else {
+            viewModel.searchResult.removeAll()
+            return
+        }
+        viewModel.searchObjects(with: text)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        searchResult.removeAll()
+        viewModel.searchResult.removeAll()
     }
 }

@@ -10,36 +10,7 @@ import Kingfisher
 
 final class MovieInfoViewController: UIViewController {
     
-    var movieID: Int?
-    var movie: Movie? {
-        didSet {
-            DispatchQueue.main.async {
-                self.setupMovieInfoUI()
-            }
-        }
-    }
-    
-    var similarMoviesNames: String? {
-        didSet {
-            DispatchQueue.main.async {
-                self.similarMoviesLabel.text = "Similar movies: \(self.similarMoviesNames ?? "None")"
-            }
-        }
-    }
-    var recommendedMoviesNames: String? {
-        didSet {
-            DispatchQueue.main.async {
-                self.recommendationsLabel.text = "Recommendations: \(self.recommendedMoviesNames ?? "None")"
-            }
-        }
-    }
-    var castMovie: String? {
-        didSet {
-            DispatchQueue.main.async {
-                self.castInfoLabel.text = "Cast: \(self.castMovie ?? "None")"
-            }
-        }
-    }
+    var viewModel: MovieInfoViewModel = .init(facade: MovieFacade())
     
     let titleMovie = UILabel()
     let imageMovie = UIImageView()
@@ -62,6 +33,7 @@ final class MovieInfoViewController: UIViewController {
         return stackView
     }()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,14 +43,20 @@ final class MovieInfoViewController: UIViewController {
         setupImageMovie()
         setupTextOverview()
         setupStackView()
-        setupMovie()
-        similarMovies()
-        recomendedMovies()
-        castFromMovie()
+        setupClosures()
+        viewModel.fetchServices()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         setupNavigationBar()
+    }
+    
+    private func setupClosures() {
+        viewModel.showError = { [weak self] error in self?.showErrorAlert(error) }
+        viewModel.loadMovieInfo = { [weak self] in self?.setupMovieInfoUI() }
+        viewModel.loadSimilarMovies = { [weak self] in self?.similarMoviesLabel.text = "Similar movies: \(self?.viewModel.similarMoviesNames ?? "None")" }
+        viewModel.loadRecommendedMovies = { [weak self] in self?.recommendationsLabel.text = "Recommendations: \(self?.viewModel.recommendedMoviesNames ?? "None")" }
+        viewModel.loadCastMovie = { [weak self] in self?.castInfoLabel.text = "Cast: \(self?.viewModel.castMovie ?? "None")"}
     }
     
     private func addAllViews() {
@@ -155,89 +133,21 @@ final class MovieInfoViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: Constants.reviewsTitleBarButton, style: .plain, target: self, action: #selector(reviewsDisplay))
     }
     
-    func setupMovie() {
-        if let _ = movieID {
-            getMovieDetail()
-        } else if let movie = movie {
-            movieID = movie.id
-            setupMovieInfoUI()
-        }
-    }
-    
     func setupMovieInfoUI() {
-        titleMovie.text = movie?.title
-        imageMovie.setImage(path: movie?.posterPath)
-        textOverview.text = "Overview: \(movie?.overview ?? "Unavailable")"
-        originalTitleMovie.text = "Original Title: \(movie?.originalTitle ?? "Unavailable")"
-        originalLanguageMovie.text = "Original Language: \(movie?.originalLanguage ?? "Unavailable")"
-        popularityMovie.text = "Popularity: \(movie?.popularity ?? 0.0)"
-        idMovie.text = "ID: \(movie?.id ?? 0)"
-        adultMovie.text = "Adult Movie: \(movie?.adult ?? false)"
-        releaseDateMovie.text = "Release Date: \(movie?.releaseDate ?? "Unavailable")"
-    }
-    
-    func getMovieDetail() {
-        guard let id = movieID else { return }
-        MovieFacade.get(endpoint: .movieDetails(id: id)) { [weak self] (response: Result<Movie, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let movie):
-                self.movie = movie
-            case .failure(let failureResult):
-                self.showErrorAlert(failureResult)
-            }
-        }
-    }
-    
-    func similarMovies() {
-        guard let id = movieID else { return }
-        MovieFacade.get(endpoint: .similar(id: id)) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let movieResponse):
-                let movies = movieResponse.results
-                let movieNames = movies?.compactMap({ $0.title }).prefix(3)
-                self.similarMoviesNames = movieNames?.joined(separator: ", ")
-            case .failure(let failureResult):
-                self.showErrorAlert(failureResult)
-            }
-        }
-    }
-    
-    func recomendedMovies() {
-        guard let id = movieID else { return }
-        MovieFacade.get(endpoint: .recommendations(id: id)) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let movieResponse):
-                guard movieResponse.results?.count ?? 0 > 0 else { return }
-                let movies = movieResponse.results
-                let movieNames = movies?.compactMap({ $0.title }).prefix(3)
-                self.recommendedMoviesNames = movieNames?.joined(separator: ", ")
-            case .failure(let failureResult):
-                self.showErrorAlert(failureResult)
-            }
-        }
-    }
-    
-    func castFromMovie() {
-        guard let id = movieID else { return }
-        MovieFacade.get(endpoint: .credits(id: id)) { [weak self] (response: Result<CreditsMovie, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let creditsResponse):
-                let castMovie = creditsResponse.cast
-                let castNames = castMovie?.compactMap({ $0.name }).prefix(3)
-                self.castMovie = castNames?.joined(separator: ", ")
-            case .failure(let failureResult):
-                self.showErrorAlert(failureResult)
-            }
-        }
+        titleMovie.text = viewModel.movie?.title
+        imageMovie.setImage(path: viewModel.movie?.posterPath)
+        textOverview.text = "Overview: \(viewModel.movie?.overview ?? "Unavailable")"
+        originalTitleMovie.text = "Original Title: \(viewModel.movie?.originalTitle ?? "Unavailable")"
+        originalLanguageMovie.text = "Original Language: \(viewModel.movie?.originalLanguage ?? "Unavailable")"
+        popularityMovie.text = "Popularity: \(viewModel.movie?.popularity ?? 0.0)"
+        idMovie.text = "ID: \(viewModel.movie?.id ?? 0)"
+        adultMovie.text = "Adult Movie: \(viewModel.movie?.adult ?? false)"
+        releaseDateMovie.text = "Release Date: \(viewModel.movie?.releaseDate ?? "Unavailable")"
     }
     
    @objc func reviewsDisplay() {
        let viewControllerReviews = ReviewsViewController()
-       viewControllerReviews.movieID = movie?.id
+       viewControllerReviews.viewModel.movieID = viewModel.movie?.id
        navigationController?.pushViewController(viewControllerReviews, animated: true)
        }
 }

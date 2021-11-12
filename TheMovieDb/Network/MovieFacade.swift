@@ -9,9 +9,10 @@ import Foundation
 
 struct MovieFacade: MovieService {
     
-    static let baseURL = URL(string:"https://api.themoviedb.org/3/")!
     
-    static func get<T: Decodable>(search: String? = nil, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) {
+    func get<T: Decodable>(search: String? = nil, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) {
+        
+        let baseURL = URL(string:"https://api.themoviedb.org/3/")!
 
         var components = URLComponents()
         components.path = endpoint.path
