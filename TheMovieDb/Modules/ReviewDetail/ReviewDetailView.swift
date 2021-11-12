@@ -1,16 +1,20 @@
 //
-//  ReviewDescriptionViewController.swift
+//  ReviewDetailView.swift
 //  TheMovieDb
 //
-//  Created by Javier Cueto on 31/10/21.
+//  Created by Javier Cueto on 11/11/21.
+//  
 //
 
+import Foundation
 import UIKit
 
-final class ReviewDescriptionViewController: UIViewController {
+class ReviewDetailView: UIViewController {
+
+    // MARK: Properties
+    var presenter: ReviewDetailPresenterProtocol?
     
-    // MARK: - Properties
-    public var review: Review? {
+    private var review: Review? {
         didSet {
             configure()
         }
@@ -23,14 +27,15 @@ final class ReviewDescriptionViewController: UIViewController {
         textView.textContainerInset = .init(top: 0, left: 20, bottom: 0, right: 20)
         return textView
     }()
-    
-    // MARK: - Life Cycle
+
+    // MARK: Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
         view.backgroundColor = .systemBackground
         view.addSubview(descriptionReviewTextView)
         descriptionReviewTextView.frame = view.frame
-
     }
     
     // MARK: - Helpers
@@ -38,5 +43,10 @@ final class ReviewDescriptionViewController: UIViewController {
         guard let review = review else { return }
         descriptionReviewTextView.text = review.content
     }
-    
+}
+
+extension ReviewDetailView: ReviewDetailViewProtocol {
+    func presenterPushDataView(receivedReview: Review) {
+        review = receivedReview
+    }
 }

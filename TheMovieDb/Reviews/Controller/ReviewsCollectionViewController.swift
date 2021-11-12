@@ -93,9 +93,8 @@ extension ReviewsCollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let review = reviews[indexPath.row]
-        let controller = ReviewDescriptionViewController()
-        controller.review = review
-        navigationController?.pushViewController(controller, animated: true)
+        let reviewDetail = ReviewDetailWireFrame.createReviewDetailModule(with: review)
+        navigationController?.pushViewController(reviewDetail, animated: true)
     }
     
 }
