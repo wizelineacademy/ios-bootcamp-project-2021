@@ -5,3 +5,19 @@
   Created by Ricardo Ramirez on 11/11/21.
   
 */
+
+// HomeView
+"home.navigation.title" = "Peliculas";
+"home.feed.trending.title" = "Tendencias";
+"home.feed.nowPlaying.title" = "En cartelera";
+"home.feed.popular.title" = "Popular";
+"home.feed.topRated.title" = "Mejor puntuadas";
+"home.feed.upcoming.title" = "En camino";
+"home.feed.keyword.title" = "Palabras clave";
+"home.feed.search.title" = "Busqueda";
+
+// DetailView
+"detail.navigation.reviewsButton" = "Reseñas";
+
+// ReviewsView
+"reviews.navigation.title" = "Reseñas";
