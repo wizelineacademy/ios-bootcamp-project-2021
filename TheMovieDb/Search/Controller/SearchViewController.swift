@@ -32,7 +32,7 @@ final class SearchViewController: UITableViewController {
         super.viewDidLoad()
         configureSearchController()
         configureTableView()
-        
+        searchData.delegate = self
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -104,12 +104,18 @@ extension SearchViewController: UISearchBarDelegate {
         let parameter = APIParameters(query: text)
         showSpinner(onView: self.view)
         globalTread.async {
-            self.moviesSearch = self.searchData.getMovie(with: parameter)
-            self.removeSpinner()
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.searchData.getMovie(with: parameter)
         }
        
+    }
+}
+
+extension SearchViewController: GetMoviesDelegate {
+    func didGetMovies(movies: [Movie]) {
+        self.moviesSearch = movies
+        self.removeSpinner()
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }

@@ -6,5 +6,6 @@
 //
 
 protocol SearchingDataProtocol: AnyObject {
-    func getMovie(with parameters: APIParameters) -> [Movie] 
+    var delegate: GetMoviesDelegate? { get set }
+    func getMovie(with parameters: APIParameters)
 }
