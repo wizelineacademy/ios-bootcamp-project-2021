@@ -81,30 +81,47 @@ final class ListSectionViewController: UICollectionViewController {
             self.callService()
         }
     }
+    
+    @IBSegueAction func goToDetailActionSegue(_ coder: NSCoder, sender: Any?) -> DetailViewController? {
+        guard let cell = sender as? ListSectionCell,
+              let item = cell.movie else {
+                  return nil
+              }
+        return DetailViewController(movie: item, coder: coder)
+    }
+}
 
-    private func callService() {
+private extension ListSectionViewController {
+    
+    func callService() {
         NetworkAPI
             .shared
             .execute(request: self.request,
-                     onSuccess: { [weak self] (response: PageModel?) in
-                self?.request?.nextPage()
-                self?.isPaginationEnabled = false
-                self?.items.append(contentsOf: response?.results ?? [])
-                DispatchQueue.main.async {
-                    self?.refreshControl.endRefreshing()
-                    self?.collectionView.reloadData()
-                }
+                     onSuccess: { [weak self] (response: PageModel<MovieModel>?) in
+                self?.onSuccessResponse(response)
             }, onError: { [weak self] error in
-                self?.isPaginationEnabled = false
-                DispatchQueue.main.async {
-                    self?.refreshControl.endRefreshing()
-                }
-                guard let error = error as? NetworkError else {
-                    return
-                }
-                DispatchQueue.main.async {
-                    Toast.showToast(title: error.localizedDescription)
-                }
+                self?.onErrorResponse(error)
         })
+    }
+    
+    func onSuccessResponse(_ response: PageModel<MovieModel>?) {
+        DispatchQueue.main.async {
+            self.request?.nextPage()
+            self.isPaginationEnabled = false
+            self.items.append(contentsOf: response?.results ?? [])
+            self.refreshControl.endRefreshing()
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func onErrorResponse(_ error: Error?) {
+        DispatchQueue.main.async {
+            self.isPaginationEnabled = false
+            self.refreshControl.endRefreshing()
+            guard let error = error as? NetworkError else {
+                return
+            }
+            Toast.showToast(title: error.localizedDescription)
+        }
     }
 }

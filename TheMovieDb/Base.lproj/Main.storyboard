@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -69,6 +70,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
+                                <connections>
+                                    <segue destination="46I-gk-Mv1" kind="show" destinationCreationSelector="goToDetailActionSegue:sender:" id="1Ox-YI-wan"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -81,6 +85,70 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gb7-1T-hUA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4522" y="67"/>
+        </scene>
+        <!--Detail View Controller-->
+        <scene sceneID="zHF-kj-fBF">
+            <objects>
+                <collectionViewController hidesBottomBarWhenPushed="YES" id="46I-gk-Mv1" customClass="DetailViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="FbE-VT-6Zb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3td-KP-SDt">
+                            <size key="itemSize" width="128" height="128"/>
+                            <size key="headerReferenceSize" width="50" height="50"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detail-rating-cell" id="UM0-HJ-MUf" customClass="DetailRatingCell" customModule="TheMovieDb" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="piG-xf-1uk">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="detail-overview-cell" id="dOv-I3-GAa" customClass="DetailOverviewCell" customModule="TheMovieDb" customModuleProvider="target">
+                                <rect key="frame" x="143" y="50" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jdJ-rW-PvO">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="detail-reviews-cell" id="zCD-sG-CBK" customClass="DetailReviewsCell" customModule="TheMovieDb" customModuleProvider="target">
+                                <rect key="frame" x="286" y="50" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Wre-Sp-dO6">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="detail-recommendations-cell" id="1gC-cI-AUF" customClass="DetailRecommendationsCell" customModule="TheMovieDb" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="188" width="128" height="128"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="D59-Qb-Lmh">
+                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </collectionViewCellContentView>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="details-header-identifier" id="7UZ-VQ-QAW" customClass="DetailHeaderView" customModule="TheMovieDb" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <viewLayoutGuide key="safeArea" id="fnD-Q7-fA4"/>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="46I-gk-Mv1" id="vM3-b2-UK1"/>
+                            <outlet property="delegate" destination="46I-gk-Mv1" id="SkQ-r4-gT8"/>
+                        </connections>
+                    </collectionView>
+                    <navigationItem key="navigationItem" id="73g-5V-aeQ"/>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gpq-go-FPC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5961" y="490"/>
         </scene>
         <!--Home-->
         <scene sceneID="rwI-Jw-AcN">
@@ -126,6 +194,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </collectionViewCellContentView>
+                                <connections>
+                                    <segue destination="46I-gk-Mv1" kind="show" destinationCreationSelector="goToDetailActionSegue:sender:" id="aRp-hb-YB1"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -137,7 +208,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mMb-LL-Apa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3632" y="799"/>
+            <point key="canvasLocation" x="4522" y="777"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="wrW-Ww-Rjk">
@@ -175,9 +246,12 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c7b-4M-R8U" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2722" y="799"/>
+            <point key="canvasLocation" x="2722" y="777"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="aRp-hb-YB1"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="home" width="32" height="32"/>
         <image name="magnifyingglass" catalog="system" width="128" height="115"/>
