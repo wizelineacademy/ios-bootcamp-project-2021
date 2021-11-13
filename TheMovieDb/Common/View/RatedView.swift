@@ -11,7 +11,7 @@ final class RatedView: UIView {
     
     private lazy var valueLabel: UILabel = {
         let label: UILabel = UILabel(frame: .zero)
-        label.font = UIFont.preferredFont(forTextStyle: .headline, compatibleWith: nil)
+        label.font = fontType
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -27,6 +27,12 @@ final class RatedView: UIView {
     var strokeWidth: CGFloat = 1
     var strokeColor: UIColor? = UIColor.black
     var backStrokeColor: UIColor? = UIColor.black.withAlphaComponent(0.5)
+    var fontType: UIFont = UIFont.preferredFont(forTextStyle: .headline,
+                                                compatibleWith: nil) {
+        didSet {
+            valueLabel.font = fontType
+        }
+    }
     
     var value: Float = 0.0 {
         didSet {

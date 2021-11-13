@@ -35,4 +35,14 @@ enum EndpointConstants {
     static var search: String {
         return "/3/search/movie"
     }
+    
+    static func reviews(id: Int) -> String {
+        let id: String = String(id)
+        return "/3/movie/\(id)/reviews"
+    }
+    
+    static func recommendations(id: Int) -> String {
+        let id: String = String(id)
+        return "/3/movie/\(id)/recommendations"
+    }
 }

@@ -50,25 +50,6 @@ final class SearchViewController: UICollectionViewController {
         }
     }
     
-    private func callService() {
-        guard let actualPage = request?.page,
-                actualPage <= totalOfPages else { return }
-        NetworkAPI
-            .shared
-            .execute(request: request,
-                     onSuccess: { [weak self] (data: PageModel?) in
-                self?.isPaginationEnabled = false
-                self?.totalOfPages = data?.totalPages ?? 0
-                self?.items.append(contentsOf: data?.results ?? [])
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                }
-            }, onError: { [weak self] error in
-                self?.isPaginationEnabled = false
-                print(error?.localizedDescription)
-            })
-    }
-    
     override func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if collectionView.contentOffset.y >=
             (collectionView.contentSize.height - collectionView.bounds.size.height) {
@@ -77,6 +58,46 @@ final class SearchViewController: UICollectionViewController {
                 request?.nextPage()
                 callService()
             }
+        }
+    }
+    
+    @IBSegueAction func goToDetailActionSegue(_ coder: NSCoder, sender: Any?) -> DetailViewController? {
+        guard let cell = sender as? SearchCell,
+              let movie = cell.movie else {
+                  return nil
+              }
+        return DetailViewController(movie: movie, coder: coder)
+    }
+}
+
+private extension SearchViewController {
+    
+    func callService() {
+        guard let actualPage = request?.page,
+                actualPage <= totalOfPages else { return }
+        NetworkAPI
+            .shared
+            .execute(request: request,
+                     onSuccess: { [weak self] (data: PageModel<MovieModel>?) in
+                self?.onSuccessResponse(data)
+            }, onError: { [weak self] error in
+                self?.onErrorResponse(error)
+            })
+    }
+    
+    func onSuccessResponse(_ response: PageModel<MovieModel>?) {
+        DispatchQueue.main.async {
+            self.isPaginationEnabled = false
+            self.totalOfPages = response?.totalPages ?? 0
+            self.items.append(contentsOf: response?.results ?? [])
+            self.collectionView.reloadData()
+        }
+    }
+    
+    func onErrorResponse(_ error: Error?) {
+        DispatchQueue.main.async {
+            self.isPaginationEnabled = false
+            Toast.showToast(title: error?.localizedDescription ?? "")
         }
     }
 }

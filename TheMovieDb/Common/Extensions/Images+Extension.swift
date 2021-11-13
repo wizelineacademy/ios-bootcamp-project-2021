@@ -9,31 +9,18 @@ import Foundation
 import UIKit
 
 extension UIImage {
-    static var trending: UIImage? {
-        return UIImage(named: "trending-topic")
-    }
     
-    static var nowPlaying: UIImage? {
-        return UIImage(named: "play")
-    }
+    static var trending: UIImage? = UIImage(named: "trending-topic")
     
-    static var popular: UIImage? {
-        return UIImage(named: "popularity")
-    }
+    static var nowPlaying: UIImage? = UIImage(named: "play")
     
-    static var topRated: UIImage? {
-        return UIImage(named: "stars")
-    }
+    static var popular: UIImage? = UIImage(named: "popularity")
     
-    static var upcoming: UIImage? {
-        return UIImage(named: "online-booking")
-    }
+    static var topRated: UIImage? = UIImage(named: "stars")
     
-    static var posterPlaceholder: UIImage? {
-        return UIImage(named: "poster-placeholder")
-    }
+    static var upcoming: UIImage? = UIImage(named: "online-booking")
     
-    static var warning: UIImage? {
-        return UIImage(named: "warning")
-    }
+    static var posterPlaceholder: UIImage? = UIImage(named: "poster-placeholder")
+    
+    static var warning: UIImage? = UIImage(named: "warning")
 }
