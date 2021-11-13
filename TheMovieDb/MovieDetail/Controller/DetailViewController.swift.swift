@@ -139,8 +139,12 @@ extension DetailViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - DetailHeaderViewDelegate
 extension DetailViewController: DetailHeaderViewDelegate {
     func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie) {
-        let controller = ReviewsCollectionViewController(with: movie)
+       /* let controller = ReviewsCollectionViewController(with: movie)
         let nav = UINavigationController(rootViewController: controller)
+        present(nav, animated: true)*/
+        
+        let reviews = ReviewsWireFrame.createReviewsModule(movie: movie)
+        let nav = UINavigationController(rootViewController: reviews)
         present(nav, animated: true)
     }
     

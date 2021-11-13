@@ -15,9 +15,7 @@ class ReviewDetailWireFrame: ReviewDetailWireFrameProtocol {
         let view = ReviewDetailView()
         
         let presenter: ReviewDetailPresenterProtocol & ReviewDetailInteractorOutputProtocol = ReviewDetailPresenter()
-        let interactor: ReviewDetailInteractorInputProtocol & ReviewDetailRemoteDataManagerOutputProtocol = ReviewDetailInteractor()
-        let localDataManager: ReviewDetailLocalDataManagerInputProtocol = ReviewDetailLocalDataManager()
-        let remoteDataManager: ReviewDetailRemoteDataManagerInputProtocol = ReviewDetailRemoteDataManager()
+        let interactor: ReviewDetailInteractorInputProtocol = ReviewDetailInteractor()
         let wireFrame: ReviewDetailWireFrameProtocol = ReviewDetailWireFrame()
         
         view.presenter = presenter
@@ -25,11 +23,7 @@ class ReviewDetailWireFrame: ReviewDetailWireFrameProtocol {
         presenter.wireFrame = wireFrame
         presenter.interactor = interactor
         interactor.presenter = presenter
-        interactor.localDatamanager = localDataManager
-        interactor.remoteDatamanager = remoteDataManager
-        
-        remoteDataManager.remoteRequestHandler = interactor
-        remoteDataManager.setReview(settedReview: review)
+        interactor.setReview(settedReview: review)
         
         return view
         

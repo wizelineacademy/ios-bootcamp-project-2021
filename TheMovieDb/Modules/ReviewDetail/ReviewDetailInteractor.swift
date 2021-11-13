@@ -11,18 +11,13 @@ import Foundation
 class ReviewDetailInteractor: ReviewDetailInteractorInputProtocol {
     // MARK: Properties
     weak var presenter: ReviewDetailInteractorOutputProtocol?
-    var localDatamanager: ReviewDetailLocalDataManagerInputProtocol?
-    var remoteDatamanager: ReviewDetailRemoteDataManagerInputProtocol?
-    
+    var review: Review?
     func interactorGetData() {
-        remoteDatamanager?.externalGetData()
-    }
-
-}
-
-extension ReviewDetailInteractor: ReviewDetailRemoteDataManagerOutputProtocol {
-    func remoteDataManagerCallBackData(with review: Review) {
+        guard let review = review else { return }
         presenter?.interactorPushDataPresenter(receivedReview: review)
     }
-    
+
+    func setReview(settedReview: Review) {
+        self.review = settedReview
+    }
 }

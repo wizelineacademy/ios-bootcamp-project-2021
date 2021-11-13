@@ -18,7 +18,6 @@ class ReviewDetailPresenter {
 }
 
 extension ReviewDetailPresenter: ReviewDetailPresenterProtocol {
-    // TODO: implement presenter methods
     func viewDidLoad() {
         interactor?.interactorGetData()
     }
