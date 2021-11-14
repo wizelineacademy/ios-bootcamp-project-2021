@@ -19,6 +19,7 @@ class HomePresenter {
 
 extension HomePresenter: HomePresenterProtocol {
     func viewDidLoad() {
+        print("movie")
         interactor?.getMovies()
     }
     

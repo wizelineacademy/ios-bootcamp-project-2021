@@ -15,7 +15,10 @@ class HomeInteractor: HomeInteractorInputProtocol {
     var remoteDatamanager: HomeRemoteDataManagerInputProtocol?
 
     func getMovies() {
-        remoteDatamanager?.fetchMovies()
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.remoteDatamanager?.fetchMovies()
+        }
+  
     }
     
 }
