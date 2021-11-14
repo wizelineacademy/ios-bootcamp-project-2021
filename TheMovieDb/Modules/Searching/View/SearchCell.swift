@@ -23,7 +23,7 @@ class SearchCell: UITableViewCell, Reusable {
         return imageView
     }()
     
-    private let titleLabel: UILabel = {
+    public let titleLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.adjustsFontSizeToFitWidth = true

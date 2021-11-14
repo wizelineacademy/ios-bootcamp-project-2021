@@ -36,12 +36,12 @@ final class MainTabViewController: UITabBarController {
             rootViewController: HomeViewController()
             )
         
-        let searchData = SearchManager()
+        let searchView = SearchingWireFrame.createSearchingModule()
         let search = templateNavigationController(
             unselectedImage: UIImage(systemName: "magnifyingglass")!,
             selectedImage: UIImage(systemName: "text.magnifyingglass")!,
             title: "Search",
-            rootViewController: SearchViewController(searchData: searchData) )
+            rootViewController: searchView )
         
         viewControllers = [home, search]
     }
