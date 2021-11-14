@@ -29,11 +29,12 @@ final class MainTabViewController: UITabBarController {
     
     private func configureViewControllers() {
         
+        let homeView = HomeWireFrame.createHomeModule()
         let home = templateNavigationController(
             unselectedImage: UIImage(systemName: "house")!,
             selectedImage: UIImage(systemName: "house.fill")!,
             title: "Home",
-            rootViewController: HomeViewController()
+            rootViewController: homeView
             )
         
         let searchView = SearchingWireFrame.createSearchingModule()

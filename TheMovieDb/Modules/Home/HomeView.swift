@@ -1,14 +1,18 @@
 //
-//  HomeViewController.swift
+//  HomeView.swift
 //  TheMovieDb
 //
-//  Created by Javier Cueto on 26/10/21.
+//  Created by Javier Cueto on 14/11/21.
+//  
 //
 
+import Foundation
 import UIKit
 
-final class HomeViewController: UIViewController {
-    // MARK: - Properties
+class HomeView: UIViewController {
+    
+    // MARK: Properties
+    var presenter: HomePresenterProtocol?
     private let group = DispatchGroup()
     private var collectionView: UICollectionView!
     let categoryHomeHeaderId = "categoryHomeHeaderId"
@@ -19,39 +23,9 @@ final class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
         configureUI()
         configureUICollection()
-        fetchDataAPI()
-    }
-    // MARK: - API
-    private func reloadCollectionView() {
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
-    }
-    
-    private func fetchDataAPI() {
-        fetchData(typeMovieSection: .popular)
-        fetchData(typeMovieSection: .upcoming)
-        fetchData(typeMovieSection: .topRated)
-        fetchData(typeMovieSection: .playingNow)
-        fetchData(typeMovieSection: .trending)
-        group.notify(queue: .main) {
-            self.reloadCollectionView()
-        }
-    }
-    
-    private func fetchData(typeMovieSection: MovieGroupSections) {
-        group.enter()
-        MovieAPI.shared.fetchData(endPoint: typeMovieSection.path, completion: {(response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let res):
-                self.movies[typeMovieSection] = res.movies
-            }
-            self.group.leave()
-        })
     }
     
     // MARK: - Helpers
@@ -73,10 +47,14 @@ final class HomeViewController: UIViewController {
         view.backgroundColor = .systemBackground
     }
     
+    private func reloadCollectionView() {
+        self.collectionView.reloadData()
+    }
+    
 }
 
 // MARK: - UICollectionViewDataSource
-extension HomeViewController: UICollectionViewDataSource {
+extension HomeView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let section = MovieGroupSections(rawValue: section) ?? .trending
         return movies[section]?.count ?? 0
@@ -104,7 +82,7 @@ extension HomeViewController: UICollectionViewDataSource {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TopRatedSectionCell.reusableIdentifier, for: indexPath) as? TopRatedSectionCell else {
                 return TopRatedSectionCell()
             }
-          
+            
             var viewModel = MovieViewModel(movie: movie)
             viewModel.numerTop = indexPath.row
             cell.viewModel = viewModel
@@ -136,21 +114,20 @@ extension HomeViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegate
-extension HomeViewController: UICollectionViewDelegate {
+extension HomeView: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let section = MovieGroupSections(rawValue: indexPath.section) ?? .topRated
         guard let movies = movies[section] else { return }
         let movie = movies[indexPath.row]
         
-        let controller = MovieDetailWireFrame.createMovieDetailModule(with: movie)
-        navigationController?.pushViewController(controller, animated: true)
+        presenter?.showMovie(movie)
         
     }
     
 }
 
-extension HomeViewController {
+extension HomeView {
     private func configureCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let sectionProvider = { (sectionIndex: Int, _: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let sectionGroup = MovieGroupSections(rawValue: sectionIndex)
@@ -168,26 +145,26 @@ extension HomeViewController {
         }
         return UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
-
+    
     private func getHightLayoutSection() -> NSCollectionLayoutSection {
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-
+        
         // group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.5))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // section
-        let seccion = NSCollectionLayoutSection(group: group)
-        seccion.orthogonalScrollingBehavior = .paging
-        seccion.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .paging
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         
-        return seccion
+        return section
         
     }
-
+    
     private  func getDefaultLayoutSection() -> NSCollectionLayoutSection {
         
         let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.25), heightDimension: .absolute(150)))
@@ -204,16 +181,16 @@ extension HomeViewController {
         ]
         
         return section
-
+        
     }
-
+    
     private func getTopRatedLayoutSection() -> NSCollectionLayoutSection {
         
         // item
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-
+        
         // group
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(180))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -228,6 +205,14 @@ extension HomeViewController {
         ]
         
         return section
-
+        
     }
+}
+
+extension HomeView: HomeViewProtocol {
+    func showMovies(_ movies: [MovieGroupSections: [Movie]]) {
+        self.movies = movies
+        reloadCollectionView()
+    }
+    
 }
