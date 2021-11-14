@@ -1,11 +1,13 @@
 //
-//  MovieSection.swift.swift
+//  MovieDetailSection.swift
 //  TheMovieDb
 //
-//  Created by Javier Cueto on 31/10/21.
+//  Created by Javier Cueto on 14/11/21.
 //
 
-enum RelatedMovieSections: Int, CaseIterable {
+import Foundation
+
+enum MovieDetailSections: Int, CaseIterable {
     case recommendations
     case similar
 

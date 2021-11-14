@@ -142,7 +142,8 @@ extension HomeViewController: UICollectionViewDelegate {
         let section = MovieGroupSections(rawValue: indexPath.section) ?? .topRated
         guard let movies = movies[section] else { return }
         let movie = movies[indexPath.row]
-        let controller = DetailViewController(with: movie)
+        
+        let controller = MovieDetailWireFrame.createMovieDetailModule(with: movie)
         navigationController?.pushViewController(controller, animated: true)
         
     }

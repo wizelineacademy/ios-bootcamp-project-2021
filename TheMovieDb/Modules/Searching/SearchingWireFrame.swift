@@ -32,7 +32,7 @@ class SearchingWireFrame: SearchingWireFrameProtocol {
     }
     
     func showMovieDetail(from view: SearchingViewProtocol, with movie: Movie) {
-        let controller = DetailViewController(with: movie)
+        let controller = MovieDetailWireFrame.createMovieDetailModule(with: movie)
         guard let view = view as? SearchingView else { return }
         view.navigationController?.pushViewController(controller, animated: true)
     }

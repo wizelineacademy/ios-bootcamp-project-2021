@@ -8,6 +8,6 @@
 
 import Foundation
 
-class SearchingLocalDataManager:SearchingLocalDataManagerInputProtocol {
+class SearchingLocalDataManager: SearchingLocalDataManagerInputProtocol {
     
 }
