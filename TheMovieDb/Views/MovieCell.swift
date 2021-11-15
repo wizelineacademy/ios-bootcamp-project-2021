@@ -56,7 +56,7 @@ class MovieCell: UITableViewCell {
     }
     
     func setCellWithValuesOf(_ movie:Movie){
-        updateUI(title: movie.title, releaseDate: movie.year, rating: movie.rate, overview: movie.overview, poster: movie.posterImage)
+        updateUI(title: movie.originalTitle, releaseDate: movie.releaseDate, rating: movie.voteAverage, overview: movie.overview, poster: movie.posterPath)
     }
     
     

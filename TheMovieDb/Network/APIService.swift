@@ -37,6 +37,7 @@ class APIService {
             }
             do{
                 let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
                 let jsonData = try decoder.decode(MoviesData.self, from: data)
                 
                 DispatchQueue.main.async {

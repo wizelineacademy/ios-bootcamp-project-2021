@@ -26,7 +26,7 @@ class MovieManager{
             
             switch result {
             case .success(let listOf):
-                self?.movies = listOf.movies
+                self?.movies = listOf.results
                 completion()
             case .failure(let error):
                 // Something is wrong with the JSON file or the model

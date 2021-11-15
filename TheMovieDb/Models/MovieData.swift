@@ -11,28 +11,26 @@ import Foundation
 import Foundation
 
 struct MoviesData: Decodable {
-    let movies: [Movie]
+    let results: [Movie]
     
-    private enum CodingKeys: String, CodingKey {
-        case movies = "results"
-    }
 }
 
 struct Movie: Decodable {
     
-    let title: String?
-    let year: String?
-    let rate: Double?
-    let posterImage: String?
+    let id: Int?
+    let originalTitle: String?
+    let releaseDate: String?
+    let voteAverage: Double?
+    let posterPath: String?
     let overview: String?
-    //let genre: [Int]?
+    let backdropPath: String?
+    let genres: [Genre]?
     
-    private enum CodingKeys: String, CodingKey {
-        case title, overview
-        case year = "release_date"
-        case rate = "vote_average"
-        case posterImage = "poster_path"
-    }
+}
+
+struct Genre: Decodable {
+    let id: Int?
+    let name: String
 }
 
 
