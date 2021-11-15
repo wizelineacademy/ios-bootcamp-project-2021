@@ -20,6 +20,7 @@ class ReviewsRemoteDataManager: ReviewsRemoteDataManagerInputProtocol {
             case .failure(let error):
                 debugPrint(error)
             case .success(let reviews):
+                print(reviews)
                 self.remoteRequestHandler?.reviewsFromServer(reviewsData: reviews)
             }
        
