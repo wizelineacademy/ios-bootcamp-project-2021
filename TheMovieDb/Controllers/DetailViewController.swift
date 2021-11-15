@@ -37,47 +37,10 @@ class DetailViewController: UIViewController {
         
         detailDescriptionLabel.text = MovieData?.overview
         guard let backdropPath = MovieData?.backdropPath else { return }
-        let urlString = "https://image.tmdb.org/t/p/w500\(backdropPath)"
+        let urlString = "\(Constants.URLS.imageURL)\(backdropPath)"
         
         if let imageURL = URL(string: urlString){
-            detailMovieImage.posterFetcher(url: imageURL)
-        }
-        
-        func fixedDateFormatter(_ date: String?) -> String {
-            var fixDate: String = ""
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyy-MM-dd"
-            if let originalDate = date {
-                if let newDate = dateFormatter.date(from: originalDate) {
-                    dateFormatter.dateFormat = "dd.MM.yyyy"
-                    fixDate = dateFormatter.string(from: newDate)
-                }
-            }
-            return fixDate
-        }
-        
-        func showStar(value: Int ) -> String {
-            var star: String = ""
-            if value < 20 && value >= 0{
-                star = "★☆☆☆☆"
-            }
-            else if value < 50 {
-                star = "★★☆☆☆"
-            }
-            else if value < 70 {
-                star = "★★★☆☆"
-            }
-            else if value < 90 {
-                star = "★★★★☆"
-            }
-            else if value <= 100{
-                star = "★★★★★"
-            }
-            else {
-                star = "TBD"
-            }
-            return star;
-            
+            detailMovieImage.imageFetcher(url: imageURL)
         }
 
         

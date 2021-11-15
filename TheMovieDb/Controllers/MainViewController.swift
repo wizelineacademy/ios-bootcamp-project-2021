@@ -14,13 +14,13 @@ class MainViewController: UIViewController{
     @IBOutlet weak var mainTableView: UITableView!
     
     var movieManager = MovieManager()
-    var movieType = Constant.MovieLaunch.nowPlaying
+    var movieType = Constants.MovieLaunch.nowPlaying
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTableView.dataSource = self
         mainTableView.delegate = self
-        mainTableView.register(UINib(nibName: Constant.cellXibName, bundle: nil), forCellReuseIdentifier: Constant.cellIdentifier)
+        mainTableView.register(UINib(nibName: Constants.cellXibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
         loadMoviesData()
         
     }
@@ -38,15 +38,15 @@ extension MainViewController {
     @IBAction func mainSegmentedControlPressed(_ sender: UISegmentedControl) {
         switch mainSegmentedControl.selectedSegmentIndex {
         case 0:
-            movieType = Constant.MovieLaunch.nowPlaying
+            movieType = Constants.MovieLaunch.nowPlaying
         case 1:
-            movieType = Constant.MovieLaunch.popular
+            movieType = Constants.MovieLaunch.popular
         case 2:
-            movieType = Constant.MovieLaunch.topRated
+            movieType = Constants.MovieLaunch.topRated
         case 3:
-            movieType = Constant.MovieLaunch.upcoming
+            movieType = Constants.MovieLaunch.upcoming
         case 4:
-            movieType = Constant.MovieLaunch.trending
+            movieType = Constants.MovieLaunch.trending
         default:
             break
         }
@@ -60,7 +60,7 @@ extension MainViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constant.cellIdentifier, for: indexPath) as! MovieCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! MovieCell
         let movie = movieManager.cellForRowAt(indexPath: indexPath)
         cell.setCellWithValuesOf(movie)
         //print(movie)
@@ -71,14 +71,13 @@ extension MainViewController: UITableViewDataSource{
 extension MainViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //tableView.deselectRow(at: indexPath, animated: true)
-        performSegue(withIdentifier: "showDetail", sender: self)
+        performSegue(withIdentifier: Constants.segueIdentifier, sender: self)
         //print(movieManager.cellForRowAt(indexPath: indexPath))
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showDetail"{
-            //print(movieManager.cellForRowAt(indexPath: (trendingTableView.indexPathForSelectedRow)!))
+        if segue.identifier == Constants.segueIdentifier {
             let destinationVC = segue.destination as! DetailViewController //as is the
             guard let indexPath = mainTableView.indexPathForSelectedRow else { return }
             destinationVC.MovieData = movieManager.cellForRowAt(indexPath: indexPath)
