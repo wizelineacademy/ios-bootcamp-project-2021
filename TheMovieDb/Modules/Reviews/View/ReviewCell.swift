@@ -67,7 +67,7 @@ final class ReviewCell: UICollectionViewCell, Reusable {
         guard let viewModel = viewModel else { return }
         descriptionLabel.text = viewModel.content
         authorNameLabel.text = viewModel.author
-        logoImageView.kf.setImage(with: viewModel.imageUrl)
+        logoImageView.setImageFromNetwork(withURL: viewModel.imageUrl!)
 
     }
     

@@ -53,13 +53,7 @@ class SearchCell: UITableViewCell, Reusable {
     
     private func configure() {
         guard let viewModel = viewModel else { return }
-        imageSearchImageView.kf.indicatorType = .activity
-        imageSearchImageView.kf.setImage(
-            with: viewModel.imageUrl,
-            options: [
-                .transition(.fade(0.7)),
-                .cacheOriginalImage
-        ])
+        imageSearchImageView.setImageFromNetwork(withURL: viewModel.imageUrl!)
         titleLabel.text = viewModel.title
     }
     

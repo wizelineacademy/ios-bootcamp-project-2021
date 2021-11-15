@@ -100,7 +100,7 @@ final class DetailHeaderView: UICollectionReusableView {
         guard let movie = movie else { return }
         let urlImage = MovieConst.imageCDN + (movie.backdropPath ?? (movie.posterPath ?? ""))
         let url = URL(string: urlImage )
-        imageBackground.kf.setImage(with: url)
+        imageBackground.setImageFromNetwork(withURL: url!)
         overviewLabel.text = movie.overview
         dateLabel.text = "   \(movie.releaseDate ?? "")   "
         popularityLabel.text = "   \(Int(movie.popularity))%   "

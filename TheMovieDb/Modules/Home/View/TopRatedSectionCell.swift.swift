@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 final class TopRatedSectionCell: UICollectionViewCell, Reusable {
     // MARK: - Properties
@@ -58,7 +57,7 @@ final class TopRatedSectionCell: UICollectionViewCell, Reusable {
     
     private func configure() {
         guard let viewModel = viewModel else { return }
-        imageBackground.kf.setImage(with: viewModel.imageUrl)
+        imageBackground.setImageFromNetwork(withURL: viewModel.imageUrl!)
         numberTopLabel.text = viewModel.topNumber
     }
 }

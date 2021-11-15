@@ -44,6 +44,7 @@ final class DefaultSectionCell: UICollectionViewCell, Reusable {
     
     public func configure() {
         guard let viewModel = viewModel else { return }
-        imageBackground.kf.setImage(with: viewModel.imageUrl)
+        self.imageBackground.setImageFromNetwork(withURL: viewModel.imageUrl!)
+    
     }
 }

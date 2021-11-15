@@ -67,14 +67,9 @@ final class HightSectionCell: UICollectionViewCell, Reusable {
     
     private func configure() {
         guard let viewModel = viewModel else { return }
-        imageBackground.kf.indicatorType = .activity
-        imageBackground.kf.setImage(
-            with: viewModel.imageUrl,
-            options: [
-                .transition(.fade(0.7)),
-                .cacheOriginalImage
-        ])
+        
+        self.imageBackground.setImageFromNetwork(withURL: viewModel.imageUrl!)
+        
         titleLabel.text = viewModel.title
     }
-    
 }

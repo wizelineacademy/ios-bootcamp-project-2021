@@ -14,7 +14,7 @@ struct ReviewViewModel {
     var imageUrl: URL? {
         
         var safeUrl = review.authorDetails.avatarPath ?? MovieConst.defaultImage
-
+print(review.authorDetails.avatarPath )
         if safeUrl.prefix(1) == "/" {
             safeUrl.removeFirst()
         }
