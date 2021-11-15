@@ -19,9 +19,8 @@ class OverviewCell: BaseCell {
 
   let descriptionLabel = LabelBuilder()
     .fontStyle(textStyle: .paragraph, weight: .regular)
-    .amountLines(numLines: 8)
+    .amountLines(numLines: 0)
     .setColor(color: .whiteDirt)
-    .setText(text: "Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence-a commodity capable of unlocking humanity's greatest potential-only those who can conquer their fear will survive.")
     .build()
   
   override func setupView() {

@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class CastCell: BaseCell {
   
@@ -26,17 +25,17 @@ class CastCell: BaseCell {
   
   var nameLabel = LabelBuilder()
     .fontStyle(textStyle: .subheadline, weight: .bold)
-    .setColor(color: .darkGray)
+    .setColor(color: .gray)
     .build()
   
   var characterLabel = LabelBuilder()
     .fontStyle(textStyle: .subheadline, weight: .regular)
-    .setColor(color: .gray)
+    .setColor(color: .darkGray)
     .build()
   
   override func setupView() {
     
-    backgroundColor = DesignColor.whiteDirt.color
+    backgroundColor = .init(white: 0.4, alpha: 0.1)
     layer.cornerRadius = 20
 
     profileImage.constrainWidth(constant: 60)
@@ -54,8 +53,8 @@ class CastCell: BaseCell {
   
   override func setupData() {
     guard let name = person?.name, let character = person?.character, let portrait = person?.profilePath else { return }
-    let imageProvider = ImageResource(downloadURL: URL(string: "\(ApiPath.baseUrlImage.path)\(portrait)")!)
-    profileImage.kf.setImage(with: imageProvider)
+    let url = "\(ApiPath.baseUrlImage.path)\(portrait)"
+    profileImage.loadImage(urlString: url)
     self.nameLabel.text = name
     self.characterLabel.text = character
   }

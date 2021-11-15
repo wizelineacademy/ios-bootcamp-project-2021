@@ -6,8 +6,6 @@
 //
 
 import UIKit
-import Foundation
-import Kingfisher
 
 class ReviewCell: BaseCell {
   
@@ -22,7 +20,6 @@ class ReviewCell: BaseCell {
   var profileImage = ImageBuilder()
     .sizeAndAspectImage(width: 30, height: 30, aspectRatio: .scaleAspectFill)
     .roundCorners(circle: true, radius: 0, clipped: true)
-    .setBackgroundColor(color: .lightGray)
     .build()
   
   var nameLabel = LabelBuilder()
@@ -64,8 +61,12 @@ class ReviewCell: BaseCell {
 
     guard let name = review?.author, let description = review?.content else { return }
     if let portrait = review?.authorDetails.avatarPath {
-      let imageProvider = ImageResource(downloadURL: URL(string: "\(ApiPath.baseUrlImage.path)\(portrait)")!)
-      self.profileImage.kf.setImage(with: imageProvider)
+      let arrayURL = "\(portrait.components(separatedBy: "/").last ?? "")"
+      let newPortraitURL = "\(ApiPath.baseUrlImage.path)\(arrayURL)"
+      self.profileImage.loadImage(urlString: newPortraitURL)
+    } else {
+      self.profileImage.image = UIImage(systemName: "person.crop.circle")
+      self.profileImage.tintColor = DesignColor.darkGray.color
     }
     
     self.nameLabel.text = name

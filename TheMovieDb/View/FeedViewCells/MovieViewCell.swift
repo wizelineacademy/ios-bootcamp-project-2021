@@ -31,8 +31,8 @@ class MovieViewCell: BaseCell {
   
   override func setupData() {
     guard let moviePoster = movie?.poster else {return}
-    let imageProvider = ImageResource(downloadURL: URL(string: "\(ApiPath.baseUrlImage.path)\(moviePoster)")!)
-    imageMovie.kf.setImage(with: imageProvider)
+    let url = "\(ApiPath.baseUrlImage.path)\(moviePoster)"
+    imageMovie.loadImage(urlString: url)
   }
   
 }

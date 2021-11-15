@@ -11,30 +11,34 @@ struct MovieDetails: Codable {
   
   let id: Int
   let title: String
-  let poster: String
   let overview: String
   let releaseDate: String
   let voteAverage: Float
-  let popularity: Float
   let budget: Int
   let backDropPath: String?
   let revenue: Int
   let originalLanguage: String
   let status: String
+  var cast: [Person]?
+  var reviews: [MovieReview]?
+  var similarMovies: [SimilarOrRecommendedMovie]?
+  var recommendedMovies: [SimilarOrRecommendedMovie]?
   
   private enum CodingKeys: String, CodingKey {
     case id
     case title
-    case poster = "poster_path"
     case releaseDate = "release_date"
     case overview
     case voteAverage = "vote_average"
-    case popularity
     case budget
     case backDropPath = "backdrop_path"
     case revenue
     case originalLanguage = "original_language"
     case status
+    case cast
+    case reviews
+    case similarMovies
+    case recommendedMovies
     
   }
 }

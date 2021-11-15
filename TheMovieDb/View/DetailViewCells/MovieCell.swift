@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class MovieCell: BaseCell {
   
@@ -32,8 +31,8 @@ class MovieCell: BaseCell {
   override func setupData() {
     guard let portrait = similarOrRecommendeMovie?.posterPath else { return }
     
-    let imageProvider = ImageResource(downloadURL: URL(string: "\(ApiPath.baseUrlImage.path)\(portrait)")!)
-    self.imageMovie.kf.setImage(with: imageProvider)
+    let url = "\(ApiPath.baseUrlImage.path)\(portrait)"
+    self.imageMovie.loadImage(urlString: url)
 
   }
   

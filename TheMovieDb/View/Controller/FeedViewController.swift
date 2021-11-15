@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 
 class FeedViewController: UICollectionViewController {
   
@@ -27,59 +26,84 @@ class FeedViewController: UICollectionViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationItem.title = "MovieDB"
-
     setupCollectionView()
     getMovies()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    setupNavigationBar()
+  }
+  
+  func setupNavigationBar() {
+    navigationItem.title = "MovieDB"
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
   }
 
+  func getMovies() {
+    for categories in MovieFeed.allCases {
+      moviePresenter?.getData(from: categories, movieRegion: .US, movieLanguage: .en, kindItem: MovieFeedResult.self, complement: categories.title)
+    }
+  }
+ 
+  func showTitleCategory(_ indexPath: IndexPath) -> String {
+
+    let sectionType = MovieFeed.allCases[indexPath.section]
+    switch sectionType {
+    case .nowPlaying: return MovieFeed.nowPlaying.title
+    case .popular: return MovieFeed.popular.title
+    case .topRated: return MovieFeed.topRated.title
+    case .trending: return MovieFeed.trending.title
+    case .upcoming: return MovieFeed.upcoming.title
+    }
+
+  }
+
+  func setMovie(with indexPath: IndexPath) -> Movie? {
+
+    let sectionType = MovieFeed.allCases[indexPath.section]
+    switch sectionType {
+    case .nowPlaying: return categoryMovies[MovieFeed.nowPlaying.title]?[indexPath.item]
+    case .popular: return categoryMovies[MovieFeed.popular.title]?[indexPath.item]
+    case .topRated: return categoryMovies[MovieFeed.topRated.title]?[indexPath.item]
+    case .trending: return categoryMovies[MovieFeed.trending.title]?[indexPath.item]
+    case .upcoming: return categoryMovies[MovieFeed.upcoming.title]?[indexPath.item]
+    }
+  }
+
+}
+// MARK: CollectionView Configuration
+extension FeedViewController {
+  
   func setupCollectionView() {
     collectionView.backgroundColor = DesignColor.black.color
     collectionView.register(MovieViewCell.self, forCellWithReuseIdentifier: MovieViewCell.identifier)
     collectionView.register(HeaderFeedView.self, forSupplementaryViewOfKind: FeedViewController.categoryHeaderId, withReuseIdentifier: HeaderFeedView.identifier)
     collectionView.showsVerticalScrollIndicator = false
   }
- 
-  func getMovies() {
-    for categories in MovieFeed.allCases {
-      moviePresenter?.getData(from: categories, movieRegion: .US, movieLanguage: .en, kindItem: MovieFeedResult.self, complement: categories.title)
-    }
-  }
   
   static func createLayout() -> UICollectionViewCompositionalLayout {
     return UICollectionViewCompositionalLayout { ( _, _ ) in
       
       let section = SectionBuilder()
+      let margin: CGFloat = 20
+      let headerHeight: CGFloat = 80
+      
       return section
-        .createItem(width: 0.9, height: 1)
-        .createGroup(width: 0.40, height: 260, axis: .horizontal)
+        .createItemAndGroup(item: (0.9, 1), group: (0.40, 260), groupAxis: .horizontal)
         .createSection()
-        .sectionConstraints(top: 0, leading: 20, bottom: 0, trailing: 0)
+        .sectionConstraints(top: 0, leading: margin, bottom: 0, trailing: 0)
         .sectionBehavior(behavior: .continuous)
-        .suplementaryView(width: 1, height: 60, elementKind: categoryHeaderId, alignment: .topLeading)
+        .suplementaryView(width: 1, height: headerHeight, elementKind: categoryHeaderId, alignment: .topLeading)
         .build()
-
     }
-  }
-  
-  func showTitleCategory(_ indexPath: IndexPath) -> String {
-    var title = ""
-    for (index, category) in MovieFeed.allCases.enumerated() where indexPath.section == index {
-      title = category.title
-    }
-    return title
   }
   
   override func numberOfSections(in collectionView: UICollectionView) -> Int {
     return categoryMovies.count
   }
-
+  
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderFeedView.identifier, for: indexPath) as? HeaderFeedView else { fatalError("problems with HeaderFeedView")}
     header.label.text = showTitleCategory(indexPath)
@@ -87,13 +111,14 @@ class FeedViewController: UICollectionViewController {
   }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    switch section {
-    case 0: return categoryMovies[MovieFeed.nowPlaying.title]?.count ?? 0
-    case 1: return categoryMovies[MovieFeed.popular.title]?.count ?? 0
-    case 2: return categoryMovies[MovieFeed.topRated.title]?.count ?? 0
-    case 3: return categoryMovies[MovieFeed.trending.title]?.count ?? 0
-    case 4: return categoryMovies[MovieFeed.upcoming.title]?.count ?? 0
-    default: return 0
+    let sectionType = MovieFeed.allCases[section]
+    
+    switch sectionType {
+    case .nowPlaying: return categoryMovies[MovieFeed.nowPlaying.title]?.count ?? 0
+    case .popular: return categoryMovies[MovieFeed.popular.title]?.count ?? 0
+    case .topRated: return categoryMovies[MovieFeed.topRated.title]?.count ?? 0
+    case .trending: return categoryMovies[MovieFeed.trending.title]?.count ?? 0
+    case .upcoming: return categoryMovies[MovieFeed.upcoming.title]?.count ?? 0
     }
   }
   
@@ -107,28 +132,7 @@ class FeedViewController: UICollectionViewController {
     }
     return cell
   }
-  
-  func setMovie(with indexPath: IndexPath) -> Movie? {
 
-    var movie: Movie?
-    
-    switch indexPath.section {
-    case 0:
-      movie = categoryMovies[MovieFeed.nowPlaying.title]?[indexPath.item]
-    case 1:
-      movie = categoryMovies[MovieFeed.popular.title]?[indexPath.item]
-    case 2:
-      movie = categoryMovies[MovieFeed.topRated.title]?[indexPath.item]
-    case 3:
-      movie = categoryMovies[MovieFeed.trending.title]?[indexPath.item]
-    case 4:
-      movie = categoryMovies[MovieFeed.upcoming.title]?[indexPath.item]
-    default:
-      movie = categoryMovies[MovieFeed.nowPlaying.title]?[indexPath.item]
-    }
-    return movie!
-  }
-  
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let detailVC = DetailViewController()
     guard let movie = setMovie(with: indexPath) else { return }
@@ -143,12 +147,8 @@ class FeedViewController: UICollectionViewController {
 extension FeedViewController: MoviePresenterDelegate {
   
   var complement: String? {
-    get {
-      return titleCategory
-    }
-    set (newValue) {
-      titleCategory = newValue ?? ""
-    }
+    get { return titleCategory }
+    set { titleCategory = newValue ?? "" }
   }
 
   func showResults<Element>(items: Element) {

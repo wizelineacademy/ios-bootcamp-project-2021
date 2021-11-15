@@ -73,7 +73,7 @@ class ExtraInfoCell: BaseCell {
     let revenueStack = VerticalStackView(arrangedSubviews: [titleRevenue, revenueLabel], spacing: UIStackView.spacingUseSystem)
     
     [languageStack, statusStack, budgetStack, revenueStack].forEach { stack in
-      stack.backgroundColor = DesignColor.whiteDirt.color
+      stack.backgroundColor = .init(white: 0.4, alpha: 0.1)
       stack.isLayoutMarginsRelativeArrangement = true
       stack.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
       stack.distribution = .fillEqually

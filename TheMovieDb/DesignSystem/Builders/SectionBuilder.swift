@@ -16,20 +16,16 @@ class SectionBuilder {
   enum Axis {
     case horizontal, vertical
   }
-  
-  func createItem(width: CGFloat, height: CGFloat) -> SectionBuilder {
-    self.item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .fractionalHeight(height)))
+
+  func createItemAndGroup(item: (w: CGFloat, h: CGFloat), group: (w: CGFloat, h: CGFloat), groupAxis: Axis) -> SectionBuilder {
+    self.item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(item.w), heightDimension: .fractionalHeight(item.h)))
+    guard let item = self.item else { fatalError("you need to create first the item") }
+    self.group = groupAxis == .horizontal ? NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(group.w), heightDimension: .estimated(group.h)), subitems: [item]) : NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(group.w), heightDimension: .estimated(group.h)), subitems: [item])
     return self
   }
   
   func itemConstraints(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> SectionBuilder {
     self.item?.contentInsets = .init(top: top, leading: leading, bottom: bottom, trailing: trailing)
-    return self
-  }
-
-  func createGroup(width: CGFloat, height: CGFloat, axis: Axis) -> SectionBuilder {
-    guard let item = self.item else { fatalError("you need to create first the item") }
-    self.group = axis == .horizontal ? NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .estimated(height)), subitems: [item]) : NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .estimated(height)), subitems: [item])
     return self
   }
 

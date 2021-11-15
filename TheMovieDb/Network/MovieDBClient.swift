@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import MapKit
 
 class MovieDBClient: ApiClient {
   
@@ -16,7 +17,7 @@ class MovieDBClient: ApiClient {
     self.init(configuration: .default)
   }
   
-  init(configuration: URLSessionConfiguration) {
+  private init(configuration: URLSessionConfiguration) {
     self.session = URLSession(configuration: configuration)
   }
 
