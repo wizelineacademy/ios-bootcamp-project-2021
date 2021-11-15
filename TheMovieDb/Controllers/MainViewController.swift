@@ -19,6 +19,7 @@ class MainViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTableView.dataSource = self
+        mainTableView.delegate = self
         mainTableView.register(UINib(nibName: Constant.cellXibName, bundle: nil), forCellReuseIdentifier: Constant.cellIdentifier)
         loadMoviesData()
         
@@ -65,4 +66,24 @@ extension MainViewController: UITableViewDataSource{
         //print(movie)
         return cell
     }
+}
+
+extension MainViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: "showDetail", sender: self)
+        //print(movieManager.cellForRowAt(indexPath: indexPath))
+        
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail"{
+            //print(movieManager.cellForRowAt(indexPath: (trendingTableView.indexPathForSelectedRow)!))
+            let destinationVC = segue.destination as! DetailViewController //as is the
+            guard let indexPath = mainTableView.indexPathForSelectedRow else { return }
+            destinationVC.MovieData = movieManager.cellForRowAt(indexPath: indexPath)
+            
+        }
+    }
+
 }

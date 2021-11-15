@@ -17,9 +17,9 @@ class MovieManager{
         let urlString: String
         
         if type == "trending" {
-            urlString = "\(movieBaseURL)/\(type)/movie/day\(apiKey)"
+            urlString = "\(movieBaseURL)/\(type)/movie/day\(apiKey)&language=en"
         } else {
-            urlString = "\(movieBaseURL)/movie/\(type)\(apiKey)"
+            urlString = "\(movieBaseURL)/movie/\(type)\(apiKey)&language=en"
         }
         // weak self - prevent retain cycles
         apiService.getMoviesData(url: urlString) { [weak self] (result) in
