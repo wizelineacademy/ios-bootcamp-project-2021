@@ -17,7 +17,6 @@ final class TopRatedSectionCell: UICollectionViewCell, Reusable {
     public var numberTop = 0
     private let imageBackground: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "TheBatman")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 10
@@ -57,7 +56,7 @@ final class TopRatedSectionCell: UICollectionViewCell, Reusable {
     
     private func configure() {
         guard let viewModel = viewModel else { return }
-        imageBackground.setImageFromNetwork(withURL: viewModel.imageUrl!)
+        imageBackground.setImageFromNetwork(withURL: viewModel.imageUrl)
         numberTopLabel.text = viewModel.topNumber
     }
 }

@@ -53,7 +53,7 @@ class SearchCell: UITableViewCell, Reusable {
     
     private func configure() {
         guard let viewModel = viewModel else { return }
-        imageSearchImageView.setImageFromNetwork(withURL: viewModel.imageUrl!)
+        imageSearchImageView.setImageFromNetwork(withURL: viewModel.imageUrl)
         titleLabel.text = viewModel.title
     }
     

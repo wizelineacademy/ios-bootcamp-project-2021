@@ -68,7 +68,7 @@ final class HightSectionCell: UICollectionViewCell, Reusable {
     private func configure() {
         guard let viewModel = viewModel else { return }
         
-        self.imageBackground.setImageFromNetwork(withURL: viewModel.imageUrl!)
+        self.imageBackground.setImageFromNetwork(withURL: viewModel.imageUrl)
         
         titleLabel.text = viewModel.title
     }

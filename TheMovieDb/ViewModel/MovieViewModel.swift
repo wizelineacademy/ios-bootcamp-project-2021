@@ -22,7 +22,7 @@ struct MovieViewModel {
         } else {
             urlImage  = MovieConst.imageCDN + (movie.posterPath ?? (movie.backdropPath ?? ""))
         }
-  
+        
         return URL(string: urlImage)
     }
     

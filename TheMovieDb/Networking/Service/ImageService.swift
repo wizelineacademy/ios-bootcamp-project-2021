@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 
 extension UIImageView {
-    func setImageFromNetwork(withURL url: URL) {
+    func setImageFromNetwork(withURL url: URL?) {
         
+        guard let url = url else { return }
         if let image = MovieConst.imageCache.object(forKey: url.absoluteString as NSString) {
             self.image = image
             return

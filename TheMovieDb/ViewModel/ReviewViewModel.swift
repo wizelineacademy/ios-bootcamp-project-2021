@@ -14,11 +14,13 @@ struct ReviewViewModel {
     var imageUrl: URL? {
         
         var safeUrl = review.authorDetails.avatarPath ?? MovieConst.defaultImage
-print(review.authorDetails.avatarPath )
+        
         if safeUrl.prefix(1) == "/" {
             safeUrl.removeFirst()
         }
-        
+        if !safeUrl.contains("http") {
+            safeUrl = MovieConst.defaultImage
+        }
         return URL(string: safeUrl)
     }
     
