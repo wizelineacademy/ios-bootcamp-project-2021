@@ -11,7 +11,6 @@ class APIService {
     func getResponse<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters, completion: @escaping(Result<T, Error>) -> Void) {
         let  urlBuild = APIBuild(with: parameters, with: endPoint)
         guard let url = urlBuild.buildURL() else { return }
-         debugPrint(url)
         URLSession.shared.dataTask(with: url) { data, _, error in
             
             if let error = error {
