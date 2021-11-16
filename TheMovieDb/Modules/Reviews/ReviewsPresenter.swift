@@ -37,8 +37,8 @@ extension ReviewsPresenter: ReviewsPresenterProtocol {
 }
 
 extension ReviewsPresenter: ReviewsInteractorOutputProtocol {
-    func reviewsFromInteractor(reviews: [Review]) {
-        view?.showReviews(reviews: reviews)
+    func reviewsFromInteractor(reviewViewModel: [ReviewViewModel]) {
+        view?.showReviews(reviewViewModel: reviewViewModel)
     }
     
 }

@@ -12,7 +12,7 @@ import UIKit
 protocol ReviewsViewProtocol: AnyObject {
     // PRESENTER -> VIEW
     var presenter: ReviewsPresenterProtocol? { get set }
-    func showReviews(reviews: [Review])
+    func showReviews(reviewViewModel: [ReviewViewModel])
 }
 
 protocol ReviewsWireFrameProtocol: AnyObject {
@@ -34,7 +34,7 @@ protocol ReviewsPresenterProtocol: AnyObject {
 
 protocol ReviewsInteractorOutputProtocol: AnyObject {
 // INTERACTOR -> PRESENTER
-    func reviewsFromInteractor(reviews: [Review])
+    func reviewsFromInteractor(reviewViewModel: [ReviewViewModel])
 }
 
 protocol ReviewsInteractorInputProtocol: AnyObject {

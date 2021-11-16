@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ReviewDetailPresenter {
+final class ReviewDetailPresenter {
     
     // MARK: Properties
     weak var view: ReviewDetailViewProtocol?

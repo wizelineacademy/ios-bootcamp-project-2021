@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ReviewsInteractor: ReviewsInteractorInputProtocol {
+final class ReviewsInteractor: ReviewsInteractorInputProtocol {
     
     // MARK: Properties
     weak var presenter: ReviewsInteractorOutputProtocol?
@@ -23,7 +23,8 @@ class ReviewsInteractor: ReviewsInteractorInputProtocol {
 extension ReviewsInteractor: ReviewsRemoteDataManagerOutputProtocol {
     func reviewsFromServer(reviewsData: Reviews) {
         let reviews = reviewsData.reviews
-        presenter?.reviewsFromInteractor(reviews: reviews)
+        let viewModel = reviews.map { ReviewViewModel(review: $0) }
+        presenter?.reviewsFromInteractor(reviewViewModel: viewModel)
     }
     
 }

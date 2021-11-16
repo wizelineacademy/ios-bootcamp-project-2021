@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ReviewsWireFrame: ReviewsWireFrameProtocol {
+final class ReviewsWireFrame: ReviewsWireFrameProtocol {
     
     class func createReviewsModule(movie: Movie) -> UIViewController {
         let view = ReviewsView()

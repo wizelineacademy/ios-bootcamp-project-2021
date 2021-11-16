@@ -387,6 +387,7 @@
 		45C0819C273E3A3C002AF663 /* Reviews */ = {
 			isa = PBXGroup;
 			children = (
+				45FAD52E2743ED7A0026CC23 /* ViewModel */,
 				45D2B4EC272F4C9A0065DC0D /* View */,
 				45C0819D273E3A52002AF663 /* ReviewsPresenter.swift */,
 				45C0819F273E3A52002AF663 /* ReviewsProtocols.swift */,
@@ -402,7 +403,6 @@
 			isa = PBXGroup;
 			children = (
 				45C8C8462733B196001FB82E /* MovieViewModel.swift */,
-				455C5AD02734E20400ADE036 /* ReviewViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -488,6 +488,14 @@
 				45A64D4C2728F2DC00159CE6 /* MainTabViewController.swift */,
 			);
 			path = MainTab;
+			sourceTree = "<group>";
+		};
+		45FAD52E2743ED7A0026CC23 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				455C5AD02734E20400ADE036 /* ReviewViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		837B4E9B258178B6003DFC67 = {

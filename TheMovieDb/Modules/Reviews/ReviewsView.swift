@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-class ReviewsView: UICollectionViewController {
+final class ReviewsView: UICollectionViewController {
 
     // MARK: Properties
     var presenter: ReviewsPresenterProtocol?
-    private var reviews = [Review]()
+    private var viewModel = [ReviewViewModel]() // reviews = [Review]()
     
     // MARK: - LifeCycle
     init() {
@@ -42,8 +42,8 @@ class ReviewsView: UICollectionViewController {
 }
 
 extension ReviewsView: ReviewsViewProtocol {
-    func showReviews(reviews: [Review]) {
-        self.reviews = reviews
+    func showReviews(reviewViewModel: [ReviewViewModel]) {
+        self.viewModel = reviewViewModel
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
@@ -54,15 +54,14 @@ extension ReviewsView: ReviewsViewProtocol {
 // MARK: UICollectionViewDataSource
 extension ReviewsView {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return reviews.count
+        return viewModel.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCell.reusableIdentifier, for: indexPath) as? ReviewCell else {
             return ReviewCell()
         }
-        let review = reviews[indexPath.row]
-        let viewModel = ReviewViewModel(review: review)
+        let viewModel = viewModel[indexPath.row]
         cell.viewModel = viewModel
         return cell
     }
@@ -79,7 +78,7 @@ extension ReviewsView: UICollectionViewDelegateFlowLayout {
 extension ReviewsView {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let review = reviews[indexPath.row]
+        let review = viewModel[indexPath.row].review
         presenter?.showDetail(review: review)
     }
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ReviewsRemoteDataManager: ReviewsRemoteDataManagerInputProtocol {
+final class ReviewsRemoteDataManager: ReviewsRemoteDataManagerInputProtocol {
 
     var remoteRequestHandler: ReviewsRemoteDataManagerOutputProtocol?
     
@@ -20,6 +20,7 @@ class ReviewsRemoteDataManager: ReviewsRemoteDataManagerInputProtocol {
             case .failure(let error):
                 debugPrint(error)
             case .success(let reviews):
+                
                 self.remoteRequestHandler?.reviewsFromServer(reviewsData: reviews)
             }
        

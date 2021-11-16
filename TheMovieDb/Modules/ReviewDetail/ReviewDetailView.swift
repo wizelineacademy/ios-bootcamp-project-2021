@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class ReviewDetailView: UIViewController {
+final class ReviewDetailView: UIViewController {
 
     // MARK: Properties
     var presenter: ReviewDetailPresenterProtocol?
