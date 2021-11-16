@@ -36,29 +36,24 @@ final class DetailDataSource: DataSourceProtocol {
         let item = items[indexPath.row]
         switch item {
         case is MovieRatingModel:
-            let cell = collectionView?
-                .dequeueReusableCell(withReuseIdentifier: DetailRatingCell.identifier,
-                                     for: indexPath) as? DetailRatingCell
+            let cell: DetailRatingCell? = collectionView?.reuse(identifier: DetailRatingCell.identifier,
+                                                                for: indexPath)
             cell?.movie = item as? MovieRatingModel
             return cell
         case is MovieOverviewModel:
-            let cell = collectionView?
-                .dequeueReusableCell(withReuseIdentifier: DetailOverviewCell.identifier,
-                                     for: indexPath) as? DetailOverviewCell
+            let cell: DetailOverviewCell? = collectionView?.reuse(identifier: DetailOverviewCell.identifier,
+                                                                  for: indexPath)
             cell?.overview = item as? MovieOverviewModel
             return cell
         case is MovieReviewsModel:
-            let cell = collectionView?
-                .dequeueReusableCell(withReuseIdentifier: DetailReviewsCell.identifier,
-                                  for: indexPath) as? DetailReviewsCell
-            let item = item as? MovieReviewsModel
-            cell?.reviewsModel = item
+            let cell: DetailReviewsCell? = collectionView?.reuse(identifier: DetailReviewsCell.identifier,
+                                                                 for: indexPath)
+            cell?.reviewsModel = item as? MovieReviewsModel
             return cell
         case is MovieRecommendationsModel:
-            let cell = collectionView?.dequeueReusableCell(withReuseIdentifier: DetailRecommendationsCell.identifier,
-                                                           for: indexPath) as? DetailRecommendationsCell
-            let item = item as? MovieRecommendationsModel
-            cell?.recommendations = item
+            let cell: DetailRecommendationsCell? = collectionView?.reuse(identifier: DetailRecommendationsCell.identifier,
+                                                                         for: indexPath)
+            cell?.recommendations = item as? MovieRecommendationsModel
             return cell
         default:
             return nil

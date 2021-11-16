@@ -55,11 +55,8 @@ final class DetailRecommendationsCell: UICollectionViewCell {
 extension DetailRecommendationsCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: RecommendationCell.identifier,
-            for: indexPath) as? RecommendationCell else {
-                return UICollectionViewCell()
-            }
+        let cell: RecommendationCell = collectionView.reuse(identifier: RecommendationCell.identifier,
+                                                            for: indexPath)
         cell.movie = recommendations?.recommendations[indexPath.row]
         return cell
     }

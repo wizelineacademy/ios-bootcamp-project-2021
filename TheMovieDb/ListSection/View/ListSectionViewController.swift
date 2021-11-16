@@ -42,13 +42,9 @@ final class ListSectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: ListSectionCell.identifier,
-                                     for: indexPath) as? ListSectionCell else {
-                    return UICollectionViewCell()
-                }
-        let movie = items[indexPath.row]
-        cell.movie = movie
+        let cell: ListSectionCell = collectionView.reuse(identifier: ListSectionCell.identifier,
+                                                         for: indexPath)
+        cell.movie = items[indexPath.row]
         return cell
     }
     
