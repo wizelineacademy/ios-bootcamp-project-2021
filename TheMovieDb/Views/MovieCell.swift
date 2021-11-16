@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MovieCell: UITableViewCell {
 
@@ -36,7 +37,8 @@ class MovieCell: UITableViewCell {
         urlString = "\(Constants.URLS.imageURL)\(posterPath)"
         
         if let imageURL = URL(string: urlString){
-            movieImageView.imageFetcher(url: imageURL)
+            movieImageView.kf.setImage(with: imageURL)
+            movieImageView.layer.cornerRadius = movieImageView.frame.size.width / 9
         }
         
     }

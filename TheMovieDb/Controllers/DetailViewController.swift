@@ -6,8 +6,7 @@
 //
 
 import UIKit
-
-import UIKit
+import Kingfisher
 
 class DetailViewController: UIViewController {
 
@@ -40,7 +39,7 @@ class DetailViewController: UIViewController {
         let urlString = "\(Constants.URLS.imageURL)\(backdropPath)"
         
         if let imageURL = URL(string: urlString){
-            detailMovieImage.imageFetcher(url: imageURL)
+            detailMovieImage.kf.setImage(with: imageURL)
         }
 
         

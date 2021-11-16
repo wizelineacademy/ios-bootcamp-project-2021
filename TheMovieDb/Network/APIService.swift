@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 class APIService {
 
     private var dataTask: URLSessionDataTask?
