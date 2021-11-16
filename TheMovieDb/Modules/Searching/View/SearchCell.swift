@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchCell: UITableViewCell, Reusable {
+final class SearchCell: UITableViewCell, Reusable {
     // MARK: - Properties
     public var viewModel: MovieViewModel? {
         didSet {

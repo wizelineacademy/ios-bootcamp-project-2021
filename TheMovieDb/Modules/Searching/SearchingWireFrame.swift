@@ -9,13 +9,12 @@
 import Foundation
 import UIKit
 
-class SearchingWireFrame: SearchingWireFrameProtocol {
+final class SearchingWireFrame: SearchingWireFrameProtocol {
     
     class func createSearchingModule() -> UIViewController {
         let view = SearchingView()
         let presenter: SearchingPresenterProtocol & SearchingInteractorOutputProtocol = SearchingPresenter()
         let interactor: SearchingInteractorInputProtocol & SearchingRemoteDataManagerOutputProtocol = SearchingInteractor()
-        let localDataManager: SearchingLocalDataManagerInputProtocol = SearchingLocalDataManager()
         let remoteDataManager: SearchingRemoteDataManagerInputProtocol = SearchingRemoteDataManager()
         let wireFrame: SearchingWireFrameProtocol = SearchingWireFrame()
         
@@ -24,7 +23,6 @@ class SearchingWireFrame: SearchingWireFrameProtocol {
         presenter.wireFrame = wireFrame
         presenter.interactor = interactor
         interactor.presenter = presenter
-        interactor.localDatamanager = localDataManager
         interactor.remoteDatamanager = remoteDataManager
         remoteDataManager.remoteRequestHandler = interactor
         return view

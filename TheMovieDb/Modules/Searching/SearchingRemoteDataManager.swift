@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SearchingRemoteDataManager: SearchingRemoteDataManagerInputProtocol {
+final class SearchingRemoteDataManager: SearchingRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: SearchingRemoteDataManagerOutputProtocol?
     

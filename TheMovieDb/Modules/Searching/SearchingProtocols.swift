@@ -12,7 +12,7 @@ import UIKit
 protocol SearchingViewProtocol: AnyObject {
     // PRESENTER -> VIEW
     var presenter: SearchingPresenterProtocol? { get set }
-    func showMoviesResults(_ moviesFound: [Movie])
+    func showMoviesResults(_ moviesFound: [MovieViewModel])
     func showSpinnerView()
     func stopSpinnerView()
 }
@@ -36,13 +36,12 @@ protocol SearchingPresenterProtocol: AnyObject {
 
 protocol SearchingInteractorOutputProtocol: AnyObject {
     // INTERACTOR -> PRESENTER
-    func moviesFound(moviesFound: [Movie])
+    func moviesFound(moviesFound: [MovieViewModel])
 }
 
 protocol SearchingInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: SearchingInteractorOutputProtocol? { get set }
-    var localDatamanager: SearchingLocalDataManagerInputProtocol? { get set }
     var remoteDatamanager: SearchingRemoteDataManagerInputProtocol? { get set }
     
     func findMovies(_ searchText: String)
@@ -60,8 +59,4 @@ protocol SearchingRemoteDataManagerOutputProtocol: AnyObject {
     // REMOTEDATAMANAGER -> INTERACTOR
     
     func moviesFound(found movies: Movies)
-}
-
-protocol SearchingLocalDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> LOCALDATAMANAGER
 }

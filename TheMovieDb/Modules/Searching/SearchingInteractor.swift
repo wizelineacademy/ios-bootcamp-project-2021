@@ -8,10 +8,9 @@
 
 import Foundation
 
-class SearchingInteractor: SearchingInteractorInputProtocol {
+final class SearchingInteractor: SearchingInteractorInputProtocol {
     // MARK: Properties
     weak var presenter: SearchingInteractorOutputProtocol?
-    var localDatamanager: SearchingLocalDataManagerInputProtocol?
     var remoteDatamanager: SearchingRemoteDataManagerInputProtocol?
 
     func findMovies(_ searchText: String) {
@@ -24,6 +23,7 @@ class SearchingInteractor: SearchingInteractorInputProtocol {
 extension SearchingInteractor: SearchingRemoteDataManagerOutputProtocol {
     func moviesFound(found movies: Movies) {
         let movies = movies.movies
-        presenter?.moviesFound(moviesFound: movies)
+        let viewModel = movies.map { MovieViewModel(movie: $0) }
+        presenter?.moviesFound(moviesFound: viewModel)
     }
 }

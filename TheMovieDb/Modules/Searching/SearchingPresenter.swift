@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SearchingPresenter {
+final class SearchingPresenter {
     
     // MARK: Properties
     weak var view: SearchingViewProtocol?
@@ -34,7 +34,7 @@ extension SearchingPresenter: SearchingPresenterProtocol {
 }
 
 extension SearchingPresenter: SearchingInteractorOutputProtocol {
-    func moviesFound(moviesFound: [Movie]) {
+    func moviesFound(moviesFound: [MovieViewModel]) {
         view?.stopSpinnerView()
         view?.showMoviesResults(moviesFound)
     }

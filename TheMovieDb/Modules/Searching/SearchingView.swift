@@ -15,7 +15,7 @@ final class SearchingView: UIViewController {
     var presenter: SearchingPresenterProtocol?
     private var tableView: UITableView!
     private let searchController = UISearchController(searchResultsController: nil)
-    private var moviesSearch: [Movie] = []
+    private var viewModel: [MovieViewModel] = []
 
     // MARK: Lifecycle
 
@@ -67,7 +67,7 @@ final class SearchingView: UIViewController {
 // MARK: - UITableDelegate
 extension SearchingView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let movie =  moviesSearch[indexPath.row]
+        let movie =  viewModel[indexPath.row].movie
         presenter?.showMovie(movie)
     }
 }
@@ -76,15 +76,14 @@ extension SearchingView: UITableViewDelegate {
 extension SearchingView: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return moviesSearch.count
+        return viewModel.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.reusableIdentifier, for: indexPath) as? SearchCell else {
             return SearchCell()
         }
-        let movie = moviesSearch[indexPath.row]
-        let viewModel = MovieViewModel(movie: movie)
+        let viewModel = viewModel[indexPath.row]
         cell.viewModel = viewModel
         return cell
     }
@@ -99,8 +98,8 @@ extension SearchingView: UISearchBarDelegate {
 }
 
 extension SearchingView: SearchingViewProtocol {
-    func showMoviesResults(_ moviesFound: [Movie]) {
-        moviesSearch = moviesFound
+    func showMoviesResults(_ moviesFound: [MovieViewModel]) {
+        viewModel = moviesFound
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
