@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Movie: Decodable {
+struct Movie: Decodable, Hashable {
     let adult: Bool?
     let backdropPath: String?
     let genreIDS: [Int]?
@@ -33,4 +33,14 @@ struct Movie: Decodable {
         case voteCount = "vote_count"
         case popularity
     }
+    
+    func hash(into hasher: inout Hasher) {
+      hasher.combine(identifier)
+    }
+
+    static func == (lhs: Movie, rhs: Movie) -> Bool {
+      return lhs.identifier == rhs.identifier
+    }
+
+    private let identifier = UUID()
 }

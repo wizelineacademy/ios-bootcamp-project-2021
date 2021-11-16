@@ -8,10 +8,8 @@
 import Foundation
 
 class MovieDBClient: APIClient, MovieClientProtocol {
-
+  
     let session: URLSession
-
-    // MARK: - Initializers
     
     init(configuration: URLSessionConfiguration) {
         self.session = URLSession(configuration: configuration)
@@ -26,40 +24,21 @@ class MovieDBClient: APIClient, MovieClientProtocol {
     
     // MARK: - Movie list
 
-    func getTrendingMovies(page: Int, completion: @escaping (Result<MoviesResult?, APIError>) -> Void) {
-        let request = MovieServices.getTrending(page: page).request
-        fetch(with: request, decode: { json -> MoviesResult? in
-            guard let movieResult = json as? MoviesResult else { return  nil }
-            return movieResult
-        }, completion: completion)
-    }
-    
-    func getNowPlayingMovies(page: Int, completion: @escaping (Result<MoviesResult?, APIError>) -> Void) {
-        let request = MovieServices.getNowPlaying(page: page).request
-        fetch(with: request, decode: { json -> MoviesResult? in
-            guard let movieResult = json as? MoviesResult else { return  nil }
-            return movieResult
-        }, completion: completion)
-    }
-    
-    func getPopularMovies(page: Int, completion: @escaping (Result<MoviesResult?, APIError>) -> Void) {
-        let request = MovieServices.getPopular(page: page).request
-        fetch(with: request, decode: { json -> MoviesResult? in
-            guard let movieResult = json as? MoviesResult else { return  nil }
-            return movieResult
-        }, completion: completion)
-    }
-    
-    func getTopRatedMovies(page: Int, completion: @escaping (Result<MoviesResult?, APIError>) -> Void) {
-        let request = MovieServices.getTopRated(page: page).request
-        fetch(with: request, decode: { json -> MoviesResult? in
-            guard let movieResult = json as? MoviesResult else { return  nil }
-            return movieResult
-        }, completion: completion)
-    }
-    
-    func getUpcomingMovies(page: Int, completion: @escaping (Result<MoviesResult?, APIError>) -> Void) {
-        let request = MovieServices.getUpcoming(page: page).request
+    func getMoviesFrom(type: SectionMovie, page: Int, completion: @escaping (Result<MoviesResult?, APIError>) -> Void) {
+        var request: URLRequest = MovieServices.getTrending(page: page).request
+        switch type {
+        case .trendingMovie:
+            request = MovieServices.getTrending(page: page).request
+        case .nowPlayingMovies:
+            request = MovieServices.getNowPlaying(page: page).request
+        case .popularMovies:
+            request = MovieServices.getPopular(page: page).request
+        case .topRatedMovies:
+            request = MovieServices.getTopRated(page: page).request
+        case .upcomingMovies:
+            request = MovieServices.getUpcoming(page: page).request
+        }
+        
         fetch(with: request, decode: { json -> MoviesResult? in
             guard let movieResult = json as? MoviesResult else { return  nil }
             return movieResult

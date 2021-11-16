@@ -29,7 +29,7 @@ extension MovieServices: MovieDBAPIEndpoint {
     var path: String {
         switch self {
         case .getTrending:
-            return "/3/movie/day"
+            return "/3/trending/movie/day"
         case .getNowPlaying:
             return "/3/movie/now_playing"
         case .getPopular:

@@ -9,20 +9,9 @@ import Foundation
 
 protocol MovieClientProtocol {
 
-    func getTrendingMovies(page: Int,
-                           completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
-    
-    func getNowPlayingMovies(page: Int,
-                             completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
-    
-    func getPopularMovies(page: Int,
-                          completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
-
-    func getTopRatedMovies(page: Int,
-                           completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
-    
-    func getUpcomingMovies(page: Int,
-                           completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
+    func getMoviesFrom(type: SectionMovie,
+                       page: Int,
+                       completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
     
     func searchByKeyword(searchText: String,
                          completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
