@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum MovieDetailSections: Int, CaseIterable {
     case recommendations
@@ -22,6 +23,20 @@ enum MovieDetailSections: Int, CaseIterable {
         switch self {
         case .recommendations: return .recommendations
         case .similar: return .similar
+        }
+    }
+    
+    var sizeCell: CGFloat {
+        switch self {
+        case .recommendations: return  500
+        case .similar: return 50
+        }
+    }
+    
+    var header: UICollectionReusableView {
+        switch self {
+        case .recommendations: return DetailHeaderView()
+        case .similar: return DetailHeader()
         }
     }
 }

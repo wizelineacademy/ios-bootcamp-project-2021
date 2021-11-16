@@ -105,16 +105,8 @@ extension MovieDetailView {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension MovieDetailView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let section = MovieDetailSections(rawValue: section)
-        switch section {
-        case .recommendations:
-            return CGSize(width: view.frame.height, height: 500)
-        case .similar:
-            return CGSize(width: view.frame.height, height: 50)
-        case .none:
-            return CGSize(width: view.frame.height, height: 0)
-        }
-        
+        let section = MovieDetailSections(rawValue: section) ?? .similar
+        return CGSize(width: view.frame.height, height: section.sizeCell)
     }
 }
 
