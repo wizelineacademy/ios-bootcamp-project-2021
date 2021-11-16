@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="m5s-he-XVc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vvn-aD-P18">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -88,7 +88,7 @@
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="heC-fV-4wV">
                                 <rect key="frame" x="20" y="399" width="374" height="243.5"/>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -132,7 +132,59 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wji-pC-rdk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-333.33333333333337" y="-656.25"/>
+            <point key="canvasLocation" x="-20" y="-788"/>
+        </scene>
+        <!--Item 2-->
+        <scene sceneID="QAQ-dS-Xxa">
+            <objects>
+                <viewController id="Dxh-RZ-ySS" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="j8o-LL-i5e">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="TSD-mK-Jdx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Item 2" id="h2r-Wz-K42"/>
+                    <navigationItem key="navigationItem" id="8av-eF-u5B"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYb-7t-cBd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1007" y="-374"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="ERC-dH-9ut">
+            <objects>
+                <tabBarController id="vvn-aD-P18" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="aJ8-O9-myu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="9cy-ps-dRR" kind="relationship" relationship="viewControllers" id="PfU-vu-ecu"/>
+                        <segue destination="8Gm-Qg-mWM" kind="relationship" relationship="viewControllers" id="v1L-J3-sNG"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5MJ-3p-Nlz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-2631" y="-1037"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="iT9-9N-o16">
+            <objects>
+                <navigationController id="8Gm-Qg-mWM" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="search" id="pm8-wD-haU"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AeD-WH-3Rd">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Dxh-RZ-ySS" kind="relationship" relationship="rootViewController" id="Lwj-Ju-yE4"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="d0c-yn-OYz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1768" y="-382"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="0JB-T6-7Sm">
@@ -142,37 +194,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="j9Y-ZK-C1L">
-                                <rect key="frame" x="0.0" y="44" width="414" height="32"/>
-                                <segments>
-                                    <segment title="Now Playing"/>
-                                    <segment title="Popular"/>
-                                    <segment title="Top Rated"/>
-                                    <segment title="Upcoming"/>
-                                    <segment title="Trending"/>
-                                </segments>
-                                <connections>
-                                    <action selector="mainSegmentedControlPressed:" destination="m5s-he-XVc" eventType="valueChanged" id="8O7-hu-zmI"/>
-                                </connections>
-                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ffH-WD-LYC">
-                                <rect key="frame" x="0.0" y="75" width="414" height="787"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wmW-zQ-qKc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="ffH-WD-LYC" firstAttribute="top" secondItem="j9Y-ZK-C1L" secondAttribute="bottom" id="DEe-nP-SLh"/>
-                            <constraint firstItem="j9Y-ZK-C1L" firstAttribute="top" secondItem="wmW-zQ-qKc" secondAttribute="top" id="Qdd-Ka-mbB"/>
-                            <constraint firstItem="j9Y-ZK-C1L" firstAttribute="trailing" secondItem="wmW-zQ-qKc" secondAttribute="trailing" id="U8n-xV-zpI"/>
-                            <constraint firstItem="ffH-WD-LYC" firstAttribute="top" secondItem="j9Y-ZK-C1L" secondAttribute="bottom" id="fHw-Mb-m8H"/>
                             <constraint firstItem="ffH-WD-LYC" firstAttribute="bottom" secondItem="wmW-zQ-qKc" secondAttribute="bottom" id="gT5-Bu-C54"/>
                             <constraint firstItem="ffH-WD-LYC" firstAttribute="leading" secondItem="wmW-zQ-qKc" secondAttribute="leading" id="idp-ut-O0U"/>
+                            <constraint firstItem="ffH-WD-LYC" firstAttribute="top" secondItem="wmW-zQ-qKc" secondAttribute="top" id="uWt-d8-VHK"/>
                             <constraint firstItem="ffH-WD-LYC" firstAttribute="trailing" secondItem="wmW-zQ-qKc" secondAttribute="trailing" id="wJh-uu-1iW"/>
-                            <constraint firstItem="j9Y-ZK-C1L" firstAttribute="leading" secondItem="wmW-zQ-qKc" secondAttribute="leading" id="wu1-bY-PPj"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="FZI-7q-yKX">
+                        <nil key="title"/>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" apportionsSegmentWidthsByContent="YES" segmentControlStyle="plain" selectedSegmentIndex="0" id="j9Y-ZK-C1L">
+                            <rect key="frame" x="12" y="6" width="390" height="32"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Now Playing"/>
+                                <segment title="Popular"/>
+                                <segment title="Top Rated"/>
+                                <segment title="Upcoming"/>
+                                <segment title="Trending"/>
+                            </segments>
+                            <connections>
+                                <action selector="mainSegmentedControlPressed:" destination="m5s-he-XVc" eventType="valueChanged" id="8O7-hu-zmI"/>
+                            </connections>
+                        </segmentedControl>
+                    </navigationItem>
                     <connections>
                         <outlet property="mainSegmentedControl" destination="j9Y-ZK-C1L" id="MXT-zy-sd2"/>
                         <outlet property="mainTableView" destination="ffH-WD-LYC" id="uGk-p4-Lkc"/>
@@ -181,7 +233,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zp-7W-dDd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1306" y="-648"/>
+            <point key="canvasLocation" x="-1007" y="-1075"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="wUy-51-KO9">
+            <objects>
+                <navigationController id="9cy-ps-dRR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="featured" id="EJW-fb-reY"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ZnP-qt-0Iu">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="m5s-he-XVc" kind="relationship" relationship="rootViewController" id="Deg-GG-6kW"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kWx-wt-NXr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1767" y="-1075"/>
         </scene>
     </scenes>
     <resources>
