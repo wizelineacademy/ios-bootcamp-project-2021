@@ -14,16 +14,13 @@ class ReviewDetailWireFrame: ReviewDetailWireFrameProtocol {
     class func createReviewDetailModule(with review: Review) -> UIViewController {
         let view = ReviewDetailView()
         
-        let presenter: ReviewDetailPresenterProtocol & ReviewDetailInteractorOutputProtocol = ReviewDetailPresenter()
-        let interactor: ReviewDetailInteractorInputProtocol = ReviewDetailInteractor()
+        let presenter: ReviewDetailPresenterProtocol = ReviewDetailPresenter()
         let wireFrame: ReviewDetailWireFrameProtocol = ReviewDetailWireFrame()
         
         view.presenter = presenter
         presenter.view = view
         presenter.wireFrame = wireFrame
-        presenter.interactor = interactor
-        interactor.presenter = presenter
-        interactor.setReview(settedReview: review)
+        presenter.setReview(settedReview: review)
         
         return view
         

@@ -23,9 +23,9 @@ protocol ReviewDetailWireFrameProtocol: AnyObject {
 protocol ReviewDetailPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: ReviewDetailViewProtocol? { get set }
-    var interactor: ReviewDetailInteractorInputProtocol? { get set }
     var wireFrame: ReviewDetailWireFrameProtocol? { get set }
     func viewDidLoad()
+    func setReview(settedReview: Review)
 }
 
 protocol ReviewDetailInteractorOutputProtocol: AnyObject {
