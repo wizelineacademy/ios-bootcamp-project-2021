@@ -418,6 +418,16 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		45F822A32744C71C004BC5BA /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				45A64D472728ECDD00159CE6 /* Views */,
+				45C8C8452733B12C001FB82E /* ViewModel */,
+				452BD823272A34F100F842F5 /* Model */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		45FAD4C9274168070026CC23 /* Searching */ = {
 			isa = PBXGroup;
 			children = (
@@ -523,12 +533,10 @@
 		837B4EA6258178B6003DFC67 /* TheMovieDb */ = {
 			isa = PBXGroup;
 			children = (
+				45F822A32744C71C004BC5BA /* Common */,
 				45C0818C273E2E2C002AF663 /* Modules */,
 				452BD828272A360C00F842F5 /* Networking */,
-				452BD823272A34F100F842F5 /* Model */,
 				45A64D572729012800159CE6 /* Utils */,
-				45C8C8452733B12C001FB82E /* ViewModel */,
-				45A64D472728ECDD00159CE6 /* Views */,
 				45A64D462728ECB600159CE6 /* Resources */,
 				45A64D452728ECB000159CE6 /* System */,
 			);

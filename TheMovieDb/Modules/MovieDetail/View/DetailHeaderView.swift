@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SwiftUI
 protocol DetailHeaderViewDelegate: AnyObject {
     func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie)
 }
