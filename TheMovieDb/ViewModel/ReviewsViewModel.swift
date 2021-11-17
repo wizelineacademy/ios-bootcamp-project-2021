@@ -19,6 +19,7 @@ final class ReviewsViewModel {
         os_log("ReviewsViewModel initialized", log: OSLog.viewModel, type: .debug)
     }
     var reloadData: (() -> Void)?
+    var showEmptyReviewsAlert: (() -> Void)?
     
     func reviewsMovie() {
         guard let id = movieID else { return }
@@ -26,7 +27,12 @@ final class ReviewsViewModel {
             guard let self = self else { return }
             switch response {
             case.success(let reviewsResponse):
-                self.reviews = reviewsResponse.results ?? []
+                guard let reviews = reviewsResponse.results,
+                        !reviews.isEmpty else {
+                    self.showEmptyReviewsAlert?()
+                    return
+                }
+                self.reviews = reviews
                 DispatchQueue.main.async {
                     self.reloadData?()
                 }

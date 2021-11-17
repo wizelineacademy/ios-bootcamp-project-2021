@@ -25,6 +25,7 @@ final class ReviewsViewController: UIViewController  {
         configureTableView()
         viewModel.reloadData = { [weak self] in self?.reviewsTableView.reloadData() }
         viewModel.reviewsMovie()
+        viewModel.showEmptyReviewsAlert = { [weak self] in self?.configureAlertEmptyReviews() }
         os_log("ReviewsViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
@@ -44,6 +45,13 @@ final class ReviewsViewController: UIViewController  {
         reviewsTableView.delegate = self
     }
     
+    private func configureAlertEmptyReviews() {
+        let alertEmptyReviews = UIAlertController(title: Constants.alertEmptyReviews, message: nil, preferredStyle: .alert)
+        alertEmptyReviews.addAction(UIAlertAction(title: Constants.alertButton, style: .default))
+        DispatchQueue.main.async {
+            self.present(alertEmptyReviews, animated: true)
+        }
+    }
 }
 
 extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
