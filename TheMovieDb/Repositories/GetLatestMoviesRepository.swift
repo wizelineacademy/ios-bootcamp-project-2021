@@ -1,0 +1,12 @@
+//
+//  GetLatestMovies.swift
+//  TheMovieDb
+//
+//  Created by Sandra Herrera on 08/11/21.
+//
+
+import Foundation
+
+protocol GetLatestMoviesRepository {
+    func getLatestMovies()
+}
