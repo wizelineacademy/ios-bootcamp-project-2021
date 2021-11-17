@@ -15,7 +15,7 @@ final class DetailHeaderView: UICollectionReusableView {
     // MARK: - Properties
     static let reuseIdentifier =  String(describing: DetailHeaderView.self)
     weak var delegate: DetailHeaderViewDelegate?
-    public var movie: Movie? {
+    public var viewModel: MovieDetailViewModel? {
         didSet {
             configure()
         }
@@ -97,14 +97,12 @@ final class DetailHeaderView: UICollectionReusableView {
     }
     
     private func configure() {
-        guard let movie = movie else { return }
-        let urlImage = MovieConst.imageCDN + (movie.backdropPath ?? (movie.posterPath ?? ""))
-        let url = URL(string: urlImage )
-        imageBackground.setImageFromNetwork(withURL: url)
-        overviewLabel.text = movie.overview
-        dateLabel.text = "   \(movie.releaseDate ?? "")   "
-        popularityLabel.text = "   \(Int(movie.popularity))%   "
-        votesLabel.text = "   Votes: \(movie.voteCount)   "
+        guard let viewModel = viewModel else { return }
+        imageBackground.setImageFromNetwork(withURL: viewModel.imageUrl)
+        overviewLabel.text = viewModel.overview
+        dateLabel.text = viewModel.date
+        popularityLabel.text = viewModel.popularity
+        votesLabel.text = viewModel.votes
     }
     
     private func configureLabelToTag(label: UILabel, colorBackground: UIColor = .blue) {
@@ -118,7 +116,7 @@ final class DetailHeaderView: UICollectionReusableView {
     // MARK: - Actions
     
     @objc private func handleReview() {
-        guard let movie = movie else {return}
-        delegate?.openReviews(self, with: movie)
+        guard let viewModel = viewModel else {return}
+        delegate?.openReviews(self, with: viewModel.movie)
     }
 }

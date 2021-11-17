@@ -13,7 +13,7 @@ final class MovieDetailView: UICollectionViewController {
     
     // MARK: Properties
     var presenter: MovieDetailPresenterProtocol?
-    public var movie: Movie?
+    public var viewModel: MovieDetailViewModel?
     var movies: [MovieDetailSections: [Movie]] = [:]
     
     // MARK: - Life Cycle
@@ -43,8 +43,8 @@ final class MovieDetailView: UICollectionViewController {
         collectionView.register(DetailHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeader.reuseIdentifier)
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reusableIdentifier)
         
-        guard let movie = movie else { return }
-        navigationItem.title = movie.title
+        guard let viewModel = viewModel else { return }
+        navigationItem.title = viewModel.title
     }
     
     private func reloadCollectionView() {
@@ -87,7 +87,7 @@ extension MovieDetailView {
             guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DetailHeaderView.reuseIdentifier, for: indexPath) as? DetailHeaderView else {
                 return DetailHeaderView()
             }
-            header.movie = movie
+            header.viewModel = viewModel
             header.delegate = self
             return header
         } else {
@@ -130,7 +130,7 @@ extension MovieDetailView {
 
 extension MovieDetailView: MovieDetailViewProtocol {
     func setMovie(_ movie: Movie) {
-        self.movie = movie
+        self.viewModel = MovieDetailViewModel(movie: movie)
     }
     
     func showRealatedMoviews(_ relatedMovies: [MovieDetailSections: [Movie]]) {
