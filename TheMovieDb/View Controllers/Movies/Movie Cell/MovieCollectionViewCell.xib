@@ -19,6 +19,7 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="voc-Kl-oYF">
                         <rect key="frame" x="0.0" y="0.0" width="129" height="191"/>
+                        <color key="backgroundColor" red="0.63194799420000003" green="0.36695146560000003" blue="0.68238151069999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </imageView>
                 </subviews>
             </view>

@@ -32,8 +32,9 @@ struct CompotitionalLayoutCreator {
         
         let compositionalLayout = UICollectionViewCompositionalLayout { (sectionNumber, _) -> NSCollectionLayoutSection? in
             let type = MovieDetailCellsLayout(rawValue: sectionNumber)
-            switch type {
-            case .header:
+            print("type \(type)")
+            switch sectionNumber {
+            case 0:
                 let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
                 
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(620)), subitems: [item])
@@ -42,22 +43,29 @@ struct CompotitionalLayoutCreator {
             
                 return section
                 
-            case.overview:
+            case 1:
                 
                 let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(400)), subitems: [item])
+                item.contentInsets.trailing = 2
+                item.contentInsets.bottom = 2
+
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1 / 4), heightDimension: .estimated(150)), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
+                section.orthogonalScrollingBehavior = .paging
+
                 return section
                 
-            case .none:
-                return nil
             
-            case .similar:
+            
+            case 2:
                 
                 let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1 / 4), heightDimension: .estimated(300)), subitems: [item])
+                item.contentInsets.trailing = 2
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1 / 4), heightDimension: .estimated(100)), subitems: [item])
                 let section = NSCollectionLayoutSection(group: group)
                 return section
+            default:
+                return nil
             }
     
         }

@@ -22,20 +22,32 @@ class MoviesViewController: UIViewController {
 
 }
 
+
 extension MoviesViewController {
     
     func requestMoviesFeed() {
+        
+        let group = DispatchGroup()
+        
         for topic in Topic.allCases {
-            let request = Request(topic: topic, method: .get)
+            let request = Request(path: topic.getPath(), method: .get, group: group)
+            
             MovieDbAPI.request(value: MovieList.self, request: request) { [weak self] list in
                 guard let listOfMovies = list else { return }
-                self?.dataSource.feed.addList(topic: request.topic, movieList: listOfMovies)
-                self?.delegate.feed.addList(topic: request.topic, movieList: listOfMovies)
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                }
+                self?.dataSource.feed.addList(topic: topic, movieList: listOfMovies)
+                self?.delegate.feed.addList(topic: topic, movieList: listOfMovies)
+//                DispatchQueue.main.async {
+//                    self?.collectionView.reloadData()
+//                }
             }
         }
+        
+        group.notify(queue: .main) {
+           // print("Completed work: \(movieIds)")
+            // Kick off the movies API calls
+            self.collectionView.reloadData()
+          }
+        
     }
     
     func setUpView() {

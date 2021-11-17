@@ -16,6 +16,16 @@ class MovieDetailViewController: UIViewController {
         super.viewDidLoad()
         setUpView()
         // Do any additional setup after loading the view.
+        let request = Request(path: Enpoints.similar(movieId: "603"), method: .get)
+        MovieDbAPI.request(value: MovieList.self, request: request) { [weak self] list in
+            guard let listOfMovies = list else { return }
+            print(listOfMovies)
+            self?.dataSource.similarMovies = listOfMovies
+//            self?.delegate.feed.addList(topic: request.topic, movieList: listOfMovies)
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
+        }
     }
     
     func setUpView() {

@@ -16,45 +16,66 @@ enum MovieDetailCellsLayout: Int, CaseIterable {
 class MovieDetailDataSource: NSObject, UICollectionViewDataSource {
     
     var movie: Movie?
+    var similarMovies: MovieList?
     var detailItems: [MovieDetailCellsLayout] = [.header, .similar]
     override init() {
         super.init()
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return detailItems.count
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        let type = MovieDetailCellsLayout(rawValue: section)
-        switch type {
-        case .header:
+      //  let type = MovieDetailCellsLayout(rawValue: section)
+        switch section {
+        case 0:
             return 1
-        case .overview:
-            return 1
-        case .similar:
+        case 1:
+            return self.similarMovies?.results.count ?? 0
+        case 2:
             return 10
-        case .none:
+        default:
             return 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
-        let itemType = detailItems[indexPath.section]
-        switch itemType {
-        case .header:
+//        let itemType = detailItems[indexPath.section]
+//        switch itemType {
+//        case .header:
+//            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeaderCollectionViewCell.identifierToDeque, for: indexPath) as? HeaderCollectionViewCell, let movie = self.movie {
+//                cell.setInfoWith(movie: movie)
+//                return cell
+//            }
+//        case .overview:
+//            return UICollectionViewCell()
+//        case .similar:
+//            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifierToDeque, for: indexPath) as? MovieCollectionViewCell {
+//                return cell
+//            }
+//        }
+        
+        switch indexPath.section {
+        case 0:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeaderCollectionViewCell.identifierToDeque, for: indexPath) as? HeaderCollectionViewCell, let movie = self.movie {
                 cell.setInfoWith(movie: movie)
                 return cell
             }
-        case .overview:
-            return UICollectionViewCell()
-        case .similar:
+        case 1:
             if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifierToDeque, for: indexPath) as? MovieCollectionViewCell {
+                if let movie = self.similarMovies?.results[indexPath.row] {
+                cell.setInfoWith(movie: movie)
+                }
                 return cell
             }
+        case 2:
+            return UICollectionViewCell()
+
+        default:
+            return UICollectionViewCell()
         }
         
         return UICollectionViewCell()
