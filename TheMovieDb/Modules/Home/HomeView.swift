@@ -26,6 +26,7 @@ final class HomeView: UIViewController {
         presenter?.viewDidLoad()
         configureUI()
         configureUICollection()
+        Log.viewDidload.description
     }
     
     // MARK: - Helpers

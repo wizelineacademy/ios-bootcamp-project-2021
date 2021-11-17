@@ -14,8 +14,9 @@ class APIService: APIMoviesProtocol {
         URLSession.shared.dataTask(with: url) { data, _, error in
             
             if let error = error {
-                 completion(.failure(error))
-             }
+                Log.networkLayer(error).description
+                completion(.failure(error))
+            }
             
             do {
                 let decoder = JSONDecoder()
@@ -23,6 +24,7 @@ class APIService: APIMoviesProtocol {
                 let result = try decoder.decode(T.self, from: data!)
                 completion(.success(result))
             } catch let error {
+                Log.networkLayer(error).description
                 completion(.failure(error))
             }
             

@@ -28,6 +28,7 @@ final class ReviewsWireFrame: ReviewsWireFrameProtocol {
         interactor.presenter = presenter
         interactor.remoteDatamanager = remoteDataManager
         remoteDataManager.remoteRequestHandler = interactor
+        remoteDataManager.service = APIService()
         
         return view
     }

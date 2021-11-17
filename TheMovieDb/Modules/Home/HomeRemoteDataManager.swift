@@ -28,7 +28,7 @@ final class HomeRemoteDataManager: HomeRemoteDataManagerInputProtocol {
         service?.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: {(response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
-                debugPrint(error)
+                Log.networkLayer(error).description
             case .success(let res):
                 self.movies[typeMovieSection] = res.movies
             }

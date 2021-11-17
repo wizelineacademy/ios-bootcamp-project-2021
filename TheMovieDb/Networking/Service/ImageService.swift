@@ -16,9 +16,10 @@ extension UIImageView {
             self.image = image
             return
         } else {
-            let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
+            let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
                 var downloadedImage: UIImage?
-                guard error == nil else {
+                if let error = error {
+                    Log.imageService(error).description
                     DispatchQueue.main.async {
                         self.image = #imageLiteral(resourceName: "default")
                     }
@@ -32,9 +33,14 @@ extension UIImageView {
                         DispatchQueue.main.async {
                             self.image = downloadedImage
                         }
+                    } else {
+                        if let httpResponse = response as? HTTPURLResponse {
+                            Log.generalInfo("image not found. Status :\(httpResponse.statusCode)").description
+                        }
+                        
                     }
                 }
-
+                
             }
             
             dataTask.resume()

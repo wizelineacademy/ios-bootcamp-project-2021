@@ -54,6 +54,7 @@
 		45D2B4E7272F34ED0065DC0D /* DetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4E6272F34ED0065DC0D /* DetailHeader.swift */; };
 		45D2B4EE272F4CAE0065DC0D /* ReviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4ED272F4CAE0065DC0D /* ReviewCell.swift */; };
 		45F822A22744C497004BC5BA /* MovieDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F822A12744C497004BC5BA /* MovieDetailViewModel.swift */; };
+		45F822A52744CC4B004BC5BA /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45F822A42744CC4B004BC5BA /* Log.swift */; };
 		45FAD4D12741681E0026CC23 /* SearchingPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FAD4CA2741681E0026CC23 /* SearchingPresenter.swift */; };
 		45FAD4D32741681E0026CC23 /* SearchingProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FAD4CC2741681E0026CC23 /* SearchingProtocols.swift */; };
 		45FAD4D42741681E0026CC23 /* SearchingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45FAD4CD2741681E0026CC23 /* SearchingInteractor.swift */; };
@@ -152,6 +153,7 @@
 		45D2B4E6272F34ED0065DC0D /* DetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeader.swift; sourceTree = "<group>"; };
 		45D2B4ED272F4CAE0065DC0D /* ReviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewCell.swift; sourceTree = "<group>"; };
 		45F822A12744C497004BC5BA /* MovieDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewModel.swift; sourceTree = "<group>"; };
+		45F822A42744CC4B004BC5BA /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		45FAD4CA2741681E0026CC23 /* SearchingPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingPresenter.swift; sourceTree = "<group>"; };
 		45FAD4CC2741681E0026CC23 /* SearchingProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingProtocols.swift; sourceTree = "<group>"; };
 		45FAD4CD2741681E0026CC23 /* SearchingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchingInteractor.swift; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				455C5ACD2734DE2A00ADE036 /* Protocols */,
 				45A64D56272900E600159CE6 /* Extensions */,
 				45BB7AB4272DB5AD00DE07C3 /* MovieConst.swift */,
+				45F822A42744CC4B004BC5BA /* Log.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -748,6 +751,7 @@
 				452BD82F272A3A5700F842F5 /* APIService.swift in Sources */,
 				452BD839272A5C4700F842F5 /* Reviews.swift in Sources */,
 				45FAD5162741BFA50026CC23 /* MainTabPresenter.swift in Sources */,
+				45F822A52744CC4B004BC5BA /* Log.swift in Sources */,
 				4583F684272BAFA7006E13AD /* ResultSearch.swift in Sources */,
 				452BD82D272A395D00F842F5 /* Movie.swift in Sources */,
 				4583F682272BAF82006E13AD /* Search.swift in Sources */,
