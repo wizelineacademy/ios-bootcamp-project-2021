@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class HomeView: UIViewController {
+final class HomeView: UIViewController {
     
     // MARK: Properties
     var presenter: HomePresenterProtocol?

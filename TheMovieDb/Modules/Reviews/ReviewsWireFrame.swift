@@ -11,7 +11,7 @@ import UIKit
 
 final class ReviewsWireFrame: ReviewsWireFrameProtocol {
     
-    class func createReviewsModule(movie: Movie) -> UIViewController {
+    static func createReviewsModule(movie: Movie) -> UIViewController {
         let view = ReviewsView()
         let presenter: ReviewsPresenterProtocol & ReviewsInteractorOutputProtocol = ReviewsPresenter()
         let interactor: ReviewsInteractorInputProtocol & ReviewsRemoteDataManagerOutputProtocol = ReviewsInteractor()

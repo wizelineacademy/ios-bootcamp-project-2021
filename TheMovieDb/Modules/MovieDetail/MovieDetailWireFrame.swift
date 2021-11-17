@@ -11,7 +11,7 @@ import UIKit
 
 class MovieDetailWireFrame: MovieDetailWireFrameProtocol {
 
-    class func createMovieDetailModule(with movie: Movie) -> UIViewController {
+    static func createMovieDetailModule(with movie: Movie) -> UIViewController {
         let view = MovieDetailView()
         let presenter: MovieDetailPresenterProtocol & MovieDetailInteractorOutputProtocol = MovieDetailPresenter()
         let interactor: MovieDetailInteractorInputProtocol & MovieDetailRemoteDataManagerOutputProtocol = MovieDetailInteractor()

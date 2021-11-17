@@ -11,7 +11,7 @@ import UIKit
 
 class HomeWireFrame: HomeWireFrameProtocol {
 
-    class func createHomeModule() -> UIViewController {
+     static func createHomeModule() -> UIViewController {
         let view = HomeView()
         let presenter: HomePresenterProtocol & HomeInteractorOutputProtocol = HomePresenter()
         let interactor: HomeInteractorInputProtocol & HomeRemoteDataManagerOutputProtocol = HomeInteractor()

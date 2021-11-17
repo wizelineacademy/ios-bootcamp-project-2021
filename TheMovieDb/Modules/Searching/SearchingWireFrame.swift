@@ -11,7 +11,7 @@ import UIKit
 
 final class SearchingWireFrame: SearchingWireFrameProtocol {
     
-    class func createSearchingModule() -> UIViewController {
+    static func createSearchingModule() -> UIViewController {
         let view = SearchingView()
         let presenter: SearchingPresenterProtocol & SearchingInteractorOutputProtocol = SearchingPresenter()
         let interactor: SearchingInteractorInputProtocol & SearchingRemoteDataManagerOutputProtocol = SearchingInteractor()

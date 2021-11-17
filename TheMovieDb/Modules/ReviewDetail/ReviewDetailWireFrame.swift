@@ -11,7 +11,7 @@ import UIKit
 
 final class ReviewDetailWireFrame: ReviewDetailWireFrameProtocol {
 
-    class func createReviewDetailModule(with review: Review) -> UIViewController {
+    static func createReviewDetailModule(with review: Review) -> UIViewController {
         let view = ReviewDetailView()
         
         let presenter: ReviewDetailPresenterProtocol = ReviewDetailPresenter()
