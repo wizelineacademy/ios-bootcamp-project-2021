@@ -24,14 +24,14 @@ class MovieDetailRemoteDataManager: MovieDetailRemoteDataManagerInputProtocol {
     
     private func fetchData(typeMovieSection: MovieDetailSections) {
         group.enter()
-        service?.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: {(response: Result<Movies, Error>) in
+        service?.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: { [weak self] (response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)
             case .success(let res):
-                self.movies[typeMovieSection] = res.movies
+                self?.movies[typeMovieSection] = res.movies
             }
-            self.group.leave()
+            self?.group.leave()
         })
     }
     
