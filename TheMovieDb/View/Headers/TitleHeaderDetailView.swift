@@ -22,7 +22,7 @@ class TitleHeaderDetailView: UICollectionReusableView {
 
   var titleLabel = LabelBuilder()
     .fontStyle(textStyle: .subheadline, weight: .bold)
-    .setColor(color: .darkCyan)
+    .setColor(color: .purple)
     .build()
   
   func setupView() {

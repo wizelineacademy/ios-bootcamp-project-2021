@@ -16,8 +16,7 @@ enum InfoById {
   case credits(Int)
   case similar(Int)
   case recommendations(Int)
-  case keywords(Int)
-  
+
 }
 
 extension InfoById: Endpoint {
@@ -29,7 +28,6 @@ extension InfoById: Endpoint {
     case .recommendations(let movieId): return "/3/movie/\(movieId)/recommendations"
     case .reviews(let movieId): return "/3/movie/\(movieId)/reviews"
     case .similar(let movieId): return "/3/movie/\(movieId)/similar"
-    case .keywords(let movieId): return "/3/movie/\(movieId)/keywords"
     case .movieDetails(let movieId): return "/3/movie/\(movieId)"
     }
   }

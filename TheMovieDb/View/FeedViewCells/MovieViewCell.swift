@@ -22,6 +22,7 @@ class MovieViewCell: BaseCell {
     .sizeAndAspectImage(width: 100, height: 100, aspectRatio: .scaleAspectFill)
     .roundCorners(circle: false, radius: 10, clipped: true)
     .setBackgroundColor(color: .lightGray)
+    .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .build()
       
   override func setupView() {
@@ -30,9 +31,18 @@ class MovieViewCell: BaseCell {
   }
   
   override func setupData() {
-    guard let moviePoster = movie?.poster else {return}
-    let url = "\(ApiPath.baseUrlImage.path)\(moviePoster)"
-    imageMovie.loadImage(urlString: url)
+    let url: String?
+    if let portrait = movie?.poster {
+      url = "\(ApiPath.baseUrlImage.path)\(portrait)"
+    } else {
+      url = nil
+    }
+    self.imageMovie.loadImage(urlString: url)
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    imageMovie.image = nil
   }
   
 }

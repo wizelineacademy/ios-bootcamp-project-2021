@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: Builder for UIImageView element
+
 class ImageBuilder {
   
   var image = CacheImageView()
@@ -49,6 +51,12 @@ class ImageBuilder {
     if color != nil {
       self.image.tintColor = color?.color
     }
+    return self
+  }
+  
+  func setPlaceHolder(image: UIImage?) -> ImageBuilder {
+    guard let placeholder = image else { return self }
+    self.image.emptyImage = placeholder
     return self
   }
   

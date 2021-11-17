@@ -10,12 +10,20 @@ import UIKit
 class FeedViewController: UICollectionViewController {
   
   static let categoryHeaderId = "categoryHeaderId"
-  
+  // MARK: presente to manage the logic part of the app
   var moviePresenter: MoviePresenter?
   
   var categoryMovies: [String: [Movie]] = [:]
+  var searchResult: [Movie]? = []
   var titleCategory: String = ""
- 
+  private var lastSearch: String?
+  lazy private var searchController: SearchBarController = {
+    let searchController = SearchBarController(placeholder: "Search a Movie or an Actor", delegate: self)
+    searchController.text = lastSearch
+    searchController.showCancelButton = !searchController.isSearchBarEmpty
+    return searchController
+  }()
+  
   init() {
     super.init(collectionViewLayout: FeedViewController.createLayout())
   }
@@ -36,19 +44,20 @@ class FeedViewController: UICollectionViewController {
   }
   
   func setupNavigationBar() {
+    navigationItem.searchController = searchController
     navigationItem.title = "MovieDB"
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
   }
-
+  // MARK: get data from the api using the presenter
   func getMovies() {
     for categories in MovieFeed.allCases {
-      moviePresenter?.getData(from: categories, movieRegion: .US, movieLanguage: .en, kindItem: MovieFeedResult.self, complement: categories.title)
+      moviePresenter?.getData(from: categories, kindItem: MovieFeedResult.self, complement: categories.title)
     }
   }
- 
+  
   func showTitleCategory(_ indexPath: IndexPath) -> String {
-
+    
     let sectionType = MovieFeed.allCases[indexPath.section]
     switch sectionType {
     case .nowPlaying: return MovieFeed.nowPlaying.title
@@ -57,11 +66,10 @@ class FeedViewController: UICollectionViewController {
     case .trending: return MovieFeed.trending.title
     case .upcoming: return MovieFeed.upcoming.title
     }
-
   }
-
+  // MARK: using the MovieFeed enum to return movie with indexPath
   func setMovie(with indexPath: IndexPath) -> Movie? {
-
+    
     let sectionType = MovieFeed.allCases[indexPath.section]
     switch sectionType {
     case .nowPlaying: return categoryMovies[MovieFeed.nowPlaying.title]?[indexPath.item]
@@ -71,9 +79,13 @@ class FeedViewController: UICollectionViewController {
     case .upcoming: return categoryMovies[MovieFeed.upcoming.title]?[indexPath.item]
     }
   }
-
+  
+  private func searchMoviesOrActors(searchText: String) {
+    
+  }
+  
 }
-// MARK: CollectionView Configuration
+  // MARK: CollectionView Configuration
 extension FeedViewController {
   
   func setupCollectionView() {
@@ -82,7 +94,7 @@ extension FeedViewController {
     collectionView.register(HeaderFeedView.self, forSupplementaryViewOfKind: FeedViewController.categoryHeaderId, withReuseIdentifier: HeaderFeedView.identifier)
     collectionView.showsVerticalScrollIndicator = false
   }
-  
+  // MARK: func to return a section for the compositional layout
   static func createLayout() -> UICollectionViewCompositionalLayout {
     return UICollectionViewCompositionalLayout { ( _, _ ) in
       
@@ -91,9 +103,9 @@ extension FeedViewController {
       let headerHeight: CGFloat = 80
       
       return section
-        .createItemAndGroup(item: (0.9, 1), group: (0.40, 260), groupAxis: .horizontal)
+        .createItemAndGroup(item: (0.9, 1), group: (0.45, 260), groupAxis: .horizontal)
         .createSection()
-        .sectionConstraints(top: 0, leading: margin, bottom: 0, trailing: 0)
+        .constraints(type: .section, contentInsets: .init(top: 0, leading: margin, bottom: 0, trailing: 0))
         .sectionBehavior(behavior: .continuous)
         .suplementaryView(width: 1, height: headerHeight, elementKind: categoryHeaderId, alignment: .topLeading)
         .build()
@@ -109,7 +121,7 @@ extension FeedViewController {
     header.label.text = showTitleCategory(indexPath)
     return header
   }
-  
+  // MARK: enum of MovieFeed to manage numberOfItemInSection
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     let sectionType = MovieFeed.allCases[section]
     
@@ -126,13 +138,15 @@ extension FeedViewController {
     guard
       let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieViewCell.identifier, for: indexPath)
         as? MovieViewCell else { fatalError("problems find it the cell") }
-
+    
     if let movie = setMovie(with: indexPath) {
       cell.movie = movie
     }
     return cell
   }
-
+  
+  // MARK: - Navigation to detailViewController
+  
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let detailVC = DetailViewController()
     guard let movie = setMovie(with: indexPath) else { return }
@@ -143,14 +157,14 @@ extension FeedViewController {
   }
   
 }
-
+  // MARK: protocol to connect the view with the presenter
 extension FeedViewController: MoviePresenterDelegate {
   
   var complement: String? {
     get { return titleCategory }
     set { titleCategory = newValue ?? "" }
   }
-
+  
   func showResults<Element>(items: Element) {
     guard let movies = items as? MovieFeedResult, let listMovies = movies.results, let complement = complement else { return }
     self.categoryMovies[complement] = listMovies
@@ -158,5 +172,16 @@ extension FeedViewController: MoviePresenterDelegate {
       self?.collectionView.reloadData()
     }
   }
+  
+}
 
+extension FeedViewController: SearchBarDelegate {
+  
+  func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {}
+  
+  func searchBarTextDidEndEditing(_ searcBar: UISearchBar) {}
+  
+  func updateSearchResults(with text: String) {
+    searchMoviesOrActors(searchText: text)
+  }
 }

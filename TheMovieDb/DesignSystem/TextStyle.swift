@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: enum for manage the text style in the app
+
 enum TextStyle {
   
   case title, subtitle, headline, subheadline, caption, paragraph

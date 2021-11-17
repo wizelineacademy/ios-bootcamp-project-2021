@@ -14,10 +14,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let window = UIWindow(windowScene: windowScene)
-    SetFirstViewController(window)
+    setFirstViewController(window)
   }
   
-  fileprivate func SetFirstViewController(_ window: UIWindow) {
+  fileprivate func setFirstViewController(_ window: UIWindow) {
     let feedViewController = FeedViewController()
     let moviePresenter =  MoviePresenter(view: feedViewController)
     feedViewController.moviePresenter = moviePresenter

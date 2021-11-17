@@ -20,6 +20,7 @@ class ReviewCell: BaseCell {
   var profileImage = ImageBuilder()
     .sizeAndAspectImage(width: 30, height: 30, aspectRatio: .scaleAspectFill)
     .roundCorners(circle: true, radius: 0, clipped: true)
+    .setPlaceHolder(image: UIImage(systemName: "person.crop.circle"))
     .build()
   
   var nameLabel = LabelBuilder()
@@ -54,20 +55,21 @@ class ReviewCell: BaseCell {
     let allViews = VerticalStackView(arrangedSubviews: [infoStack, descriptionLabel], spacing: 20)
     allViews.alignment = .leading
     addSubview(allViews)
-    allViews.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+    allViews.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor)
   }
   
   override func setupData() {
 
     guard let name = review?.author, let description = review?.content else { return }
+    let url: String?
     if let portrait = review?.authorDetails.avatarPath {
-      let arrayURL = "\(portrait.components(separatedBy: "/").last ?? "")"
-      let newPortraitURL = "\(ApiPath.baseUrlImage.path)\(arrayURL)"
-      self.profileImage.loadImage(urlString: newPortraitURL)
+      print(portrait)
+      url = "\(ApiPath.baseUrlImage.path)\(portrait)"
     } else {
-      self.profileImage.image = UIImage(systemName: "person.crop.circle")
-      self.profileImage.tintColor = DesignColor.darkGray.color
+      url = nil
+      profileImage.tintColor = DesignColor.darkGray.color
     }
+    profileImage.loadImage(urlString: url)
     
     self.nameLabel.text = name
     self.descriptionLabel.text = description

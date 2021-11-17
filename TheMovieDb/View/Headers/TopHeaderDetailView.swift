@@ -30,16 +30,17 @@ class TopHeaderDetailView: UICollectionReusableView {
 
   var posterImage = ImageBuilder()
     .sizeAndAspectImage(width: UIScreen.main.bounds.width,
-                        height: UIScreen.main.bounds.width + 100,
+                        height: UIScreen.main.bounds.width / 1.3,
                         aspectRatio: .scaleAspectFill)
     .roundCorners(circle: false, radius: 0, clipped: true)
     .setBackgroundColor(color: .black)
+    .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .build()
   
   var titleLabel = LabelBuilder()
     .amountLines(numLines: 2)
     .fontStyle(textStyle: .headline, weight: .bold)
-    .setColor(color: .darkCyan)
+    .setColor(color: .purple)
     .setText(text: "Title")
     .build()
   
@@ -57,7 +58,7 @@ class TopHeaderDetailView: UICollectionReusableView {
 
   var scoreIconImage = ImageBuilder()
     .sizeAndAspectImage(width: 15, height: 15, aspectRatio: .scaleAspectFit)
-    .systemImage(iconName: "star.fill", color: .darkGray, size: 12)
+    .systemImage(iconName: "star.fill", color: .purple, size: 12)
     .build()
   
   var scoreLabel = LabelBuilder()
@@ -68,6 +69,8 @@ class TopHeaderDetailView: UICollectionReusableView {
   func setupView() {
     addSubview(posterImage)
     posterImage.anchor(top: topAnchor, leading: leadingAnchor, bottom: nil, trailing: trailingAnchor, padding: .init(top: 0, left: 0, bottom: 0, right: 0))
+    posterImage.constrainWidth(constant: UIScreen.main.bounds.width)
+    posterImage.constrainHeight(constant: UIScreen.main.bounds.width / 1.3)
     
     let scoreStack = HorizontalStackView(arrangedSubviews: [scoreTitleLabel, scoreIconImage, scoreLabel], spacing: 10)
     let releaseStack = HorizontalStackView(arrangedSubviews: [releaseDateLabel, UIView(), scoreStack])
@@ -81,13 +84,20 @@ class TopHeaderDetailView: UICollectionReusableView {
   
   func setupData() {
     guard
-      let moviePoster = movieDetails?.backDropPath,
       let title = movieDetails?.title,
       let releaseDate = movieDetails?.getMovieReleaseDateFormat(),
       let score = movieDetails?.voteAverage
     else {return}
-    let url = "\(ApiPath.baseUrlImageW780.path)\(moviePoster)"
+    
+    let moviePoster = movieDetails?.backDropPath
+    let url: String?
+    if moviePoster != nil {
+      url = "\(ApiPath.baseUrlImageW780.path)\(moviePoster ?? "")"
+    } else {
+      url = nil
+    }
     posterImage.loadImage(urlString: url)
+ 
     releaseDateLabel.text = releaseDate
     titleLabel.text = title
     scoreLabel.text = "\(score)"

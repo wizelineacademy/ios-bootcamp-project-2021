@@ -21,6 +21,7 @@ class CastCell: BaseCell {
     .sizeAndAspectImage(width: 60, height: 60, aspectRatio: .scaleAspectFill)
     .roundCorners(circle: true, radius: 0, clipped: true)
     .setBackgroundColor(color: .darkGray)
+    .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .build()
   
   var nameLabel = LabelBuilder()
@@ -52,8 +53,13 @@ class CastCell: BaseCell {
   }
   
   override func setupData() {
-    guard let name = person?.name, let character = person?.character, let portrait = person?.profilePath else { return }
-    let url = "\(ApiPath.baseUrlImage.path)\(portrait)"
+    guard let name = person?.name, let character = person?.character else { return }
+    let url: String?
+    if let portrait = person?.profilePath {
+      url = "\(ApiPath.baseUrlImage.path)\(portrait)"
+    } else {
+      url = nil
+    }
     profileImage.loadImage(urlString: url)
     self.nameLabel.text = name
     self.characterLabel.text = character

@@ -11,14 +11,15 @@ class DetailViewController: UIViewController {
   
   var movieId: Int?
   var seccion = ""
-  
+
+  // MARK: presente to manage the logic part of the app
   var movieDetailPresenter: MoviePresenter?
   var movieDetails: MovieDetails?
   
   static let categoryTopHeaderId = "categoryTopHeaderId"
   static let categoryTitleHeaderView = "categoryTitleHeaderView"
   var detailCollectionView: UICollectionView! = nil
-
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setupCollectionView()
@@ -29,14 +30,14 @@ class DetailViewController: UIViewController {
     super.viewWillAppear(animated)
     setupNavigationBar()
   }
-  
+  // MARK: initial configuration NavigationController
   func setupNavigationBar() {
     navigationItem.title = movieDetails?.title
     navigationController?.navigationBar.prefersLargeTitles = false
     navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     navigationController?.navigationBar.barTintColor = DesignColor.black.color
   }
-
+  // MARK: returning header title depending of its section with MovieSection enum
   func showTitleCategory(_ indexPath: IndexPath) -> String {
     let section = MovieSection.allCases[indexPath.section]
     switch section {
@@ -48,33 +49,17 @@ class DetailViewController: UIViewController {
     case .recommended: return MovieSection.recommended.title
     }
   }
-
+  // MARK: get data from the api using the presenter
   func getMovieDetails() {
     guard let movieId = self.movieId else { return }
     movieDetailPresenter?.getData(from: InfoById.movieDetails(movieId), kindItem: MovieDetails.self)
   }
-
-}
-// MARK: Presenter Delegate
-extension DetailViewController: MoviePresenterDelegate {
   
-  var complement: String? {
-    get { return seccion }
-    set { seccion = newValue ?? "" }
-  }
-
-  func showResults<Element>(items: Element) {
-    guard let movie = items as? MovieDetails else { return }
-    self.movieDetails = movie
-    DispatchQueue.main.async {
-      self.detailCollectionView.reloadData()
-    }
-  }
-
 }
+
 // MARK: CollectionView Configuration
 extension DetailViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-  
+  // MARK: initial configuration in the collectionView
   func setupCollectionView() {
     let collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createLayout())
     view.addSubview(collectionView)
@@ -94,7 +79,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     collectionView.showsVerticalScrollIndicator = false
     detailCollectionView = collectionView
   }
-  
+  // MARK: estimating the cell height depending of the number of lines in the text
   func estimatedHeightForText(_ text: String) -> CGFloat {
     
     let approximateWidthOfBioTextView = UIScreen.main.bounds.width - 40
@@ -104,83 +89,103 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     
     return estimatedFrame.height
   }
-  
+  // MARK: func to return a layout with sections for the compositionalLayout
   func createLayout() -> UICollectionViewLayout {
+    
     let layout = UICollectionViewCompositionalLayout { [weak self] (sectionNumber, _ ) -> NSCollectionLayoutSection? in
-      guard let self = self else { fatalError("problem with self")}
-      let section = SectionBuilder()
-      let margin: CGFloat = 20
-      let headerHeight: CGFloat = 80
+      
+      guard let self = self else { fatalError("problem with self") }
       let category = MovieSection.allCases[sectionNumber]
+      let heightOverview = self.estimatedHeightForText(self.movieDetails?.overview ?? "")
+      let margin: CGFloat = 20
+      let categoryHeaderHeight: CGFloat = 80
+      let topHeaderHeight: CGFloat = UIScreen.main.bounds.width / 1.3
       
       switch category {
-        
       case .extrainfo:
-        return section
-          .createItemAndGroup(item: (w: 1, h: 1), group: (w: 1, h: 120), groupAxis: .vertical)
-          .createSection()
-          .suplementaryView(width: 1, height: UIScreen.main.bounds.width, elementKind: DetailViewController.categoryTopHeaderId, alignment: .topLeading)
-          .build()
+        return self.generateTopHeaderSection(margin: margin, headerHeight: topHeaderHeight)
       case .overview:
-        return section
-          .createItemAndGroup(item: (w: 1, h: 1), group: (w: 1, h: self.estimatedHeightForText(self.movieDetails?.overview ?? "")), groupAxis: .horizontal)
-          .groupConstraints(top: 0, leading: margin, bottom: 0, trailing: margin)
-          .createSection()
-          .sectionBehavior(behavior: .paging)
-          .suplementaryView(width: 1, height: headerHeight, elementKind: DetailViewController.categoryTitleHeaderView, alignment: .topLeading)
-          .build()
+        return self.generateOverviewLayout(margin: margin, headerHeight: categoryHeaderHeight, groupHeight: heightOverview)
       case .cast:
-        return section
-          .createItemAndGroup(item: (w: 1, h: 1), group: (w: 1, h: 100), groupAxis: .horizontal)
-          .groupConstraints(top: 0, leading: margin, bottom: 0, trailing: margin)
-          .createSection()
-          .sectionBehavior(behavior: .paging)
-          .suplementaryView(width: 1, height: headerHeight, elementKind: DetailViewController.categoryTitleHeaderView, alignment: .topLeading)
-          .build()
+        guard let list = self.movieDetails?.cast?.isEmpty else { return nil }
+        return self.generateLayoutCastReviews(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: 100)
       case .reviews:
         guard let list = self.movieDetails?.reviews?.isEmpty else { return nil }
-        return self.generateListLayout(listMovies: list, margin: margin, headerHeight: headerHeight, groupSize: (w: 1, h: 120), behavior: .paging)
+        return self.generateLayoutCastReviews(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: 120)
       case .similar:
         guard let list = self.movieDetails?.similarMovies?.isEmpty else { return nil }
-        return self.generateListLayout(listMovies: list, margin: margin, headerHeight: headerHeight, groupSize: (w: 0.40, h: 260), behavior: .continuous)
+        return self.generateLayoutLisMovies(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: 260)
       case .recommended:
         guard let list = self.movieDetails?.recommendedMovies?.isEmpty else { return nil }
-        return self.generateListLayout(listMovies: list, margin: margin, headerHeight: headerHeight, groupSize: (w: 0.40, h: 260), behavior: .continuous)
+        return self.generateLayoutLisMovies(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: 260)
       }
     }
     return layout
   }
-  
-  func generateListLayout(listMovies: Bool, margin: CGFloat, headerHeight: CGFloat, groupSize: (w: CGFloat, h: CGFloat), behavior: UICollectionLayoutSectionOrthogonalScrollingBehavior) -> NSCollectionLayoutSection? {
+  // MARK: returning section TopHeaderSection
+  func generateTopHeaderSection(margin: CGFloat, headerHeight: CGFloat) -> NSCollectionLayoutSection? {
     let section = SectionBuilder()
     return section
-      .createItemAndGroup(item: (w: 1, h: 1), group: (w: groupSize.w, h: listMovies ? 0 : groupSize.h), groupAxis: .horizontal)
-      .groupConstraints(top: 0, leading: margin, bottom: 0, trailing: 0)
+      .createItemAndGroup(item: (w: 1, h: 1), group: (w: 1, h: 120), groupAxis: .vertical)
       .createSection()
-      .sectionBehavior(behavior: behavior)
-      .sectionConstraints(top: 0, leading: 0, bottom: 0, trailing: margin)
+      .suplementaryView(width: 1, height: headerHeight, elementKind: DetailViewController.categoryTopHeaderId, alignment: .topLeading)
+      .build()
+  }
+  
+  // MARK: returning section depending the size of the UILabel
+  func generateOverviewLayout(margin: CGFloat, headerHeight: CGFloat, groupHeight: CGFloat) -> NSCollectionLayoutSection? {
+    let section = SectionBuilder()
+    return section
+      .createItemAndGroup(item: (w: 1, h: 1), group: (w: 1, h: groupHeight), groupAxis: .horizontal)
+      .constraints(type: .group, contentInsets: .init(top: 0, leading: margin, bottom: 0, trailing: margin))
+      .createSection()
+      .suplementaryView(width: 1, height: headerHeight, elementKind: DetailViewController.categoryTitleHeaderView, alignment: .topLeading)
+      .build()
+  }
+  
+  // MARK: returning section depending if the data has or not cast and reviews inside
+  func generateLayoutCastReviews(listMovies: Bool, margin: CGFloat, headerHeight: CGFloat, groupHeight: CGFloat) -> NSCollectionLayoutSection? {
+    let section = SectionBuilder()
+    return section
+      .createItemAndGroup(item: (w: 1, h: 1), group: (w: 1, h: listMovies ? 0 : groupHeight), groupAxis: .horizontal)
+      .constraints(type: .group, contentInsets: .init(top: 0, leading: margin, bottom: 0, trailing: margin))
+      .createSection()
+      .sectionBehavior(behavior: .paging)
       .suplementaryView(width: 1, height: listMovies ? 0 : headerHeight, elementKind: DetailViewController.categoryTitleHeaderView, alignment: .topLeading)
       .build()
   }
   
+  // MARK: returning section depending if the data has or not movies inside
+  func generateLayoutLisMovies(listMovies: Bool, margin: CGFloat, headerHeight: CGFloat, groupHeight: CGFloat) -> NSCollectionLayoutSection? {
+    let section = SectionBuilder()
+    return section
+      .createItemAndGroup(item: (w: 1, h: 1), group: (w: 0.45, h: listMovies ? 0 : groupHeight), groupAxis: .horizontal)
+      .constraints(type: .group, contentInsets: .init(top: 0, leading: margin, bottom: 0, trailing: 0))
+      .createSection()
+      .sectionBehavior(behavior: .continuous)
+      .constraints(type: .section, contentInsets: .init(top: 0, leading: 0, bottom: 0, trailing: margin))
+      .suplementaryView(width: 1, height: listMovies ? 0 : listMovies ? 0 : headerHeight, elementKind: DetailViewController.categoryTitleHeaderView, alignment: .topLeading)
+      .build()
+  }
+  // MARK: Using MovieSection enum to determine the amount of section in the detailController
   func numberOfSections(in collectionView: UICollectionView) -> Int {
     return MovieSection.allCases.count
   }
-  
+  // MARK: Setting the corresponding header with the MovieSection enum
   func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
-    if indexPath.section == 0 {
+    let sectionType = MovieSection.allCases[indexPath.section]
+    switch sectionType {
+    case .extrainfo:
       guard let header = detailCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TopHeaderDetailView.identifier, for: indexPath) as? TopHeaderDetailView else { fatalError("some problem with TopHeader") }
       header.movieDetails = self.movieDetails
       return header
-    } else {
+    case .overview, .cast, .reviews, .similar, .recommended:
       guard let header = detailCollectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: TitleHeaderDetailView.identifier, for: indexPath) as? TitleHeaderDetailView else { fatalError("some problem with TitleHeaderView") }
       header.titleLabel.text = showTitleCategory(indexPath)
       return header
     }
-
   }
-  
+  // MARK: enum of MovieSection to manage numberOfItemInSection
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     let sectionType = MovieSection.allCases[section]
     switch sectionType {
@@ -192,13 +197,13 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     case .recommended: return  movieDetails?.recommendedMovies!.count ?? 0
     }
   }
-
+  // MARK: setupCell depending of its kind of cell
   private func setupCell<GenericCell: BaseCell>(indexpath: IndexPath, cell: GenericCell.Type, identifier: String) -> GenericCell {
     guard let cell = detailCollectionView.dequeueReusableCell(withReuseIdentifier: identifier, for: indexpath) as? GenericCell
     else { fatalError("some problem with BaseCell") }
     return cell
   }
-  
+  // MARK: returning the cell choosen to set the corresponding data of each cell
   private func chooseCellForSection(_ indexPath: IndexPath) -> UICollectionViewCell {
     let sectionType = MovieSection.allCases[indexPath.section]
     switch sectionType {
@@ -218,13 +223,13 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
       let cell = self.setupCell(indexpath: indexPath, cell: ReviewCell.self, identifier: ReviewCell.identifier)
       if let review = movieDetails?.reviews![indexPath.item] { cell.review = review }
       return cell
-    case .similar, .recommended :
+    case .similar:
       let cell = self.setupCell(indexpath: indexPath, cell: MovieCell.self, identifier: MovieCell.identifier)
-      if indexPath.section == 4 {
-        if let movie = movieDetails?.similarMovies![indexPath.item] { cell.similarOrRecommendeMovie = movie }
-      } else if indexPath.section == 5 {
-        if let movie = movieDetails?.recommendedMovies![indexPath.item] { cell.similarOrRecommendeMovie = movie }
-      }
+      if let movie = movieDetails?.similarMovies![indexPath.item] { cell.similarOrRecommendeMovie = movie }
+      return cell
+    case .recommended :
+      let cell = self.setupCell(indexpath: indexPath, cell: MovieCell.self, identifier: MovieCell.identifier)
+      if let movie = movieDetails?.recommendedMovies![indexPath.item] { cell.similarOrRecommendeMovie = movie }
       return cell
     }
   }
@@ -237,4 +242,24 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     print(indexPath)
   }
   
+}
+
+// MARK: Presenter Delegate
+extension DetailViewController: MoviePresenterDelegate {
+  
+  var complement: String? {
+    get { return seccion }
+    set { seccion = newValue ?? "" }
+  }
+  
+  func showResults<Element>(items: Element) {
+    guard let movie = items as? MovieDetails else { return }
+    
+    self.movieDetailPresenter?.completeMovieDetails(movieDetails: movie, complete: { [weak self] completeDetailMovie in
+      self?.movieDetails = completeDetailMovie
+      DispatchQueue.main.async {
+        self?.detailCollectionView.reloadData()
+      }
+    })
+  }
 }
