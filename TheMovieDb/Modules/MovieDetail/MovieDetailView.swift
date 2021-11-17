@@ -48,9 +48,7 @@ final class MovieDetailView: UICollectionViewController {
     }
     
     private func reloadCollectionView() {
-        
-        self.collectionView.reloadData()
-        
+        collectionView.reloadData()
     }
     
 }
