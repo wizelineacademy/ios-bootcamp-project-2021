@@ -44,7 +44,6 @@ protocol MovieDetailInteractorOutputProtocol: AnyObject {
 protocol MovieDetailInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: MovieDetailInteractorOutputProtocol? { get set }
-    var localDatamanager: MovieDetailLocalDataManagerInputProtocol? { get set }
     var remoteDatamanager: MovieDetailRemoteDataManagerInputProtocol? { get set }
     
     func getRelatedMovies()
@@ -65,8 +64,4 @@ protocol MovieDetailRemoteDataManagerOutputProtocol: AnyObject {
     // REMOTEDATAMANAGER -> INTERACTOR
     
     func relatedMoviesFound(_ relatedMovies: [MovieDetailSections: [Movie]])
-}
-
-protocol MovieDetailLocalDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> LOCALDATAMANAGER
 }

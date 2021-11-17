@@ -15,7 +15,6 @@ class MovieDetailWireFrame: MovieDetailWireFrameProtocol {
         let view = MovieDetailView()
         let presenter: MovieDetailPresenterProtocol & MovieDetailInteractorOutputProtocol = MovieDetailPresenter()
         let interactor: MovieDetailInteractorInputProtocol & MovieDetailRemoteDataManagerOutputProtocol = MovieDetailInteractor()
-        let localDataManager: MovieDetailLocalDataManagerInputProtocol = MovieDetailLocalDataManager()
         let remoteDataManager: MovieDetailRemoteDataManagerInputProtocol = MovieDetailRemoteDataManager()
         let wireFrame: MovieDetailWireFrameProtocol = MovieDetailWireFrame()
         
@@ -25,7 +24,6 @@ class MovieDetailWireFrame: MovieDetailWireFrameProtocol {
         presenter.interactor = interactor
         presenter.setMovie(movie)
         interactor.presenter = presenter
-        interactor.localDatamanager = localDataManager
         interactor.remoteDatamanager = remoteDataManager
         remoteDataManager.remoteRequestHandler = interactor
         remoteDataManager.service = APIService()

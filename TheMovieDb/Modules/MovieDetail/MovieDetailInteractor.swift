@@ -12,7 +12,6 @@ class MovieDetailInteractor: MovieDetailInteractorInputProtocol {
     
     // MARK: Properties
     weak var presenter: MovieDetailInteractorOutputProtocol?
-    var localDatamanager: MovieDetailLocalDataManagerInputProtocol?
     var remoteDatamanager: MovieDetailRemoteDataManagerInputProtocol?
     
     func getRelatedMovies() {

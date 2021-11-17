@@ -22,7 +22,7 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
         interactor?.getRelatedMovies()
     }
     
-    public func setMovie(_ movie: Movie) {
+    func setMovie(_ movie: Movie) {
         view?.setMovie(movie)
     }
     
