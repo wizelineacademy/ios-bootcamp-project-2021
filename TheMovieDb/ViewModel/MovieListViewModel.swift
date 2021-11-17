@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 final class MovieListViewModel {
     var movieListOption: MoviesOptions = .nowPlaying
@@ -22,6 +23,7 @@ final class MovieListViewModel {
     
     init(facade: MovieService) {
         self.facade = facade
+        os_log("MovieListViewModel initialized", log: OSLog.viewModel, type: .debug)
     }
     
     func loadMovies() {
@@ -45,12 +47,14 @@ final class MovieListViewModel {
             case .success(let sucessResult):
                 guard let results = sucessResult.results else {
                     self.showError?(.invalidResponse)
+                    os_log("MovieListViewModel results error", log: OSLog.viewModel, type: .error)
                     return
                 }
                 self.movies = results
                 
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("MovieListViewModel failure", log: OSLog.viewModel, type: .error)
             }
         }
     }

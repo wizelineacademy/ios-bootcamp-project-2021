@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os.log
 
 final class TableViewController: UITableViewController {
     
@@ -17,6 +18,7 @@ final class TableViewController: UITableViewController {
         title = viewModel.title
         setupNavigationBar()
         setupTableViewUI()
+        os_log("TableViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
     override func viewWillAppear(_ animated: Bool) {

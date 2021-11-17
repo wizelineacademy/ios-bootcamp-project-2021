@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Kingfisher
+import os.log
 
 final class MovieInfoViewController: UIViewController {
     
@@ -45,6 +45,7 @@ final class MovieInfoViewController: UIViewController {
         setupStackView()
         setupClosures()
         viewModel.fetchServices()
+        os_log("MovieInfoViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,10 +72,9 @@ final class MovieInfoViewController: UIViewController {
         titleMovie.translatesAutoresizingMaskIntoConstraints = false
         titleMovie.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         titleMovie.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        titleMovie.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 20).isActive = true
+        view.trailingAnchor.constraint(equalTo: titleMovie.trailingAnchor, constant: 20).isActive = true
         titleMovie.heightAnchor.constraint(equalToConstant: 20).isActive = true
         titleMovie.textAlignment = .center
-        titleMovie.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         titleMovie.numberOfLines = 2
     }
     
@@ -82,7 +82,7 @@ final class MovieInfoViewController: UIViewController {
         imageMovie.translatesAutoresizingMaskIntoConstraints = false
         imageMovie.topAnchor.constraint(equalTo: titleMovie.bottomAnchor, constant: 10).isActive = true
         imageMovie.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        imageMovie.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 20).isActive = true
+        view.safeAreaLayoutGuide.trailingAnchor.constraint(greaterThanOrEqualTo: imageMovie.trailingAnchor, constant: 20).isActive = true
         imageMovie.heightAnchor.constraint(equalToConstant: 150).isActive = true
         imageMovie.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imageMovie.heightAnchor.constraint(equalTo: imageMovie.widthAnchor, multiplier: 1.5).isActive = true

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 final class ReviewsViewModel {
     var movieID: Int?
@@ -15,8 +16,10 @@ final class ReviewsViewModel {
     var facade: MovieService
     init(facade: MovieService) {
         self.facade = facade
+        os_log("ReviewsViewModel initialized", log: OSLog.viewModel, type: .debug)
     }
     var reloadData: (() -> Void)?
+    var showEmptyReviewsAlert: (() -> Void)?
     
     func reviewsMovie() {
         guard let id = movieID else { return }
@@ -24,12 +27,18 @@ final class ReviewsViewModel {
             guard let self = self else { return }
             switch response {
             case.success(let reviewsResponse):
-                self.reviews = reviewsResponse.results ?? []
+                guard let reviews = reviewsResponse.results,
+                        !reviews.isEmpty else {
+                    self.showEmptyReviewsAlert?()
+                    return
+                }
+                self.reviews = reviews
                 DispatchQueue.main.async {
                     self.reloadData?()
                 }
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("ReviewsViewModel failure", log: OSLog.viewModel, type: .error)
             }
         }
     }

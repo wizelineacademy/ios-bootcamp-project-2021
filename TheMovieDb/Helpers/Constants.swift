@@ -24,6 +24,7 @@ struct Constants {
     static let titleInitialTableView = "Show Movies"
     static let searchBarPlaceholder = "Search for movies or person"
     static let alertButton = "Dismiss"
+    static let alertEmptyReviews = "Reviews Not Found"
     
     // MARK: - ImageURL
     static let imageBaseUrl = "https://image.tmdb.org/t/p/w500"

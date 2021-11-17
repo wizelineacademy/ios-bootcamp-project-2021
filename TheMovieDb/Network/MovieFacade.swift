@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 struct MovieFacade: MovieService {
     
@@ -27,6 +28,7 @@ struct MovieFacade: MovieService {
         
         guard let url = components.url(relativeTo: baseURL) else {
             returnResponse(.failure(.invalidUrl))
+            os_log("Network request error!", log: OSLog.networkRequest, type: .error)
             return
         }
         
@@ -38,11 +40,13 @@ struct MovieFacade: MovieService {
             if let error = error {
                 returnResponse(.failure(.unknownError(error: error)))
                 print("Error took place \(error.localizedDescription)")
+                os_log("Network request error!", log: OSLog.networkRequest, type: .error)
                 return
             }
             
             guard let response = response as? HTTPURLResponse else {
                 returnResponse(.failure(.invalidResponse))
+                os_log("Network request error!", log: OSLog.networkRequest, type: .error)
                 return
             }
             
@@ -55,6 +59,7 @@ struct MovieFacade: MovieService {
                     returnResponse(.success(moviesDecoded))
                 } catch {
                     returnResponse(.failure(.wrongResponse(status: response.statusCode)))
+                    os_log("Network request error!", log: OSLog.networkRequest, type: .error)
                 }
             }
         }

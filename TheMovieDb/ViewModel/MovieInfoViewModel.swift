@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 final class MovieInfoViewModel {
     var movieID: Int?
@@ -50,6 +51,7 @@ final class MovieInfoViewModel {
     
     init(facade: MovieService) {
         self.facade = facade
+        os_log("MovieInfoViewModel initialized", log: OSLog.viewModel, type: .debug)
     }
     
     func getMovieDetail() {
@@ -61,6 +63,7 @@ final class MovieInfoViewModel {
                 self.movie = movie
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("MovieInfoViewModel getMovieDetail failure", log: OSLog.viewModel, type: .error)
             }
         }
     }
@@ -76,6 +79,7 @@ final class MovieInfoViewModel {
                 self.similarMoviesNames = movieNames?.joined(separator: ", ")
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("MovieInfoViewModel similarMovies failure", log: OSLog.viewModel, type: .error)
             }
         }
     }
@@ -92,6 +96,7 @@ final class MovieInfoViewModel {
                 self.recommendedMoviesNames = movieNames?.joined(separator: ", ")
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("MovieInfoViewModel recomendedMovies failure", log: OSLog.viewModel, type: .error)
             }
         }
     }
@@ -107,6 +112,7 @@ final class MovieInfoViewModel {
                 self.castMovie = castNames?.joined(separator: ", ")
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("MovieInfoViewModel castFromMovie failure", log: OSLog.viewModel, type: .error)
             }
         }
     }

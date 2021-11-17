@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 final class PersonDetailViewModel {
     var personID: Int?
@@ -21,6 +22,7 @@ final class PersonDetailViewModel {
     var facade: MovieService
     init(facade: MovieService) {
         self.facade = facade
+        os_log("PersonDetailViewModel initialized", log: OSLog.viewModel, type: .debug)
     }
     
     func detailPersonID() {
@@ -32,6 +34,7 @@ final class PersonDetailViewModel {
                 self.person = person
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("PersonDetailViewModel failure", log: OSLog.viewModel, type: .error)
             }
         }
     }

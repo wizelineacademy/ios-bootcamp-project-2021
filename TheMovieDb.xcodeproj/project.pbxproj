@@ -30,6 +30,7 @@
 		2E9FAA9E2744192800B4A054 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FAA9D2744192800B4A054 /* SearchViewModelTests.swift */; };
 		2E9FAAA027441D5700B4A054 /* ReviewsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FAA9F27441D5700B4A054 /* ReviewsViewModelTests.swift */; };
 		2E9FAAA2274425DF00B4A054 /* ReviewsDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FAAA1274425DF00B4A054 /* ReviewsDetailViewModelTests.swift */; };
+		2E9FAAA6274567A200B4A054 /* OSLog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FAAA5274567A200B4A054 /* OSLog+Extensions.swift */; };
 		2EAABCB92728A0AF0074BD5D /* MovieInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAABCB82728A0AF0074BD5D /* MovieInfoViewController.swift */; };
 		2EB8047B272F31BA00444461 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB8047A272F31BA00444461 /* UIImageView+Extensions.swift */; };
 		2EB8047D272F330E00444461 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB8047C272F330E00444461 /* Person.swift */; };
@@ -95,6 +96,7 @@
 		2E9FAA9D2744192800B4A054 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 		2E9FAA9F27441D5700B4A054 /* ReviewsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewModelTests.swift; sourceTree = "<group>"; };
 		2E9FAAA1274425DF00B4A054 /* ReviewsDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsDetailViewModelTests.swift; sourceTree = "<group>"; };
+		2E9FAAA5274567A200B4A054 /* OSLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OSLog+Extensions.swift"; path = "../../../../../../Documents/OSLog+Extensions.swift"; sourceTree = "<group>"; };
 		2EAABCB82728A0AF0074BD5D /* MovieInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoViewController.swift; sourceTree = "<group>"; };
 		2EB8047A272F31BA00444461 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		2EB8047C272F330E00444461 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				2EB8047A272F31BA00444461 /* UIImageView+Extensions.swift */,
 				2E17B95E273331E900D12D8A /* UIViewController+Extensions.swift */,
 				2E17B9592732CD2E00D12D8A /* Constants.swift */,
+				2E9FAAA5274567A200B4A054 /* OSLog+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				2EAABCB92728A0AF0074BD5D /* MovieInfoViewController.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				2E17B95F273331E900D12D8A /* UIViewController+Extensions.swift in Sources */,
+				2E9FAAA6274567A200B4A054 /* OSLog+Extensions.swift in Sources */,
 				2E86F8B327273F68005DB3E2 /* MovieFacade.swift in Sources */,
 				2E9FAA8C273EB7DC00B4A054 /* MovieInfoViewModel.swift in Sources */,
 				2ED9EA37273098B50067133E /* ReviewsDetails.swift in Sources */,
