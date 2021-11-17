@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os.log
 
 final class ViewController: UIViewController {
     
@@ -26,6 +27,7 @@ final class ViewController: UIViewController {
         viewModel.reloadData = { [weak self] in self?.tableView.reloadData() }
         viewModel.loadMovies()
         viewModel.showError = { [weak self] error in self?.showErrorAlert(error) }
+        os_log("ViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
     override func viewWillAppear(_ animated: Bool) {

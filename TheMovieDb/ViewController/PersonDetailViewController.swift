@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os.log
 
 final class PersonDetailViewController: UIViewController {
     
@@ -38,6 +39,7 @@ final class PersonDetailViewController: UIViewController {
         setupStackView()
         configureUIDetailPerson()
         viewModel.detailPersonID()
+        os_log("PersonDetailViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
     private func addAllViews() {
@@ -52,10 +54,9 @@ final class PersonDetailViewController: UIViewController {
         personName.translatesAutoresizingMaskIntoConstraints = false
         personName.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10).isActive = true
         personName.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        personName.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 20).isActive = true
+        view.trailingAnchor.constraint(equalTo: personName.trailingAnchor, constant: 20).isActive = true
         personName.heightAnchor.constraint(equalToConstant: 20).isActive = true
         personName.textAlignment = .center
-        personName.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         personName.numberOfLines = 2
     }
     
@@ -63,7 +64,7 @@ final class PersonDetailViewController: UIViewController {
         imagePerson.translatesAutoresizingMaskIntoConstraints = false
         imagePerson.topAnchor.constraint(equalTo: personName.bottomAnchor, constant: 10).isActive = true
         imagePerson.leadingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20).isActive = true
-        imagePerson.trailingAnchor.constraint(greaterThanOrEqualTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 20).isActive = true
+        view.safeAreaLayoutGuide.trailingAnchor.constraint(greaterThanOrEqualTo: imagePerson.trailingAnchor, constant: 20).isActive = true
         imagePerson.heightAnchor.constraint(equalToConstant: 150).isActive = true
         imagePerson.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imagePerson.heightAnchor.constraint(equalTo: imagePerson.widthAnchor, multiplier: 1.5).isActive = true

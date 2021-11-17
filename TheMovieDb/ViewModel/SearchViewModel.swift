@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 final class SearchViewModel {
     
@@ -21,6 +22,7 @@ final class SearchViewModel {
     var facade: MovieService
     init(facade: MovieService) {
         self.facade = facade
+        os_log("SearchViewModel initialized", log: OSLog.viewModel, type: .debug)
     }
     
     var showError: ((MovieError) -> Void)?
@@ -33,6 +35,7 @@ final class SearchViewModel {
             case .success(let movieResponse):
                 guard let resultObject = movieResponse.results else {
                     self.showError?(.invalidResponse)
+                    os_log("SearchViewModel error", log: OSLog.viewModel, type: .error)
                     return
                 }
                 var searchArray: [SearchObject] = []
@@ -44,6 +47,7 @@ final class SearchViewModel {
                 self.searchResult = searchArray
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("SearchViewModel failure", log: OSLog.viewModel, type: .error)
             }
         }
     }

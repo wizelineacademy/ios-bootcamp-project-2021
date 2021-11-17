@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os.log
 
 final class ReviewsDetailViewController: UIViewController {
     
@@ -21,6 +22,7 @@ final class ReviewsDetailViewController: UIViewController {
         setupReviewCompletedText()
         setupAuthorLabel()
         setupUI()
+        os_log("ReviewsDetailViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
     private func addAllViews() {
@@ -42,11 +44,10 @@ final class ReviewsDetailViewController: UIViewController {
         authorLabel.translatesAutoresizingMaskIntoConstraints = false
         authorLabel.topAnchor.constraint(equalTo: reviewCompletedText.bottomAnchor, constant: 20).isActive = true
         authorLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
-        authorLabel.trailingAnchor.constraint(greaterThanOrEqualTo: view.trailingAnchor, constant: 20).isActive = true
+        view.trailingAnchor.constraint(equalTo: authorLabel.trailingAnchor, constant: 20).isActive = true
         view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: authorLabel.bottomAnchor, constant: 20).isActive = true
         authorLabel.heightAnchor.constraint(equalToConstant: 20).isActive = true
         authorLabel.textAlignment = .center
-        authorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     func setupUI() {

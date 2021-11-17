@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import os.log
 
 final class ReviewsViewModel {
     var movieID: Int?
@@ -15,6 +16,7 @@ final class ReviewsViewModel {
     var facade: MovieService
     init(facade: MovieService) {
         self.facade = facade
+        os_log("ReviewsViewModel initialized", log: OSLog.viewModel, type: .debug)
     }
     var reloadData: (() -> Void)?
     
@@ -30,6 +32,7 @@ final class ReviewsViewModel {
                 }
             case .failure(let failureResult):
                 self.showError?(failureResult)
+                os_log("ReviewsViewModel failure", log: OSLog.viewModel, type: .error)
             }
         }
     }

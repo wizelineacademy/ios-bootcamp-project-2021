@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os.log
 
 final class SearchTableViewController: UITableViewController {
     
@@ -21,6 +22,7 @@ final class SearchTableViewController: UITableViewController {
         setupNavigation()
         viewModel.loadSearch = { [weak self] in self?.tableView.reloadData() }
         viewModel.showError = { [weak self] error in self?.showErrorAlert(error) }
+        os_log("SearchTableViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
     func setupTableViewUI() {

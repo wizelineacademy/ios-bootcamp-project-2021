@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os.log
 
 final class ReviewsViewController: UIViewController  {
     
@@ -24,6 +25,7 @@ final class ReviewsViewController: UIViewController  {
         configureTableView()
         viewModel.reloadData = { [weak self] in self?.reviewsTableView.reloadData() }
         viewModel.reviewsMovie()
+        os_log("ReviewsViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
     private func configureUI() {
