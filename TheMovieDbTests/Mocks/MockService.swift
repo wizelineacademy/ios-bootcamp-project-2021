@@ -89,7 +89,7 @@ final class MockService: MovieService {
                                                     mediaType: "movie"),
                                        SearchObject(id: 006,
                                                     name: nil,
-                                                    title: "Betty ls fea",
+                                                    title: "Betty la fea",
                                                     mediaType: "tv"),
                                        SearchObject(id: 005,
                                                     name: "Brad Pit",
