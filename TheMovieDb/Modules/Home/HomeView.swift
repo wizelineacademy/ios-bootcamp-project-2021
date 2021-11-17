@@ -48,7 +48,7 @@ class HomeView: UIViewController {
     }
     
     private func reloadCollectionView() {
-        self.collectionView.reloadData()
+        collectionView.reloadData()
     }
     
 }

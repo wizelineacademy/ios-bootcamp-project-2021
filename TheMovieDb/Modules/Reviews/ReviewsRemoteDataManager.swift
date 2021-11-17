@@ -11,11 +11,12 @@ import Foundation
 final class ReviewsRemoteDataManager: ReviewsRemoteDataManagerInputProtocol {
 
     var remoteRequestHandler: ReviewsRemoteDataManagerOutputProtocol?
+    var service: APIMoviesProtocol?
     
     func fetchReviews(movie: Movie) {
         let id = String(movie.id)
         let parameter = APIParameters(id: id)
-        MovieAPI.shared.fetchData(endPoint: .review, with: parameter, completion: {(response: Result<Reviews, Error>) in
+        service?.fetchData(endPoint: .review, with: parameter, completion: {(response: Result<Reviews, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)

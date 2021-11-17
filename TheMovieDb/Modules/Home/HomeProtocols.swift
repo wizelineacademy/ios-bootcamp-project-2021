@@ -53,7 +53,7 @@ protocol HomeDataManagerInputProtocol: AnyObject {
 protocol HomeRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: HomeRemoteDataManagerOutputProtocol? { get set }
-    
+    var service: APIMoviesProtocol? { get set }
     func fetchMovies()
 }
 

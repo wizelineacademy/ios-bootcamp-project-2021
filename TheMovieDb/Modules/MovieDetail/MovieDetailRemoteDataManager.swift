@@ -9,13 +9,14 @@
 import Foundation
 
 class MovieDetailRemoteDataManager: MovieDetailRemoteDataManagerInputProtocol {
-
     var remoteRequestHandler: MovieDetailRemoteDataManagerOutputProtocol?
     private let group = DispatchGroup()
+    private let defaultParameters = APIParameters()
     var movies: [MovieDetailSections: [Movie]] = [:]
+    var service: APIMoviesProtocol?
+    
     func fetchRelatedMovies() {
-        fetchData(typeMovieSection: .recommendations)
-        fetchData(typeMovieSection: .similar)
+        MovieDetailSections.allCases.forEach { fetchData(typeMovieSection: $0) }
         group.notify(queue: .main) {
             self.remoteRequestHandler?.relatedMoviesFound(self.movies)
         }
@@ -23,7 +24,7 @@ class MovieDetailRemoteDataManager: MovieDetailRemoteDataManagerInputProtocol {
     
     private func fetchData(typeMovieSection: MovieDetailSections) {
         group.enter()
-        MovieAPI.shared.fetchData(endPoint: typeMovieSection.path, completion: {(response: Result<Movies, Error>) in
+        service?.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: {(response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)
@@ -33,5 +34,5 @@ class MovieDetailRemoteDataManager: MovieDetailRemoteDataManagerInputProtocol {
             self.group.leave()
         })
     }
-                                  
+    
 }

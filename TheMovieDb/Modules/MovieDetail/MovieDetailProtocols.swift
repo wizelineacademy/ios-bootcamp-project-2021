@@ -57,7 +57,7 @@ protocol MovieDetailDataManagerInputProtocol: AnyObject {
 protocol MovieDetailRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: MovieDetailRemoteDataManagerOutputProtocol? { get set }
-    
+    var service: APIMoviesProtocol? { get set }
     func fetchRelatedMovies()
 }
 

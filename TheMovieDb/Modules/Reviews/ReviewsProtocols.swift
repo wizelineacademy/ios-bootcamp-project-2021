@@ -48,6 +48,7 @@ protocol ReviewsInteractorInputProtocol: AnyObject {
 protocol ReviewsRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: ReviewsRemoteDataManagerOutputProtocol? { get set }
+    var service: APIMoviesProtocol? { get set }
     func fetchReviews(movie: Movie)
 }
 

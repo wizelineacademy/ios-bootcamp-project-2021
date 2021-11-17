@@ -11,15 +11,13 @@ import Foundation
 final class HomeRemoteDataManager: HomeRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: HomeRemoteDataManagerOutputProtocol?
+    var service: APIMoviesProtocol?
+    private let defaultParameters = APIParameters()
     private let group = DispatchGroup()
     private var movies: [MovieGroupSections: [Movie]] = [:]
     
     func fetchMovies() {
-        fetchData(typeMovieSection: .popular)
-        fetchData(typeMovieSection: .upcoming)
-        fetchData(typeMovieSection: .topRated)
-        fetchData(typeMovieSection: .playingNow)
-        fetchData(typeMovieSection: .trending)
+        MovieGroupSections.allCases.forEach { fetchData(typeMovieSection: $0) }
         group.notify(queue: .main) {
             self.remoteRequestHandler?.fetchedMovies(self.movies)
         }
@@ -27,7 +25,7 @@ final class HomeRemoteDataManager: HomeRemoteDataManagerInputProtocol {
     
     private func fetchData(typeMovieSection: MovieGroupSections) {
         group.enter()
-        MovieAPI.shared.fetchData(endPoint: typeMovieSection.path, completion: {(response: Result<Movies, Error>) in
+        service?.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: {(response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)

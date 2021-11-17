@@ -28,6 +28,7 @@ class MovieDetailWireFrame: MovieDetailWireFrameProtocol {
         interactor.localDatamanager = localDataManager
         interactor.remoteDatamanager = remoteDataManager
         remoteDataManager.remoteRequestHandler = interactor
+        remoteDataManager.service = APIService()
         
         return view
     }

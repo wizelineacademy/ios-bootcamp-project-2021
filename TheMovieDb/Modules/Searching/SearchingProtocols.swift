@@ -51,7 +51,7 @@ protocol SearchingInteractorInputProtocol: AnyObject {
 protocol SearchingRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: SearchingRemoteDataManagerOutputProtocol? { get set }
-    
+    var service: APIMoviesProtocol? { get set }
     func fetchMovies(_ searchText: String)
 }
 
