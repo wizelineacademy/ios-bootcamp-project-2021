@@ -9,7 +9,7 @@ import UIKit
 
 class ListViewController: UICollectionViewController {
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    var activityIndicator: UIActivityIndicatorView!
     var movieClient: MovieClient!
     var movieList: MovieList?
     var configuration: ConfigurationWelcome?
@@ -21,9 +21,10 @@ class ListViewController: UICollectionViewController {
         movieClient = MovieClient()
         
         guard let tabIndex = self.tabBarController?.selectedIndex, let movieFeed = MovieFeed(rawValue: tabIndex) else {
+            print("Nothing selected")
             return
         }
-        
+        setupUI()
         setupUINavigation(movieFeed: movieFeed)
         setupUICollectionView()
         
@@ -32,10 +33,22 @@ class ListViewController: UICollectionViewController {
         
     }
     
-    private func setupUICollectionView() {
-        let cellNib = UINib(nibName: MovieCell.cellIdentifier, bundle: .main)
-        collectionView.register(cellNib, forCellWithReuseIdentifier: MovieCell.cellIdentifier)
+    private func setupUI() {
+        self.activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+        self.activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        self.activityIndicator.tintColor = .systemIndigo
+        view.addSubview(activityIndicator)
         
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func setupUICollectionView() {
+        //let cellNib = UINib(nibName: MovieCellController.cellIdentifier, bundle: .main)
+        //collectionView.register(cellNib, forCellWithReuseIdentifier: MovieCellController.cellIdentifier)
+        collectionView.register(MovieCellController.self, forCellWithReuseIdentifier: MovieCellController.cellIdentifier)
         // Set up the collection view.
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.alwaysBounceVertical = true
@@ -129,7 +142,7 @@ class ListViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.cellIdentifier, for: indexPath) as? MovieCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCellController.cellIdentifier, for: indexPath) as? MovieCellController else {
             preconditionFailure("Failed to load collection view cell")
         }
         
@@ -138,7 +151,7 @@ class ListViewController: UICollectionViewController {
         }
         
         cell.movieItem = movie
-        cell.configurationImages = configuration?.images
+        cell.configurationImage = configuration?.image
         
         return cell
     }
@@ -157,7 +170,7 @@ class ListViewController: UICollectionViewController {
         if segue.identifier == DetailViewController.segueIdentifier {
             let detailViewController = segue.destination as? DetailViewController
             detailViewController?.movieItem = selectedMovie
-            detailViewController?.configurationImages = configuration?.images
+            detailViewController?.configurationImage = configuration?.image
         }
     }
 }

@@ -16,7 +16,7 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var movieOverview: UILabel!
     @IBOutlet weak var movieRating: UILabel!
 
-    var configurationImages: ConfigurationImages?
+    var configurationImage: ConfigurationImage?
     var movieItem: MovieItem?
     
     static let segueIdentifier = "goToMovieDetalSegue"
@@ -32,11 +32,11 @@ class DetailViewController: UIViewController {
             return
         }
         
-        guard var configurationImages = configurationImages else {
+        guard var configurationImage = configurationImage else {
             return
         }
         
-        if let posterURL = movieItem.getPosterURL(baseURL: configurationImages.secureBasePosterURL) {
+        if let posterURL = movieItem.getPosterURL(baseURL: configurationImage.secureBasePosterURL) {
             self.moviePoster.kf.indicatorType = .activity
             self.moviePoster.kf.setImage(
                 with: posterURL,

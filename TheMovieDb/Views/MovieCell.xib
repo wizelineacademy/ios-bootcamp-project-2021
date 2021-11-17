@@ -11,7 +11,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCell" id="byu-ye-865" customClass="MovieCell" customModule="TheMovieDb" customModuleProvider="target">
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MovieCell" id="byu-ye-865" customClass="MovieCellController" customModule="TheMovieDb" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="130" height="230"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="U4M-Ne-ZE1">
@@ -59,11 +59,6 @@
                 </constraints>
             </collectionViewCellContentView>
             <size key="customSize" width="162" height="230"/>
-            <connections>
-                <outlet property="movieImage" destination="IZl-gr-FQr" id="7lH-V1-8ca"/>
-                <outlet property="movieRating" destination="0TV-bA-rWZ" id="lqI-bD-aPc"/>
-                <outlet property="movieTitle" destination="WHW-fl-P5O" id="GjQ-JO-rtV"/>
-            </connections>
             <point key="canvasLocation" x="314.49275362318843" y="62.946428571428569"/>
         </collectionViewCell>
     </objects>
