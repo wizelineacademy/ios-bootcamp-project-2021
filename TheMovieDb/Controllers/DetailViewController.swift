@@ -51,6 +51,7 @@ class DetailViewController: UIViewController {
         view.font = .preferredFont(forTextStyle: .body)
         view.textColor = .label
         view.numberOfLines = 0
+        view.setContentHuggingPriority(UILayoutPriority(252), for: .vertical)
         return view
     }()
     
@@ -104,22 +105,7 @@ class DetailViewController: UIViewController {
     
     lazy private var scrollView: UIScrollView = {
         let view = UIScrollView()
-        view.indicatorStyle = .default
-        view.showsHorizontalScrollIndicator = true
-        view.showsVerticalScrollIndicator = true
-        view.isScrollEnabled = true
-        view.bounces = true
-        view.bouncesZoom = true
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-        view.setContentHuggingPriority(UILayoutPriority(1), for: .horizontal)
-        
-        view.addSubview(contentView)
-        return view
-    }()
-    
-    lazy private var contentView: UIView = {
-        let view = UIView()
         
         view.addSubview(moviePoster)
         view.addSubview(movieTitle)
@@ -127,6 +113,17 @@ class DetailViewController: UIViewController {
         view.addSubview(movieOverview)
         view.addSubview(ratingStackView)
         
+        return view
+    }()
+    
+    lazy private var closeButton: UIButton = {
+        let view = UIButton(type: UIButton.ButtonType.close)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        if #available(iOS 15.0, *) {
+            view.configuration = UIButton.Configuration.filled()
+        }
+        view.tintColor = .systemIndigo
+        view.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         return view
     }()
 
@@ -150,46 +147,44 @@ class DetailViewController: UIViewController {
     
     private func setupUI() {
         view.addSubview(scrollView)
+        view.addSubview(closeButton)
         
         NSLayoutConstraint.activate([
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
             
-            //contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            
-            moviePoster.heightAnchor.constraint(equalToConstant: 300),
-            //moviePoster.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            moviePoster.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            moviePoster.topAnchor.constraint(equalTo: contentView.topAnchor),
+            moviePoster.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            moviePoster.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            moviePoster.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            moviePoster.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
             
             movieTitle.topAnchor.constraint(equalTo: moviePoster.bottomAnchor, constant: margin),
-            movieTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: margin),
-            //movieTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -margin),
+            movieTitle.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: margin),
+            movieTitle.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -margin),
             
             mediaAndReleaseStackView.topAnchor.constraint(equalTo: movieTitle.bottomAnchor, constant: margin),
-            mediaAndReleaseStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: margin),
-            //mediaAndReleaseStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -margin),
+            mediaAndReleaseStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: margin),
+            mediaAndReleaseStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -margin),
             
             movieOverview.topAnchor.constraint(equalTo: mediaAndReleaseStackView.bottomAnchor, constant: margin),
-            movieOverview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: margin),
-            //movieOverview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -margin),
+            movieOverview.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: margin),
+            movieOverview.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -margin),
             
             ratingStackView.topAnchor.constraint(equalTo: movieOverview.bottomAnchor, constant: margin),
-            ratingStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: margin),
-            //ratingStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -margin),
-            //ratingStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -margin)
+            ratingStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: margin),
+            ratingStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -margin),
+            ratingStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -margin),
+            
+            closeButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -30),
+            closeButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30),
+            closeButton.heightAnchor.constraint(equalToConstant: 40),
+            closeButton.widthAnchor.constraint(equalToConstant: 40)
         ])
         
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.systemBackground
         
-        // Customize navigation bar.
-        guard let navbar = self.navigationController?.navigationBar else { return }
-        navbar.prefersLargeTitles = false
     }
     
     private func setupData() {
@@ -219,7 +214,7 @@ class DetailViewController: UIViewController {
         }
     }
 
-    @IBAction func closeView(_ sender: UIButton) {
+    @objc func closeView() {
         dismiss(animated: true)
     }
 }
