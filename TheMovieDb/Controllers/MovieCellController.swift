@@ -31,6 +31,9 @@ class MovieCellController: UICollectionViewCell {
         view.alignment = .fill
         view.setContentHuggingPriority(UILayoutPriority(252), for: .vertical)
         view.setContentCompressionResistancePriority(UILayoutPriority(751), for: .horizontal)
+        
+        view.addArrangedSubview(starImageView)
+        view.addArrangedSubview(movieRating)
         return view
     }()
     
@@ -101,8 +104,6 @@ class MovieCellController: UICollectionViewCell {
     }
     
     func setupUI() {
-        stackView.addArrangedSubview(starImageView)
-        stackView.addArrangedSubview(movieRating)
         
         addSubview(movieImage)
         addSubview(stackView)

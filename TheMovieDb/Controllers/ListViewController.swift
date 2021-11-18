@@ -191,7 +191,6 @@ extension ListViewController: UICollectionViewDataSource, UICollectionViewDelega
         guard let navigation = navigationController else {
             return
         }
-        
-        navigation.pushViewController(detailViewController, animated: true)
+        navigation.showDetailViewController(detailViewController, sender: self)
     }
 }
