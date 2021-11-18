@@ -18,8 +18,8 @@ class CastCell: BaseCell {
   }
   
   var profileImage = ImageBuilder()
-    .sizeAndAspectImage(width: 60, height: 60, aspectRatio: .scaleAspectFill)
-    .roundCorners(circle: true, radius: 0, clipped: true)
+    .aspectImage(aspectRatio: .scaleAspectFill)
+    .roundCorners(circle: true, radius: SizeAndMeasures.profilePictureBig.measure, clipped: true)
     .setBackgroundColor(color: .darkGray)
     .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .build()
@@ -36,11 +36,12 @@ class CastCell: BaseCell {
   
   override func setupView() {
     
-    backgroundColor = .init(white: 0.4, alpha: 0.1)
-    layer.cornerRadius = 20
+    backgroundColor = DesignColor.transparentWhite.color
+    layer.cornerRadius = SizeAndMeasures.cornerRadiusBig.measure
 
-    profileImage.constrainWidth(constant: 60)
-    profileImage.constrainHeight(constant: 60)
+    let widthAndHeightProfileImage = SizeAndMeasures.profilePictureBig.measure
+    profileImage.constrainWidth(constant: widthAndHeightProfileImage)
+    profileImage.constrainHeight(constant: widthAndHeightProfileImage)
 
     let infoStack = VerticalStackView(arrangedSubviews: [nameLabel, characterLabel], spacing: 0)
     
@@ -57,9 +58,7 @@ class CastCell: BaseCell {
     let url: String?
     if let portrait = person?.profilePath {
       url = "\(ApiPath.baseUrlImage.path)\(portrait)"
-    } else {
-      url = nil
-    }
+    } else { url = nil }
     profileImage.loadImage(urlString: url)
     self.nameLabel.text = name
     self.characterLabel.text = character

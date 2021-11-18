@@ -92,10 +92,8 @@ class TopHeaderDetailView: UICollectionReusableView {
     let moviePoster = movieDetails?.backDropPath
     let url: String?
     if moviePoster != nil {
-      url = "\(ApiPath.baseUrlImageW780.path)\(moviePoster ?? "")"
-    } else {
-      url = nil
-    }
+      url = "\(ApiPath.baseUrlImage.path)\(moviePoster ?? "")"
+    } else { url = nil }
     posterImage.loadImage(urlString: url)
  
     releaseDateLabel.text = releaseDate

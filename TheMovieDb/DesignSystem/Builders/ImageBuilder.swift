@@ -19,8 +19,13 @@ class ImageBuilder {
     return self
   }
   
-  func roundCorners(circle: Bool, radius: CGFloat?, clipped: Bool) -> ImageBuilder {
-    self.image.layer.cornerRadius = circle ? self.image.frame.height / 2 : radius ?? 0
+  func aspectImage(aspectRatio: UIView.ContentMode) -> ImageBuilder {
+    self.image.contentMode = aspectRatio
+    return self
+  }
+  
+  func roundCorners(circle: Bool, radius: CGFloat, clipped: Bool) -> ImageBuilder {
+    self.image.layer.cornerRadius = circle ? radius / 2 : radius
     self.image.clipsToBounds = clipped
     return self
   }
@@ -57,6 +62,10 @@ class ImageBuilder {
   func setPlaceHolder(image: UIImage?) -> ImageBuilder {
     guard let placeholder = image else { return self }
     self.image.emptyImage = placeholder
+    return self
+  }
+  func setTinColor(color: DesignColor) -> ImageBuilder {
+    self.image.tintColor = color.color
     return self
   }
   

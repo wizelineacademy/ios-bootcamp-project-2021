@@ -19,7 +19,7 @@ class MovieCell: BaseCell {
   
   var imageMovie = ImageBuilder()
     .sizeAndAspectImage(width: 100, height: 200, aspectRatio: .scaleAspectFill)
-    .roundCorners(circle: false, radius: 10, clipped: true)
+    .roundCorners(circle: false, radius: SizeAndMeasures.cornerRadiusSmall.measure, clipped: true)
     .setBackgroundColor(color: .lightGray)
     .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .build()
@@ -33,9 +33,7 @@ class MovieCell: BaseCell {
     let url: String?
     if let portrait = similarOrRecommendeMovie?.posterPath {
       url = "\(ApiPath.baseUrlImage.path)\(portrait)"
-    } else {
-      url = nil
-    }
+    } else { url = nil }
     self.imageMovie.loadImage(urlString: url)
   }
   

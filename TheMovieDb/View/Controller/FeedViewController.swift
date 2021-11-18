@@ -48,6 +48,8 @@ class FeedViewController: UICollectionViewController {
     navigationItem.title = "MovieDB"
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+    navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
+    navigationController?.navigationBar.tintColor = DesignColor.purple.color
   }
   // MARK: get data from the api using the presenter
   func getMovies() {
@@ -99,11 +101,11 @@ extension FeedViewController {
     return UICollectionViewCompositionalLayout { ( _, _ ) in
       
       let section = SectionBuilder()
-      let margin: CGFloat = 20
-      let headerHeight: CGFloat = 80
+      let margin: CGFloat = SizeAndMeasures.margin.measure
+      let headerHeight: CGFloat = SizeAndMeasures.normalHeadersHeight.measure
       
       return section
-        .createItemAndGroup(item: (0.9, 1), group: (0.45, 260), groupAxis: .horizontal)
+        .createItemAndGroup(item: (0.9, 1), group: (SizeAndMeasures.movieCellSizeWidth.measure, SizeAndMeasures.movieCellSizeHeight.measure), groupAxis: .horizontal)
         .createSection()
         .constraints(type: .section, contentInsets: .init(top: 0, leading: margin, bottom: 0, trailing: 0))
         .sectionBehavior(behavior: .continuous)
@@ -150,7 +152,7 @@ extension FeedViewController {
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let detailVC = DetailViewController()
     guard let movie = setMovie(with: indexPath) else { return }
-    let movieDetailPresenter = MoviePresenter(view: detailVC)
+    let movieDetailPresenter = MoviePresenter(anotherView: detailVC)
     detailVC.movieDetailPresenter = movieDetailPresenter
     detailVC.movieId = movie.id
     navigationController?.pushViewController(detailVC, animated: true)

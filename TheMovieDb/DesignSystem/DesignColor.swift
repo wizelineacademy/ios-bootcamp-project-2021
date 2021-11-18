@@ -17,6 +17,7 @@ enum DesignColor {
   case lightGray
   case purple
   case whiteDirt
+  case transparentWhite
 }
 
 extension DesignColor {
@@ -36,6 +37,8 @@ extension DesignColor {
       return UIColor(red: 10/255, green: 10/255, blue: 10/255, alpha: 1)
     case .whiteDirt:
       return UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
+    case .transparentWhite:
+      return .init(white: 0.4, alpha: 0.1)
     }
   }
 }

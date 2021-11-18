@@ -18,9 +18,10 @@ class ReviewCell: BaseCell {
   }
   
   var profileImage = ImageBuilder()
-    .sizeAndAspectImage(width: 30, height: 30, aspectRatio: .scaleAspectFill)
-    .roundCorners(circle: true, radius: 0, clipped: true)
+    .aspectImage(aspectRatio: .scaleAspectFill)
+    .roundCorners(circle: true, radius: SizeAndMeasures.profilePictureSmall.measure, clipped: true)
     .setPlaceHolder(image: UIImage(systemName: "person.crop.circle"))
+    .setTinColor(color: DesignColor.darkGray)
     .build()
   
   var nameLabel = LabelBuilder()
@@ -43,12 +44,13 @@ class ReviewCell: BaseCell {
   
   override func setupView() {
     clipsToBounds = true
-    profileImage.constrainWidth(constant: 30)
-    profileImage.constrainHeight(constant: 30)
+    let widthAndHeightProfileImage = SizeAndMeasures.profilePictureSmall.measure
+    profileImage.constrainWidth(constant: widthAndHeightProfileImage)
+    profileImage.constrainHeight(constant: widthAndHeightProfileImage)
     
     let nameStack = HorizontalStackView(arrangedSubviews: [writeForLabel, nameLabel], spacing: 5)
     nameStack.alignment = .center
-
+    
     let infoStack = HorizontalStackView(arrangedSubviews: [profileImage, nameStack, UIView()], spacing: 10)
     infoStack.alignment = .center
     
@@ -59,21 +61,24 @@ class ReviewCell: BaseCell {
   }
   
   override func setupData() {
-
-    guard let name = review?.author, let description = review?.content else { return }
-    let url: String?
-    if let portrait = review?.authorDetails.avatarPath {
-      print(portrait)
-      url = "\(ApiPath.baseUrlImage.path)\(portrait)"
-    } else {
-      url = nil
-      profileImage.tintColor = DesignColor.darkGray.color
-    }
-    profileImage.loadImage(urlString: url)
     
+    guard let name = review?.author, let description = review?.content else { return }
+    var url: String?
+    var portrait = review?.authorDetails.avatarPath
+    let checkValidUrl = portrait?.prefix(9)
+    if checkValidUrl == "/https://" {
+      portrait?.removeFirst()
+      url = portrait
+    } else {
+      if portrait != nil {
+        url = "\(ApiPath.baseUrlImage.path)\(portrait ?? "")"
+      }
+    }
+
+    self.profileImage.loadImage(urlString: url)
     self.nameLabel.text = name
     self.descriptionLabel.text = description
-
+    
   }
   
 }

@@ -12,8 +12,6 @@ import UIKit
 class CacheImageView: UIImageView {
   
   public static let imageCache = NSCache<NSString, DiscardableImageCacheItem>()
-
-  public var shouldUseEmptyImage = true
   
   private var urlStringForChecking: String?
   var emptyImage: UIImage?
@@ -21,15 +19,13 @@ class CacheImageView: UIImageView {
   public func loadImage(urlString: String?, completion: (() -> Void)? = nil) {
     image = nil
     
-    if urlString == nil {
-      if shouldUseEmptyImage { image = emptyImage }
+    guard urlString != nil else {
+      image = emptyImage
       return
     }
     
     self.urlStringForChecking = urlString
-    guard let urlKey = urlString as NSString? else { return }
-
-    guard let url = URL(string: urlString ?? "") else { return }
+    guard let urlKey = urlString as NSString?, let url = URL(string: urlString!) else { return }
     
     if let cachedItem = CacheImageView.imageCache.object(forKey: urlKey) {
       image = cachedItem.image
@@ -38,15 +34,17 @@ class CacheImageView: UIImageView {
     }
 
     let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
-      guard let data = data, error == nil else { fatalError("the image doesn't exist") }
+      guard let data = data, error == nil else { return }
       
       DispatchQueue.main.async {
-        if let image = UIImage(data: data) {
-          let cacheItem = DiscardableImageCacheItem(image: image)
-          CacheImageView.imageCache.setObject(cacheItem, forKey: urlKey)
-          if urlString == self?.urlStringForChecking {
-            self?.image = image
-            completion?()
+        if let imageData = UIImage(data: data)?.jpegData(compressionQuality: 0.5) {
+          if let newImageSmaller = UIImage(data: imageData) {
+            let cacheItem = DiscardableImageCacheItem(image: newImageSmaller)
+            CacheImageView.imageCache.setObject(cacheItem, forKey: urlKey)
+            if urlString == self?.urlStringForChecking {
+              self?.image = newImageSmaller
+              completion?()
+            }
           }
         }
       }

@@ -8,26 +8,32 @@
 import Foundation
 
 // MARK: class Presenter and protocols to manage the logic part of the app
-
-protocol MoviePresenterDelegate: AnyObject {
-  var complement: String? { get set }
+protocol MoviePresenterDelegateShowResults: AnyObject {
   func showResults<Element: Decodable>(items: Element)
+}
+
+protocol MoviePresenterDelegate: MoviePresenterDelegateShowResults {
+  var complement: String? { get set }
 }
 
 protocol MovieViewPresenter {
   init(view: MoviePresenterDelegate)
   func getData<Element: Decodable>(from: Endpoint, kindItem: Element.Type, complement: String?, search: String?)
-  
 }
 
 class MoviePresenter: MovieViewPresenter {
   
   weak var view: MoviePresenterDelegate?
+  weak var anotherView: MoviePresenterDelegateShowResults?
   private var databaseManager = MovieDBClient.shared
   var movieDetails: MovieDetails?
   
   required init(view: MoviePresenterDelegate) {
     self.view = view
+  }
+  
+  init(anotherView: MoviePresenterDelegateShowResults) {
+    self.anotherView = anotherView
   }
   
   private func setUrl(_ from: Endpoint, search: String? = nil) -> URLRequest {
@@ -64,8 +70,12 @@ class MoviePresenter: MovieViewPresenter {
       } completion: { [weak self] (result: Result<Element, ApiError>) in
         switch result {
         case .success(let element):
-          if complement != nil { self?.view?.complement = complement! }
-          self?.view?.showResults(items: element)
+          if complement != nil {
+            self?.view?.complement = complement!
+            self?.view?.showResults(items: element)
+          } else {
+            self?.anotherView?.showResults(items: element)
+          }
         case .failure(let error):
           print(error.localizedDescription)
         }
@@ -117,8 +127,8 @@ extension MoviePresenter {
     }
   }
   
-  func getDataDetailsMovie<Element: Decodable>(request: URLRequest, kindItem: Element.Type, group: DispatchGroup, complete: @escaping (Element?, Error?) -> Void) {
-
+  private func getDataDetailsMovie<Element: Decodable>(request: URLRequest, kindItem: Element.Type, group: DispatchGroup, complete: @escaping (Element?, Error?) -> Void) {
+    
     databaseManager.fetch(with: request) { json -> Element in
       guard let item = json as? Element else { fatalError("problem returning the json") }
       return item

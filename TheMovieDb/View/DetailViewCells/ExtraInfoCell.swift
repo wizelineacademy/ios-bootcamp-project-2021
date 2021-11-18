@@ -66,18 +66,18 @@ class ExtraInfoCell: BaseCell {
     .build()
     
   override func setupView() {
-    
+    let margin = SizeAndMeasures.margin.measure
     let languageStack = VerticalStackView(arrangedSubviews: [titleOriginalLanguage, languageLabel], spacing: UIStackView.spacingUseSystem)
     let statusStack = VerticalStackView(arrangedSubviews: [titleStatus, statusLabel], spacing: UIStackView.spacingUseSystem)
     let budgetStack = VerticalStackView(arrangedSubviews: [titleBudget, budgetLabel], spacing: UIStackView.spacingUseSystem)
     let revenueStack = VerticalStackView(arrangedSubviews: [titleRevenue, revenueLabel], spacing: UIStackView.spacingUseSystem)
     
     [languageStack, statusStack, budgetStack, revenueStack].forEach { stack in
-      stack.backgroundColor = .init(white: 0.4, alpha: 0.1)
+      stack.backgroundColor = DesignColor.transparentWhite.color
       stack.isLayoutMarginsRelativeArrangement = true
       stack.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
       stack.distribution = .fillEqually
-      stack.layer.cornerRadius =  10
+      stack.layer.cornerRadius =  SizeAndMeasures.cornerRadiusSmall.measure
     }
     
     let languageStatusStack = VerticalStackView(arrangedSubviews: [languageStack, statusStack], spacing: UIStackView.spacingUseSystem)
@@ -90,7 +90,7 @@ class ExtraInfoCell: BaseCell {
     let allStack = HorizontalStackView(arrangedSubviews: [languageStatusStack, budgetRevenueStack], spacing: UIStackView.spacingUseSystem)
     allStack.distribution = .fillEqually
     addSubview(allStack)
-    allStack.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: 20, bottom: 0, right: 20))
+    allStack.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 0, left: margin, bottom: 0, right: margin))
     
   }
   

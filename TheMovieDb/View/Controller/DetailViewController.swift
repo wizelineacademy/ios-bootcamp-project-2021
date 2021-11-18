@@ -32,9 +32,7 @@ class DetailViewController: UIViewController {
   }
   // MARK: initial configuration NavigationController
   func setupNavigationBar() {
-    navigationItem.title = movieDetails?.title
     navigationController?.navigationBar.prefersLargeTitles = false
-    navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     navigationController?.navigationBar.barTintColor = DesignColor.black.color
   }
   // MARK: returning header title depending of its section with MovieSection enum
@@ -79,16 +77,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     collectionView.showsVerticalScrollIndicator = false
     detailCollectionView = collectionView
   }
-  // MARK: estimating the cell height depending of the number of lines in the text
-  func estimatedHeightForText(_ text: String) -> CGFloat {
-    
-    let approximateWidthOfBioTextView = UIScreen.main.bounds.width - 40
-    let size = CGSize(width: approximateWidthOfBioTextView, height: 1000)
-    let attributes = [NSAttributedString.Key.font: UIFont.systemFont(ofSize: TextStyle.paragraph.size)]
-    let estimatedFrame = NSString(string: text).boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-    
-    return estimatedFrame.height
-  }
+
   // MARK: func to return a layout with sections for the compositionalLayout
   func createLayout() -> UICollectionViewLayout {
     
@@ -96,10 +85,11 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
       
       guard let self = self else { fatalError("problem with self") }
       let category = MovieSection.allCases[sectionNumber]
-      let heightOverview = self.estimatedHeightForText(self.movieDetails?.overview ?? "")
-      let margin: CGFloat = 20
-      let categoryHeaderHeight: CGFloat = 80
-      let topHeaderHeight: CGFloat = UIScreen.main.bounds.width / 1.3
+      let heightOverview = SizeAndMeasures.cellWithTextHeight(self.movieDetails?.overview ?? "", .paragraph, SizeAndMeasures.sizeScreen.measure - 40).measure
+      let margin: CGFloat = SizeAndMeasures.margin.measure
+      let categoryHeaderHeight: CGFloat = SizeAndMeasures.normalHeadersHeight.measure
+      let topHeaderHeight: CGFloat = SizeAndMeasures.topHeadersHeight.measure
+      let movieSimilarAndRecommendedHeight = SizeAndMeasures.movieCellSizeHeight.measure
       
       switch category {
       case .extrainfo:
@@ -114,10 +104,10 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
         return self.generateLayoutCastReviews(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: 120)
       case .similar:
         guard let list = self.movieDetails?.similarMovies?.isEmpty else { return nil }
-        return self.generateLayoutLisMovies(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: 260)
+        return self.generateLayoutLisMovies(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: movieSimilarAndRecommendedHeight)
       case .recommended:
         guard let list = self.movieDetails?.recommendedMovies?.isEmpty else { return nil }
-        return self.generateLayoutLisMovies(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: 260)
+        return self.generateLayoutLisMovies(listMovies: list, margin: margin, headerHeight: categoryHeaderHeight, groupHeight: movieSimilarAndRecommendedHeight)
       }
     }
     return layout
@@ -245,21 +235,15 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
 }
 
 // MARK: Presenter Delegate
-extension DetailViewController: MoviePresenterDelegate {
-  
-  var complement: String? {
-    get { return seccion }
-    set { seccion = newValue ?? "" }
-  }
+extension DetailViewController: MoviePresenterDelegateShowResults {
   
   func showResults<Element>(items: Element) {
     guard let movie = items as? MovieDetails else { return }
-    
-    self.movieDetailPresenter?.completeMovieDetails(movieDetails: movie, complete: { [weak self] completeDetailMovie in
+    self.movieDetailPresenter?.completeMovieDetails(movieDetails: movie) { [weak self] completeDetailMovie in
       self?.movieDetails = completeDetailMovie
       DispatchQueue.main.async {
         self?.detailCollectionView.reloadData()
       }
-    })
+    }
   }
 }
