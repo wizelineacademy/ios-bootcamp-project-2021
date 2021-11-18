@@ -12,7 +12,7 @@ struct ConfigurationWelcome: Decodable {
     let changeKeys: [String]
 
     enum CodingKeys: String, CodingKey {
-        case image
+        case image = "images"
         case changeKeys = "change_keys"
     }
 }
