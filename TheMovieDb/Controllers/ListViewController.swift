@@ -30,7 +30,6 @@ class ListViewController: UIViewController {
     var movieClient: MovieClient!
     var movieList: MovieList?
     var configuration: ConfigurationWelcome?
-    var selectedMovie: MovieItem?
     
     // general margin for ui elements
     private let margin: CGFloat = 10
@@ -43,7 +42,6 @@ class ListViewController: UIViewController {
         movieClient = MovieClient()
         
         guard let tabIndex = self.tabBarController?.selectedIndex, let movieFeed = MovieFeed(rawValue: tabIndex) else {
-            print("Nothing selected")
             return
         }
         setupUI(movieFeed: movieFeed)
@@ -177,17 +175,23 @@ extension ListViewController: UICollectionViewDataSource, UICollectionViewDelega
         guard let movie = movieList?.results?[indexPath.row] else {
             return false
         }
-        self.selectedMovie = movie
-        performSegue(withIdentifier: DetailViewController.segueIdentifier, sender: self)
-        return true
+        if let configurationImage = configuration?.image {
+            navigateTo(movie: movie, with: configurationImage)
+            return true
+        }
+        return false
     }
     
     // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == DetailViewController.segueIdentifier {
-            let detailViewController = segue.destination as? DetailViewController
-            detailViewController?.movieItem = selectedMovie
-            detailViewController?.configurationImage = configuration?.image
+    func navigateTo(movie: MovieItem, with configuration: ConfigurationImage) {
+        let detailViewController = DetailViewController()
+        detailViewController.movieItem = movie
+        detailViewController.configurationImage = configuration
+        
+        guard let navigation = navigationController else {
+            return
         }
+        
+        navigation.pushViewController(detailViewController, animated: true)
     }
 }

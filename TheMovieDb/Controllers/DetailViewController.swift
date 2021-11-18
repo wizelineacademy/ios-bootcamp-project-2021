@@ -9,12 +9,12 @@ import UIKit
 import Kingfisher
 
 class DetailViewController: UIViewController {
-    @IBOutlet weak var moviePoster: UIImageView!
-    @IBOutlet weak var movieTitle: UILabel!
-    @IBOutlet weak var movieMediaType: UILabel!
-    @IBOutlet weak var movieReleaseDate: UILabel!
-    @IBOutlet weak var movieOverview: UILabel!
-    @IBOutlet weak var movieRating: UILabel!
+    var moviePoster: UIImageView!
+    var movieTitle: UILabel!
+    var movieMediaType: UILabel!
+    var movieReleaseDate: UILabel!
+    var movieOverview: UILabel!
+    var movieRating: UILabel!
 
     var configurationImage: ConfigurationImage?
     var movieItem: MovieItem?
