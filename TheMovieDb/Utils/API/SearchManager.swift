@@ -8,21 +8,18 @@
 import Foundation
 
 class SearchManager: SearchingDataProtocol {
-    func getMovie(with parameters: APIParameters) -> [Movie] {
-        let semaphore = DispatchSemaphore(value: 0)
+    weak var delegate: GetMoviesDelegate?
+    func getMovie(with parameters: APIParameters) {
         var movies: [Movie] = []
-        MovieAPI.shared.fetchData(endPoint: .search, with: parameters, completion: {(response: Result<Movies, Error>) in
+        MovieAPI.shared.fetchData(endPoint: .search, with: parameters, completion: { (response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)
             case .success(let res):
                 movies = res.movies
             }
-            semaphore.signal()
+            self.delegate?.didGetMovies(movies: movies)
         })
-        semaphore.wait()
-        
-        return movies
     }
     
 }

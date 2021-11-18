@@ -6,17 +6,17 @@
 //
 import Foundation
 
-class APIService {
+class APIService: APIMoviesProtocol {
     
-    func getResponse<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters, completion: @escaping(Result<T, Error>) -> Void) {
+    func fetchData<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters, completion: @escaping(Result<T, Error>) -> Void) {
         let  urlBuild = APIBuild(with: parameters, with: endPoint)
         guard let url = urlBuild.buildURL() else { return }
-        // debugPrint(url)
         URLSession.shared.dataTask(with: url) { data, _, error in
             
             if let error = error {
-                 completion(.failure(error))
-             }
+                Log.networkLayer(error).description
+                completion(.failure(error))
+            }
             
             do {
                 let decoder = JSONDecoder()
@@ -24,6 +24,7 @@ class APIService {
                 let result = try decoder.decode(T.self, from: data!)
                 completion(.success(result))
             } catch let error {
+                Log.networkLayer(error).description
                 completion(.failure(error))
             }
             
