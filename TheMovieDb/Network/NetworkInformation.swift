@@ -45,7 +45,7 @@ enum HTTPMethod: String {
 
 struct RequestParams {
     static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
-    static let language = "en-US"
+    static let language = Locale.current.languageCode ?? "en"
 }
 
 enum MovieError: Error {

@@ -50,7 +50,7 @@ final class SearchTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath)
         let row = viewModel.searchResult[indexPath.row]
         if let mediaType = row.mediaType, let type = MediaType(rawValue: mediaType) {
-            cell.detailTextLabel?.text = mediaType
+            cell.detailTextLabel?.text = mediaType.localized
             switch type {
             case .movie:
                 cell.textLabel?.text = row.title

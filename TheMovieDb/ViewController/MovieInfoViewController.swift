@@ -55,9 +55,18 @@ final class MovieInfoViewController: UIViewController {
     private func setupClosures() {
         viewModel.showError = { [weak self] error in self?.showErrorAlert(error) }
         viewModel.loadMovieInfo = { [weak self] in self?.setupMovieInfoUI() }
-        viewModel.loadSimilarMovies = { [weak self] in self?.similarMoviesLabel.text = "Similar movies: \(self?.viewModel.similarMoviesNames ?? "None")" }
-        viewModel.loadRecommendedMovies = { [weak self] in self?.recommendationsLabel.text = "Recommendations: \(self?.viewModel.recommendedMoviesNames ?? "None")" }
-        viewModel.loadCastMovie = { [weak self] in self?.castInfoLabel.text = "Cast: \(self?.viewModel.castMovie ?? "None")"}
+        viewModel.loadSimilarMovies = { [weak self] in
+            let similar = "similar.movies".localized
+            self?.similarMoviesLabel.text = String(format: similar, self?.viewModel.similarMoviesNames ?? "unavailable".localized)
+        }
+        viewModel.loadRecommendedMovies = { [weak self] in
+            let recomendations = "recomendations".localized
+            self?.recommendationsLabel.text = String(format: recomendations, self?.viewModel.recommendedMoviesNames ?? "unavailable".localized)
+        }
+        viewModel.loadCastMovie = { [weak self] in
+            let cast = "cast".localized
+            self?.castInfoLabel.text = String(format: cast, self?.viewModel.castMovie ?? "unavailable".localized)
+            }
     }
     
     private func addAllViews() {
@@ -136,13 +145,20 @@ final class MovieInfoViewController: UIViewController {
     func setupMovieInfoUI() {
         titleMovie.text = viewModel.movie?.title
         imageMovie.setImage(path: viewModel.movie?.posterPath)
-        textOverview.text = "Overview: \(viewModel.movie?.overview ?? "Unavailable")"
-        originalTitleMovie.text = "Original Title: \(viewModel.movie?.originalTitle ?? "Unavailable")"
-        originalLanguageMovie.text = "Original Language: \(viewModel.movie?.originalLanguage ?? "Unavailable")"
-        popularityMovie.text = "Popularity: \(viewModel.movie?.popularity ?? 0.0)"
-        idMovie.text = "ID: \(viewModel.movie?.id ?? 0)"
-        adultMovie.text = "Adult Movie: \(viewModel.movie?.adult ?? false)"
-        releaseDateMovie.text = "Release Date: \(viewModel.movie?.releaseDate ?? "Unavailable")"
+        let overview = "overview".localized
+        textOverview.text = String(format: overview, viewModel.movie?.overview ?? "unavailable".localized)
+        let originalTitle = "original.title".localized
+        originalTitleMovie.text = String(format: originalTitle, viewModel.movie?.originalTitle ?? "unavailable".localized)
+        let originalLanguage = "original.language.movie".localized
+        originalLanguageMovie.text = String(format: originalLanguage, viewModel.movie?.originalLanguage ?? "unavailable".localized)
+        let popularity = "popularity.movie".localized
+        popularityMovie.text = String(format: popularity, "\(viewModel.movie?.popularity ?? 0.0)")
+        let id = "id.movie".localized
+        idMovie.text = String(format: id, "\(viewModel.movie?.id ?? 0)")
+        let adult = "adult.movie".localized
+        adultMovie.text = String(format: adult, "\(viewModel.movie?.adult ?? false ? "afirmative".localized : "negative".localized)")
+        let releaseDate = "release.date.movie".localized
+        releaseDateMovie.text = String(format: releaseDate, viewModel.movie?.releaseDate ?? "unavailable".localized)
     }
     
    @objc func reviewsDisplay() {
