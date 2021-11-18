@@ -7,42 +7,67 @@
 
 import UIKit
 
-class ListViewController: UICollectionViewController {
+class ListViewController: UIViewController {
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    lazy private var activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.color = .systemIndigo
+        return view
+    }()
+    
+    lazy private var collectionView: UICollectionView = {
+        let layout = ColumnFlowLayout()
+        layout.scrollDirection = .vertical
+        let collection = UICollectionView(frame: CGRect(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: layout)
+        collection.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        collection.alwaysBounceVertical = true
+        collection.indicatorStyle = .white
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        return collection
+    }()
+    
     var movieClient: MovieClient!
     var movieList: MovieList?
     var configuration: ConfigurationWelcome?
-    var selectedMovie: MovieItem?
+    
+    // general margin for ui elements
+    private let margin: CGFloat = 10
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
         movieClient = MovieClient()
         
         guard let tabIndex = self.tabBarController?.selectedIndex, let movieFeed = MovieFeed(rawValue: tabIndex) else {
             return
         }
-        
-        setupUINavigation(movieFeed: movieFeed)
-        setupUICollectionView()
+        setupUI(movieFeed: movieFeed)
         
         fetchConfiguration()
         fetchData(movieFeed: movieFeed)
         
     }
     
-    private func setupUICollectionView() {
-        let cellNib = UINib(nibName: MovieCell.cellIdentifier, bundle: .main)
-        collectionView.register(cellNib, forCellWithReuseIdentifier: MovieCell.cellIdentifier)
+    private func setupUI(movieFeed: MovieFeed) {
         
-        // Set up the collection view.
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.alwaysBounceVertical = true
-        collectionView.indicatorStyle = .white
-    }
-    
-    private func setupUINavigation(movieFeed: MovieFeed) {
+        view.addSubview(collectionView)
+        view.addSubview(activityIndicator)
+        
+        collectionView.register(MovieCellController.self, forCellWithReuseIdentifier: MovieCellController.cellIdentifier)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
         title = movieFeed.getNavigationTitle()
 
         // Customize navigation bar.
@@ -82,7 +107,7 @@ class ListViewController: UICollectionViewController {
                         self.collectionView.reloadData()
                     }
                 case .failure(let error):
-                    print("The error \(error.localizedDescription)")
+                    print("The error fetchData \(error.localizedDescription)")
                 }
             }
         }
@@ -107,7 +132,7 @@ class ListViewController: UICollectionViewController {
                         self.collectionView.reloadData()
                     }
                 case .failure(let error):
-                    print("The error \(error.localizedDescription)")
+                    print("The error fetchConfiguration \(error.localizedDescription)")
                 }
             }
         }
@@ -123,13 +148,16 @@ class ListViewController: UICollectionViewController {
         self.activityIndicator.isHidden = true
     }
     
+}
+
+extension ListViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     // MARK: - CollectionView DataSource
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return movieList?.results?.count ?? 0
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.cellIdentifier, for: indexPath) as? MovieCell else {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCellController.cellIdentifier, for: indexPath) as? MovieCellController else {
             preconditionFailure("Failed to load collection view cell")
         }
         
@@ -138,26 +166,31 @@ class ListViewController: UICollectionViewController {
         }
         
         cell.movieItem = movie
-        cell.configurationImages = configuration?.images
+        cell.configurationImage = configuration?.image
         
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
         guard let movie = movieList?.results?[indexPath.row] else {
             return false
         }
-        self.selectedMovie = movie
-        performSegue(withIdentifier: DetailViewController.segueIdentifier, sender: self)
-        return true
+        if let configurationImage = configuration?.image {
+            navigateTo(movie: movie, with: configurationImage)
+            return true
+        }
+        return false
     }
     
     // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == DetailViewController.segueIdentifier {
-            let detailViewController = segue.destination as? DetailViewController
-            detailViewController?.movieItem = selectedMovie
-            detailViewController?.configurationImages = configuration?.images
+    func navigateTo(movie: MovieItem, with configuration: ConfigurationImage) {
+        let detailViewController = DetailViewController()
+        detailViewController.movieItem = movie
+        detailViewController.configurationImage = configuration
+        
+        guard let navigation = navigationController else {
+            return
         }
+        navigation.showDetailViewController(detailViewController, sender: self)
     }
 }

@@ -8,16 +8,16 @@
 import Foundation
 
 struct ConfigurationWelcome: Decodable {
-    let images: ConfigurationImages
+    let image: ConfigurationImage
     let changeKeys: [String]
 
     enum CodingKeys: String, CodingKey {
-        case images
+        case image = "images"
         case changeKeys = "change_keys"
     }
 }
 
-struct ConfigurationImages: Decodable {
+struct ConfigurationImage: Decodable {
     let secureBaseURL: String
     let backdropSizes: [String]
     let posterSizes: [String]
