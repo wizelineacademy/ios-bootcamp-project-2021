@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MovieManager{
+/*class MovieManager{
     var apiService = APIService()
     var movies = [Movie]()
     
@@ -45,5 +45,5 @@ class MovieManager{
         return movies[indexPath.row]
     }
     
-}
+}*/
 
