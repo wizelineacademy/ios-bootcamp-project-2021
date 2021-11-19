@@ -13,10 +13,14 @@ final class DetailViewController: UICollectionViewController {
     private let dataSource: DetailDataSource
     private var reviews: [ReviewModel] = []
     private var recommendations: [MovieModel] = []
-    let group = DispatchGroup()
+    private let executor: ExecutorRequest
+    private let group = DispatchGroup()
     
-    init?(movie: MovieModel, coder: NSCoder) {
+    init?(movie: MovieModel,
+          executor: ExecutorRequest = NetworkAPI(),
+          coder: NSCoder) {
         self.movie = movie
+        self.executor = executor
         dataSource = DetailDataSource(item: movie)
         super.init(coder: coder)
     }
@@ -66,8 +70,7 @@ private extension DetailViewController {
     func callReviewsService() {
         guard let id = movie.id else { return }
         group.enter()
-        NetworkAPI
-            .shared
+        executor
             .execute(request: ReviewRequest(id: id),
                      onSuccess: { [weak self] (reviews: PageModel<ReviewModel>?) in
                 self?.reviews = reviews?.results ?? []
@@ -80,8 +83,7 @@ private extension DetailViewController {
     func callRecommendationsService() {
         guard let id = movie.id else { return }
         group.enter()
-        NetworkAPI
-            .shared
+        executor
             .execute(request: RecommendationsRequest(id: id),
                      onSuccess: { [weak self] (recommendations: PageModel<MovieModel>?) in
                 self?.recommendations = recommendations?.results ?? []
