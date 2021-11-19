@@ -15,6 +15,7 @@
 "unavailable" = "No disponible";
 "afirmative" = "Sí";
 "negative" = "No";
+"author" = "Autor: %@";
 
 // MARK: - Type Search
 "person" = "Persona";
