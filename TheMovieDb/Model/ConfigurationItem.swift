@@ -22,17 +22,17 @@ struct ConfigurationImage: Decodable {
     let backdropSizes: [String]
     let posterSizes: [String]
     
-    lazy var secureBasePosterURL: String = {
+    enum CodingKeys: String, CodingKey {
+        case secureBaseURL = "secure_base_url"
+        case backdropSizes = "backdrop_sizes"
+        case posterSizes = "poster_sizes"
+    }
+    
+    func getSecureBasePosterURL() -> String {
         guard !backdropSizes.isEmpty else {
             return ""
         }
         let posterIndex = backdropSizes.firstIndex(where: { $0 == Constants.defaultPosterSize }) ?? 0
         return self.secureBaseURL + backdropSizes[posterIndex]
-    }()
-    
-    enum CodingKeys: String, CodingKey {
-        case secureBaseURL = "secure_base_url"
-        case backdropSizes = "backdrop_sizes"
-        case posterSizes = "poster_sizes"
     }
 }
