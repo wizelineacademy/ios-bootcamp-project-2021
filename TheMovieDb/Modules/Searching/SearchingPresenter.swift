@@ -13,14 +13,14 @@ final class SearchingPresenter {
     // MARK: Properties
     weak var view: SearchingViewProtocol?
     var interactor: SearchingInteractorInputProtocol?
-    var wireFrame: SearchingWireFrameProtocol?
+    var router: SearchingRouterProtocol?
     
 }
 
 extension SearchingPresenter: SearchingPresenterProtocol {
     func showMovie(_ movie: Movie) {
         guard let view = view else { return }
-        wireFrame?.showMovieDetail(from: view, with: movie)
+        router?.showMovieDetail(from: view, with: movie)
     }
     
     func viewDidLoad() {

@@ -11,11 +11,15 @@ import Foundation
 final class SearchingRemoteDataManager: SearchingRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: SearchingRemoteDataManagerOutputProtocol?
-    var service: APIMoviesProtocol?
+    private let service: APIMoviesProtocol
+    
+    init(service: APIMoviesProtocol) {
+        self.service = service
+    }
     
     func fetchMovies(_ searchText: String) {
         let parameters = APIParameters(query: searchText)
-        service?.fetchData(endPoint: .search, with: parameters, completion: { (response: Result<Movies, Error>) in
+        service.fetchData(endPoint: .search, with: parameters, completion: { (response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 debugPrint(error)

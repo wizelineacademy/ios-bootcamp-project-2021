@@ -31,7 +31,7 @@ class MainTabWireFrame: MainTabWireFrameProtocol {
             rootViewController: homeView
         )
         
-        let searchView = SearchingWireFrame.createSearchingModule()
+        let searchView = SearchingBuilder.createModule()
         let search = view.templateNavigationController(
             unselectedImage: UIImage(systemName: "magnifyingglass")!,
             selectedImage: UIImage(systemName: "text.magnifyingglass")!,

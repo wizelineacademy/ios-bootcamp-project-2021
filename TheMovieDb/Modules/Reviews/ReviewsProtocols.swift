@@ -22,7 +22,7 @@ protocol ReviewsRouterProtocol: AnyObject {
 
 protocol ReviewsBuilderProtocol {
     // BUILDER
-    static func createReviewsModule(movie: Movie) -> UIViewController
+    static func createModule(movie: Movie) -> UIViewController
 }
 
 protocol ReviewsPresenterProtocol: AnyObject {
@@ -51,7 +51,6 @@ protocol ReviewsInteractorInputProtocol: AnyObject {
 protocol ReviewsRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: ReviewsRemoteDataManagerOutputProtocol? { get set }
-    var service: APIMoviesProtocol? { get set }
     func fetchReviews(movie: Movie)
 }
 
