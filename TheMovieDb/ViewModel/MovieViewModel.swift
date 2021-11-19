@@ -27,7 +27,7 @@ struct MovieViewModel {
         } else {
             self.rating = ""
         }
-        self.baseURL = configuration.secureBaseURL
+        self.baseURL = configuration.getSecureBasePosterURL()
     }
     
     lazy var posterURL: URL? = {

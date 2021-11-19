@@ -31,7 +31,7 @@ class ListViewController: UIViewController {
         
         let model = MovieModel(movieClient: MovieClient())
         listViewModel = ListViewModel(movieModel: model, movieFeed: movieFeed, delegate: self)
-        listView = ListView(viewModel: listViewModel)
+        listView = ListView(viewModel: listViewModel, navigationDelegate: self)
         
         setupUI(movieFeed: movieFeed)
     }
@@ -71,18 +71,7 @@ class ListViewController: UIViewController {
     
 }
 
-// MARK: - Navigation
-extension ListViewController {
-    func navigateTo(movieViewModel: MovieViewModel) {
-        let detailViewController = DetailViewController()
-        detailViewController.movieViewModel = movieViewModel
-        guard let navigation = navigationController else {
-            return
-        }
-        navigation.showDetailViewController(detailViewController, sender: self)
-    }
-}
-
+// MARK: - UI Updates
 extension ListViewController: ListViewModelDelegate {
     func didBeginRefreshing() {
         self.activityIndicator.startAnimating()
@@ -94,5 +83,17 @@ extension ListViewController: ListViewModelDelegate {
         self.activityIndicator.isHidden = true
         listView?.collectionView.refreshControl?.endRefreshing()
         listView?.collectionView.reloadData()
+    }
+}
+
+// MARK: - Navigation
+extension ListViewController: NavigationDelegate {
+    func navigate(movieViewModel: MovieViewModel) {
+        let detailViewController = DetailViewController()
+        detailViewController.movieViewModel = movieViewModel
+        guard let navigation = navigationController else {
+            return
+        }
+        navigation.showDetailViewController(detailViewController, sender: self)
     }
 }

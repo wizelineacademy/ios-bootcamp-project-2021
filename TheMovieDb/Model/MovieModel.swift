@@ -28,23 +28,22 @@ struct MovieModel {
                     return
                 }
                 movieClient.getFeed(from: movieFeed, searchId: nil, params: [:]) { result in
-                    group.enter()
                     switch result {
                     case .success(let movieListResults):
                         guard let movieListResults = movieListResults else {
                             group.leave()
                             return
                         }
-                        movies.append(
-                            contentsOf: movieListResults.results?.map(
-                                { return MovieViewModel(movie: $0, configuration: configuration.image)}) ?? [])
+                        let mappedValues = movieListResults.results?.map({
+                            return MovieViewModel(movie: $0, configuration: configuration.image)
+                        }) ?? []
+                        movies.append(contentsOf: mappedValues)
                         group.leave()
                     case .failure(let error):
                         print("The error fetchData \(error.localizedDescription)")
                         group.leave()
                     }
                 }
-                group.leave()
             case .failure(let error):
                 print("The error fetchConfiguration \(error.localizedDescription)")
                 group.leave()

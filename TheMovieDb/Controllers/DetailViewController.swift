@@ -188,7 +188,7 @@ class DetailViewController: UIViewController {
         guard var movieViewModel = movieViewModel else {
             return
         }
-        /*
+        
         if let posterURL = movieViewModel.posterURL {
             self.moviePoster.kf.indicatorType = .activity
             self.moviePoster.kf.setImage(
@@ -197,7 +197,6 @@ class DetailViewController: UIViewController {
                 options: nil,
                 completionHandler: nil)
         }
-        */
         
         self.movieTitle.text = movieViewModel.title
         self.movieMediaType.text = movieViewModel.mediaType
