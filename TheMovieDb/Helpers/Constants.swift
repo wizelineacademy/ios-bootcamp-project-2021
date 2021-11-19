@@ -20,11 +20,11 @@ struct Constants {
     static let cellIdentifier = "cell"
     
     // MARK: - Titles/Messages
-    static let reviewsTitleBarButton = "Reviews"
-    static let titleInitialTableView = "Show Movies"
-    static let searchBarPlaceholder = "Search for movies or person"
-    static let alertButton = "Dismiss"
-    static let alertEmptyReviews = "Reviews Not Found"
+    static let reviewsTitleBarButton = "reviews.title.bar.button".localized
+    static let titleInitialTableView = "title.initial.table.view".localized
+    static let searchBarPlaceholder = "search.bar.placeholder".localized
+    static let alertButton = "alert.button".localized
+    static let alertEmptyReviews = "alert.empty.reviews".localized
     
     // MARK: - ImageURL
     static let imageBaseUrl = "https://image.tmdb.org/t/p/w500"

@@ -31,6 +31,8 @@
 		2E9FAAA027441D5700B4A054 /* ReviewsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FAA9F27441D5700B4A054 /* ReviewsViewModelTests.swift */; };
 		2E9FAAA2274425DF00B4A054 /* ReviewsDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FAAA1274425DF00B4A054 /* ReviewsDetailViewModelTests.swift */; };
 		2E9FAAA6274567A200B4A054 /* OSLog+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E9FAAA5274567A200B4A054 /* OSLog+Extensions.swift */; };
+		2EA409B627468AC300CB8D5B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2EA409B827468AC300CB8D5B /* Localizable.strings */; };
+		2EA409BB2746943A00CB8D5B /* String+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA409BA2746943A00CB8D5B /* String+Extensions.swift */; };
 		2EAABCB92728A0AF0074BD5D /* MovieInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EAABCB82728A0AF0074BD5D /* MovieInfoViewController.swift */; };
 		2EB8047B272F31BA00444461 /* UIImageView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB8047A272F31BA00444461 /* UIImageView+Extensions.swift */; };
 		2EB8047D272F330E00444461 /* Person.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB8047C272F330E00444461 /* Person.swift */; };
@@ -97,6 +99,10 @@
 		2E9FAA9F27441D5700B4A054 /* ReviewsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewModelTests.swift; sourceTree = "<group>"; };
 		2E9FAAA1274425DF00B4A054 /* ReviewsDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsDetailViewModelTests.swift; sourceTree = "<group>"; };
 		2E9FAAA5274567A200B4A054 /* OSLog+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "OSLog+Extensions.swift"; path = "../../../../../../Documents/OSLog+Extensions.swift"; sourceTree = "<group>"; };
+		2EA409B32746885800CB8D5B /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		2EA409B727468AC300CB8D5B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		2EA409B927468AC600CB8D5B /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		2EA409BA2746943A00CB8D5B /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		2EAABCB82728A0AF0074BD5D /* MovieInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInfoViewController.swift; sourceTree = "<group>"; };
 		2EB8047A272F31BA00444461 /* UIImageView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extensions.swift"; sourceTree = "<group>"; };
 		2EB8047C272F330E00444461 /* Person.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Person.swift; sourceTree = "<group>"; };
@@ -230,6 +236,15 @@
 			path = ViewModelsTests;
 			sourceTree = "<group>";
 		};
+		2EA409BC2746E68C00CB8D5B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				837B4EB0258178B9003DFC67 /* Assets.xcassets */,
+				2EA409B827468AC300CB8D5B /* Localizable.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		2EB80479272F319800444461 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -237,6 +252,7 @@
 				2E17B95E273331E900D12D8A /* UIViewController+Extensions.swift */,
 				2E17B9592732CD2E00D12D8A /* Constants.swift */,
 				2E9FAAA5274567A200B4A054 /* OSLog+Extensions.swift */,
+				2EA409BA2746943A00CB8D5B /* String+Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -278,12 +294,12 @@
 			children = (
 				837B4EA7258178B6003DFC67 /* AppDelegate.swift */,
 				837B4EA9258178B6003DFC67 /* SceneDelegate.swift */,
+				2EA409BC2746E68C00CB8D5B /* Resources */,
 				2E86F8AD272732E7005DB3E2 /* Model */,
 				2E17B95D2733285100D12D8A /* Network */,
 				2E9FAA84273E9A1F00B4A054 /* ViewModel */,
 				2E86F8AF2727331B005DB3E2 /* ViewController */,
 				2EB80479272F319800444461 /* Helpers */,
-				837B4EB0258178B9003DFC67 /* Assets.xcassets */,
 				837B4EB2258178B9003DFC67 /* LaunchScreen.storyboard */,
 				837B4EB5258178B9003DFC67 /* Info.plist */,
 			);
@@ -413,6 +429,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"es-419",
 			);
 			mainGroup = 837B4E9B258178B6003DFC67;
 			productRefGroup = 837B4EA5258178B6003DFC67 /* Products */;
@@ -432,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				837B4EB4258178B9003DFC67 /* LaunchScreen.storyboard in Resources */,
+				2EA409B627468AC300CB8D5B /* Localizable.strings in Resources */,
 				837B4EB1258178B9003DFC67 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -588,6 +606,7 @@
 				2E9FAA94273EC4FB00B4A054 /* ReviewsDetailViewModel.swift in Sources */,
 				2EB80485272F748B00444461 /* PersonDetailViewController.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
+				2EA409BB2746943A00CB8D5B /* String+Extensions.swift in Sources */,
 				2E9FAA88273E9BD600B4A054 /* MoviesOptionsViewModel.swift in Sources */,
 				2E9FAA86273E9B2900B4A054 /* MoviesOptions.swift in Sources */,
 			);
@@ -632,10 +651,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		2EA409B827468AC300CB8D5B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				2EA409B727468AC300CB8D5B /* en */,
+				2EA409B927468AC600CB8D5B /* es-419 */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		837B4EB2258178B9003DFC67 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				837B4EB3258178B9003DFC67 /* Base */,
+				2EA409B32746885800CB8D5B /* es-419 */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -647,6 +676,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -708,6 +738,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

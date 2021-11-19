@@ -61,7 +61,9 @@ extension ReviewsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (self.reviewsTableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as UITableViewCell?)!
+        guard let cell: UITableViewCell = self.reviewsTableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) else {
+            return UITableViewCell()
+        }
         cell.textLabel?.text = viewModel.reviews[indexPath.row].content
         return cell
     }

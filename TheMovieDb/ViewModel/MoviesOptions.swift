@@ -8,11 +8,11 @@
 import Foundation
 
 enum MoviesOptions: String, CaseIterable {
-    case trending = "Trending"
-    case nowPlaying = "Now Playing"
-    case popular = "Popular"
-    case topRated = "Top Rated"
-    case upcoming = "Upcoming"
+    case trending = "trending"
+    case nowPlaying = "now.playing"
+    case popular = "popular"
+    case topRated = "top.rated"
+    case upcoming = "upcoming"
     
-    var title: String { rawValue }
+    var title: String { rawValue.localized }
 }

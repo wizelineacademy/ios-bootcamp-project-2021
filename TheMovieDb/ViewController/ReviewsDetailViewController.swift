@@ -52,6 +52,7 @@ final class ReviewsDetailViewController: UIViewController {
     
     func setupUI() {
         reviewCompletedText.text = viewModel.review?.content
-        authorLabel.text = "Author: \(viewModel.review?.author ?? "Unavailable")"
+        let author = "author".localized
+        authorLabel.text =  String(format: author, viewModel.review?.author ?? "unavailable".localized)
     }
 }
