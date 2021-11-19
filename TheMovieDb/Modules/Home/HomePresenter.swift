@@ -13,19 +13,18 @@ class HomePresenter {
     // MARK: Properties
     weak var view: HomeViewProtocol?
     var interactor: HomeInteractorInputProtocol?
-    var wireFrame: HomeWireFrameProtocol?
+    var router: HomeRouterProtocol?
     
 }
 
 extension HomePresenter: HomePresenterProtocol {
     func viewDidLoad() {
-        print("movie")
         interactor?.getMovies()
     }
     
     func showMovie(_ movie: Movie) {
         guard let view = view else { return }
-        wireFrame?.showMovie(from: view, with: movie)
+        router?.showMovie(from: view, with: movie)
     }
 }
 

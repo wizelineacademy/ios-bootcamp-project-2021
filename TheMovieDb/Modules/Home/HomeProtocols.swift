@@ -16,17 +16,21 @@ protocol HomeViewProtocol: AnyObject {
     func showMovies(_ movies: [MovieGroupSections: [Movie]])
 }
 
-protocol HomeWireFrameProtocol: AnyObject {
-    // PRESENTER -> WIREFRAME
-    static func createHomeModule() -> UIViewController
+protocol HomeRouterProtocol: AnyObject {
+    // PRESENTER -> ROUTER
     func showMovie(from view: HomeViewProtocol, with movie: Movie)
+}
+
+protocol HomeBuilderProtocol {
+    // BUILDER
+    static func createModule() -> UIViewController
 }
 
 protocol HomePresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: HomeViewProtocol? { get set }
     var interactor: HomeInteractorInputProtocol? { get set }
-    var wireFrame: HomeWireFrameProtocol? { get set }
+    var router: HomeRouterProtocol? { get set }
     
     func viewDidLoad()
     func showMovie(_ movie: Movie)
@@ -53,7 +57,6 @@ protocol HomeDataManagerInputProtocol: AnyObject {
 protocol HomeRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: HomeRemoteDataManagerOutputProtocol? { get set }
-    var service: APIMoviesProtocol? { get set }
     func fetchMovies()
 }
 

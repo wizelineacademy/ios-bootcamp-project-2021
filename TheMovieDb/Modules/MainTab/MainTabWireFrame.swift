@@ -23,7 +23,7 @@ class MainTabWireFrame: MainTabWireFrameProtocol {
     func buildControllers(build view: MainTabViewProtocol) {
         
         guard let view = view as? MainTabView else {return}
-        let homeView = HomeWireFrame.createHomeModule()
+        let homeView = HomeBuilder.createModule()
         let home = view.templateNavigationController(
             unselectedImage: UIImage(systemName: "house")!,
             selectedImage: UIImage(systemName: "house.fill")!,
