@@ -9,17 +9,8 @@
 import Foundation
 import UIKit
 
-class MainTabWireFrame: MainTabWireFrameProtocol {
-    class func createMainTabModule() -> UIViewController {
-        let presenter: MainTabPresenterProtocol = MainTabPresenter()
-        let view = MainTabView()
-        let wireFrame: MainTabWireFrameProtocol = MainTabWireFrame()
-        view.presenter = presenter
-        presenter.view = view
-        presenter.wireFrame = wireFrame
-        return view
-    }
-    
+class MainTabRouter: MainTabRouterProtocol {
+   
     func buildControllers(build view: MainTabViewProtocol) {
         
         guard let view = view as? MainTabView else {return}
