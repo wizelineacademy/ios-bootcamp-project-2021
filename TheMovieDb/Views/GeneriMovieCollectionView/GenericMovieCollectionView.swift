@@ -4,33 +4,45 @@
 //
 //  Created by Jonathan Hernandez on 16/11/21.
 //
-/*
+
 import UIKit
 
-
-
 class GenericMovieCollectionView: UICollectionView {
-    override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
-        let collectionView = UICollectionView(frame: frame, collectionViewLayout: compositionalLayout)
-
-        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        collectionView.backgroundColor = .systemBackground
-        collectionView.register(LargeCollectionViewCell.self, forCellWithReuseIdentifier: LargeCollectionViewCell.reuseIdentifer)
-        collectionView.register(
+    var arrMovies: [SectionMovie: [MovieViewModel]] = [:] {
+        didSet {
+            configureDataSource()
+        }
+    }
+    
+    public init(frame: CGRect) {
+        super.init(frame: frame, collectionViewLayout: compositionalLayout)
+    
+        self.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        self.backgroundColor = .systemBackground
+        self.register(LargeCollectionViewCell.self, forCellWithReuseIdentifier: LargeCollectionViewCell.reuseIdentifer)
+        self.register(
           HeaderCollectionView.self,
           forSupplementaryViewOfKind: "HeaderCollectionView.reuseIdentifier",
           withReuseIdentifier: HeaderCollectionView.reuseIdentifier)
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        collectionView.refreshControl = refreshControl
-        collectionView.sendSubviewToBack(refreshControl)
-        self = collectionView
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    var dataSourceMovie: UICollectionViewDiffableDataSource<T, Movie>! = nil
+    private lazy var dataSourceMovie: UICollectionViewDiffableDataSource<SectionMovie, MovieViewModel> = {
+        return UICollectionViewDiffableDataSource
+        <SectionMovie, MovieViewModel>(collectionView: self) {
+            (collectionView: UICollectionView, indexPath: IndexPath, movieItem: MovieViewModel) -> UICollectionViewCell? in
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: LargeCollectionViewCell.reuseIdentifer,
+                for: indexPath) as? LargeCollectionViewCell else { fatalError("Could not create new cell") }
+            cell.title = movieItem.title
+            cell.portraitPhotoURL = movieItem.image
+            return cell
+        }
+        
+    }()
+    
     let compositionalLayout: UICollectionViewCompositionalLayout = {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
                                               heightDimension: .fractionalHeight(1))
@@ -59,21 +71,7 @@ class GenericMovieCollectionView: UICollectionView {
         return UICollectionViewCompositionalLayout(section: section)
     }()
 
-    func setUpCollectionView() {
-       
-    }
-
     func configureDataSource() {
-        dataSourceMovie = UICollectionViewDiffableDataSource
-        <SectionMovie, Movie>(collectionView: self) {
-            (collectionView: UICollectionView, indexPath: IndexPath, movieItem: Movie) -> UICollectionViewCell? in
-            guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: LargeCollectionViewCell.reuseIdentifer,
-                for: indexPath) as? LargeCollectionViewCell else { fatalError("Could not create new cell") }
-            cell.title = movieItem.title
-            cell.portraitPhotoURL = movieItem.posterPath
-            return cell
-        }
         
         dataSourceMovie.supplementaryViewProvider = { (
           collectionView: UICollectionView,
@@ -93,8 +91,8 @@ class GenericMovieCollectionView: UICollectionView {
         
     }
     
-    func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<T, Movie> {
-        var snapshot = NSDiffableDataSourceSnapshot<T, Movie>()
+    func snapshotForCurrentState() -> NSDiffableDataSourceSnapshot<SectionMovie, MovieViewModel> {
+        var snapshot = NSDiffableDataSourceSnapshot<SectionMovie, MovieViewModel>()
         for (key, value) in arrMovies {
             snapshot.appendSections([key])
             snapshot.appendItems(value)
@@ -103,4 +101,5 @@ class GenericMovieCollectionView: UICollectionView {
     }
     
 }
-*/
+
+

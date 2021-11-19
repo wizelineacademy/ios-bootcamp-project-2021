@@ -20,7 +20,7 @@ class LargeCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var portraitPhotoURL: String? {
+    var portraitPhotoURL: URL? {
         didSet {
             configure()
         }
@@ -44,10 +44,7 @@ extension LargeCollectionViewCell {
         contentView.addSubview(contentContainer)
         
         portraitImageView.translatesAutoresizingMaskIntoConstraints = false
-        
-        if let portraitPhotoURL = portraitPhotoURL, let url = URL(string: "https://image.tmdb.org/t/p/w500\(portraitPhotoURL)") {
-            portraitImageView.kf.setImage(with: url)
-        }
+        portraitImageView.kf.setImage(with: portraitPhotoURL)
         portraitImageView.layer.cornerRadius = 4
         portraitImageView.clipsToBounds = true
         contentContainer.addSubview(portraitImageView)

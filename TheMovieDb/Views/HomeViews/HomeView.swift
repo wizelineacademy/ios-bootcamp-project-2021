@@ -10,6 +10,7 @@ import Foundation
 protocol HomeView: AnyObject {
     func showLoading()
     func stopLoading()
-    func showMoviesHome(arrMovie: [SectionMovie: [Movie]])
+    func showMoviesHome(arrMovie: [SectionMovie: [MovieViewModel]])
+    func showMoviesList(arrMovie: [Movie])
     func showEmptyState()
 }
