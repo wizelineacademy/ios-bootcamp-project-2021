@@ -17,22 +17,22 @@ class CacheImageView: UIImageView {
     cache.totalCostLimit = 200
     return cache
   }
-  var activity: UIActivityIndicatorView = {
-    let a = UIActivityIndicatorView()
-    a.style = .large
-    return a
+  var activityIndicator: UIActivityIndicatorView = {
+    let activityIndicator = UIActivityIndicatorView()
+    activityIndicator.style = .large
+    return activityIndicator
   }()
   
   private var urlStringForChecking: String?
   var emptyImage: UIImage?
   
   public func loadImage(urlString: String?, completion: (() -> Void)? = nil) {
-    self.showLoading(view: &activity)
+    self.showLoading(view: &activityIndicator)
     image = nil
     
     guard urlString != nil else {
       image = emptyImage
-      stopLoading(view: &activity)
+      stopLoading(view: &activityIndicator)
       return
     }
     
@@ -57,7 +57,7 @@ class CacheImageView: UIImageView {
             self.imageCache.setObject(cacheItem, forKey: urlKey)
             if urlString == self.urlStringForChecking {
               self.image = newImageSmaller
-              self.stopLoading(view: &self.activity)
+              self.stopLoading(view: &self.activityIndicator)
               completion?()
             }
           }
