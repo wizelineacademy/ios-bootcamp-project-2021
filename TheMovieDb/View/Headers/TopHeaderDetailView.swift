@@ -33,7 +33,7 @@ class TopHeaderDetailView: UICollectionReusableView {
                         height: UIScreen.main.bounds.width / 1.3,
                         aspectRatio: .scaleAspectFill)
     .roundCorners(circle: false, radius: 0, clipped: true)
-    .setBackgroundColor(color: .black)
+    .setBackgroundColor(color: .transparentWhite)
     .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .build()
   
@@ -95,7 +95,6 @@ class TopHeaderDetailView: UICollectionReusableView {
       url = "\(ApiPath.baseUrlImage.path)\(moviePoster ?? "")"
     } else { url = nil }
     posterImage.loadImage(urlString: url)
- 
     releaseDateLabel.text = releaseDate
     titleLabel.text = title
     scoreLabel.text = "\(score)"

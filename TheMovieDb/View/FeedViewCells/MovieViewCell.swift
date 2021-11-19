@@ -21,7 +21,7 @@ class MovieViewCell: BaseCell {
   var imageMovie = ImageBuilder()
     .sizeAndAspectImage(width: 100, height: 100, aspectRatio: .scaleAspectFill)
     .roundCorners(circle: false, radius: SizeAndMeasures.cornerRadiusSmall.measure, clipped: true)
-    .setBackgroundColor(color: .lightGray)
+    .setBackgroundColor(color: .transparentWhite)
     .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .build()
       

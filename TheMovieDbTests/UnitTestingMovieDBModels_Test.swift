@@ -33,6 +33,7 @@ class UnitTestingMovieDBModels_Test: XCTestCase {
       let item = try JSONDecoder().decode(Movie.self, from: json)
       // Then
       XCTAssertEqual(item.title, "Home alone 1")
+      XCTAssertNotNil(item.poster)
     } catch let error {
       print(error.localizedDescription)
     }
@@ -134,4 +135,3 @@ class UnitTestingMovieDBModels_Test: XCTestCase {
   }
 
 }
-

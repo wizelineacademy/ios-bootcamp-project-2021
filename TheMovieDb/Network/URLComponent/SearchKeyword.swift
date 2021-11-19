@@ -8,13 +8,13 @@
 import Foundation
 
 enum SearchKeyword {
-  case keywords(String)
+  case keywords
 }
 
 extension SearchKeyword: Endpoint {
   var path: String {
     switch self {
-    case .keywords(let word): return "/3/search/\(word)"
+    case .keywords: return "/3/search/keyword"
     }
   }
 }

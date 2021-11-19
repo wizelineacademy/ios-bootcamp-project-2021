@@ -152,7 +152,7 @@ extension FeedViewController {
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let detailVC = DetailViewController()
     guard let movie = setMovie(with: indexPath) else { return }
-    let movieDetailPresenter = MoviePresenter(anotherView: detailVC)
+    let movieDetailPresenter = MoviePresenter(view: detailVC)
     detailVC.movieDetailPresenter = movieDetailPresenter
     detailVC.movieId = movie.id
     navigationController?.pushViewController(detailVC, animated: true)

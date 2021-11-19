@@ -8,12 +8,17 @@
 import Foundation
 
 // MARK: class Presenter and protocols to manage the logic part of the app
-protocol MoviePresenterDelegateShowResults: AnyObject {
+
+protocol MoviePresenterDelegate: AnyObject {
+  var complement: String? { get set }
   func showResults<Element: Decodable>(items: Element)
 }
 
-protocol MoviePresenterDelegate: MoviePresenterDelegateShowResults {
-  var complement: String? { get set }
+extension MoviePresenterDelegate {
+  var complement: String? {
+    get { return nil }
+    set { _ = newValue }
+  }
 }
 
 protocol MovieViewPresenter {
@@ -24,16 +29,11 @@ protocol MovieViewPresenter {
 class MoviePresenter: MovieViewPresenter {
   
   weak var view: MoviePresenterDelegate?
-  weak var anotherView: MoviePresenterDelegateShowResults?
-  private var databaseManager = MovieDBClient.shared
+  var databaseManager = MovieDBClient.shared
   var movieDetails: MovieDetails?
   
   required init(view: MoviePresenterDelegate) {
     self.view = view
-  }
-  
-  init(anotherView: MoviePresenterDelegateShowResults) {
-    self.anotherView = anotherView
   }
   
   private func setUrl(_ from: Endpoint, search: String? = nil) -> URLRequest {
@@ -44,12 +44,7 @@ class MoviePresenter: MovieViewPresenter {
       query = [
         URLQueryItem(name: "query", value: search)
       ]
-    } else {
-      query = [
-        URLQueryItem(name: "language", value: "en"),
-        URLQueryItem(name: "region", value: "US")
-      ]
-    }
+    } else { query = nil }
     
     let urlComponents = endPoint.getUrlComponents(queryItems: query)
     let request = endPoint.request(urlComponents: urlComponents)
@@ -74,7 +69,7 @@ class MoviePresenter: MovieViewPresenter {
             self?.view?.complement = complement!
             self?.view?.showResults(items: element)
           } else {
-            self?.anotherView?.showResults(items: element)
+            self?.view?.showResults(items: element)
           }
         case .failure(let error):
           print(error.localizedDescription)

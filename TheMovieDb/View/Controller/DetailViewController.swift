@@ -235,7 +235,7 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
 }
 
 // MARK: Presenter Delegate
-extension DetailViewController: MoviePresenterDelegateShowResults {
+extension DetailViewController: MoviePresenterDelegate {
   
   func showResults<Element>(items: Element) {
     guard let movie = items as? MovieDetails else { return }

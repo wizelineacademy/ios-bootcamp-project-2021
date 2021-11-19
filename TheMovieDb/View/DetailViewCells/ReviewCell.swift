@@ -21,6 +21,7 @@ class ReviewCell: BaseCell {
     .aspectImage(aspectRatio: .scaleAspectFill)
     .roundCorners(circle: true, radius: SizeAndMeasures.profilePictureSmall.measure, clipped: true)
     .setPlaceHolder(image: UIImage(systemName: "person.crop.circle"))
+    .setBackgroundColor(color: .transparentWhite)
     .setTinColor(color: DesignColor.darkGray)
     .build()
   
@@ -79,6 +80,11 @@ class ReviewCell: BaseCell {
     self.nameLabel.text = name
     self.descriptionLabel.text = description
     
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    profileImage.image = nil
   }
   
 }

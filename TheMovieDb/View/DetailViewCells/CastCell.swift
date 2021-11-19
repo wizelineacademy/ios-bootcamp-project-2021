@@ -20,7 +20,7 @@ class CastCell: BaseCell {
   var profileImage = ImageBuilder()
     .aspectImage(aspectRatio: .scaleAspectFill)
     .roundCorners(circle: true, radius: SizeAndMeasures.profilePictureBig.measure, clipped: true)
-    .setBackgroundColor(color: .darkGray)
+    .setBackgroundColor(color: .transparentWhite)
     .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .build()
   
@@ -62,6 +62,11 @@ class CastCell: BaseCell {
     profileImage.loadImage(urlString: url)
     self.nameLabel.text = name
     self.characterLabel.text = character
+  }
+  
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    profileImage.image = nil
   }
 
 }
