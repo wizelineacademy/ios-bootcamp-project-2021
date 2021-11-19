@@ -127,16 +127,13 @@ class DetailViewController: UIViewController {
         return view
     }()
 
-    var configurationImage: ConfigurationImage?
-    var movieItem: MovieItem?
+    var movieViewModel: MovieViewModel?
     
     // General margin for ui elements
     private let margin: CGFloat = 10
     
     // General corner radius
     private let cornerRadius: CGFloat = 10.0
-    
-    static let segueIdentifier = "goToMovieDetalSegue"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -188,15 +185,11 @@ class DetailViewController: UIViewController {
     }
     
     private func setupData() {
-        guard let movieItem = movieItem else {
+        guard var movieViewModel = movieViewModel else {
             return
         }
-        
-        guard var configurationImage = configurationImage else {
-            return
-        }
-        
-        if let posterURL = movieItem.getPosterURL(baseURL: configurationImage.secureBasePosterURL) {
+        /*
+        if let posterURL = movieViewModel.posterURL {
             self.moviePoster.kf.indicatorType = .activity
             self.moviePoster.kf.setImage(
                 with: posterURL,
@@ -204,14 +197,13 @@ class DetailViewController: UIViewController {
                 options: nil,
                 completionHandler: nil)
         }
+        */
         
-        self.movieTitle.text = movieItem.title
-        self.movieMediaType.text = movieItem.mediaType
-        self.movieReleaseDate.text = movieItem.releaseDate
-        self.movieOverview.text = movieItem.overview
-        if let voteAverage = movieItem.voteAverage {
-            self.movieRating.text = String(voteAverage)
-        }
+        self.movieTitle.text = movieViewModel.title
+        self.movieMediaType.text = movieViewModel.mediaType
+        self.movieReleaseDate.text = movieViewModel.releaseDate
+        self.movieOverview.text = movieViewModel.overview
+        self.movieRating.text = String(movieViewModel.rating)
     }
 
     @objc func closeView() {

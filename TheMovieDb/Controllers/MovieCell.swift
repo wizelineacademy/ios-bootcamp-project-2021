@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class MovieCellController: UICollectionViewCell {
+class MovieCell: UICollectionViewCell {
     static let cellIdentifier = "MovieCell"
     
     lazy private var movieImage: UIImageView = {
@@ -66,18 +66,11 @@ class MovieCellController: UICollectionViewCell {
         return view
     }()
     
-    var movieItem: MovieItem? {
+    var movieViewModel: MovieViewModel! {
         didSet {
-            self.movieTitle.text = movieItem?.title
-            if let voteAverage = movieItem?.voteAverage {
-                self.movieRating.text = String(voteAverage)
-            }
-        }
-    }
-    
-    var configurationImage: ConfigurationImage? {
-        didSet {
-            if let posterURL = movieItem?.getPosterURL(baseURL: configurationImage?.secureBasePosterURL) {
+            self.movieTitle.text = movieViewModel.title
+            self.movieRating.text = String(movieViewModel.rating)
+            if let posterURL = movieViewModel.posterURL {
                 self.movieImage.kf.indicatorType = .activity
                 self.movieImage.kf.setImage(
                     with: posterURL,
