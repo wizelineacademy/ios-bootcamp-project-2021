@@ -6,9 +6,6 @@
 //  
 //
 
-import Foundation
-import UIKit
-
 final class SearchingRouter: SearchingRouterProtocol {
     
     func showMovieDetail(from view: SearchingViewProtocol, with movie: Movie) {

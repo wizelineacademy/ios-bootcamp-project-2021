@@ -6,9 +6,6 @@
 //  
 //
 
-import Foundation
-import UIKit
-
 final class ReviewsRouter: ReviewsRouterProtocol {
     
     func showReviewDetail(from view: ReviewsViewProtocol, with review: Review) {

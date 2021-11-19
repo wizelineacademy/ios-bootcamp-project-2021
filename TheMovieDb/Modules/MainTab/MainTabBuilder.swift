@@ -5,7 +5,7 @@
 //  Created by Javier Cueto on 18/11/21.
 //
 
-import UIKit
+import UIKit.UIViewController
 
 enum MainTabBuilder {
     static func createModule() -> UIViewController {

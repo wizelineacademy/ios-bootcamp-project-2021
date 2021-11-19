@@ -6,8 +6,7 @@
 //  
 //
 
-import Foundation
-import UIKit
+import UIKit.UINavigationController
 
 class MovieDetailRouter: MovieDetailRouterProtocol {
 

@@ -5,7 +5,7 @@
 //  Created by Javier Cueto on 18/11/21.
 //
 
-import UIKit
+import UIKit.UIViewController
 
 enum MovieDetailBuilder {
     static func createModule(with movie: Movie) -> UIViewController {

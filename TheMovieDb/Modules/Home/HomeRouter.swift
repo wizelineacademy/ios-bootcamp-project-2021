@@ -6,9 +6,6 @@
 //  
 //
 
-import Foundation
-import UIKit
-
 class HomeWireFrame: HomeRouterProtocol {
 
     func showMovie(from view: HomeViewProtocol, with movie: Movie) {
