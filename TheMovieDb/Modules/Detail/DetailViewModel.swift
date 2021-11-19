@@ -13,7 +13,15 @@ protocol ViewModel {
 
 typealias DetailMovieRepository = RelatedMoviesRepository & MovieCastRepository
 
+protocol DetailViewModelDelegate: AnyObject {
+    func didStartLoading()
+    func didFinishLoading()
+    func didUpdateRelatedMovieData()
+}
+
 class DetailViewModel: ViewModel {
+    
+    weak var delegate: DetailViewModelDelegate?
     
     struct Dependencies {
         let movie: Movie
@@ -75,7 +83,8 @@ class DetailViewModel: ViewModel {
             .joined(separator: "\n")
     }
     
-    func requestRelatedMovieData(completion: @escaping () -> Void) {
+    func requestRelatedMovieData() {
+        delegate?.didStartLoading()
         let dispatchGroup = DispatchGroup()
         dispatchGroup.enter()
         dependencies.service.getRelatedMovies(
@@ -116,7 +125,8 @@ class DetailViewModel: ViewModel {
             dispatchGroup.leave()
         }
         dispatchGroup.notify(queue: .main) {
-            completion()
+            self.delegate?.didFinishLoading()
+            self.delegate?.didUpdateRelatedMovieData()
         }
     }
     
