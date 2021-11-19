@@ -13,7 +13,11 @@ struct MovieFacade: MovieService {
     
     func get<T: Decodable>(search: String? = nil, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) {
         
-        let baseURL = URL(string:"https://api.themoviedb.org/3/")!
+        guard let baseURL = URL(string:"https://api.themoviedb.org/3/") else {
+            returnResponse(.failure(.invalidUrl))
+            os_log("Network request error!", log: OSLog.networkRequest, type: .error)
+            return
+        }
 
         var components = URLComponents()
         components.path = endpoint.path

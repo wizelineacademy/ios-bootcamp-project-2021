@@ -13,10 +13,10 @@ final class MockService: MovieService {
     func get<T>(search: String?, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) where T : Decodable {
         switch endpoint {
         case .trending, .nowPlaying, .popular, .topRated, .upcoming:
-            let moviesResponse = mockedMovies() as! T
+            guard let moviesResponse = mockedMovies() as? T else { return }
             returnResponse(.success(moviesResponse))
         case .search:
-            let searchResponse = mockedSearchObject() as! T
+            guard let searchResponse = mockedSearchObject() as? T else { return }
             returnResponse(.success(searchResponse))
         case .movieDetails(_):
             guard let movieDetail = mockedMovies().results?[0] as? T else { return }
@@ -25,16 +25,16 @@ final class MockService: MovieService {
             guard let personDetail = Person(id: 005, biography: "", knownForDepartment: "Actor", name: "Brad Pit", popularity: 5.1, profilePath: "", birthday: "", deathday: "") as? T else { return }
             returnResponse(.success(personDetail))
         case .similar(_):
-            let movieSimilar = mockedMovies() as! T
+            guard let movieSimilar = mockedMovies() as? T else { return }
             returnResponse(.success(movieSimilar))
         case .recommendations(_):
-            let movieRecomended = mockedMovies() as! T
+            guard let movieRecomended = mockedMovies() as? T else { return }
             returnResponse(.success(movieRecomended))
         case .reviews(_):
-            let reviewsResponse = mockedReview() as! T
+            guard let reviewsResponse = mockedReview() as? T else { return }
             returnResponse(.success(reviewsResponse))
         case .credits(_):
-            let creditsResponse = mockedCredits() as! T
+            guard let creditsResponse = mockedCredits() as? T else { return }
             returnResponse(.success(creditsResponse))
         }
     }

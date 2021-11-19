@@ -65,7 +65,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = (self.tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) as UITableViewCell?)!
+        guard let cell: UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) else {
+            return UITableViewCell()
+        }
         cell.textLabel?.text = viewModel.movies[indexPath.row].title
         return cell
     }
