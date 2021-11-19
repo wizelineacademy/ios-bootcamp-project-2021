@@ -16,6 +16,7 @@
 		452BD839272A5C4700F842F5 /* Reviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452BD838272A5C4700F842F5 /* Reviews.swift */; };
 		45334C66274766A000CB40DD /* ReviewDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45334C65274766A000CB40DD /* ReviewDetailInteractor.swift */; };
 		45334C6A274766F600CB40DD /* ReviewsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45334C69274766F600CB40DD /* ReviewsInteractor.swift */; };
+		45334C6C274770DA00CB40DD /* ReviewsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45334C6B274770DA00CB40DD /* ReviewsBuilder.swift */; };
 		4546A262272B848800D77147 /* APIBuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546A261272B848800D77147 /* APIBuild.swift */; };
 		455C5ACF2734DE3D00ADE036 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5ACE2734DE3D00ADE036 /* Reusable.swift */; };
 		455C5AD12734E20400ADE036 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5AD02734E20400ADE036 /* ReviewViewModel.swift */; };
@@ -49,7 +50,7 @@
 		45C081A6273E3A52002AF663 /* ReviewsProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C0819F273E3A52002AF663 /* ReviewsProtocols.swift */; };
 		45C081A8273E3A52002AF663 /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C081A1273E3A52002AF663 /* ReviewsView.swift */; };
 		45C081A9273E3A52002AF663 /* ReviewsRemoteDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C081A2273E3A52002AF663 /* ReviewsRemoteDataManager.swift */; };
-		45C081AA273E3A52002AF663 /* ReviewsWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C081A3273E3A52002AF663 /* ReviewsWireFrame.swift */; };
+		45C081AA273E3A52002AF663 /* ReviewsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C081A3273E3A52002AF663 /* ReviewsRouter.swift */; };
 		45C8C8472733B196001FB82E /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45C8C8462733B196001FB82E /* MovieViewModel.swift */; };
 		45D2B4DE272EFD5A0065DC0D /* DetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4DD272EFD5A0065DC0D /* DetailHeaderView.swift */; };
 		45D2B4E7272F34ED0065DC0D /* DetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45D2B4E6272F34ED0065DC0D /* DetailHeader.swift */; };
@@ -116,6 +117,7 @@
 		452BD838272A5C4700F842F5 /* Reviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reviews.swift; sourceTree = "<group>"; };
 		45334C65274766A000CB40DD /* ReviewDetailInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewDetailInteractor.swift; sourceTree = "<group>"; };
 		45334C69274766F600CB40DD /* ReviewsInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewsInteractor.swift; sourceTree = "<group>"; };
+		45334C6B274770DA00CB40DD /* ReviewsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsBuilder.swift; sourceTree = "<group>"; };
 		4546A261272B848800D77147 /* APIBuild.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBuild.swift; sourceTree = "<group>"; };
 		455C5ACE2734DE3D00ADE036 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		455C5AD02734E20400ADE036 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
@@ -149,7 +151,7 @@
 		45C0819F273E3A52002AF663 /* ReviewsProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsProtocols.swift; sourceTree = "<group>"; };
 		45C081A1273E3A52002AF663 /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
 		45C081A2273E3A52002AF663 /* ReviewsRemoteDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsRemoteDataManager.swift; sourceTree = "<group>"; };
-		45C081A3273E3A52002AF663 /* ReviewsWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsWireFrame.swift; sourceTree = "<group>"; };
+		45C081A3273E3A52002AF663 /* ReviewsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsRouter.swift; sourceTree = "<group>"; };
 		45C8C8462733B196001FB82E /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		45D2B4DD272EFD5A0065DC0D /* DetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeaderView.swift; sourceTree = "<group>"; };
 		45D2B4E6272F34ED0065DC0D /* DetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeader.swift; sourceTree = "<group>"; };
@@ -395,7 +397,8 @@
 				45334C69274766F600CB40DD /* ReviewsInteractor.swift */,
 				45C081A1273E3A52002AF663 /* ReviewsView.swift */,
 				45C081A2273E3A52002AF663 /* ReviewsRemoteDataManager.swift */,
-				45C081A3273E3A52002AF663 /* ReviewsWireFrame.swift */,
+				45C081A3273E3A52002AF663 /* ReviewsRouter.swift */,
+				45334C6B274770DA00CB40DD /* ReviewsBuilder.swift */,
 			);
 			path = Reviews;
 			sourceTree = "<group>";
@@ -771,7 +774,7 @@
 				45F822A22744C497004BC5BA /* MovieDetailViewModel.swift in Sources */,
 				45FAD4F627419BAD0026CC23 /* MovieDetailProtocols.swift in Sources */,
 				45BB7ABB272DDAFE00DE07C3 /* TopRatedSectionCell.swift.swift in Sources */,
-				45C081AA273E3A52002AF663 /* ReviewsWireFrame.swift in Sources */,
+				45C081AA273E3A52002AF663 /* ReviewsRouter.swift in Sources */,
 				45C081A4273E3A52002AF663 /* ReviewsPresenter.swift in Sources */,
 				45D2B4DE272EFD5A0065DC0D /* DetailHeaderView.swift in Sources */,
 				45BB7AAF272DAE3A00DE07C3 /* MovieGroupSections.swift in Sources */,
@@ -785,6 +788,7 @@
 				45FAD4D32741681E0026CC23 /* SearchingProtocols.swift in Sources */,
 				45FAD51A2741BFA50026CC23 /* MainTabView.swift in Sources */,
 				45BB7AA6272D019700DE07C3 /* APIBuildProtocol.swift.swift in Sources */,
+				45334C6C274770DA00CB40DD /* ReviewsBuilder.swift in Sources */,
 				45C08199273E2E65002AF663 /* ReviewDetailView.swift in Sources */,
 				45A64D4D2728F2DC00159CE6 /* MainTabViewController.swift in Sources */,
 				45FAD4D72741681E0026CC23 /* SearchingWireFrame.swift in Sources */,

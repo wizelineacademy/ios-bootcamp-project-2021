@@ -14,25 +14,19 @@ final class ReviewsPresenter {
     // MARK: Properties
     weak var view: ReviewsViewProtocol?
     var interactor: ReviewsInteractorInputProtocol?
-    var wireFrame: ReviewsWireFrameProtocol?
-    
-    var movie: Movie?
+    var router: ReviewsRouterProtocol?
+
 }
 
 extension ReviewsPresenter: ReviewsPresenterProtocol {
-    
-    func setMovie(_ movie: Movie) {
-        self.movie = movie
-    }
-    
+
     func viewDidLoad() {
-        guard let movie = movie else { return }
-        interactor?.getReviews(from: movie)
+        interactor?.getReviews()
     }
     
     func showDetail(review: Review) {
         guard let view = view else { return }
-        wireFrame?.showReviewDetail(from: view, with: review)
+        router?.showReviewDetail(from: view, with: review)
     }
 }
 

@@ -32,7 +32,7 @@ class MovieDetailWireFrame: MovieDetailWireFrameProtocol {
     }
     
     func showReviews(from view: MovieDetailViewProtocol, with movie: Movie) {
-        let reviewDetail = ReviewsWireFrame.createReviewsModule(movie: movie)
+        let reviewDetail = ReviewsBuilder.createModule(movie: movie)
         guard let view = view as? MovieDetailView else { return }
         let nav = UINavigationController(rootViewController: reviewDetail)
         view.present(nav, animated: true)

@@ -13,9 +13,13 @@ final class ReviewsInteractor: ReviewsInteractorInputProtocol {
     // MARK: Properties
     weak var presenter: ReviewsInteractorOutputProtocol?
     var remoteDatamanager: ReviewsRemoteDataManagerInputProtocol?
+    private let movie: Movie
+    func getReviews() {
+        remoteDatamanager?.fetchReviews(movie: self.movie)
+    }
     
-    func getReviews(from movie: Movie) {
-        remoteDatamanager?.fetchReviews(movie: movie)
+    init(movie: Movie) {
+        self.movie = movie
     }
     
 }
