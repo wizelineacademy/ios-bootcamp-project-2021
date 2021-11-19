@@ -10,11 +10,11 @@ import UIKit
 final class ListSectionViewController: UICollectionViewController {
     
     static let segueIdentifier: String = "go-to-list-section"
-    private var isPaginationEnabled: Bool = true
     
+    private let executor: ExecutorRequest
+    private var isPaginationEnabled: Bool = true
     private let navigationTitle: String
     private var request: (Request & PageableModel)?
-    
     private var items: [MovieModel] = []
     
     private lazy var refreshControl: UIRefreshControl = {
@@ -23,8 +23,11 @@ final class ListSectionViewController: UICollectionViewController {
         return refresh
     }()
     
-    init?(title: String, request: (Request & PageableModel)?, coder: NSCoder) {
+    init?(title: String,
+          executor: ExecutorRequest = NetworkAPI(),
+          request: (Request & PageableModel)?, coder: NSCoder) {
         self.navigationTitle = title
+        self.executor = executor
         self.request = request
         super.init(coder: coder)
     }
@@ -42,13 +45,9 @@ final class ListSectionViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: ListSectionCell.identifier,
-                                     for: indexPath) as? ListSectionCell else {
-                    return UICollectionViewCell()
-                }
-        let movie = items[indexPath.row]
-        cell.movie = movie
+        let cell: ListSectionCell = collectionView.reuse(identifier: ListSectionCell.identifier,
+                                                         for: indexPath)
+        cell.movie = items[indexPath.row]
         return cell
     }
     
@@ -94,8 +93,7 @@ final class ListSectionViewController: UICollectionViewController {
 private extension ListSectionViewController {
     
     func callService() {
-        NetworkAPI
-            .shared
+        executor
             .execute(request: self.request,
                      onSuccess: { [weak self] (response: PageModel<MovieModel>?) in
                 self?.onSuccessResponse(response)
@@ -105,23 +103,19 @@ private extension ListSectionViewController {
     }
     
     func onSuccessResponse(_ response: PageModel<MovieModel>?) {
-        DispatchQueue.main.async {
-            self.request?.nextPage()
-            self.isPaginationEnabled = false
-            self.items.append(contentsOf: response?.results ?? [])
-            self.refreshControl.endRefreshing()
-            self.collectionView.reloadData()
-        }
+        request?.nextPage()
+        isPaginationEnabled = false
+        items.append(contentsOf: response?.results ?? [])
+        refreshControl.endRefreshing()
+        collectionView.reloadData()
     }
     
     func onErrorResponse(_ error: Error?) {
-        DispatchQueue.main.async {
-            self.isPaginationEnabled = false
-            self.refreshControl.endRefreshing()
-            guard let error = error as? NetworkError else {
-                return
-            }
-            Toast.showToast(title: error.localizedDescription)
+        isPaginationEnabled = false
+        refreshControl.endRefreshing()
+        guard let error = error as? NetworkError else {
+            return
         }
+        Toast.showToast(title: error.localizedDescription)
     }
 }

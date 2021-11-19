@@ -46,6 +46,7 @@ public protocol Request {
     var query: [String: String]? { get }
     var params: Encodable? { get }
     var decodingKey: JSONDecoder.KeyDecodingStrategy { get }
+    var jsonMock: String? { get }
 }
 
 extension Request {
@@ -93,5 +94,9 @@ extension Request {
     
     var decodingKey: JSONDecoder.KeyDecodingStrategy {
         return .useDefaultKeys
+    }
+    
+    var jsonMock: String? {
+        return nil
     }
 }

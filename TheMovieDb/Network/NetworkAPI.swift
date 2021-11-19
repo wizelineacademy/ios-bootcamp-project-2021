@@ -8,61 +8,46 @@
 import Foundation
 
 protocol ExecutorRequest {
-    associatedtype Response: Codable
-    func execute(onSuccess: @escaping (Response?) -> Void,
-                 onError: @escaping (Error?) -> Void)
+    func execute<D: Decodable>(request: Request?,
+                               onSuccess: @escaping (D?) -> Void,
+                               onError: @escaping (Error?) -> Void)
 }
 
-final class Network<T: Codable>: ExecutorRequest {
-    typealias Response = T
-    private var request: Request?
+final class MockNetworkAPI: ExecutorRequest {
     
-    init(request: Request?) {
-        self.request = request
-    }
-    
-    func execute(onSuccess: @escaping (T?) -> Void,
-                 onError: @escaping (Error?) -> Void) {
-        guard let requestURL = request?.urlEndpoint else {
-            onError(NetworkError.invalidData)
-            return
-        }
-        let task = URLSession.shared.dataTask(with: requestURL) { data, response, error in
-            guard let data = data,
-                  let response = response as? HTTPURLResponse,
-                  200 ..< 300 ~= response.statusCode,
-                  error == nil else {
-                      onError(NetworkError.requestFailed)
-                      return
+    func execute<D>(request: Request?,
+                    onSuccess: @escaping (D?) -> Void,
+                    onError: @escaping (Error?) -> Void) where D : Decodable {
+        guard let rawData = request?.jsonMock,
+              let data = rawData.data(using: .utf8) else {
+                  DispatchQueue.main.async {
+                      onError(NetworkError.noResponse)
                   }
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = self.request?.decodingKey ?? .useDefaultKeys
-                let object = try decoder.decode(T.self, from: data)
+                  return
+        }
+        do {
+            let decoder = JSONDecoder()
+            let object = try decoder.decode(D.self, from: data)
+            DispatchQueue.main.async {
                 onSuccess(object)
-                return
-            } catch {
-                onError(NetworkError.jsonParsingFailed)
-                return
+            }
+        } catch let error {
+            DispatchQueue.main.async {
+                onError(error)
             }
         }
-        task.resume()
     }
 }
 
-final class NetworkAPI {
-    
-    static var shared: NetworkAPI = {
-        return NetworkAPI()
-    }()
-    
-    private init() {}
+final class NetworkAPI: ExecutorRequest {
     
     func execute<D: Decodable>(request: Request?,
                                onSuccess: @escaping (D?) -> Void,
                                onError: @escaping (Error?) -> Void) {
         guard let requestURL = request?.urlEndpoint else {
-            onError(NetworkError.invalidData)
+            DispatchQueue.main.async {
+                onError(NetworkError.invalidData)
+            }
             return
         }
         let task = URLSession.shared.dataTask(with: requestURL) { data, response, error in
@@ -70,17 +55,23 @@ final class NetworkAPI {
                   let response = response as? HTTPURLResponse,
                   200 ..< 300 ~= response.statusCode,
                   error == nil else {
-                      onError(NetworkError.requestFailed)
+                      DispatchQueue.main.async {
+                          onError(NetworkError.requestFailed)
+                      }
                       return
                   }
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = request?.decodingKey ?? .useDefaultKeys
                 let object = try decoder.decode(D.self, from: data)
-                onSuccess(object)
+                DispatchQueue.main.async {
+                    onSuccess(object)
+                }
                 return
             } catch {
-                onError(NetworkError.jsonParsingFailed)
+                DispatchQueue.main.async {
+                    onError(NetworkError.jsonParsingFailed)
+                }
                 return
             }
         }

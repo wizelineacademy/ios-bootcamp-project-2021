@@ -17,9 +17,8 @@ final class HomeViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeViewCell.identifier, for: indexPath) as? HomeViewCell else {
-            return UICollectionViewCell()
-        }
+        let cell: HomeViewCell = collectionView.reuse(identifier: HomeViewCell.identifier,
+                                                      for: indexPath)
         cell.section = HomeSections.allCases[indexPath.row]
         return cell
     }

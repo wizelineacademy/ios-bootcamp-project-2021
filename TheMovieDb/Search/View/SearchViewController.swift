@@ -10,6 +10,7 @@ import UIKit
 final class SearchViewController: UICollectionViewController {
     
     private var isPaginationEnabled: Bool = true
+    private let executor: ExecutorRequest = NetworkAPI()
     private var request: (Request & SearchableModel & PageableModel)? = SearchRequest()
     private var totalOfPages: Int = 1
     private var items: [MovieModel] = []
@@ -29,13 +30,9 @@ final class SearchViewController: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: SearchCell.cellIdentifier,
-                                     for: indexPath) as? SearchCell else {
-                    return UICollectionViewCell()
-                }
-        let movie = items[indexPath.row]
-        cell.movie = movie
+        let cell: SearchCell = collectionView.reuse(identifier: SearchCell.cellIdentifier,
+                                                    for: indexPath)
+        cell.movie = items[indexPath.row]
         return cell
     }
     
@@ -75,8 +72,7 @@ private extension SearchViewController {
     func callService() {
         guard let actualPage = request?.page,
                 actualPage <= totalOfPages else { return }
-        NetworkAPI
-            .shared
+        executor
             .execute(request: request,
                      onSuccess: { [weak self] (data: PageModel<MovieModel>?) in
                 self?.onSuccessResponse(data)
@@ -86,19 +82,15 @@ private extension SearchViewController {
     }
     
     func onSuccessResponse(_ response: PageModel<MovieModel>?) {
-        DispatchQueue.main.async {
-            self.isPaginationEnabled = false
-            self.totalOfPages = response?.totalPages ?? 0
-            self.items.append(contentsOf: response?.results ?? [])
-            self.collectionView.reloadData()
-        }
+        isPaginationEnabled = false
+        totalOfPages = response?.totalPages ?? 0
+        items.append(contentsOf: response?.results ?? [])
+        collectionView.reloadData()
     }
     
     func onErrorResponse(_ error: Error?) {
-        DispatchQueue.main.async {
-            self.isPaginationEnabled = false
-            Toast.showToast(title: error?.localizedDescription ?? "")
-        }
+        isPaginationEnabled = false
+        Toast.showToast(title: error?.localizedDescription ?? "")
     }
 }
 

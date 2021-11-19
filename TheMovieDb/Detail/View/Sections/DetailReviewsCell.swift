@@ -118,12 +118,9 @@ extension DetailReviewsCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RatingViewCell.identifier,
-                                                            for: indexPath) as? RatingViewCell else {
-            return UICollectionViewCell()
-        }
-        let review = reviewsModel?.reviews[indexPath.row]
-        cell.review = review
+        let cell: RatingViewCell = collectionView.reuse(identifier: RatingViewCell.identifier,
+                                                        for: indexPath)
+        cell.review = reviewsModel?.reviews[indexPath.row]
         return cell
     }
     
