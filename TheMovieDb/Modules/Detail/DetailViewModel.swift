@@ -35,11 +35,11 @@ class DetailViewModel: ViewModel {
     
     private let dependencies: Dependencies
     
-    private var similarMovies = [Movie]()
+    private var similarMovies: [Movie]?
     
-    private var recommendations = [Movie]()
+    private var recommendations: [Movie]?
     
-    private var cast = [CastMember]()
+    private var cast: [CastMember]?
     
     init(dependencies: Dependencies) {
         self.dependencies = dependencies
@@ -65,20 +65,29 @@ class DetailViewModel: ViewModel {
         dependencies.movie.posterPath
     }
     
-    func getSimilarMovies() -> String {
-        similarMovies.prefix(5)
+    func getSimilarMovies() -> String? {
+        guard let similarMovies = similarMovies else {
+            return nil
+        }
+        return similarMovies.prefix(5)
             .map { $0.title }
             .joined(separator: ", ")
     }
     
-    func getRecommendationMovies() -> String {
-        recommendations.prefix(5)
+    func getRecommendationMovies() -> String? {
+        guard let recommendations = recommendations else {
+            return nil
+        }
+        return recommendations.prefix(5)
             .map { $0.title }
             .joined(separator: ", ")
     }
     
-    func getCast() -> String {
-        cast.prefix(5)
+    func getCast() -> String? {
+        guard let cast = cast else {
+            return nil
+        }
+        return cast.prefix(5)
             .map { "\($0.name): \($0.character)" }
             .joined(separator: "\n")
     }
