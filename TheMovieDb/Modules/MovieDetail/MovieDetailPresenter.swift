@@ -13,7 +13,7 @@ class MovieDetailPresenter {
     // MARK: Properties
     weak var view: MovieDetailViewProtocol?
     var interactor: MovieDetailInteractorInputProtocol?
-    var wireFrame: MovieDetailWireFrameProtocol?
+    var router: MovieDetailRouterProtocol?
 }
 
 extension MovieDetailPresenter: MovieDetailPresenterProtocol {
@@ -28,12 +28,12 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
     
     func showReviews(_ movie: Movie) {
         guard let view = view else { return }
-        wireFrame?.showReviews(from: view, with: movie)
+        router?.showReviews(from: view, with: movie)
     }
     
     func showMovie(_ movie: Movie) {
         guard let view = view else { return }
-        wireFrame?.showMovie(from: view, with: movie)
+        router?.showMovie(from: view, with: movie)
     }
 }
 

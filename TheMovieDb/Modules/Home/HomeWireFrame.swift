@@ -33,7 +33,7 @@ class HomeWireFrame: HomeWireFrameProtocol {
     }
     
     func showMovie(from view: HomeViewProtocol, with movie: Movie) {
-        let controller = MovieDetailWireFrame.createMovieDetailModule(with: movie)
+        let controller = MovieDetailBuilder.createModule(with: movie)
         guard let view = view as? HomeView else { return }
         view.navigationController?.pushViewController(controller, animated: true)
     }
