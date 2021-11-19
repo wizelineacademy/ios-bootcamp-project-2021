@@ -34,7 +34,7 @@ final class ReviewsWireFrame: ReviewsWireFrameProtocol {
     }
     
     func showReviewDetail(from view: ReviewsViewProtocol, with review: Review) {
-        let reviewDetail = ReviewDetailWireFrame.createReviewDetailModule(with: review)
+        let reviewDetail = ReviewDetailBuilder.createModule(with: review)
         guard let view = view as? ReviewsView else { return }
         view.navigationController?.pushViewController(reviewDetail, animated: true)
     }
