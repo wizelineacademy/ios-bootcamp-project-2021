@@ -20,13 +20,13 @@ enum FeedTypes {
 private extension FeedTypes {
     var feedTitle: String {
         switch self {
-        case .trending: return "Trending"
-        case .nowPlaying: return "Now Playing"
-        case .popular: return "Popular"
-        case .topRated: return "Top Rated"
-        case .upcoming: return "Upcoming"
-        case .keyword: return "Keyword"
-        case .search: return "Search"
+        case .trending: return "home.feed.trending.title".localized
+        case .nowPlaying: return "home.feed.nowPlaying.title".localized
+        case .popular: return "home.feed.popular.title".localized
+        case .topRated: return "home.feed.topRated.title".localized
+        case .upcoming: return "home.feed.upcoming.title".localized
+        case .keyword: return "home.feed.keyword.title".localized
+        case .search: return "home.feed.search.title".localized
         }
     }
 }
@@ -88,6 +88,7 @@ final class HomeView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "home.navigation.title".localized
         configureSearch()
         configureFeedCollection()
         configureTypesCollection()
