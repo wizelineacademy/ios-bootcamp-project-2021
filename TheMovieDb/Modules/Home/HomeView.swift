@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import OSLog
 
 enum FeedTypes {
     case trending
@@ -137,8 +138,8 @@ final class HomeView: UIViewController {
                 self?.loadedPages = response.page
                 self?.movies.append(contentsOf: response.results)
                 self?.updateFeed()
-            case .failure(let error):
-                print(error)
+            case .failure:
+                os_log("Network request error", log: OSLog.networkRequest, type: .debug)
             }
             self?.isLoading = false
         }

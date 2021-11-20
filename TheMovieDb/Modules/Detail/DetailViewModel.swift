@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 protocol ViewModel {
     associatedtype Dependencies
@@ -103,8 +104,8 @@ class DetailViewModel: ViewModel {
             switch result {
             case .success(let data):
                 self?.similarMovies = data.results
-            case .failure(let error):
-                print(error)
+            case .failure:
+                os_log("Network request error", log: OSLog.networkRequest, type: .debug)
             }
             dispatchGroup.leave()
         }
@@ -116,8 +117,8 @@ class DetailViewModel: ViewModel {
             switch result {
             case .success(let data):
                 self?.recommendations = data.results
-            case .failure(let error):
-                print(error)
+            case .failure:
+                os_log("Network request error", log: OSLog.networkRequest, type: .debug)
             }
             dispatchGroup.leave()
         }
@@ -128,8 +129,8 @@ class DetailViewModel: ViewModel {
             switch result {
             case .success(let data):
                 self?.cast = data.cast
-            case .failure(let error):
-                print(error)
+            case .failure:
+                os_log("Network request error", log: OSLog.networkRequest, type: .debug)
             }
             dispatchGroup.leave()
         }
