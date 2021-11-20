@@ -15,26 +15,24 @@ protocol ReviewDetailViewProtocol: AnyObject {
     func presenterPushDataView(receivedReview: Review)
 }
 
-protocol ReviewDetailWireFrameProtocol: AnyObject {
-    // PRESENTER -> WIREFRAME
-    static func createReviewDetailModule(with review: Review) -> UIViewController
+protocol ReviewDetailBuilderProtocol {
+    static func createModule(with review: Review) -> UIViewController
 }
 
 protocol ReviewDetailPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: ReviewDetailViewProtocol? { get set }
-    var wireFrame: ReviewDetailWireFrameProtocol? { get set }
+    var interactor: ReviewDetailInteractorInputProtocol? { get set }
     func viewDidLoad()
-    func setReview(settedReview: Review)
 }
 
 protocol ReviewDetailInteractorOutputProtocol: AnyObject {
+    // INTERACTOR -> PRESENTER
     func interactorPushDataPresenter(receivedReview: Review)
 }
 
 protocol ReviewDetailInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: ReviewDetailInteractorOutputProtocol? { get set }
-    func interactorGetData()
-    func setReview(settedReview: Review)
+    func getReview()
 }

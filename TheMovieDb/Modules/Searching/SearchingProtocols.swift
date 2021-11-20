@@ -17,17 +17,21 @@ protocol SearchingViewProtocol: AnyObject {
     func stopSpinnerView()
 }
 
-protocol SearchingWireFrameProtocol: AnyObject {
-    // PRESENTER -> WIREFRAME
-    static func createSearchingModule() -> UIViewController
+protocol SearchingRouterProtocol: AnyObject {
+    // PRESENTER -> Router
     func showMovieDetail(from view: SearchingViewProtocol, with movie: Movie)
+}
+
+protocol SearchingBuilderProtocol {
+    // PRESENTER -> WIREFRAME
+    static func createModule() -> UIViewController
 }
 
 protocol SearchingPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: SearchingViewProtocol? { get set }
     var interactor: SearchingInteractorInputProtocol? { get set }
-    var wireFrame: SearchingWireFrameProtocol? { get set }
+    var router: SearchingRouterProtocol? { get set }
     
     func viewDidLoad()
     func searchMovies(_ searchText: String)
@@ -51,7 +55,7 @@ protocol SearchingInteractorInputProtocol: AnyObject {
 protocol SearchingRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: SearchingRemoteDataManagerOutputProtocol? { get set }
-    var service: APIMoviesProtocol? { get set }
+
     func fetchMovies(_ searchText: String)
 }
 

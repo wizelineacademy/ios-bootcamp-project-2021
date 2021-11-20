@@ -9,15 +9,18 @@
 import Foundation
 
 class ReviewDetailInteractor: ReviewDetailInteractorInputProtocol {
+    
     // MARK: Properties
     weak var presenter: ReviewDetailInteractorOutputProtocol?
-    var review: Review?
-    func interactorGetData() {
-        guard let review = review else { return }
-        presenter?.interactorPushDataPresenter(receivedReview: review)
+    private let review: Review
+    
+    init(review: Review) {
+        self.review = review
+        
+    }
+    
+    func getReview() {
+        presenter?.interactorPushDataPresenter(receivedReview: self.review)
     }
 
-    func setReview(settedReview: Review) {
-        self.review = settedReview
-    }
 }

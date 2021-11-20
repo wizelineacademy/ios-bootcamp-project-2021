@@ -11,14 +11,14 @@ import Foundation
 final class MainTabPresenter {
     // MARK: Properties
     weak var view: MainTabViewProtocol?
-    var wireFrame: MainTabWireFrameProtocol?
+    var router: MainTabRouterProtocol?
     
 }
 
 extension MainTabPresenter: MainTabPresenterProtocol {
     func viewWillAppear() {
         guard let view = view else { return }
-        wireFrame?.buildControllers(build: view)
+        router?.buildControllers(build: view)
 
     }
 }

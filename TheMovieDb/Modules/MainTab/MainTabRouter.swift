@@ -6,24 +6,14 @@
 //  
 //
 
-import Foundation
-import UIKit
+import UIKit.UIImage
 
-class MainTabWireFrame: MainTabWireFrameProtocol {
-    class func createMainTabModule() -> UIViewController {
-        let presenter: MainTabPresenterProtocol = MainTabPresenter()
-        let view = MainTabView()
-        let wireFrame: MainTabWireFrameProtocol = MainTabWireFrame()
-        view.presenter = presenter
-        presenter.view = view
-        presenter.wireFrame = wireFrame
-        return view
-    }
-    
+class MainTabRouter: MainTabRouterProtocol {
+   
     func buildControllers(build view: MainTabViewProtocol) {
         
         guard let view = view as? MainTabView else {return}
-        let homeView = HomeWireFrame.createHomeModule()
+        let homeView = HomeBuilder.createModule()
         let home = view.templateNavigationController(
             unselectedImage: UIImage(systemName: "house")!,
             selectedImage: UIImage(systemName: "house.fill")!,
@@ -31,7 +21,7 @@ class MainTabWireFrame: MainTabWireFrameProtocol {
             rootViewController: homeView
         )
         
-        let searchView = SearchingWireFrame.createSearchingModule()
+        let searchView = SearchingBuilder.createModule()
         let search = view.templateNavigationController(
             unselectedImage: UIImage(systemName: "magnifyingglass")!,
             selectedImage: UIImage(systemName: "text.magnifyingglass")!,

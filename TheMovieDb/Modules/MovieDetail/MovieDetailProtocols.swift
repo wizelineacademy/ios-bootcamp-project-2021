@@ -17,18 +17,22 @@ protocol MovieDetailViewProtocol: AnyObject {
     func setMovie(_ movie: Movie)
 }
 
-protocol MovieDetailWireFrameProtocol: AnyObject {
-    // PRESENTER -> WIREFRAME
-    static func createMovieDetailModule(with movie: Movie) -> UIViewController
+protocol MovieDetailRouterProtocol: AnyObject {
+    // PRESENTER -> ROUTER
     func showReviews(from view: MovieDetailViewProtocol, with movie: Movie)
     func showMovie(from view: MovieDetailViewProtocol, with movie: Movie)
+}
+
+protocol MovieDetailBuilderProtocol: AnyObject {
+    // BUILDER
+    static func createModule(with movie: Movie) -> UIViewController
 }
 
 protocol MovieDetailPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: MovieDetailViewProtocol? { get set }
     var interactor: MovieDetailInteractorInputProtocol? { get set }
-    var wireFrame: MovieDetailWireFrameProtocol? { get set }
+    var router: MovieDetailRouterProtocol? { get set }
     
     func viewDidLoad()
     func setMovie(_ movie: Movie)
@@ -56,7 +60,6 @@ protocol MovieDetailDataManagerInputProtocol: AnyObject {
 protocol MovieDetailRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: MovieDetailRemoteDataManagerOutputProtocol? { get set }
-    var service: APIMoviesProtocol? { get set }
     func fetchRelatedMovies()
 }
 

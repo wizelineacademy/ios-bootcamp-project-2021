@@ -11,10 +11,14 @@ import Foundation
 final class HomeRemoteDataManager: HomeRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: HomeRemoteDataManagerOutputProtocol?
-    var service: APIMoviesProtocol?
+    private let service: APIMoviesProtocol
     private let defaultParameters = APIParameters()
     private let group = DispatchGroup()
     private var movies: [MovieGroupSections: [Movie]] = [:]
+    
+    init(service: APIMoviesProtocol) {
+        self.service = service
+    }
     
     func fetchMovies() {
         MovieGroupSections.allCases.forEach { fetchData(typeMovieSection: $0) }
@@ -25,7 +29,7 @@ final class HomeRemoteDataManager: HomeRemoteDataManagerInputProtocol {
     
     private func fetchData(typeMovieSection: MovieGroupSections) {
         group.enter()
-        service?.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: {(response: Result<Movies, Error>) in
+        service.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: {(response: Result<Movies, Error>) in
             switch response {
             case .failure(let error):
                 Log.networkLayer(error).description

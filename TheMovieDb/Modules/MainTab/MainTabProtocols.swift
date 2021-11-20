@@ -14,16 +14,20 @@ protocol MainTabViewProtocol: AnyObject {
     var presenter: MainTabPresenterProtocol? { get set }
 }
 
-protocol MainTabWireFrameProtocol: AnyObject {
-    // PRESENTER -> WIREFRAME
-    static func createMainTabModule() -> UIViewController
+protocol MainTabRouterProtocol: AnyObject {
+    // PRESENTER -> ROUTER
     func buildControllers(build view: MainTabViewProtocol)
+}
+
+protocol MainTabBuilderProtocol: AnyObject {
+    // BUILDER
+    static func createModule() -> UIViewController
 }
 
 protocol MainTabPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: MainTabViewProtocol? { get set }
-    var wireFrame: MainTabWireFrameProtocol? { get set }
+    var router: MainTabRouterProtocol? { get set }
     
     func viewWillAppear()
 }

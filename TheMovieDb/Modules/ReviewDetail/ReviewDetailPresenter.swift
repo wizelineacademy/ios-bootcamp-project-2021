@@ -12,19 +12,20 @@ final class ReviewDetailPresenter {
     
     // MARK: Properties
     weak var view: ReviewDetailViewProtocol?
-    var wireFrame: ReviewDetailWireFrameProtocol?
-    var review: Review?
+    var interactor: ReviewDetailInteractorInputProtocol?
         
-    func setReview(settedReview: Review) {
-        self.review = settedReview
-    }
-    
 }
 
 extension ReviewDetailPresenter: ReviewDetailPresenterProtocol {
     
     func viewDidLoad() {
-        guard let review = review else { return }
-        view?.presenterPushDataView(receivedReview: review)
+        interactor?.getReview()
     }
+}
+
+extension ReviewDetailPresenter: ReviewDetailInteractorOutputProtocol {
+    func interactorPushDataPresenter(receivedReview: Review) {
+        view?.presenterPushDataView(receivedReview: receivedReview)
+    }
+    
 }

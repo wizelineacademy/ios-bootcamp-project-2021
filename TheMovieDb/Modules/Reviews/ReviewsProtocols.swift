@@ -15,20 +15,23 @@ protocol ReviewsViewProtocol: AnyObject {
     func showReviews(reviewViewModel: [ReviewViewModel])
 }
 
-protocol ReviewsWireFrameProtocol: AnyObject {
-    // PRESENTER -> WIREFRAME
-    static func createReviewsModule(movie: Movie) -> UIViewController
+protocol ReviewsRouterProtocol: AnyObject {
+    // PRESENTER -> ROUTER
     func showReviewDetail(from view: ReviewsViewProtocol, with review: Review)
+}
+
+protocol ReviewsBuilderProtocol {
+    // BUILDER
+    static func createModule(movie: Movie) -> UIViewController
 }
 
 protocol ReviewsPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: ReviewsViewProtocol? { get set }
     var interactor: ReviewsInteractorInputProtocol? { get set }
-    var wireFrame: ReviewsWireFrameProtocol? { get set }
+    var router: ReviewsRouterProtocol? { get set }
     
     func viewDidLoad()
-    func setMovie(_ movie: Movie)
     func showDetail(review: Review)
 }
 
@@ -42,13 +45,12 @@ protocol ReviewsInteractorInputProtocol: AnyObject {
     var presenter: ReviewsInteractorOutputProtocol? { get set }
     var remoteDatamanager: ReviewsRemoteDataManagerInputProtocol? { get set }
     
-    func getReviews(from movie: Movie)
+    func getReviews()
 }
 
 protocol ReviewsRemoteDataManagerInputProtocol: AnyObject {
     // INTERACTOR -> REMOTEDATAMANAGER
     var remoteRequestHandler: ReviewsRemoteDataManagerOutputProtocol? { get set }
-    var service: APIMoviesProtocol? { get set }
     func fetchReviews(movie: Movie)
 }
 
