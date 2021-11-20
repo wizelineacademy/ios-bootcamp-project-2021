@@ -140,15 +140,40 @@
         <!--Item 2-->
         <scene sceneID="QAQ-dS-Xxa">
             <objects>
-                <viewController id="Dxh-RZ-ySS" sceneMemberID="viewController">
+                <viewController id="Dxh-RZ-ySS" customClass="SearchViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="j8o-LL-i5e">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Opr-1F-fr4">
+                                <rect key="frame" x="0.0" y="139" width="414" height="674"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                            <searchBar contentMode="redraw" placeholder="Search Movie" translatesAutoresizingMaskIntoConstraints="NO" id="d4k-ZH-mQk">
+                                <rect key="frame" x="0.0" y="88" width="414" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="TSD-mK-Jdx"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Opr-1F-fr4" firstAttribute="top" secondItem="d4k-ZH-mQk" secondAttribute="bottom" id="6Gl-zK-oxf"/>
+                            <constraint firstItem="d4k-ZH-mQk" firstAttribute="leading" secondItem="TSD-mK-Jdx" secondAttribute="leading" id="FzM-96-yj0"/>
+                            <constraint firstItem="TSD-mK-Jdx" firstAttribute="bottom" secondItem="Opr-1F-fr4" secondAttribute="bottom" id="ZrZ-Ub-J9r"/>
+                            <constraint firstItem="Opr-1F-fr4" firstAttribute="top" secondItem="d4k-ZH-mQk" secondAttribute="bottom" id="gGL-Ak-hc1"/>
+                            <constraint firstItem="Opr-1F-fr4" firstAttribute="leading" secondItem="TSD-mK-Jdx" secondAttribute="leading" id="kJ6-y7-ClP"/>
+                            <constraint firstItem="d4k-ZH-mQk" firstAttribute="top" secondItem="TSD-mK-Jdx" secondAttribute="top" id="qg1-i0-7sf"/>
+                            <constraint firstItem="d4k-ZH-mQk" firstAttribute="trailing" secondItem="TSD-mK-Jdx" secondAttribute="trailing" id="stT-5s-n2u"/>
+                            <constraint firstItem="TSD-mK-Jdx" firstAttribute="trailing" secondItem="Opr-1F-fr4" secondAttribute="trailing" id="uHD-ES-XRT"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="h2r-Wz-K42"/>
                     <navigationItem key="navigationItem" id="8av-eF-u5B"/>
+                    <connections>
+                        <outlet property="searchBar" destination="d4k-ZH-mQk" id="Ppy-WH-xOj"/>
+                        <outlet property="searchTableView" destination="Opr-1F-fr4" id="XgP-rO-cpw"/>
+                        <segue destination="ZSC-7V-vYZ" kind="show" identifier="showSearchDetail" id="bGL-cr-8Q0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYb-7t-cBd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -256,6 +281,9 @@
             <point key="canvasLocation" x="-1767" y="-1075"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="bGL-cr-8Q0"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

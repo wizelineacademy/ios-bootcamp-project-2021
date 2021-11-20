@@ -17,16 +17,16 @@ enum MovieFeed {
 extension MovieFeed: Endpoint {    
     
     var base: String {
-        return "https://api.themoviedb.org"
+        return Constants.URLS.movieBaseURL
     }
     
     var path: String {
         switch self {
-        case .nowPlaying: return "/3/movie/now_playing"
-        case .popular: return "/3/movie/popular"
-        case .topRated: return "/3/movie/top_rated"
-        case .upcoming: return "/3/movie/upcoming"
-        case .trending: return "/3/trending/movie/day"
+        case .nowPlaying: return Constants.MovieControl.nowPlaying
+        case .popular: return Constants.MovieControl.popular
+        case .topRated: return Constants.MovieControl.topRated
+        case .upcoming: return Constants.MovieControl.upcoming
+        case .trending: return Constants.MovieControl.trending
         }
     }
 }

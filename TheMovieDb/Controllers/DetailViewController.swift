@@ -9,8 +9,7 @@ import UIKit
 import Kingfisher
 
 class DetailViewController: UIViewController {
-
-    //var movieManager = MovieManager()
+    
     var MovieData: Movie?
     
     @IBOutlet weak var detailTitleLabel: UILabel!
@@ -41,10 +40,5 @@ class DetailViewController: UIViewController {
         if let imageURL = URL(string: urlString){
             detailMovieImage.kf.setImage(with: imageURL)
         }
-
-        
     }
-    
-
-    
 }

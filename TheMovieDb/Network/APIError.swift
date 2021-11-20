@@ -15,11 +15,11 @@ enum APIError: Error {
     case jsonParsingFailure
     var localizedDescription: String {
         switch self {
-        case .requestFailed: return "Request Failed"
-        case .invalidData: return "Invalid Data"
-        case .responseUnsuccessful: return "Response Unsuccessful"
-        case .jsonParsingFailure: return "JSON Parsing Failure"
-        case .jsonConversionFailure: return "JSON Conversion Failure"
+        case .requestFailed: return Constants.Errors.requestFailed
+        case .invalidData: return Constants.Errors.InvalidData
+        case .responseUnsuccessful: return Constants.Errors.responseUnsuccessful
+        case .jsonParsingFailure: return Constants.Errors.jsonParsingFailure
+        case .jsonConversionFailure: return Constants.Errors.jsonConversionFailure
         }
     }
 }

@@ -35,7 +35,7 @@ class MainViewController: UIViewController{
                 self?.movies = movieResult
                 self?.mainTableView.reloadData()
             case .failure(let error):
-                print("the error \(error)")
+                print("Error: \(error)")
             }
         }
 
@@ -66,12 +66,12 @@ extension MainViewController: UITableViewDataSource{
 
 extension MainViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: Constants.segueIdentifier, sender: self)
+        performSegue(withIdentifier: Constants.mainSegueIdentifier, sender: self)
         
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.segueIdentifier {
+        if segue.identifier == Constants.mainSegueIdentifier {
             let destinationVC = segue.destination as! DetailViewController //as is the
             guard let indexPath = mainTableView.indexPathForSelectedRow else { return }
             destinationVC.MovieData = movies[indexPath.row]
