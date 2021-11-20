@@ -215,6 +215,7 @@ extension HomeView: UICollectionViewDelegate {
                 dependencies: DetailViewModel.Dependencies(movie: selectedMovie)
             )
             let vc = DetailView(viewModel: viewModel)
+            viewModel.delegate = vc
             navigationController?.pushViewController(vc, animated: true)
         case feedType:
             currentFeed = isSearching ? searchFeeds[indexPath.row] : normalFeeds[indexPath.row]

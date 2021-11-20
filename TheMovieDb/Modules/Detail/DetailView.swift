@@ -76,16 +76,6 @@ final class DetailView: UIViewController {
         return label
     }()
     
-    private var isLoading = false {
-        didSet {
-            if isLoading {
-                add(loader)
-            } else {
-                loader.remove()
-            }
-        }
-    }
-    
     init(viewModel: DetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -151,11 +141,7 @@ final class DetailView: UIViewController {
     }
     
     func requestRelatedMovieData() {
-        isLoading = true
-        viewModel.requestRelatedMovieData { [weak self] in
-            self?.isLoading = false
-            self?.updateUIWithRelatedMovieData()
-        }
+        viewModel.requestRelatedMovieData()
     }
     
     func updateUIWithRelatedMovieData() {
@@ -186,4 +172,18 @@ final class DetailView: UIViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
+}
+
+extension DetailView: DetailViewModelDelegate {
+    func didStartLoading() {
+        add(loader)
+    }
+    
+    func didFinishLoading() {
+        loader.remove()
+    }
+    
+    func didUpdateRelatedMovieData() {
+        updateUIWithRelatedMovieData()
+    }
 }

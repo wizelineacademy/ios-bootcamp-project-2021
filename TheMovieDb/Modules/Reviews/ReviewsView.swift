@@ -33,7 +33,7 @@ struct ReviewsView: View {
 
 struct ReviewsView_Previews: PreviewProvider {
     static var previews: some View {
-        ReviewsView(viewModel: ReviewsViewModel(movie: Movie(posterPath: "", adult: false, overview: "", releaseDate: "", genreIds: [0], id: 0, originalTitle: "", originalLanguage: "", title: "", backdrop_path: "", popularity: 1, voteCount: 1, video: true, voteAverage: 1), reviews: [Review(author: "Rick", content: "It's great n.n", id: "1")]))
+        ReviewsView(viewModel: ReviewsViewModel(movie: Movie(posterPath: nil, overview: "", releaseDate: "", id: 0, title: ""), reviews: [Review(author: "Rick", content: "It's great n.n", id: "1")]))
     }
 }
 
