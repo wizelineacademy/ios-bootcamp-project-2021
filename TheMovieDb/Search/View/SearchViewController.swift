@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class SearchViewController: UICollectionViewController {
     
@@ -14,6 +15,7 @@ final class SearchViewController: UICollectionViewController {
     private var request: (Request & SearchableModel & PageableModel)? = SearchRequest()
     private var totalOfPages: Int = 1
     private var items: [MovieModel] = []
+    private var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
     
     private lazy var searchController: UISearchController = {
         let searchController = UISearchController()
@@ -72,13 +74,11 @@ private extension SearchViewController {
     func callService() {
         guard let actualPage = request?.page,
                 actualPage <= totalOfPages else { return }
-        executor
-            .execute(request: request,
-                     onSuccess: { [weak self] (data: PageModel<MovieModel>?) in
-                self?.onSuccessResponse(data)
-            }, onError: { [weak self] error in
-                self?.onErrorResponse(error)
-            })
+        executor.execute(request: request)
+            .receive(on: DispatchQueue.main)
+            .sink { (data: PageModel<MovieModel>?) in
+                self.onSuccessResponse(data)
+            }.store(in: &cancellables)
     }
     
     func onSuccessResponse(_ response: PageModel<MovieModel>?) {

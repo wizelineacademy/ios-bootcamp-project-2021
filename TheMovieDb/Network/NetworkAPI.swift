@@ -6,11 +6,13 @@
 //
 
 import Foundation
+import Combine
 
 protocol ExecutorRequest {
     func execute<D: Decodable>(request: Request?,
                                onSuccess: @escaping (D?) -> Void,
                                onError: @escaping (Error?) -> Void)
+    func execute<D: Decodable>(request: Request?) -> AnyPublisher<D?, Never>
 }
 
 final class MockNetworkAPI: ExecutorRequest {
@@ -18,6 +20,7 @@ final class MockNetworkAPI: ExecutorRequest {
     func execute<D>(request: Request?,
                     onSuccess: @escaping (D?) -> Void,
                     onError: @escaping (Error?) -> Void) where D : Decodable {
+
         guard let rawData = request?.jsonMock,
               let data = rawData.data(using: .utf8) else {
                   DispatchQueue.main.async {
@@ -36,6 +39,17 @@ final class MockNetworkAPI: ExecutorRequest {
                 onError(error)
             }
         }
+    }
+    
+    func execute<D>(request: Request?) -> AnyPublisher<D?, Never> where D : Decodable {
+        let decoderKey = request!.decodingKey
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = decoderKey
+        return URLSession.shared.dataTaskPublisher(for: request!.urlEndpoint!)
+            .map { $0.data }
+            .decode(type: D?.self, decoder: jsonDecoder)
+            .replaceError(with: nil)
+            .eraseToAnyPublisher()
     }
 }
 
@@ -76,5 +90,16 @@ final class NetworkAPI: ExecutorRequest {
             }
         }
         task.resume()
+    }
+    
+    func execute<D>(request: Request?) -> AnyPublisher<D?, Never> where D : Decodable {
+        let decoderKey = request!.decodingKey
+        let jsonDecoder = JSONDecoder()
+        jsonDecoder.keyDecodingStrategy = decoderKey
+        return URLSession.shared.dataTaskPublisher(for: request!.urlEndpoint!)
+            .map { $0.data }
+            .decode(type: D?.self, decoder: jsonDecoder)
+            .replaceError(with: nil)
+            .eraseToAnyPublisher()
     }
 }

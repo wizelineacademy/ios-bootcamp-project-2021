@@ -6,11 +6,13 @@
 //
 
 import UIKit
+import Combine
 
 final class ListSectionViewController: UICollectionViewController {
     
     static let segueIdentifier: String = "go-to-list-section"
     
+    private var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
     private let executor: ExecutorRequest
     private var isPaginationEnabled: Bool = true
     private let navigationTitle: String
@@ -93,13 +95,11 @@ final class ListSectionViewController: UICollectionViewController {
 private extension ListSectionViewController {
     
     func callService() {
-        executor
-            .execute(request: self.request,
-                     onSuccess: { [weak self] (response: PageModel<MovieModel>?) in
-                self?.onSuccessResponse(response)
-            }, onError: { [weak self] error in
-                self?.onErrorResponse(error)
-        })
+        executor.execute(request: self.request)
+            .receive(on: DispatchQueue.main)
+            .sink { (response: PageModel<MovieModel>?) in
+                self.onSuccessResponse(response)
+            }.store(in: &cancellables)
     }
     
     func onSuccessResponse(_ response: PageModel<MovieModel>?) {

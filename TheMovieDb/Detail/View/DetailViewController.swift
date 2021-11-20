@@ -6,15 +6,18 @@
 //
 
 import UIKit
+import Combine
 
 final class DetailViewController: UICollectionViewController {
     
+    // MARK: Properties
     private let movie: MovieModel
     private let dataSource: DetailDataSource
     private var reviews: [ReviewModel] = []
     private var recommendations: [MovieModel] = []
     private let executor: ExecutorRequest
     private let group = DispatchGroup()
+    private var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
     
     init?(movie: MovieModel,
           executor: ExecutorRequest = NetworkAPI(),
@@ -33,13 +36,7 @@ final class DetailViewController: UICollectionViewController {
         super.viewDidLoad()
         collectionView.contentInsetAdjustmentBehavior = .never
         collectionView.collectionViewLayout = DetailFlowLayout(dataSource: dataSource)
-        callReviewsService()
-        callRecommendationsService()
-        group.notify(queue: DispatchQueue.main) {
-            self.dataSource.appendReviewItems(reviews: self.reviews)
-            self.dataSource.appendRecommendationItems(recomendations: self.recommendations)
-            self.collectionView.reloadData()
-        }
+        callServices()
     }
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -67,29 +64,17 @@ final class DetailViewController: UICollectionViewController {
 
 private extension DetailViewController {
     
-    func callReviewsService() {
+    func callServices() {
         guard let id = movie.id else { return }
-        group.enter()
-        executor
-            .execute(request: ReviewRequest(id: id),
-                     onSuccess: { [weak self] (reviews: PageModel<ReviewModel>?) in
-                self?.reviews = reviews?.results ?? []
-                self?.group.leave()
-            }, onError: { [weak self] error in
-                self?.group.leave()
-            })
-    }
-    
-    func callRecommendationsService() {
-        guard let id = movie.id else { return }
-        group.enter()
-        executor
-            .execute(request: RecommendationsRequest(id: id),
-                     onSuccess: { [weak self] (recommendations: PageModel<MovieModel>?) in
-                self?.recommendations = recommendations?.results ?? []
-                self?.group.leave()
-            }, onError: { [weak self] error in
-                self?.group.leave()
-            })
+        Publishers.Zip(
+            executor.execute(request: ReviewRequest(id: id)),
+            executor.execute(request: RecommendationsRequest(id: id))
+        ).receive(on: DispatchQueue.main)
+            .sink { (reviews: PageModel<ReviewModel>?, recommendations: PageModel<MovieModel>?) in
+            self.dataSource.appendReviewItems(reviews: reviews?.results ?? [])
+            self.dataSource.appendRecommendationItems(recomendations: recommendations?.results ?? [])
+            self.collectionView.reloadData()
+        }.store(in: &cancellables)
+        
     }
 }
