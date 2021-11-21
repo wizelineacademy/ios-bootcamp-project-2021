@@ -31,8 +31,7 @@ struct CompotitionalLayoutCreator {
     static func createLayoutForMovieDetail() -> UICollectionViewCompositionalLayout {
         
         let compositionalLayout = UICollectionViewCompositionalLayout { (sectionNumber, _) -> NSCollectionLayoutSection? in
-            let type = MovieDetailCellsLayout(rawValue: sectionNumber)
-            print("type \(type)")
+           
             switch sectionNumber {
             case 0:
                 let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))
@@ -55,8 +54,6 @@ struct CompotitionalLayoutCreator {
 
                 return section
                 
-            
-            
             case 2:
                 
                 let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1)))

@@ -9,14 +9,10 @@ import UIKit
 
 class MovieDetailViewController: UIViewController, MoviesDetailViewProtocol {
   
-    
-   
-    var presenter: MoviesDetailPresenterProtocol?
-    
-    var movie: MovieProtocol?
-    
     @IBOutlet weak var collectionView: UICollectionView!
     let dataSource = MovieDetailDataSource()
+    var presenter: MoviesDetailPresenterProtocol?
+    var movie: MovieProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()

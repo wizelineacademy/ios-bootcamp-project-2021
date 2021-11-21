@@ -14,18 +14,10 @@ protocol MovieDetailProtocol: MovieProtocol {
 
 struct MovieDetail: MovieDetailProtocol, Decodable {
     var originalTitle: String
-    
     var releaseDate: String
-    
     var popularity: Double
-    
     var title: String
-    
     var id: Int
-    
     var posterPath: String
-    
     var overview: String
-    
-   
 }

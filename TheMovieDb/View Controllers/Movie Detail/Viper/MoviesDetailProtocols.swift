@@ -33,13 +33,12 @@ protocol MoviesDetailInteractorInputProtocol {
 }
 
 protocol MoviesDetailInteractorOutputProtocol {
-    //Only methods the presenter will implement
+    // Only methods the presenter will implement
     func didFetchMovieDetail(movieDetail: MovieDetail)
     func didFailFetchMovieDetailWith(error: Error)
     func didFetchSimilarMoviesFor(movies: MovieList)
     func didFailFetchSimilarMoviesWith(error: Error)
 }
-
 
 // Builder
 protocol MoviesDetailBuilderProtocol {
@@ -49,4 +48,3 @@ protocol MoviesDetailBuilderProtocol {
 protocol MoviesDetailRouterProtocol {
 
 }
-

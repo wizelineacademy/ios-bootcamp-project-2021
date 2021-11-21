@@ -18,7 +18,6 @@ final class MoviesHomePresenter: MoviesHomePresenterProtocol {
     }
     
     func didSelectMovie(movie: MovieProtocol) {
-        //push detail view controler
         if let moviesHomeViewController = view as? UIViewController {
             router?.pushDetailViewControllerFrom(view: moviesHomeViewController, with: movie)
         }
@@ -27,7 +26,6 @@ final class MoviesHomePresenter: MoviesHomePresenterProtocol {
 
 extension MoviesHomePresenter: MoviesHomeInteractorOutputProtocol {
     func moviesDidFetch(movies: MoviesFeed) {
-        //here is where i have to send the info to the view
         view?.reloadViewWith(movies: movies)
     }
     

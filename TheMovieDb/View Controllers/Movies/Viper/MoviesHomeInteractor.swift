@@ -12,10 +12,7 @@ final class MoviesHomeInteractor: MoviesHomeInteractorInputProtocol {
     var moviesFeed: MoviesFeed = MoviesFeed(listsOfElements: [:])
    
     func fetchMovies() {
-        
-        
         let group = DispatchGroup()
-        
         for topic in Topic.allCases {
             let request = Request(path: topic.getPath(), method: .get, group: group)
             
@@ -35,7 +32,5 @@ final class MoviesHomeInteractor: MoviesHomeInteractorInputProtocol {
         group.notify(queue: .main) {
             self.presenter?.moviesDidFetch(movies: self.moviesFeed)
         }
-        
-        
     }
 }

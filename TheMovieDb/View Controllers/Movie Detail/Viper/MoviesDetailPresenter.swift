@@ -8,8 +8,6 @@
 import Foundation
 
 final class MoviesDetailPresenter: MoviesDetailPresenterProtocol {
-   
-    
 
     var view: MoviesDetailViewProtocol?
     var interactor: MoviesDetailInteractorInputProtocol?
@@ -42,7 +40,4 @@ extension MoviesDetailPresenter: MoviesDetailInteractorOutputProtocol {
     func didFetchMovieDetail(movieDetail: MovieDetail) {
         view?.showDetailOf(movie: movieDetail)
     }
-    
-   
-    
 }

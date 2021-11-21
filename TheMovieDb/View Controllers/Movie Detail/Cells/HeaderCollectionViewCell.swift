@@ -19,10 +19,6 @@ class HeaderCollectionViewCell: UICollectionViewCell, CellIdentifierProtocol {
     func setInfoWith(movie: MovieDetailProtocol) {
         let url = URL(string: BaseURL.baseUrlForImage + movie.posterPath)
         imageView.kf.setImage(with: url)
-        
         titleLabel.attributedText = AttributedTextCreator.textForMovieDetailInfo(movie: movie)
     }
-
 }
-
-
