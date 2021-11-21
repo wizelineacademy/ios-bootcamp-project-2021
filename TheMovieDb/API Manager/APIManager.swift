@@ -27,12 +27,15 @@ enum Topic: String, CaseIterable {
     case upcoming = "/movie/upcoming?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&region=US&page=1"
 }
 
-enum Enpoints: String {
-   // case similar = "/movie/603/similar?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en"
+enum Endpoints: String {
     case similar = "/movie/"
-
+    
     static func similar(movieId: String) -> String {
-        return BaseURL.baseUrl + Enpoints.similar.rawValue + movieId + "/similar?api_key=" + ApiKey.apiKey
+        return BaseURL.baseUrl + Endpoints.similar.rawValue + movieId + "/similar?api_key=" + ApiKey.apiKey
+    }
+    
+    static func detailOfMovie(id: String) -> String {
+        return BaseURL.baseUrl + "/movie/" + id + "?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US"
     }
 }
 
@@ -89,9 +92,13 @@ class DecoderJson {
     }
 }
 
+enum NetworkError: Error {
+    case noList
+}
+
 class MovieDbAPI {
     
-    static func request<T: Decodable>(value: T.Type, request: Request, completion: @escaping (_ results: T?) -> Void ) {
+    static func request<T: Decodable>(value: T.Type, request: Request, completion: @escaping (Result< T?, NetworkError>) -> Void ) {
         let group = request.group
         group?.enter()
         let url = URL(string: request.path)!
@@ -102,9 +109,9 @@ class MovieDbAPI {
         
         URLSession.shared.dataTask(with: request) { data, _, error in
             if let decoded = DecoderJson.decode(value: T.self, data: data) {
-                completion(decoded)
+                completion(.success(decoded))
             } else {
-                completion(nil)
+                completion(.failure(.noList))
             }
             group?.leave()
         }.resume()

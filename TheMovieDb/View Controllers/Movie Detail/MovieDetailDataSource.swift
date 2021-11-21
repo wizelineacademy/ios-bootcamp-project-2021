@@ -15,7 +15,7 @@ enum MovieDetailCellsLayout: Int, CaseIterable {
 
 class MovieDetailDataSource: NSObject, UICollectionViewDataSource {
     
-    var movie: Movie?
+    var movie: MovieDetailProtocol?
     var similarMovies: MovieList?
     var detailItems: [MovieDetailCellsLayout] = [.header, .similar]
     override init() {

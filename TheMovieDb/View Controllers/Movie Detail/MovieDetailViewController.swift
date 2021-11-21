@@ -7,42 +7,39 @@
 
 import UIKit
 
-class MovieDetailViewController: UIViewController {
-
+class MovieDetailViewController: UIViewController, MoviesDetailViewProtocol {
+  
+    
+   
+    var presenter: MoviesDetailPresenterProtocol?
+    
+    var movie: MovieProtocol?
+    
     @IBOutlet weak var collectionView: UICollectionView!
     let dataSource = MovieDetailDataSource()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        guard let movieDetail = self.movie else { return }
+        self.presenter?.loadMovieDetail(movie: movieDetail)
+    }
+    
+    func showDetailOf(movie: MovieDetailProtocol) {
+        dataSource.movie = movie
+        self.presenter?.loadSimilarMoviesFor(movie: movie)
+    }
+    
+    func displaySimilarMovies(list: MovieList) {
+        dataSource.similarMovies = list
         setUpView()
-        // Do any additional setup after loading the view.
-        let request = Request(path: Enpoints.similar(movieId: "603"), method: .get)
-        MovieDbAPI.request(value: MovieList.self, request: request) { [weak self] list in
-            guard let listOfMovies = list else { return }
-            print(listOfMovies)
-            self?.dataSource.similarMovies = listOfMovies
-//            self?.delegate.feed.addList(topic: request.topic, movieList: listOfMovies)
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
-            }
-        }
     }
     
     func setUpView() {
+        self.title = movie?.title
         collectionView.collectionViewLayout = CompotitionalLayoutCreator.createLayoutForMovieDetail()
         collectionView.setup(dataSource: dataSource)
         collectionView.registerNibForCellWith(name: HeaderCollectionViewCell.identifierToDeque)
         collectionView.registerNibForCellWith(name: MovieCollectionViewCell.identifierToDeque)
-
+        collectionView.reloadData()
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

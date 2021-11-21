@@ -10,7 +10,7 @@ import UIKit
 class MoviesDelegate: NSObject, UICollectionViewDelegate {
 
     var feed = MoviesFeed(listsOfElements: [:])
-    var didSelectMovie: ((_ movie: Movie) -> Void)?
+    var didSelectMovie: ((_ movie: MovieProtocol) -> Void)?
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let topic = Topic.allCases[indexPath.section]

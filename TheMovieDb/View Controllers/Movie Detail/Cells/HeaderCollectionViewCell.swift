@@ -16,10 +16,13 @@ class HeaderCollectionViewCell: UICollectionViewCell, CellIdentifierProtocol {
         // Initialization code
     }
     
-    func setInfoWith(movie: Movie) {
+    func setInfoWith(movie: MovieDetailProtocol) {
         let url = URL(string: BaseURL.baseUrlForImage + movie.posterPath)
         imageView.kf.setImage(with: url)
-        titleLabel.text = movie.title + "\n" + movie.overview
+        
+        titleLabel.attributedText = AttributedTextCreator.textForMovieDetailInfo(movie: movie)
     }
 
 }
+
+
