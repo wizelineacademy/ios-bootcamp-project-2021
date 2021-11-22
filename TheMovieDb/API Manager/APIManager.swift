@@ -20,11 +20,19 @@ enum HTTPMethod: String {
 }
 
 enum Topic: String, CaseIterable {
-    case trending = "/trending/movie/day?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&region=US&page=1"
-    case popular = "/movie/popular?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&region=US&page=1"
-    case nowPlaying = "/movie/now_playing?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&region=US&page=1"
-    case topRated = "/movie/top_rated?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&page=1&region=US"
-    case upcoming = "/movie/upcoming?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&region=US&page=1"
+    case trending = "/trending/movie/day"
+    case popular = "/movie/popular"
+    case nowPlaying = "/movie/now_playing"
+    case topRated = "/movie/top_rated"
+    case upcoming = "/movie/upcoming"
+    
+}
+
+struct HeadersForString {
+    static let apiKey = "?api_key="
+    static let language = "&language=en"
+    static let region = "&region=US"
+    static let page = "&page=1"
 }
 
 enum Endpoints: String {
@@ -37,12 +45,13 @@ enum Endpoints: String {
     static func detailOfMovie(id: String) -> String {
         return BaseURL.baseUrl + "/movie/" + id + "?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US"
     }
+    
 }
 
 extension Topic {
 
     func getPath() -> String {
-        return BaseURL.baseUrl + self.rawValue
+        return BaseURL.baseUrl + self.rawValue + HeadersForString.apiKey + ApiKey.apiKey + HeadersForString.language + HeadersForString.region + HeadersForString.page
     }
 }
 
@@ -98,7 +107,7 @@ enum NetworkError: Error {
 
 class MovieDbAPI {
     
-    static func request<T: Decodable>(value: T.Type, request: Request, completion: @escaping (Result< T?, NetworkError>) -> Void ) {
+    static func request<T: Decodable>(value: T.Type, request: Request, completion: @escaping (Result< T?, Error>) -> Void ) {
         let group = request.group
         group?.enter()
         let url = URL(string: request.path)!
@@ -111,7 +120,7 @@ class MovieDbAPI {
             if let decoded = DecoderJson.decode(value: T.self, data: data) {
                 completion(.success(decoded))
             } else {
-                completion(.failure(.noList))
+                completion(.failure(NetworkError.noList))
             }
             group?.leave()
         }.resume()
