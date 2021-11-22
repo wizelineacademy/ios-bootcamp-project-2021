@@ -13,32 +13,21 @@ class MainViewController: UIViewController{
     @IBOutlet weak var mainSegmentedControl: UISegmentedControl!
     @IBOutlet weak var mainTableView: UITableView!
     
-    private let client = MovieClient()
-    private var movies = [Movie]()
+    private let mainViewModel = MainViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mainTableView.dataSource = self
         mainTableView.delegate = self
         mainTableView.register(UINib(nibName: Constants.cellXibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
-        loadMoviesData()
+        setupTableView()
         
     }
     
-    private func loadMoviesData(){
-        client.getFeed(from: mainSegmentedControl.endpoint) { [weak self] (result) in
-      
-            switch result {
-            case .success(let listOf):
-                guard let movieResult = listOf?.results else { return }
-                //print(movieFeedResult?.results)
-                self?.movies = movieResult
-                self?.mainTableView.reloadData()
-            case .failure(let error):
-                print("Error: \(error)")
-            }
+    private func setupTableView() {
+        mainViewModel.loadMoviesData(from: mainSegmentedControl.endpoint) {
+            self.mainTableView.reloadData()
         }
-
     }
 
     
@@ -46,20 +35,19 @@ class MainViewController: UIViewController{
 
 extension MainViewController {
     @IBAction func mainSegmentedControlPressed(_ sender: UISegmentedControl) {
-        loadMoviesData()
+        setupTableView()
     }
 }
 
 extension MainViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        mainViewModel.numberOfRowsInSection(section: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! MovieCell
-        let movie = movies[indexPath.row]
+        let movie = mainViewModel.cellForRowAt(indexPath: indexPath)
         cell.setCellWithValuesOf(movie)
-        //print(movie)
         return cell
     }
 }
@@ -74,7 +62,7 @@ extension MainViewController: UITableViewDelegate{
         if segue.identifier == Constants.mainSegueIdentifier {
             let destinationVC = segue.destination as! DetailViewController //as is the
             guard let indexPath = mainTableView.indexPathForSelectedRow else { return }
-            destinationVC.MovieData = movies[indexPath.row]
+            destinationVC.MovieData = mainViewModel.cellForRowAt(indexPath: indexPath)
             
         }
     }
