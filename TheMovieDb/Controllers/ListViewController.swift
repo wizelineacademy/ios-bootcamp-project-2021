@@ -7,42 +7,50 @@
 
 import UIKit
 
-class ListViewController: UICollectionViewController {
+class ListViewController: UIViewController {
 
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    var movieClient: MovieClient!
-    var movieList: MovieList?
-    var configuration: ConfigurationWelcome?
-    var selectedMovie: MovieItem?
+    lazy private var activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.color = .systemIndigo
+        return view
+    }()
+    
+    // general margin for ui elements
+    private let margin: CGFloat = 10
+    
+    private var listView: ListView!
+    private var listViewModel: ListViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        movieClient = MovieClient()
         
         guard let tabIndex = self.tabBarController?.selectedIndex, let movieFeed = MovieFeed(rawValue: tabIndex) else {
             return
         }
         
-        setupUINavigation(movieFeed: movieFeed)
-        setupUICollectionView()
+        let model = MovieModel(movieClient: MovieClient())
+        listViewModel = ListViewModel(movieModel: model, movieFeed: movieFeed, delegate: self)
+        listView = ListView(viewModel: listViewModel, navigationDelegate: self)
         
-        fetchConfiguration()
-        fetchData(movieFeed: movieFeed)
-        
+        setupUI(movieFeed: movieFeed)
     }
     
-    private func setupUICollectionView() {
-        let cellNib = UINib(nibName: MovieCell.cellIdentifier, bundle: .main)
-        collectionView.register(cellNib, forCellWithReuseIdentifier: MovieCell.cellIdentifier)
+    private func setupUI(movieFeed: MovieFeed) {
         
-        // Set up the collection view.
-        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        collectionView.alwaysBounceVertical = true
-        collectionView.indicatorStyle = .white
-    }
-    
-    private func setupUINavigation(movieFeed: MovieFeed) {
+        view.addSubview(listView.collectionView)
+        view.addSubview(activityIndicator)
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            listView.collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            listView.collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            listView.collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            listView.collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
         title = movieFeed.getNavigationTitle()
 
         // Customize navigation bar.
@@ -61,103 +69,31 @@ class ListViewController: UICollectionViewController {
         tabBar.tintColor = .systemIndigo
     }
     
-    private func fetchData(movieFeed: MovieFeed) {
-        self.startAnimatingActivityIndicator()
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.movieClient.getFeed(from: movieFeed, searchId: nil, params: [:]) { result in
-                switch result {
-                case .success(let movieList):
-                    guard let movieList = movieList else {
-                        return
-                    }
-                    self.movieList = movieList
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else {
-                            return
-                        }
-                        self.stopAnimatingActivityIndicator()
-                        self.collectionView.reloadData()
-                    }
-                case .failure(let error):
-                    print("The error \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    private func fetchConfiguration() {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.movieClient.getConfiguration { result in
-                switch result {
-                case .success(let configuration):
-                    guard let configuration = configuration else {
-                        return
-                    }
-                    self.configuration = configuration
-                    DispatchQueue.main.async { [weak self] in
-                        guard let self = self else {
-                            return
-                        }
-                        self.collectionView.reloadData()
-                    }
-                case .failure(let error):
-                    print("The error \(error.localizedDescription)")
-                }
-            }
-        }
-    }
-    
-    private func startAnimatingActivityIndicator() {
+}
+
+// MARK: - UI Updates
+extension ListViewController: ListViewModelDelegate {
+    func didBeginRefreshing() {
         self.activityIndicator.startAnimating()
         self.activityIndicator.isHidden = false
     }
     
-    private func stopAnimatingActivityIndicator() {
+    func didEndRefreshing() {
         self.activityIndicator.stopAnimating()
         self.activityIndicator.isHidden = true
+        listView?.collectionView.refreshControl?.endRefreshing()
+        listView?.collectionView.reloadData()
     }
-    
-    // MARK: - CollectionView DataSource
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return movieList?.results?.count ?? 0
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCell.cellIdentifier, for: indexPath) as? MovieCell else {
-            preconditionFailure("Failed to load collection view cell")
+}
+
+// MARK: - Navigation
+extension ListViewController: NavigationDelegate {
+    func navigate(movieViewModel: MovieViewModel) {
+        let detailViewController = DetailViewController()
+        detailViewController.movieViewModel = movieViewModel
+        guard let navigation = navigationController else {
+            return
         }
-        
-        guard let movie = movieList?.results?[indexPath.row] else {
-            return cell
-        }
-        
-        cell.movieItem = movie
-        cell.configurationImages = configuration?.images
-        
-        return cell
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        guard let movie = movieList?.results?[indexPath.row] else {
-            return false
-        }
-        self.selectedMovie = movie
-        performSegue(withIdentifier: DetailViewController.segueIdentifier, sender: self)
-        return true
-    }
-    
-    // MARK: - Navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == DetailViewController.segueIdentifier {
-            let detailViewController = segue.destination as? DetailViewController
-            detailViewController?.movieItem = selectedMovie
-            detailViewController?.configurationImages = configuration?.images
-        }
+        navigation.showDetailViewController(detailViewController, sender: self)
     }
 }

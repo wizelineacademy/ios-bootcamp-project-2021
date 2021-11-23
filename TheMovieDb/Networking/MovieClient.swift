@@ -18,8 +18,8 @@ class MovieClient: APIClient {
         self.init(configuration: .default)
     }
     
-    func getFeed(from moviewFeedType: MovieFeed, searchId: String? = nil, params: [String: String], completion: @escaping (Result<MovieList?, APIError>) -> Void) {
-        fetch(with: moviewFeedType.getRequest(id: searchId, params: params), decode: { [weak self] json -> MovieList? in
+    func getFeed(from moviewFeedType: MovieFeed, searchId: String? = nil, params: [String: String], completion: @escaping (Result<MovieListResults?, APIError>) -> Void) {
+        fetch(with: moviewFeedType.getRequest(id: searchId, params: params), decode: { [weak self] json -> MovieListResults? in
             return self?.getJSONData(data: json)
         }, completion: completion)
     }

@@ -41,11 +41,4 @@ struct MovieItem: Decodable {
         case popularity
         case mediaType = "media_type"
     }
-    
-    func getPosterURL(baseURL: String?) -> URL? {
-        if let posterPath = posterPath, let baseURL = baseURL {
-            return URL(string: baseURL + posterPath)
-        }
-        return nil
-    }
 }
