@@ -5,7 +5,7 @@
 //  Created by Misael Chávez on 22/11/21.
 //
 
-import UIKit
+import Foundation
 
 class MockAPIClient: APIClient {
     var session: URLSession

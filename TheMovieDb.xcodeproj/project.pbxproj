@@ -29,7 +29,7 @@
 		FC6BCBCA2743692E00AE9AAE /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6BCBC92743692E00AE9AAE /* TabBarController.swift */; };
 		FC7326382731E0FD009900ED /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7326372731E0FD009900ED /* ListViewController.swift */; };
 		FC8E09F4274CAC1000C84912 /* MovieAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8E09F3274CAC1000C84912 /* MovieAPIClient.swift */; };
-		FC8E09F6274CB15C00C84912 /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8E09F5274CB15C00C84912 /* MockAPIClient.swift */; };
+		FC8E09F7274CBA6B00C84912 /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8E09F5274CB15C00C84912 /* MockAPIClient.swift */; };
 		FC94C47D273107CF00E5BB5E /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC94C47C273107CF00E5BB5E /* MovieCell.swift */; };
 		FC9BC77F2734AF70003FA443 /* ConfigurationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9BC77E2734AF70003FA443 /* ConfigurationItem.swift */; };
 		FCA94ED52746E70300A5EB8D /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA94ED42746E70300A5EB8D /* MovieViewModel.swift */; };
@@ -160,6 +160,7 @@
 		837B4EBD258178BA003DFC67 /* TheMovieDbTests */ = {
 			isa = PBXGroup;
 			children = (
+				FC8E09F5274CB15C00C84912 /* MockAPIClient.swift */,
 				837B4EBE258178BA003DFC67 /* TheMovieDbTests.swift */,
 				837B4EC0258178BA003DFC67 /* Info.plist */,
 			);
@@ -240,7 +241,6 @@
 				FC3E4036272F1E81002E207D /* APIClient.swift */,
 				FC8E09F3274CAC1000C84912 /* MovieAPIClient.swift */,
 				FC3E4038272F1F10002E207D /* MovieAPIManager.swift */,
-				FC8E09F5274CB15C00C84912 /* MockAPIClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -455,7 +455,6 @@
 			files = (
 				FC33294027476F3400207055 /* MovieModel.swift in Sources */,
 				FC9BC77F2734AF70003FA443 /* ConfigurationItem.swift in Sources */,
-				FC8E09F6274CB15C00C84912 /* MockAPIClient.swift in Sources */,
 				FC33293C27475EE700207055 /* ListView.swift in Sources */,
 				FC94C47D273107CF00E5BB5E /* MovieCell.swift in Sources */,
 				FCB40F2227339F1100F39478 /* ColumnFlowLayout.swift in Sources */,
@@ -483,6 +482,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				837B4EBF258178BA003DFC67 /* TheMovieDbTests.swift in Sources */,
+				FC8E09F7274CBA6B00C84912 /* MockAPIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
