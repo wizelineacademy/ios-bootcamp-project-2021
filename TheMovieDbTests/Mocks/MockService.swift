@@ -10,7 +10,13 @@ import Foundation
 
 final class MockService: MovieService {
     
+    var failure = false
+    
     func get<T>(search: String?, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) where T : Decodable {
+        guard !failure else {
+            returnResponse(.failure(.invalidResponse))
+            return
+        }
         switch endpoint {
         case .trending, .nowPlaying, .popular, .topRated, .upcoming:
             guard let moviesResponse = mockedMovies() as? T else { return }

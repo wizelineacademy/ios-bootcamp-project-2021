@@ -1,0 +1,59 @@
+//
+//  MovieListPresenterTests.swift
+//  TheMovieDbTests
+//
+//  Created by Karla Rubiano on 23/11/21.
+//
+
+import XCTest
+@testable import TheMovieDb
+
+class MovieListPresenterTests: XCTestCase {
+
+    var presenter: MovieListPresenter?
+    var mockView = MockMovieListView()
+    var facade = MockService()
+    var movieListOption: MoviesOptions = .trending
+    
+    override func setUp() {
+        presenter = MovieListPresenter(view: mockView, facade: facade, movieOption: movieListOption)
+    }
+    
+    override func tearDown() {
+        presenter = nil
+    }
+    
+    func testShowError() {
+        facade.failure = true
+        presenter?.listMovies()
+        XCTAssertTrue(mockView.showErrorCalled, "ShowError was not called")
+    }
+    
+    func testGetMoviesFail() {
+        XCTAssertFalse(mockView.updateMoviesCalled, "Update movies was called")
+    }
+    
+    func testGetMovies() {
+        presenter?.listMovies()
+        
+        XCTAssertTrue(mockView.updateMoviesCalled)
+        XCTAssertTrue(presenter?.movies.count == 4, "No movies")
+    }
+    
+    func testListOption() {
+        XCTAssert(presenter?.movieListOption == .trending, "Wrong list option")
+    }
+    
+    func testMovieReturned() {
+        presenter?.listMovies()
+        guard let movie = presenter?.movies[0] else {
+            XCTFail("No movie")
+            return
+        }
+        XCTAssert(movie.title == "Dune", "Wrong movie returned")
+    }
+    
+    func testTitle() {
+        XCTAssert(mockView.title == "Trending", "Failure")
+    }
+}
