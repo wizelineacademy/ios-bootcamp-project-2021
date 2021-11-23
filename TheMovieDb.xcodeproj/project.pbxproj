@@ -19,16 +19,17 @@
 		FC33293E2747608600207055 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC33293D2747608600207055 /* ListViewModel.swift */; };
 		FC33294027476F3400207055 /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC33293F27476F3400207055 /* MovieModel.swift */; };
 		FC39A120272BB5BB0098E033 /* MovieItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC39A11F272BB5BB0098E033 /* MovieItem.swift */; };
-		FC3E402F272F1064002E207D /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3E402E272F1064002E207D /* Result.swift */; };
 		FC3E4031272F1091002E207D /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3E4030272F1091002E207D /* EndPoint.swift */; };
 		FC3E4033272F115A002E207D /* MovieFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3E4032272F115A002E207D /* MovieFeed.swift */; };
 		FC3E4035272F1E56002E207D /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3E4034272F1E56002E207D /* APIError.swift */; };
 		FC3E4037272F1E81002E207D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3E4036272F1E81002E207D /* APIClient.swift */; };
-		FC3E4039272F1F10002E207D /* MovieClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3E4038272F1F10002E207D /* MovieClient.swift */; };
+		FC3E4039272F1F10002E207D /* MovieAPIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3E4038272F1F10002E207D /* MovieAPIManager.swift */; };
 		FC3E403B272F1F62002E207D /* MovieListResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC3E403A272F1F62002E207D /* MovieListResults.swift */; };
 		FC66C01A272E1018002D5C78 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC66C019272E1018002D5C78 /* Constants.swift */; };
 		FC6BCBCA2743692E00AE9AAE /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6BCBC92743692E00AE9AAE /* TabBarController.swift */; };
 		FC7326382731E0FD009900ED /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7326372731E0FD009900ED /* ListViewController.swift */; };
+		FC8E09F4274CAC1000C84912 /* MovieAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8E09F3274CAC1000C84912 /* MovieAPIClient.swift */; };
+		FC8E09F6274CB15C00C84912 /* MockAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC8E09F5274CB15C00C84912 /* MockAPIClient.swift */; };
 		FC94C47D273107CF00E5BB5E /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC94C47C273107CF00E5BB5E /* MovieCell.swift */; };
 		FC9BC77F2734AF70003FA443 /* ConfigurationItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC9BC77E2734AF70003FA443 /* ConfigurationItem.swift */; };
 		FCA94ED52746E70300A5EB8D /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA94ED42746E70300A5EB8D /* MovieViewModel.swift */; };
@@ -73,16 +74,17 @@
 		FC33293D2747608600207055 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		FC33293F27476F3400207055 /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
 		FC39A11F272BB5BB0098E033 /* MovieItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieItem.swift; sourceTree = "<group>"; };
-		FC3E402E272F1064002E207D /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		FC3E4030272F1091002E207D /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
 		FC3E4032272F115A002E207D /* MovieFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFeed.swift; sourceTree = "<group>"; };
 		FC3E4034272F1E56002E207D /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
 		FC3E4036272F1E81002E207D /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
-		FC3E4038272F1F10002E207D /* MovieClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieClient.swift; sourceTree = "<group>"; };
+		FC3E4038272F1F10002E207D /* MovieAPIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPIManager.swift; sourceTree = "<group>"; };
 		FC3E403A272F1F62002E207D /* MovieListResults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieListResults.swift; sourceTree = "<group>"; };
 		FC66C019272E1018002D5C78 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		FC6BCBC92743692E00AE9AAE /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		FC7326372731E0FD009900ED /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
+		FC8E09F3274CAC1000C84912 /* MovieAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAPIClient.swift; sourceTree = "<group>"; };
+		FC8E09F5274CB15C00C84912 /* MockAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAPIClient.swift; sourceTree = "<group>"; };
 		FC94C47C273107CF00E5BB5E /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		FC9BC77E2734AF70003FA443 /* ConfigurationItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationItem.swift; sourceTree = "<group>"; };
 		FCA94ED42746E70300A5EB8D /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
@@ -232,12 +234,13 @@
 		FC3E402D272F105C002E207D /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				FC3E402E272F1064002E207D /* Result.swift */,
 				FC3E4030272F1091002E207D /* EndPoint.swift */,
 				FC3E4032272F115A002E207D /* MovieFeed.swift */,
 				FC3E4034272F1E56002E207D /* APIError.swift */,
 				FC3E4036272F1E81002E207D /* APIClient.swift */,
-				FC3E4038272F1F10002E207D /* MovieClient.swift */,
+				FC8E09F3274CAC1000C84912 /* MovieAPIClient.swift */,
+				FC3E4038272F1F10002E207D /* MovieAPIManager.swift */,
+				FC8E09F5274CB15C00C84912 /* MockAPIClient.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -452,6 +455,7 @@
 			files = (
 				FC33294027476F3400207055 /* MovieModel.swift in Sources */,
 				FC9BC77F2734AF70003FA443 /* ConfigurationItem.swift in Sources */,
+				FC8E09F6274CB15C00C84912 /* MockAPIClient.swift in Sources */,
 				FC33293C27475EE700207055 /* ListView.swift in Sources */,
 				FC94C47D273107CF00E5BB5E /* MovieCell.swift in Sources */,
 				FCB40F2227339F1100F39478 /* ColumnFlowLayout.swift in Sources */,
@@ -460,7 +464,6 @@
 				FCA94ED52746E70300A5EB8D /* MovieViewModel.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
 				FC6BCBCA2743692E00AE9AAE /* TabBarController.swift in Sources */,
-				FC3E402F272F1064002E207D /* Result.swift in Sources */,
 				FC33293E2747608600207055 /* ListViewModel.swift in Sources */,
 				FC09A1152735A81E008781B1 /* DetailViewController.swift in Sources */,
 				FC3E403B272F1F62002E207D /* MovieListResults.swift in Sources */,
@@ -468,7 +471,8 @@
 				FC3E4033272F115A002E207D /* MovieFeed.swift in Sources */,
 				FC66C01A272E1018002D5C78 /* Constants.swift in Sources */,
 				FC3E4035272F1E56002E207D /* APIError.swift in Sources */,
-				FC3E4039272F1F10002E207D /* MovieClient.swift in Sources */,
+				FC8E09F4274CAC1000C84912 /* MovieAPIClient.swift in Sources */,
+				FC3E4039272F1F10002E207D /* MovieAPIManager.swift in Sources */,
 				FC7326382731E0FD009900ED /* ListViewController.swift in Sources */,
 				FC3E4037272F1E81002E207D /* APIClient.swift in Sources */,
 			);
