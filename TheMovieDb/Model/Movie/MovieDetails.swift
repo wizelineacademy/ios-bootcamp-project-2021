@@ -21,8 +21,8 @@ struct MovieDetails: Codable {
   let status: String
   var cast: [Person]?
   var reviews: [MovieReview]?
-  var similarMovies: [SimilarOrRecommendedMovie]?
-  var recommendedMovies: [SimilarOrRecommendedMovie]?
+  var similarMovies: [Movie]?
+  var recommendedMovies: [Movie]?
   
   private enum CodingKeys: String, CodingKey {
     case id

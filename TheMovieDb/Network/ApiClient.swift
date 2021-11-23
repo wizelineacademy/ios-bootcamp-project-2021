@@ -11,7 +11,6 @@ import UIKit
 protocol ApiClient {
   var session: URLSession { get }
   func fetch<Element: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> Element?, completion: @escaping (Result<Element, ApiError>) -> Void)
-  //  func getData<Element: Decodable>(from: Endpoint, movieRegion: MovieRegion, movieLanguage: MovieLanguage, completion: @escaping (Result<Element?, ApiError>) -> Void)
 }
 
 extension ApiClient {

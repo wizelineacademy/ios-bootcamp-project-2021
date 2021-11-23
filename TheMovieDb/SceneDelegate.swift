@@ -18,9 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   }
   
   fileprivate func setFirstViewController(_ window: UIWindow) {
-    let feedViewController = FeedViewController()
-    let moviePresenter =  MoviePresenter(view: feedViewController)
-    feedViewController.moviePresenter = moviePresenter
+    let apiClient = MovieClient.shared
+    let feedViewController = FeedViewController(apiClient: apiClient)
     let navigationController = UINavigationController()
     navigationController.viewControllers = [feedViewController]
     navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]

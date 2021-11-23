@@ -11,7 +11,7 @@ class ReviewCell: BaseCell {
   
   static let identifier = "ReviewCell"
   
-  var review: MovieReview? {
+  var review: ReviewViewModel? {
     didSet {
       setupData()
     }
@@ -64,19 +64,7 @@ class ReviewCell: BaseCell {
   override func setupData() {
     
     guard let name = review?.author, let description = review?.content else { return }
-    var url: String?
-    var portrait = review?.authorDetails.avatarPath
-    let checkValidUrl = portrait?.prefix(9)
-    if checkValidUrl == "/https://" {
-      portrait?.removeFirst()
-      url = portrait
-    } else {
-      if portrait != nil {
-        url = "\(ApiPath.baseUrlImage.path)\(portrait ?? "")"
-      }
-    }
-
-    self.profileImage.loadImage(urlString: url)
+    self.profileImage.loadImage(urlString: review?.profileImageAuthor)
     self.nameLabel.text = name
     self.descriptionLabel.text = description
     

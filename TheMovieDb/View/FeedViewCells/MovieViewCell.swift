@@ -12,7 +12,7 @@ class MovieViewCell: BaseCell {
   
   static let identifier = "MovieViewCell"
   
-  var movie: Movie? {
+  var movie: MovieViewModel? {
     didSet {
       setupData()
     }
@@ -31,11 +31,7 @@ class MovieViewCell: BaseCell {
   }
   
   override func setupData() {
-    let url: String?
-    if let portrait = movie?.poster {
-      url = "\(ApiPath.baseUrlImage.path)\(portrait)"
-    } else { url = nil }
-    self.imageMovie.loadImage(urlString: url)
+    self.imageMovie.loadImage(urlString: movie?.poster)
   }
   
   override func prepareForReuse() {

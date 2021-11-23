@@ -11,7 +11,7 @@ class CastCell: BaseCell {
   
   static let identifier = "CastCell"
   
-  var person: Person? {
+  var person: PersonViewModel? {
     didSet {
       setupData()
     }
@@ -55,11 +55,8 @@ class CastCell: BaseCell {
   
   override func setupData() {
     guard let name = person?.name, let character = person?.character else { return }
-    let url: String?
-    if let portrait = person?.profilePath {
-      url = "\(ApiPath.baseUrlImage.path)\(portrait)"
-    } else { url = nil }
-    profileImage.loadImage(urlString: url)
+
+    profileImage.loadImage(urlString: person?.profilePath)
     self.nameLabel.text = name
     self.characterLabel.text = character
   }

@@ -6,17 +6,21 @@
 //
 
 import UIKit
+import Combine
 
 class FeedViewController: UICollectionViewController {
   
   static let categoryHeaderId = "categoryHeaderId"
-  // MARK: presente to manage the logic part of the app
-  var moviePresenter: MoviePresenter?
+
+  var apiClient: MovieClient
+  var movieViewModel: GeneralMovieViewModel?
   
-  var categoryMovies: [String: [Movie]] = [:]
-  var searchResult: [Movie]? = []
+  var categoryMovies: [String: [MovieViewModel]] = [:]
+  var searchResult: [MovieViewModel]? = []
   var titleCategory: String = ""
+  
   private var lastSearch: String?
+  
   lazy private var searchController: SearchBarController = {
     let searchController = SearchBarController(placeholder: "Search a Movie or an Actor", delegate: self)
     searchController.text = lastSearch
@@ -24,7 +28,9 @@ class FeedViewController: UICollectionViewController {
     return searchController
   }()
   
-  init() {
+  init(apiClient: MovieClient) {
+    self.apiClient = apiClient
+    self.movieViewModel = GeneralMovieViewModel(movieClient: apiClient)
     super.init(collectionViewLayout: FeedViewController.createLayout())
   }
   
@@ -51,13 +57,18 @@ class FeedViewController: UICollectionViewController {
     navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: self, action: nil)
     navigationController?.navigationBar.tintColor = DesignColor.purple.color
   }
-  // MARK: get data from the api using the presenter
+  // MARK: get data from the api using the viewModel
   func getMovies() {
+    let group = DispatchGroup()
     for categories in MovieFeed.allCases {
-      moviePresenter?.getData(from: categories, kindItem: MovieFeedResult.self, complement: categories.title)
+      movieViewModel?.getListMovies(categories: categories, title: categories.title, group: group)
+    }
+    group.notify(queue: .main) {
+      self.categoryMovies = self.movieViewModel!.listMovieViewModel
+      self.collectionView.reloadData()
     }
   }
-  
+
   func showTitleCategory(_ indexPath: IndexPath) -> String {
     
     let sectionType = MovieFeed.allCases[indexPath.section]
@@ -70,7 +81,7 @@ class FeedViewController: UICollectionViewController {
     }
   }
   // MARK: using the MovieFeed enum to return movie with indexPath
-  func setMovie(with indexPath: IndexPath) -> Movie? {
+  func setMovie(with indexPath: IndexPath) -> MovieViewModel? {
     
     let sectionType = MovieFeed.allCases[indexPath.section]
     switch sectionType {
@@ -150,29 +161,9 @@ extension FeedViewController {
   // MARK: - Navigation to detailViewController
   
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let detailVC = DetailViewController()
     guard let movie = setMovie(with: indexPath) else { return }
-    let movieDetailPresenter = MoviePresenter(view: detailVC)
-    detailVC.movieDetailPresenter = movieDetailPresenter
-    detailVC.movieId = movie.id
-    navigationController?.pushViewController(detailVC, animated: true)
-  }
-  
-}
-  // MARK: protocol to connect the view with the presenter
-extension FeedViewController: MoviePresenterDelegate {
-  
-  var complement: String? {
-    get { return titleCategory }
-    set { titleCategory = newValue ?? "" }
-  }
-  
-  func showResults<Element>(items: Element) {
-    guard let movies = items as? MovieFeedResult, let listMovies = movies.results, let complement = complement else { return }
-    self.categoryMovies[complement] = listMovies
-    DispatchQueue.main.async { [weak self]  in
-      self?.collectionView.reloadData()
-    }
+    let detailVC = DetailViewController(movieClient: apiClient, movieId: movie.id)
+    self.navigationController?.pushViewController(detailVC, animated: true)
   }
   
 }
