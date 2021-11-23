@@ -8,19 +8,13 @@
 
 import Foundation
 
-class ReviewDetailInteractor: ReviewDetailInteractorInputProtocol {
+class ReviewDetailInteractor {
     
     // MARK: Properties
-    weak var presenter: ReviewDetailInteractorOutputProtocol?
-    private let review: Review
+    @Published  var review: Review?
     
     init(review: Review) {
         self.review = review
-        
     }
     
-    func getReview() {
-        presenter?.interactorPushDataPresenter(receivedReview: self.review)
-    }
-
 }

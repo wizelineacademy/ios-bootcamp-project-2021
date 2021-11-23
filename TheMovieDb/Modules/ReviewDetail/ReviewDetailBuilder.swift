@@ -7,21 +7,18 @@
 //
 
 import UIKit.UIViewController
+import SwiftUI
 
 enum ReviewDetailBuilder: ReviewDetailBuilderProtocol {
 
     static func createModule(with review: Review) -> UIViewController {
-        let view = ReviewDetailView()
-        let presenter: ReviewDetailPresenterProtocol & ReviewDetailInteractorOutputProtocol = ReviewDetailPresenter()
-        let interactor: ReviewDetailInteractorInputProtocol = ReviewDetailInteractor(review: review)
         
-        view.presenter = presenter
-        presenter.view = view
-        presenter.interactor = interactor
-        
-        interactor.presenter = presenter
-    
-        return view
+        let interactor = ReviewDetailInteractor(review: review)
+        let presenter = ReviewDetailPresenter(interactor: interactor)
+        let view = ReviewDetailViewUI(presenter: presenter)
+        let viewUI = UIHostingController(rootView: view)
+
+        return viewUI
     }
 
 }
