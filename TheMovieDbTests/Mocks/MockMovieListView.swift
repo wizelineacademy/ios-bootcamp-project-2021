@@ -8,7 +8,7 @@
 import Foundation
 @testable import TheMovieDb
 
-class MockMovieListView: MovieListView {
+final class MockMovieListView: MovieListView {
     
     var setTitleCalled = false
     var showErrorCalled =  false

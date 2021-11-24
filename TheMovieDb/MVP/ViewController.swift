@@ -11,7 +11,7 @@ import os.log
 final class ViewController: UIViewController {
     
     private var presenter: MovieListPresenter?
-    var movieListOption: MoviesOptions = .nowPlaying
+    private var movieListOption: MoviesOptions = .nowPlaying
     
     private var tableView: UITableView = {
         let tableView = UITableView()
