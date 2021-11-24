@@ -35,7 +35,6 @@ class NetworkManager {
         
         guard let url = urlComponents.url else { fatalError("Error: invalid request") }
         let request = URLRequest(url: url)
-        print(url)
         return request
     }
     
