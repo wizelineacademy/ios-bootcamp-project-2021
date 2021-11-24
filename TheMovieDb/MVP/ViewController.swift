@@ -10,7 +10,8 @@ import os.log
 
 final class ViewController: UIViewController {
     
-    var viewModel: MovieListViewModel = .init(facade: MovieFacade())
+    private var presenter: MovieListPresenter?
+    private var movieListOption: MoviesOptions = .nowPlaying
     
     private var tableView: UITableView = {
         let tableView = UITableView()
@@ -24,9 +25,8 @@ final class ViewController: UIViewController {
         configureTableView()
         configureUI()
         setupNavigationBar()
-        viewModel.reloadData = { [weak self] in self?.tableView.reloadData() }
-        viewModel.loadMovies()
-        viewModel.showError = { [weak self] error in self?.showErrorAlert(error) }
+        presenter = MovieListPresenter(view: self as MovieListView, facade: MovieFacade(), movieOption: movieListOption)
+        presenter?.listMovies()
         os_log("ViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
@@ -35,7 +35,7 @@ final class ViewController: UIViewController {
     }
     
     private func configureUI() {
-        title = viewModel.movieListOption.title
+        title = presenter?.movieListOption.title
         view.backgroundColor = .systemRed
         view.addSubview(tableView)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellIdentifier)
@@ -61,21 +61,38 @@ final class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.movies.count
+        return presenter?.movies.count ?? .zero
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier) else {
             return UITableViewCell()
         }
-        cell.textLabel?.text = viewModel.movies[indexPath.row].title
+        cell.textLabel?.text = presenter?.movies[indexPath.row].title
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewControllerMovieInfo = MovieInfoViewController()
-        viewControllerMovieInfo.viewModel.movieID = viewModel.movies[indexPath.row].id
+        viewControllerMovieInfo.viewModel.movieID = presenter?.movies[indexPath.row].id
         navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
+    }
+}
+
+extension ViewController: MovieListView {
+    func showError(_ error: MovieError) {
+        showErrorAlert(error)
+    }
+    
+    func didSetTitle(title: String) {
+        self.title = title
+    }
+   
+    
+    func onUpdateMovies() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 

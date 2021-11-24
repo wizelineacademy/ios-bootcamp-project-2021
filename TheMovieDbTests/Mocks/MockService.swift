@@ -10,7 +10,13 @@ import Foundation
 
 final class MockService: MovieService {
     
+    var failure = false
+    
     func get<T>(search: String?, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) where T : Decodable {
+        guard !failure else {
+            returnResponse(.failure(.invalidResponse))
+            return
+        }
         switch endpoint {
         case .trending, .nowPlaying, .popular, .topRated, .upcoming:
             guard let moviesResponse = mockedMovies() as? T else { return }
@@ -39,7 +45,7 @@ final class MockService: MovieService {
         }
     }
     
-    fileprivate func mockedMovies() -> MovieResponse<Movie> {
+    private func mockedMovies() -> MovieResponse<Movie> {
         return MovieResponse(page: 0,
                              results: [Movie(posterPath: "",
                                              overview: "",
@@ -81,7 +87,7 @@ final class MockService: MovieService {
                              totalResults: 1)
     }
     
-    fileprivate func mockedSearchObject() -> MovieResponse<SearchObject> {
+    private func mockedSearchObject() -> MovieResponse<SearchObject> {
         return MovieResponse(page: 0,
                              results: [SearchObject(id: 001,
                                                     name: nil,
@@ -99,7 +105,7 @@ final class MockService: MovieService {
                              totalResults: 1)
     }
     
-    fileprivate func mockedReview() -> MovieResponse<ReviewsDetails> {
+    private func mockedReview() -> MovieResponse<ReviewsDetails> {
         return MovieResponse(page: 0,
                              results: [ReviewsDetails(author: "Karla", content: "Excelent"),
                                       ReviewsDetails(author: "Daniela", content: "Bad movie")],
@@ -107,7 +113,7 @@ final class MockService: MovieService {
                              totalResults: 1)
     }
     
-    fileprivate func mockedCredits() -> CreditsMovie {
+    private func mockedCredits() -> CreditsMovie {
         return CreditsMovie(id: 1,
                             cast: [Person(id: 005,
                                           biography: "",
