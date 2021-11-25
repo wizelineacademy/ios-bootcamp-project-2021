@@ -32,15 +32,17 @@ final class SearchingView: UIViewController {
         }
     }
     
-    // MARK: Helpers
-    
-    private func configureUI() {
+}
+
+// MARK: Helpers
+private extension SearchingView {
+    func configureUI() {
         configureTableView()
         configureSearchController()
 
     }
     
-    private func configureTableView() {
+    func configureTableView() {
         tableView = UITableView(frame: .zero, style: .insetGrouped)
         view.addSubview(tableView)
         tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
@@ -61,7 +63,6 @@ final class SearchingView: UIViewController {
         navigationItem.titleView?.isHidden = true
         definesPresentationContext = false
     }
-    
 }
 
 // MARK: - UITableDelegate
