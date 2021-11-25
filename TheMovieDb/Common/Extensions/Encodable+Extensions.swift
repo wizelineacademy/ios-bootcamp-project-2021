@@ -9,6 +9,10 @@ import Foundation
 
 extension Encodable {
     func toData() -> Data? {
-        return try? JSONEncoder().encode(self)
+        do {
+            return try? JSONEncoder().encode(self)
+        } catch let error {
+            print(error)
+        }
     }
 }
