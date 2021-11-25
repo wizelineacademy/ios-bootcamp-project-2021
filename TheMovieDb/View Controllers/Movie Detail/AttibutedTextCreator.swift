@@ -16,15 +16,23 @@ struct AttributedTextCreator {
         let thirdAttributes: [NSAttributedString.Key: Any] = [ .foregroundColor: UIColor.lightGray, .font: UIFont.systemFont(ofSize: 15)]
         
         let fourthrAttributes: [NSAttributedString.Key: Any] = [ .foregroundColor: UIColor.darkGray, .font: UIFont.systemFont(ofSize: 15)]
-        
+        let fivethAttributes: [NSAttributedString.Key: Any] = [ .foregroundColor: UIColor.white, .font: UIFont.boldSystemFont(ofSize: 19)]
+
         let firstString = NSMutableAttributedString(string: movie.title + "\n", attributes: firstAttributes)
         
         let secondString = NSMutableAttributedString(string: movie.overview + "\n\n", attributes: secondAttributes)
         
         let thirdString = NSMutableAttributedString(string: "Release: " + (DateFormatterManager.formatToReadableString(dateString: movie.releaseDate) ?? "") + "\n", attributes: thirdAttributes)
         
-        let fourthString = NSMutableAttributedString(string: "Popularity: " + movie.popularity.description + "\n\n", attributes: fourthrAttributes)
-
+        let popularImageAttachment = NSTextAttachment()
+        popularImageAttachment.image = UIImage(named: "medal.png")?.withTintColor(.white)
+        let imageString = NSAttributedString(attachment: popularImageAttachment)
+        let fourthString = NSMutableAttributedString(string: "", attributes: fourthrAttributes)
+        fourthString.append(imageString)
+        
+        let fourthOneString = NSMutableAttributedString(string: "  " + String(format: "%.0f", movie.popularity) + "\n\n", attributes: fivethAttributes)
+        fourthString.append(fourthOneString)
+      
         let fifthString = NSMutableAttributedString(string: "Similar Movies \n", attributes: thirdAttributes)
 
         firstString.append(secondString)
