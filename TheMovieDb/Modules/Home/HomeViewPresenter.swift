@@ -22,7 +22,7 @@ class HomeViewPresenter {
     
     weak var delegate: HomeViewPresenterDelegate?
     
-    var movies = [Movie]()
+    private var movies = [Movie]()
     
     var isLoading = false {
         didSet {
@@ -75,6 +75,14 @@ class HomeViewPresenter {
             }
             self?.isLoading = false
         }
+    }
+    
+    func getMoviesCount() -> Int {
+        movies.count
+    }
+    
+    func getMovie(forPosition index: Int) -> Movie {
+        movies[index]
     }
     
     func resetFeed() {
