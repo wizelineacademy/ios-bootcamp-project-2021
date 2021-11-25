@@ -21,7 +21,7 @@ struct AttributedTextCreator {
         
         let secondString = NSMutableAttributedString(string: movie.overview + "\n\n", attributes: secondAttributes)
         
-        let thirdString = NSMutableAttributedString(string: "ReleaseDate: " + movie.releaseDate + "\n", attributes: thirdAttributes)
+        let thirdString = NSMutableAttributedString(string: "Release: " + (DateFormatterManager.formatToReadableString(dateString: movie.releaseDate) ?? "") + "\n", attributes: thirdAttributes)
         
         let fourthString = NSMutableAttributedString(string: "Popularity: " + movie.popularity.description + "\n\n", attributes: fourthrAttributes)
 
