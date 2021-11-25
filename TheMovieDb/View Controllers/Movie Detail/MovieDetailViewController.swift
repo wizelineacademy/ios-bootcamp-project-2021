@@ -11,6 +11,7 @@ class MovieDetailViewController: UIViewController, MoviesDetailViewProtocol {
   
     @IBOutlet weak var collectionView: UICollectionView!
     let dataSource = MovieDetailDataSource()
+    let delegate = MovieDetailDelegate()
     var presenter: MoviesDetailPresenterProtocol?
     var movie: MovieProtocol?
     
@@ -18,15 +19,18 @@ class MovieDetailViewController: UIViewController, MoviesDetailViewProtocol {
         super.viewDidLoad()
         guard let movieDetail = self.movie else { return }
         self.presenter?.loadMovieDetail(movie: movieDetail)
+        addDidSelectMovieClousure()
     }
     
     func showDetailOf(movie: MovieDetailProtocol) {
         dataSource.movie = movie
+        delegate.movie = movie
         self.presenter?.loadSimilarMoviesFor(movie: movie)
     }
     
     func displaySimilarMovies(list: MovieList) {
         dataSource.similarMovies = list
+        delegate.similarMovies = list
         setUpView()
     }
     
@@ -34,8 +38,15 @@ class MovieDetailViewController: UIViewController, MoviesDetailViewProtocol {
         self.title = movie?.title
         collectionView.collectionViewLayout = CompotitionalLayoutCreator.createLayoutForMovieDetail()
         collectionView.setup(dataSource: dataSource)
+        collectionView.setup(delegate: delegate)
         collectionView.registerNibForCellWith(name: HeaderCollectionViewCell.identifierToDeque)
         collectionView.registerNibForCellWith(name: MovieCollectionViewCell.identifierToDeque)
         collectionView.reloadData()
+    }
+    
+    func addDidSelectMovieClousure() {
+        delegate.didSelectSimilarMovie = { [weak self] movie in
+            self?.presenter?.didSelectSimilarMovie(movie: movie)
+        }
     }
 }

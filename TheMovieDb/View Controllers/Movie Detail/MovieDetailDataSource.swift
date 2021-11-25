@@ -42,21 +42,6 @@ class MovieDetailDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-
-//        let itemType = detailItems[indexPath.section]
-//        switch itemType {
-//        case .header:
-//            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HeaderCollectionViewCell.identifierToDeque, for: indexPath) as? HeaderCollectionViewCell, let movie = self.movie {
-//                cell.setInfoWith(movie: movie)
-//                return cell
-//            }
-//        case .overview:
-//            return UICollectionViewCell()
-//        case .similar:
-//            if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifierToDeque, for: indexPath) as? MovieCollectionViewCell {
-//                return cell
-//            }
-//        }
         
         switch indexPath.section {
         case 0:

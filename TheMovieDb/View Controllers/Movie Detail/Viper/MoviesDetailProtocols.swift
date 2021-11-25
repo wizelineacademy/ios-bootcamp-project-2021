@@ -15,7 +15,7 @@ protocol MoviesDetailPresenterProtocol {
     var router: MoviesDetailRouterProtocol? { get set }
     func loadMovieDetail(movie: MovieProtocol)
     func loadSimilarMoviesFor(movie: MovieProtocol)
-    
+    func didSelectSimilarMovie(movie: MovieProtocol)
 }
 
 // View
@@ -46,5 +46,5 @@ protocol MoviesDetailBuilderProtocol {
 }
 
 protocol MoviesDetailRouterProtocol {
-
+    func pushDetailViewControllerFrom(view: UIViewController, with movie: MovieProtocol)
 }

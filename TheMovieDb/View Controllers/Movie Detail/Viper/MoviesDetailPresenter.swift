@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 final class MoviesDetailPresenter: MoviesDetailPresenterProtocol {
+    
+    
 
     var view: MoviesDetailViewProtocol?
     var interactor: MoviesDetailInteractorInputProtocol?
@@ -20,6 +23,12 @@ final class MoviesDetailPresenter: MoviesDetailPresenterProtocol {
     func loadSimilarMoviesFor(movie: MovieProtocol) {
       
         interactor?.fetchSimilarMoviesFor(movie: movie)
+    }
+    
+    func didSelectSimilarMovie(movie: MovieProtocol) {
+        if let movieDetailViewController = view as? UIViewController {
+            router?.pushDetailViewControllerFrom(view: movieDetailViewController, with: movie)
+        }
     }
     
 }
