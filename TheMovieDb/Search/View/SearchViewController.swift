@@ -60,12 +60,13 @@ final class SearchViewController: UICollectionViewController {
         }
     }
     
-    @IBSegueAction func goToDetailActionSegue(_ coder: NSCoder, sender: Any?) -> DetailViewController? {
-        guard let cell = sender as? SearchCell,
-              let movie = cell.movie else {
-                  return nil
-              }
-        return DetailViewController(movie: movie, coder: coder)
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = items[indexPath.row]
+        let factory = DefaultDetailSceneFactory()
+        factory.configurator = DefaultDetailSceneConfigurator()
+        let viewController = factory.makeDetailScene(movie: movie)
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 

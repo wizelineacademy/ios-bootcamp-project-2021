@@ -82,13 +82,14 @@ final class ListSectionViewController: UICollectionViewController {
             self.callService()
         }
     }
-    
-    @IBSegueAction func goToDetailActionSegue(_ coder: NSCoder, sender: Any?) -> DetailViewController? {
-        guard let cell = sender as? ListSectionCell,
-              let item = cell.movie else {
-                  return nil
-              }
-        return DetailViewController(movie: item, coder: coder)
+
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = items[indexPath.row]
+        let factory = DefaultDetailSceneFactory()
+        factory.configurator = DefaultDetailSceneConfigurator()
+        let viewController = factory.makeDetailScene(movie: movie)
+        viewController.hidesBottomBarWhenPushed = true
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
