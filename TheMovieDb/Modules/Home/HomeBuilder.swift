@@ -11,8 +11,8 @@ enum HomeBuilder: HomeBuilderProtocol {
     static func createModule() -> UIViewController {
         let view = HomeView()
         let service = APIService()
-        let presenter: HomePresenterProtocol & HomeInteractorOutputProtocol = HomePresenter()
-        let interactor: HomeInteractorInputProtocol & HomeRemoteDataManagerOutputProtocol = HomeInteractor()
+        let presenter: HomePresenterViewInteractorProtocol = HomePresenter()
+        let interactor: HomeInteractorDataManagerProtocol = HomeInteractor()
         let remoteDataManager: HomeRemoteDataManagerInputProtocol = HomeRemoteDataManager(service: service)
         let wireFrame: HomeRouterProtocol = HomeWireFrame()
         

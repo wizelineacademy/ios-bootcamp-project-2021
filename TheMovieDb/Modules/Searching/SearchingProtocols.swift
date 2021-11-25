@@ -27,6 +27,7 @@ protocol SearchingBuilderProtocol {
     static func createModule() -> UIViewController
 }
 
+typealias SearchingPresenterInteractorProtocol = SearchingPresenterProtocol & SearchingInteractorOutputProtocol
 protocol SearchingPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: SearchingViewProtocol? { get set }
@@ -43,6 +44,7 @@ protocol SearchingInteractorOutputProtocol: AnyObject {
     func moviesFound(moviesFound: [MovieViewModel])
 }
 
+typealias SearchingInteractorDataManagerProtocol = SearchingInteractorInputProtocol & SearchingRemoteDataManagerOutputProtocol
 protocol SearchingInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: SearchingInteractorOutputProtocol? { get set }

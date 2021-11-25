@@ -11,7 +11,6 @@ import Foundation
 class HomeInteractor: HomeInteractorInputProtocol {
     // MARK: Properties
     weak var presenter: HomeInteractorOutputProtocol?
-    var localDatamanager: HomeLocalDataManagerInputProtocol?
     var remoteDatamanager: HomeRemoteDataManagerInputProtocol?
 
     func getMovies() {

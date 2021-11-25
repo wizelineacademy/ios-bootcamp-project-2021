@@ -13,4 +13,3 @@ enum InterfaceConst {
     static let searchUnselectedIcon = "magnifyingglass"
     static let searchSelectedIcon = "text.magnifyingglass"
 }
-

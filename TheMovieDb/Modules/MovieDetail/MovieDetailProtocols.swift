@@ -28,6 +28,7 @@ protocol MovieDetailBuilderProtocol: AnyObject {
     static func createModule(with movie: Movie) -> UIViewController
 }
 
+typealias MovieDetailPresenterInteractorProtocol = MovieDetailPresenterProtocol & MovieDetailInteractorOutputProtocol
 protocol MovieDetailPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: MovieDetailViewProtocol? { get set }
@@ -45,16 +46,13 @@ protocol MovieDetailInteractorOutputProtocol: AnyObject {
     func moviesFromInteractor(_ relatedMovies: [MovieDetailSections: [Movie]])
 }
 
+typealias MovieDetailInteractorDataManagerProtocol = MovieDetailInteractorInputProtocol & MovieDetailRemoteDataManagerOutputProtocol
 protocol MovieDetailInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: MovieDetailInteractorOutputProtocol? { get set }
     var remoteDatamanager: MovieDetailRemoteDataManagerInputProtocol? { get set }
     
     func getRelatedMovies()
-}
-
-protocol MovieDetailDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> DATAMANAGER
 }
 
 protocol MovieDetailRemoteDataManagerInputProtocol: AnyObject {
