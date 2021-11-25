@@ -26,6 +26,7 @@ protocol HomeBuilderProtocol {
     static func createModule() -> UIViewController
 }
 
+typealias HomePresenterViewInteractorProtocol = HomePresenterProtocol & HomeInteractorOutputProtocol
 protocol HomePresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: HomeViewProtocol? { get set }
@@ -41,17 +42,13 @@ protocol HomeInteractorOutputProtocol: AnyObject {
     func moviesObtained(_ movies: [MovieGroupSections: [Movie]])
 }
 
+typealias HomeInteractorDataManagerProtocol = HomeInteractorInputProtocol & HomeRemoteDataManagerOutputProtocol
 protocol HomeInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: HomeInteractorOutputProtocol? { get set }
-    var localDatamanager: HomeLocalDataManagerInputProtocol? { get set }
     var remoteDatamanager: HomeRemoteDataManagerInputProtocol? { get set }
     
     func getMovies()
-}
-
-protocol HomeDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> DATAMANAGER
 }
 
 protocol HomeRemoteDataManagerInputProtocol: AnyObject {
@@ -63,8 +60,4 @@ protocol HomeRemoteDataManagerInputProtocol: AnyObject {
 protocol HomeRemoteDataManagerOutputProtocol: AnyObject {
     // REMOTEDATAMANAGER -> INTERACTOR
     func fetchedMovies(_ movies: [MovieGroupSections: [Movie]])
-}
-
-protocol HomeLocalDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> LOCALDATAMANAGER
 }

@@ -19,6 +19,7 @@ protocol ReviewDetailBuilderProtocol {
     static func createModule(with review: Review) -> UIViewController
 }
 
+typealias ReviewDetailPresenterInteractorProtocol = ReviewDetailPresenterProtocol & ReviewDetailInteractorOutputProtocol
 protocol ReviewDetailPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: ReviewDetailViewProtocol? { get set }

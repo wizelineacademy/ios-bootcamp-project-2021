@@ -16,8 +16,7 @@ final class ReviewsView: UICollectionViewController {
     private var viewModel = [ReviewViewModel]() // reviews = [Review]()
     
     // MARK: - LifeCycle
-    init() {
-        let layout = UICollectionViewFlowLayout()
+    init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
         layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
         super.init(collectionViewLayout: layout)
     }

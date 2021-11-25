@@ -25,6 +25,7 @@ protocol ReviewsBuilderProtocol {
     static func createModule(movie: Movie) -> UIViewController
 }
 
+typealias ReviewsPresenterInteractorProtocol = ReviewsPresenterProtocol & ReviewsInteractorOutputProtocol
 protocol ReviewsPresenterProtocol: AnyObject {
     // VIEW -> PRESENTER
     var view: ReviewsViewProtocol? { get set }
@@ -40,6 +41,7 @@ protocol ReviewsInteractorOutputProtocol: AnyObject {
     func reviewsFromInteractor(reviewViewModel: [ReviewViewModel])
 }
 
+typealias ReviewsInteractorDataManagerProtocol = ReviewsInteractorInputProtocol & ReviewsRemoteDataManagerOutputProtocol
 protocol ReviewsInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: ReviewsInteractorOutputProtocol? { get set }
