@@ -20,7 +20,6 @@ final class MoviesHomeAPIDataManager: MoviesHomeAPIDataManagerProtocol {
                 completion(.success(listOfMovies))
             case .failure(let error):
                 completion(.failure(error))
-
             }
         }
     }

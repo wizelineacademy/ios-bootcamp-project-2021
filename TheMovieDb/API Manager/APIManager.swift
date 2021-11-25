@@ -101,8 +101,10 @@ class DecoderJson {
     }
 }
 
-enum NetworkError: Error {
-    case noList
+enum NetworkError: Int, Error {
+    case failure = 404
+    case succes = 200
+    case unknown = 0
 }
 
 class MovieDbAPI {
@@ -116,11 +118,14 @@ class MovieDbAPI {
         request.setValue(RequestFields.applicationJson, forHTTPHeaderField: RequestFields.contentType)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        URLSession.shared.dataTask(with: request) { data, _, error in
+        URLSession.shared.dataTask(with: request) { data, response, error in
+           
             if let decoded = DecoderJson.decode(value: T.self, data: data) {
                 completion(.success(decoded))
             } else {
-                completion(.failure(NetworkError.noList))
+                guard let httpResponse = response as? HTTPURLResponse else { return }
+                let networkError: Error = NetworkError(rawValue: httpResponse.statusCode) ?? error ?? NetworkError.unknown
+                completion(.failure(networkError))
             }
             group?.leave()
         }.resume()

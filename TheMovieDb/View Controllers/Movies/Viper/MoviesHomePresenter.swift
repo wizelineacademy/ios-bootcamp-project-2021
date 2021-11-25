@@ -26,12 +26,13 @@ final class MoviesHomePresenter: MoviesHomePresenterProtocol {
 
 extension MoviesHomePresenter: MoviesHomeInteractorOutputProtocol {
     func moviesDidFetch(movies: MoviesFeed) {
-        
         view?.reloadViewWith(movies: movies)
     }
     
     func fetchMoviesDidFail(with error: Error) {
-        
+        if let moviesHomeViewController = view as? UIViewController {
+            router?.showErrorAlertFrom(view: moviesHomeViewController, message: "Something went wrong, try again later")
+        }
     }
     
 }

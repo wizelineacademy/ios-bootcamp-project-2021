@@ -39,6 +39,7 @@ protocol MoviesHomeInteractorOutputProtocol: AnyObject {
 // Presenter -> Router
 protocol MoviesHomeRouterProtocol: AnyObject {
     func pushDetailViewControllerFrom(view: UIViewController, with movie: MovieProtocol)
+    func showErrorAlertFrom(view: UIViewController, message: String)
 }
 
 // No comunication
