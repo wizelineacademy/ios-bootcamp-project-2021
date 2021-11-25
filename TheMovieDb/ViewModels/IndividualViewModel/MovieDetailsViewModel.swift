@@ -40,7 +40,7 @@ struct MovieDetailsViewModel {
   var backDropPath: String? {
     let url: String?
     guard let moviePoster = movieDetails.backDropPath else { return nil }
-    url = "\(ApiPath.baseUrlImage.path)\(moviePoster)"
+    url = ApiPath.baseUrlImage.path + moviePoster
     return url
   }
   

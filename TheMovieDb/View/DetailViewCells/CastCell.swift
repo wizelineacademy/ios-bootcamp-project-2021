@@ -20,8 +20,8 @@ class CastCell: BaseCell {
   var profileImage = ImageBuilder()
     .aspectImage(aspectRatio: .scaleAspectFill)
     .roundCorners(circle: true, radius: SizeAndMeasures.profilePictureBig.measure, clipped: true)
-    .setBackgroundColor(color: .transparentWhite)
     .setPlaceHolder(image: UIImage(named: "notFoundImage"))
+    .setBackgroundColor(color: .transparentWhite)
     .build()
   
   var nameLabel = LabelBuilder()
@@ -54,10 +54,10 @@ class CastCell: BaseCell {
   }
   
   override func setupData() {
-    guard let name = person?.name, let character = person?.character else { return }
-
+    guard let name = person?.name else { return }
     profileImage.loadImage(urlString: person?.profilePath)
     self.nameLabel.text = name
+    guard let character = person?.character else { return }
     self.characterLabel.text = character
   }
   

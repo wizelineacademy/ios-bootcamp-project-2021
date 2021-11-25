@@ -50,7 +50,7 @@ class DetailViewController: UIViewController {
     setupCollectionView()
     getAllInfoDetailMovie()
   }
-  
+
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     setupNavigationBar()
@@ -72,64 +72,38 @@ class DetailViewController: UIViewController {
     case .recommended: return MovieSection.recommended.title
     }
   }
-//  var cancellables: Set<AnyCancellable> = []
-  // MARK: get data from the api using the presenter
-//  func getMovieDetails() {
-//    guard let id = movieId else { return }
-//    movieClient.fetch(InfoById.movieDetails(id), kindItem: MovieDetails.self)
-//      .receive(on: RunLoop.main)
-//      .sink(receiveCompletion: { _ in },
-//            receiveValue: { [weak self] movieDetails in
-//            guard let self = self else { return }
-//            self.movieDetails = MovieDetailsViewModel(movieDetails: movieDetails)
-//      })
-//      .store(in: &cancellables)
-//  }
+  
+  var group: DispatchGroup?
   
   func getAllInfoDetailMovie() {
-    guard let id = movieId else { return }
-    let group = DispatchGroup()
-    group.enter()
-    movieDetails?.getMovieDetails(categories: InfoById.movieDetails(id), group: group)
-    group.leave()
-    group.enter()
-    listCast?.getCast(categories: InfoById.credits(id), group: group)
-    group.leave()
-    group.enter()
-    listReview?.getReviews(categories: InfoById.reviews(id), group: group)
-    group.leave()
-    group.enter()
-    listSimilarMovies?.getSimilarOrRecommendedMovies(categories: InfoById.similar(id), group: group)
-    group.leave()
-    group.enter()
-    listRecommendedMovies?.getSimilarOrRecommendedMovies(categories: InfoById.recommendations(id), group: group)
-    group.leave()
-    
-    group.notify(queue: .main) {
-      self.updateInfo()
+    group = DispatchGroup()
+    guard let id = movieId, group != nil else { return }
+    group?.enter()
+    movieDetails?.getMovieDetails(categories: InfoById.movieDetails(id), group: group!)
+    listCast?.getCast(categories: InfoById.credits(id), group: group!)
+    listReview?.getReviews(categories: InfoById.reviews(id), group: group!)
+    listSimilarMovies?.getSimilarOrRecommendedMovies(categories: InfoById.similar(id), group: group!)
+    listRecommendedMovies?.getSimilarOrRecommendedMovies(categories: InfoById.recommendations(id), group: group!)
+    group?.leave()
+    group?.notify(queue: .main) { [weak self] in
+      self?.updateInfo()
     }
   }
   
   func updateInfo() {
-    guard
-      let movieDetails = self.movieDetails?.movieDetails,
-      let similar = self.listSimilarMovies?.listSimilarOrRecommendedViewModel,
-      let recommended = self.listRecommendedMovies?.listSimilarOrRecommendedViewModel,
-      let credits = self.listCast?.listCastViewModel,
-      let reviews = self.listReview?.listReviewsViewModel
-    else { return }
-    self.movieVM = movieDetails
-    self.similarMovies = similar
-    self.recommendedMovies = recommended
-    self.cast = credits
-    self.reviews = reviews
+    self.movieVM = self.movieDetails?.movieDetails
+    self.similarMovies = self.listSimilarMovies?.listSimilarOrRecommendedViewModel
+    self.recommendedMovies = self.listRecommendedMovies?.listSimilarOrRecommendedViewModel
+    self.cast = listCast?.listCastViewModel
+    self.reviews = self.listReview?.listReviewsViewModel
     refreshView()
   }
   
   func refreshView() {
-
-    DispatchQueue.main.async {
-      self.detailCollectionView.reloadData()
+    group = nil
+    DispatchQueue.main.async { [weak self] in
+      self?.detailCollectionView.reloadData()
+      print(self?.group as Any)
     }
   }
   
@@ -316,7 +290,9 @@ extension DetailViewController: UICollectionViewDataSource, UICollectionViewDele
     case .cast:
       print(cast?[indexPath.item].character as Any)
     case .reviews:
-      print(reviews?[indexPath.item].content as Any)
+      guard let review = reviews?[indexPath.item] else { return }
+      let reviewVC = ReviewDetailController(review: review)
+      self.present(reviewVC, animated: true)
     case .similar:
       guard let movie = similarMovies?[indexPath.item] else { return }
       let detailVC = DetailViewController(movieClient: movieClient, movieId: movie.id)

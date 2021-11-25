@@ -22,12 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let feedViewController = FeedViewController(apiClient: apiClient)
     let navigationController = UINavigationController()
     navigationController.viewControllers = [feedViewController]
-    navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-    navigationController.navigationBar.barTintColor = DesignColor.black.color
-    navigationController.navigationBar.isTranslucent = true
     window.rootViewController = navigationController
-    window.makeKeyAndVisible()
     self.window = window
+    self.window?.makeKeyAndVisible()
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {

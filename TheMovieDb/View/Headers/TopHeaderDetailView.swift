@@ -83,7 +83,6 @@ class TopHeaderDetailView: UICollectionReusableView {
   }
   
   func setupData() {
-    
     posterImage.loadImage(urlString: movieDetails?.backDropPath)
     releaseDateLabel.text = movieDetails?.releaseDate
     titleLabel.text = movieDetails?.title

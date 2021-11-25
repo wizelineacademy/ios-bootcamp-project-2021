@@ -15,6 +15,7 @@ class GeneralMovieViewModel {
   var listMovieViewModel: [String: [MovieViewModel]] = [:]
   var listSimilarOrRecommendedViewModel: [MovieViewModel] = []
   var movieDetails: MovieDetailsViewModel?
+  var searchMovie: [MovieViewModel] = []
   
   init(movieClient: MovieClient, category: Endpoint? = nil) {
     self.movieClient = movieClient
@@ -23,7 +24,6 @@ class GeneralMovieViewModel {
   func getListMovies(categories: Endpoint, title: String, group: DispatchGroup) {
     group.enter()
     movieClient.fetch(categories, kindItem: MovieFeedResult.self)
-      .receive(on: RunLoop.main)
       .sink(receiveCompletion: { _ in },
             receiveValue: { [weak self] movies in
         defer { group.leave() }
@@ -38,7 +38,6 @@ class GeneralMovieViewModel {
   func getSimilarOrRecommendedMovies(categories: Endpoint, group: DispatchGroup) {
     group.enter()
     movieClient.fetch(categories, kindItem: MovieFeedResult.self)
-      .receive(on: RunLoop.main)
       .sink(receiveCompletion: { _ in },
             receiveValue: { [weak self] movies in
         defer { group.leave() }
@@ -46,7 +45,6 @@ class GeneralMovieViewModel {
         self?.listSimilarOrRecommendedViewModel = listMovies.map { movie in
           MovieViewModel(movie: movie)
         }
-        
       })
       .store(in: &cancellables)
   }
@@ -54,11 +52,24 @@ class GeneralMovieViewModel {
   func getMovieDetails(categories: Endpoint, group: DispatchGroup) {
     group.enter()
     movieClient.fetch(categories, kindItem: MovieDetails.self)
-      .receive(on: RunLoop.main)
       .sink(receiveCompletion: { _ in },
             receiveValue: { [weak self] movieDetails in
         defer { group.leave() }
         self?.movieDetails = MovieDetailsViewModel(movieDetails: movieDetails)
+      })
+      .store(in: &cancellables)
+  }
+  
+  func searchMovies(endPoint: Endpoint, search: String, group: DispatchGroup) {
+    group.enter()
+    movieClient.fetch(endPoint, kindItem: MovieFeedResult.self, search: search)
+      .sink(receiveCompletion: { _ in },
+            receiveValue: { [weak self] movies in
+        defer { group.leave() }
+        guard let listMovies = movies.results else { return }
+        self?.searchMovie = listMovies.map { movie in
+          return MovieViewModel(movie: movie)
+        }
       })
       .store(in: &cancellables)
   }

@@ -22,13 +22,12 @@ class ListReviewsViewModel {
   func getReviews(categories: Endpoint, group: DispatchGroup) {
     group.enter()
     movieClient.fetch(categories, kindItem: ListReviews.self)
-      .receive(on: RunLoop.main)
-      .sink(receiveCompletion: { _ in },
+      .sink(receiveCompletion: { error in print(error) },
             receiveValue: { [weak self] reviews in
         defer { group.leave() }
         guard let reviews = reviews.results else { return }
         self?.listReviewsViewModel = reviews.map { review in
-          ReviewViewModel(review: review)
+          return ReviewViewModel(review: review)
         }
       })
       .store(in: &cancellables)

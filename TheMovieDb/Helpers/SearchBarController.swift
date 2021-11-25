@@ -9,8 +9,8 @@ import UIKit
 
 protocol SearchBarDelegate: AnyObject {
   func searchBarTextDidBeginEditing(_ searchBar: UISearchBar)
-  func searchBarTextDidEndEditing(_ searcBar: UISearchBar)
-  func updateSearchResults(with text: String)
+  func searchBarTextDidEndEditing(_ searchBar: UISearchBar)
+  func updateSearchResults(_ searchBar: UISearchBar, with text: String)
 }
 
 protocol SearchBarProtocol: UISearchBarDelegate & UISearchResultsUpdating {
@@ -50,7 +50,7 @@ class SearchBarController: UISearchController, SearchBarProtocol {
   init(placeholder: String?, delegate: SearchBarDelegate?) {
     self.searchBarDelegate = delegate
     super.init(searchResultsController: nil)
-    self.obscuresBackgroundDuringPresentation = true
+    self.obscuresBackgroundDuringPresentation = false
     self.searchResultsUpdater = self
     searchBar.delegate = self
     searchBar.showsCancelButton = false
@@ -72,7 +72,7 @@ class SearchBarController: UISearchController, SearchBarProtocol {
   }
   
   func updateSearchResults(for searchController: UISearchController) {
-    searchBarDelegate?.updateSearchResults(with: text ?? "")
+    searchBarDelegate?.updateSearchResults(searchController.searchBar, with: text ?? "")
   }
 
 }

@@ -22,7 +22,6 @@ class ListCastViewModel {
   func getCast(categories: Endpoint, group: DispatchGroup) {
     group.enter()
     movieClient.fetch(categories, kindItem: Credits.self)
-      .receive(on: RunLoop.main)
       .sink(receiveCompletion: { _ in },
             receiveValue: { [weak self] cast in
         defer { group.leave() }

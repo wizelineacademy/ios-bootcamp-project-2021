@@ -21,17 +21,18 @@ struct ReviewViewModel {
   
   var content: String { review.content }
   
+  var score: Float? { review.authorDetails.rating }
+  
   var profileImageAuthor: String? {
     var url: String?
-    var portrait = review.authorDetails.avatarPath
-    let checkValidUrl = portrait?.prefix(9)
+    guard let portrait = review.authorDetails.avatarPath else { return nil }
+    let checkValidUrl = portrait.prefix(9)
     if checkValidUrl == "/https://" {
-      portrait?.removeFirst()
-      url = portrait
+      var newUrl = portrait
+      newUrl.removeFirst()
+      url = newUrl
     } else {
-      if portrait != nil {
-        url = "\(ApiPath.baseUrlImage.path)\(portrait ?? "")"
-      }
+      url = ApiPath.baseUrlImage.path + portrait
     }
     return url
   }

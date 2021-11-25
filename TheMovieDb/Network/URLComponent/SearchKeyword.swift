@@ -14,7 +14,7 @@ enum SearchKeyword {
 extension SearchKeyword: Endpoint {
   var path: String {
     switch self {
-    case .keywords: return "/3/search/keyword"
+    case .keywords: return "/3/search/movie"
     }
   }
 }

@@ -19,11 +19,7 @@ struct MovieDetails: Codable {
   let revenue: Int
   let originalLanguage: String
   let status: String
-  var cast: [Person]?
-  var reviews: [MovieReview]?
-  var similarMovies: [Movie]?
-  var recommendedMovies: [Movie]?
-  
+
   private enum CodingKeys: String, CodingKey {
     case id
     case title
@@ -35,10 +31,6 @@ struct MovieDetails: Codable {
     case revenue
     case originalLanguage = "original_language"
     case status
-    case cast
-    case reviews
-    case similarMovies
-    case recommendedMovies
     
   }
 }

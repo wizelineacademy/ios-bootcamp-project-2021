@@ -30,8 +30,7 @@ extension Endpoint {
     } else {
       components.queryItems = [
         URLQueryItem(name: "api_key", value: apiKey),
-        URLQueryItem(name: "language", value: "en"),
-        URLQueryItem(name: "region", value: "US")
+        URLQueryItem(name: "language", value: "en-US")
       ]
     }
     return components

@@ -21,7 +21,7 @@ struct MovieViewModel {
   var poster: String? {
     let url: String?
     guard let portrait = movie.poster else { return nil }
-    url = "\(ApiPath.baseUrlImage.path)\(portrait)"
+    url = ApiPath.baseUrlImage.path + portrait
     return url
   }
   
