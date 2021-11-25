@@ -10,6 +10,8 @@ import UIKit
 class MoviesViewController: UIViewController, MoviesHomeViewProtocol {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    var spinner = UIActivityIndicatorView(style: .whiteLarge)
+
     var dataSource = MoviesDataSource()
     var delegate = MoviesDelegate()
     var presenter: MoviesHomePresenterProtocol?
@@ -18,6 +20,7 @@ class MoviesViewController: UIViewController, MoviesHomeViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpView()
+        setUpSpinner()
         presenter?.viewDidLoad()
     }
 
@@ -25,7 +28,7 @@ class MoviesViewController: UIViewController, MoviesHomeViewProtocol {
         self.dataSource.feed = movies
         self.delegate.feed = movies
         self.collectionView.reloadData()
-        
+        self.spinner.stopAnimating()
     }
     
 }
@@ -38,11 +41,17 @@ extension MoviesViewController {
         collectionView.setup(dataSource: dataSource)
         collectionView.registerNibForCellWith(name: MovieCollectionViewCell.identifierToDeque)
         collectionView.registerViewWith(name: HeaderCollectionReusableView.identifierToDeque)
-        
         collectionView.setup(delegate: delegate)
         delegate.didSelectMovie = { movie in
             self.presenter?.didSelectMovie(movie: movie)
         }
+    }
+    
+    func setUpSpinner() {
+        spinner.center = self.collectionView.center
+        self.view.addSubview(spinner)
+        spinner.hidesWhenStopped = true
+        spinner.startAnimating()
     }
     
 }
