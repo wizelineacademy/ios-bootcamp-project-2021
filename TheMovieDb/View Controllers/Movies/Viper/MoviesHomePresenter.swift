@@ -26,6 +26,7 @@ final class MoviesHomePresenter: MoviesHomePresenterProtocol {
 
 extension MoviesHomePresenter: MoviesHomeInteractorOutputProtocol {
     func moviesDidFetch(movies: MoviesFeed) {
+        
         view?.reloadViewWith(movies: movies)
     }
     

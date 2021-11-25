@@ -8,6 +8,7 @@
 import Foundation
 
 final class MoviesHomeInteractor: MoviesHomeInteractorInputProtocol {
+    var apiDataManager: MoviesHomeAPIDataManagerProtocol?
     weak var presenter: MoviesHomeInteractorOutputProtocol?
     var moviesFeed: MoviesFeed = MoviesFeed(listsOfElements: [:])
    
@@ -15,18 +16,17 @@ final class MoviesHomeInteractor: MoviesHomeInteractorInputProtocol {
         let group = DispatchGroup()
         for topic in Topic.allCases {
             let request = Request(path: topic.getPath(), method: .get, group: group)
-            
-            MovieDbAPI.request(value: MovieList.self, request: request) { [weak self] result in
-                
+            apiDataManager?.requestMovies(value: MovieList.self, request: request, completion: { [weak self] result in
                 switch result {
-                case .success(let result):
-                guard let listOfMovies = result else { return }
-                    self?.moviesFeed.addList(topic: topic, movieList: listOfMovies)
-
+                case .success(let movieList):
+                    if let list = movieList {
+                        self?.moviesFeed.addList(topic: topic, movieList: list)
+                    }
+                    
                 case .failure(let error):
-                    print(error)
+                    self?.presenter?.fetchMoviesDidFail(with: error)
                 }
-            }
+            })
         }
         
         group.notify(queue: .main) {
