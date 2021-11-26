@@ -14,9 +14,9 @@ enum MovieServices {
     case getUpcoming(page: Int)
     case serachKeyword(searchText: String)
     case search(searchText: String, page: Int)
-    case getReviews(page: Int, id: Int)
-    case getSimilars(page: Int, id: Int)
-    case getRecommendations(page: Int, id: Int)
+    case getReviews(id: Int)
+    case getSimilars(id: Int)
+    case getRecommendations(id: Int)
 }
 
 // MARK: - Endpointavata
@@ -42,11 +42,11 @@ extension MovieServices: MovieDBAPIEndpoint {
             return "/3/search/keyword"
         case .search:
             return "/3/search/movie"
-        case .getReviews(_, let id):
+        case .getReviews(let id):
             return "/3/movie/\(id)/reviews"
-        case .getSimilars(_, let id):
+        case .getSimilars(let id):
             return "/3/movie/\(id)/similar"
-        case .getRecommendations(_, let id):
+        case .getRecommendations(let id):
             return "/3/movie/\(id)/recommendations"
         }
     }
@@ -71,12 +71,12 @@ extension MovieServices: MovieDBAPIEndpoint {
             return ["query": searchText]
         case .search(let searchText, let page):
             return ["query": searchText, "page": page]
-        case .getReviews(let page, _):
-            return ["page": page]
-        case .getSimilars(let page, _):
-            return ["page": page]
-        case .getRecommendations(let page, _):
-            return ["page": page]
+        case .getReviews:
+            return [:]
+        case .getSimilars:
+            return [:]
+        case .getRecommendations:
+            return [:]
             
         }
     }

@@ -12,8 +12,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     private lazy var movieDBClient = MovieDBClient()
     private lazy var  navigation = UINavigationController()
-    private lazy var detailViewController = DetailViewController()
-    private lazy var detailNavigator = DetailNavigatorImp(navigationController: navigation, viewController: detailViewController)
+    private lazy var detailNavigator = DetailNavigatorImp(navigationController: navigation, client: movieDBClient)
     private lazy var homeScreen = HomeScreenComposer.compose(client: movieDBClient, navigator: detailNavigator)
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -24,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
     
-        let navigation = UINavigationController(rootViewController: homeScreen)
+        navigation.viewControllers = [homeScreen]
 
         window.rootViewController = navigation
         

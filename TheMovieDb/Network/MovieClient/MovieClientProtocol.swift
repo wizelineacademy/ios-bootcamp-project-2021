@@ -11,24 +11,18 @@ protocol MovieClientProtocol {
 
     func getMoviesFrom(type: SectionMovie,
                        page: Int,
-                       completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
+                       id: Int,
+                       completion: @escaping (Result<MoviesResult<Movie>?, APIError>) -> Void)
     
     func searchByKeyword(searchText: String,
-                         completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
+                         completion: @escaping (Result<MoviesResult<Movie>?, APIError>) -> Void)
     
     func searchMovies(searchText: String,
                       page: Int,
-                      completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
+                      completion: @escaping (Result<MoviesResult<Movie>?, APIError>) -> Void)
     
     func getReviewsMovie(page: Int,
                          movieId: Int,
-                         completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
+                         completion: @escaping (Result<MoviesResult<Review>?, APIError>) -> Void)
     
-    func getSimilarMovies(page: Int,
-                          movieId: Int,
-                          completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
-    
-    func getRecommendations(page: Int,
-                            movieId: Int,
-                            completion: @escaping (Result<MoviesResult?, APIError>) -> Void)
 }

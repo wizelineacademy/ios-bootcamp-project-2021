@@ -9,20 +9,18 @@ import Foundation
 import UIKit
 
 protocol DetailNavigator {
-    func goToMovieDetail(with id: Int)
+    func goToMovieDetail(with id: MovieViewModel)
 }
 
 final class DetailNavigatorImp: DetailNavigator {
-    
-    let navigationController: UINavigationController
-    let viewController: UIViewController
-    
-    init(navigationController: UINavigationController, viewController: UIViewController){
+    private let navigationController: UINavigationController
+    private let client: MovieDBClient
+    init(navigationController: UINavigationController, client: MovieDBClient) {
         self.navigationController = navigationController
-        self.viewController = viewController
+        self.client = client
     }
     
-    func goToMovieDetail(with id: Int) {
-        navigationController.pushViewController(viewController, animated: true)
+    func goToMovieDetail(with id: MovieViewModel) {
+        navigationController.pushViewController(DetailComposerScreen.compose(client: client, movieSelected: id), animated: true)
     }
 }

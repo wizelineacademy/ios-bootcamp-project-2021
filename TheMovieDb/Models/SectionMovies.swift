@@ -14,3 +14,10 @@ enum SectionMovie: String, CaseIterable {
     case topRatedMovies = "Top"
     case upcomingMovies = "Upcoming Movies"
 }
+
+enum SectionMovieDetail: String, CaseIterable {
+    case header = "Header Deatil"
+    case reccommendattions = "Recommendetions"
+    case similar = "Similar Movies"
+    case comment = "Reviews"
+}

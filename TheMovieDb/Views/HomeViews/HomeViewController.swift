@@ -9,7 +9,14 @@ import UIKit
 
 class HomeViewController: UIViewController, HomeView {
    
+    var presenter: HomeViewPresenter?
+    
+    // Private Instances
     private var latestSearch: String?
+    private var movieHomeCollectionView: GenericMovieCollectionView<SectionMovie>!
+    private var tableView: GenericTableViewController!
+    
+    // Lazy Vars
     lazy private var searchController: SearchBar = {
         let searchController = SearchBar("Search a Movie", delegate: self)
         searchController.text = latestSearch
@@ -17,15 +24,7 @@ class HomeViewController: UIViewController, HomeView {
         return searchController
     }()
     
-    var movieHomeCollectionView: GenericMovieCollectionView!
-    var tableView: GenericTableViewController!
-  
-    func showEmptyState() {
-        print("")
-    }
-    
-    var presenter: HomeViewPresenter?
-    
+    // Life Cycle Application
     override func viewDidLoad() {
         super.viewDidLoad()
    
@@ -41,9 +40,11 @@ class HomeViewController: UIViewController, HomeView {
         setUpTableView()
         presenter?.fetchAllMovieList()
     }
-    
+  
+    // Methods To Configure Views
     func setUpCollectionView() {
-        movieHomeCollectionView = GenericMovieCollectionView(frame: view.bounds)
+        movieHomeCollectionView = GenericMovieCollectionView<SectionMovie>(frame: view.bounds)
+        movieHomeCollectionView.delegateCollection = self
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         movieHomeCollectionView.refreshControl = refreshControl
@@ -61,17 +62,18 @@ class HomeViewController: UIViewController, HomeView {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-     
         tableView.isHidden = true
-        
     }
     
-    @objc func refresh() {
-        presenter?.fetchAllMovieList()
+    // Methods to conform HomeView
+    func showEmptyState() {
+        print("")
     }
     
     func showMoviesHome(arrMovie: [SectionMovie: [MovieViewModel]]) {
         movieHomeCollectionView.arrMovies = arrMovie
+        movieHomeCollectionView.sections = Array(arrMovie.keys)
+        movieHomeCollectionView.configureDataSource()
         movieHomeCollectionView.reloadData()
     }
     
@@ -92,6 +94,11 @@ class HomeViewController: UIViewController, HomeView {
         refreshControl.endRefreshing()
     }
     
+    // Actions
+    @objc func refresh() {
+        presenter?.fetchAllMovieList()
+    }
+
 }
 
 extension HomeViewController: SearchBarDelegate {
@@ -107,4 +114,12 @@ extension HomeViewController: SearchBarDelegate {
         presenter?.searchMovie(strMovie: text)
     }
     
+}
+
+extension HomeViewController: GenericMovieCollectionViewDelegate {
+    
+    func selectedItem(movie: MovieViewModel) {
+        presenter?.didSelectMovie(with: movie)
+    }
+
 }

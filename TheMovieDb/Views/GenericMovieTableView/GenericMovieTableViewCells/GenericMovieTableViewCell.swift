@@ -10,7 +10,7 @@ import Kingfisher
 class GenericMovieTableViewCell: UITableViewCell {
     static let reuseIdentifier = "cellGenericMovieTableViewCell"
     var movie: Movie? {
-        didSet{
+        didSet {
             setUpCell()
             setupUI()
         }
@@ -24,18 +24,15 @@ class GenericMovieTableViewCell: UITableViewCell {
     let contentContainer = UIView()
     
     private func setUpCell() {
-        //titleLabel.text = movie?.title
+        // titleLabel.text = movie?.title
         if let portraitPhotoURL = movie?.posterPath, let url = URL(string: "https://image.tmdb.org/t/p/w500\(portraitPhotoURL)") {
             posterImageView.kf.setImage(with: url)
         }
         
-        
+    }
+    
+    private func setupUI() {
         
     }
     
-    private func setupUI(){
-        
-    }
-    
-
 }

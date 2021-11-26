@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct MoviesResult: Decodable {
+struct MoviesResult<T: Decodable>: Decodable {
     let page: Int?
-    let results: [Movie]?
+    let results: [T]?
     let totalPages, totalResults: Int?
 
     enum CodingKeys: String, CodingKey {
@@ -17,4 +17,5 @@ struct MoviesResult: Decodable {
         case totalPages = "total_pages"
         case totalResults = "total_results"
     }
+    
 }

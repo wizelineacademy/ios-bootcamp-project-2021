@@ -33,8 +33,6 @@ extension GenericTableViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         var content = cell.defaultContentConfiguration()
-   
-       
         content.text = arrMovies[indexPath.row].title
 
         // Customize appearance.
