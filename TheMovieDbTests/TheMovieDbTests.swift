@@ -9,25 +9,26 @@ import XCTest
 @testable import TheMovieDb
 
 class TheMovieDbTests: XCTestCase {
+    
+    var mockAPIClient: MockAPIClient!
+    var movieModel: MovieModel!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func setUp() {
+        mockAPIClient = MockAPIClient()
+        let movieApiManager = MovieAPIManager(client: mockAPIClient)
+        movieModel = MovieModel(movieManager: movieApiManager)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testGetListSuccess() {
+        movieModel.getList(movieFeed: MovieFeed.trending) { list in
+            XCTAssertTrue(!list.isEmpty, "List shouldn't be empty")
         }
     }
-
+    
+    func testGetListError() {
+        mockAPIClient.error = .responseUnsuccessful
+        movieModel.getList(movieFeed: MovieFeed.trending) { list in
+            XCTAssertTrue(list.isEmpty, "List should be empty")
+        }
+    }
 }

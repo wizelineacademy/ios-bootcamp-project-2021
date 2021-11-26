@@ -6,18 +6,42 @@
 //
 
 import Foundation
+import os
+@testable import TheMovieDb
 
 class MockAPIClient: APIClient {
-    var session: URLSession
+    private let logger = Logger(subsystem: Constants.subsystemName, category: "MockAPIClient")
+    var error: APIError?
     
-    static let shared = MockAPIClient()
-    
-    init() {
-        self.session = URLSession(configuration: .default)
-    }
-    
-    func fetch<T>(with request: URLRequest, decode: @escaping (Decodable) -> T?, completion: @escaping (Result<T, APIError>) -> Void) where T : Decodable {
+    func fetch<T: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> T?, completion: @escaping (Result<T, APIError>) -> Void) {
+        // If error is setted, return error
+        if let error = error {
+            completion(.failure(error))
+            return
+        }
         
+        var fileName = ""
+        
+        guard let urlString = request.url?.absoluteString else {
+            completion(.failure(.invalidData))
+            return
+        }
+        if urlString.contains("trending") {
+            fileName = "Trending_example"
+        } else if urlString.contains("configuration") {
+            fileName = "Configuration_example"
+        } else {
+            completion(.failure(.invalidData))
+            return
+        }
+        
+        do {
+            let data: T = try FileParser.createMockResponse(filename: fileName)
+            completion(.success(data))
+            return
+        } catch {
+            logger.error("\(error.localizedDescription)")
+        }
+        completion(.failure(.jsonConversionFailure))
     }
-    
 }
