@@ -7,6 +7,6 @@
 
 import Combine
 
-protocol APIMoviesProtocol: AnyObject {
+protocol APIMoviesProtocol {
     func fetchData<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters) -> AnyPublisher<T, APIRequestError>
 }

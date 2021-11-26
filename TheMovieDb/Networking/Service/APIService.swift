@@ -7,7 +7,7 @@
 import Foundation
 import Combine
 
-class APIService: APIMoviesProtocol { 
+struct APIService: APIMoviesProtocol { 
     
     func fetchData<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters) -> AnyPublisher<T, APIRequestError> {
         let  urlBuild = APIBuild(with: parameters, with: endPoint)
