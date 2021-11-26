@@ -19,7 +19,7 @@ public class SearchViewModel {
     }
 
 
-    func searchMovie(query: String?, completion: @escaping () -> ()) {
+    func searchMovie(with query: String?, completion: @escaping () -> ()) {
         guard let query = query, !query.isEmpty else { return }
         client.getSearch(query: query, params: nil) { [weak self] (result) in
   

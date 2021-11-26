@@ -15,28 +15,25 @@ protocol APIClient {
 extension APIClient {
     typealias JSONTaskCompletionHandler = (Decodable?, APIError?) -> Void
     private func decodingTask<T: Decodable>(with request: URLRequest, decodingType: T.Type, completionHandler completion: @escaping JSONTaskCompletionHandler) -> URLSessionDataTask {
-       
         let task = session.dataTask(with: request) { data, response, error in
             guard let httpResponse = response as? HTTPURLResponse else {
                 completion(nil, .requestFailed)
                 return
             }
             if httpResponse.statusCode == 200 {
-                if let data = data {
+                guard let data = data else { return completion(nil, .invalidData) }
                     do {
                         let jsonData = JSONDecoder()
                         jsonData.keyDecodingStrategy = .convertFromSnakeCase
                         let genericModel = try jsonData.decode(decodingType, from: data)
-                         completion(genericModel, nil)
+                        //genericModel.keyDecodingStrategy = .convertFromSnakeCase
+                        completion(genericModel, nil)
                     } catch {
                         completion(nil, .jsonConversionFailure)
                     }
                 } else {
-                    completion(nil, .invalidData)
+                    completion(nil, .responseUnsuccessful)
                 }
-            } else {
-                completion(nil, .responseUnsuccessful)
-            }
         }
         return task
     }

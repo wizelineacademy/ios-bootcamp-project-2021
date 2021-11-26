@@ -30,7 +30,7 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        searchViewModel.searchMovie(query: searchBar.text) {
+        searchViewModel.searchMovie(with: searchBar.text) {
             self.searchTableView.reloadData()
         }
     }

@@ -17,8 +17,20 @@ public class MainViewModel {
     }
     
    
-    func loadMoviesData(from movieType: MovieFeed, completion: @escaping () -> ()) {
-        client.getFeed(from: movieType) { [weak self] (result) in
+    func loadMoviesData(with index: Int, completion: @escaping () -> ()) {
+        
+        var endpoint: MovieFeed {
+            switch index {
+            case 0: return .nowPlaying
+            case 1: return .popular
+            case 2: return .topRated
+            case 3: return .upcoming
+            case 4: return .trending
+            default: fatalError()
+            }
+        }
+        
+        client.getFeed(from: endpoint) { [weak self] (result) in
       
             switch result {
             case .success(let listOf):

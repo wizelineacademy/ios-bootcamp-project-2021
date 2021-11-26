@@ -28,9 +28,9 @@ class MovieCell: UITableViewCell {
         self.movieTitleLabel.text = title
         self.movieTitleLabel.adjustsFontSizeToFitWidth = true
 
-        self.releaseDateLabel.text = fixedDateFormatter(releaseDate)
+        self.releaseDateLabel.text = releaseDate?.readableDate()
         guard let average = rating else { return }
-        self.ratingLabel.text =  showStar(value: Int(average * 10))
+        self.ratingLabel.text =  showStar(value: Int(average))
         self.movieOverviewLabel.text = overview
         
         guard let posterPath = poster else { return }

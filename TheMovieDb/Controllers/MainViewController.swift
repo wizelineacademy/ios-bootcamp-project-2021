@@ -25,7 +25,7 @@ class MainViewController: UIViewController{
     }
     
     private func setupTableView() {
-        mainViewModel.loadMoviesData(from: mainSegmentedControl.endpoint) {
+        mainViewModel.loadMoviesData(with: mainSegmentedControl.selectedSegmentIndex) {
             self.mainTableView.reloadData()
         }
     }
@@ -39,7 +39,7 @@ extension MainViewController {
     }
 }
 
-extension MainViewController: UITableViewDataSource{
+extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         mainViewModel.numberOfRowsInSection(section: section)
     }
@@ -52,7 +52,7 @@ extension MainViewController: UITableViewDataSource{
     }
 }
 
-extension MainViewController: UITableViewDelegate{
+extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: Constants.mainSegueIdentifier, sender: self)
         

@@ -16,7 +16,6 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var detailRatingLabel: UILabel!
     @IBOutlet weak var detailDateLabel: UILabel!
     @IBOutlet weak var detailDescriptionLabel: UILabel!
-    @IBOutlet weak var detailGenreLabel: UILabel!
     @IBOutlet weak var detailMovieImage: UIImageView!
     
     
@@ -24,14 +23,14 @@ class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(MovieData)
+        //print(MovieData)
         
         detailTitleLabel.text = MovieData?.originalTitle
         detailTitleLabel.adjustsFontSizeToFitWidth = true
 
-        detailDateLabel.text = fixedDateFormatter(MovieData?.releaseDate)
+        detailDateLabel.text = MovieData?.releaseDate?.readableDate()
         guard let average = MovieData?.voteAverage else { return }
-        detailRatingLabel.text = "\(average) " + showStar(value: Int(average * 10))
+        detailRatingLabel.text = "\(average) " + showStar(value: Int(average))
         
         detailDescriptionLabel.text = MovieData?.overview
         guard let backdropPath = MovieData?.backdropPath else { return }
