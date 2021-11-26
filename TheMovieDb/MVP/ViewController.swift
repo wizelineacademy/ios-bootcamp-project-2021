@@ -11,21 +11,27 @@ import os.log
 final class ViewController: UIViewController {
     
     private var presenter: MovieListPresenter?
-    private var movieListOption: MoviesOptions = .nowPlaying
     
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-   
+    
+    init(movieOption: MoviesOptions) {
+        super.init(nibName: nil, bundle: nil)
+        presenter = MovieListPresenter(view: self as MovieListView, facade: MovieFacade(), movieOption: movieOption)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         configureTableView()
         configureUI()
         setupNavigationBar()
-        presenter = MovieListPresenter(view: self as MovieListView, facade: MovieFacade(), movieOption: movieListOption)
         presenter?.listMovies()
         os_log("ViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
