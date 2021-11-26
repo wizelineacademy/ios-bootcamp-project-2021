@@ -12,7 +12,7 @@ import Combine
 final class SearchingRemoteDataManager: SearchingRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: SearchingRemoteDataManagerOutputProtocol?
-    private var cancellables = Set<AnyCancellable>()
+    private var cancellable = Set<AnyCancellable>()
     private let service: APIMoviesProtocol
     
     init(service: APIMoviesProtocol) {
@@ -28,7 +28,7 @@ final class SearchingRemoteDataManager: SearchingRemoteDataManagerInputProtocol 
                 }
             }, receiveValue: { (movies: Movies) in
                 self.remoteRequestHandler?.moviesFound(found: movies)
-            }).store(in: &cancellables)
+            }).store(in: &cancellable)
         
     }
 }

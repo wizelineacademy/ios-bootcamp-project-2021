@@ -7,12 +7,13 @@
 //
 
 import Foundation
+import Combine
 
 final class ReviewsRemoteDataManager: ReviewsRemoteDataManagerInputProtocol {
 
     var remoteRequestHandler: ReviewsRemoteDataManagerOutputProtocol?
     private let service: APIMoviesProtocol
-    
+    private var cancellable = Set<AnyCancellable>()
     init(service: APIMoviesProtocol) {
         self.service = service
     }
@@ -20,15 +21,15 @@ final class ReviewsRemoteDataManager: ReviewsRemoteDataManagerInputProtocol {
     func fetchReviews(movie: Movie) {
         let id = String(movie.id)
         let parameter = APIParameters(id: id)
-        service.fetchData(endPoint: .review, with: parameter, completion: {(response: Result<Reviews, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let reviews):
+        service.fetchDataCombine(endPoint: .review, with: parameter)
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { (reviews: Reviews) in
                 self.remoteRequestHandler?.reviewsFromServer(reviewsData: reviews)
-            }
-       
-        })
+            }).store(in: &cancellable)
+        
     }
 
 }
