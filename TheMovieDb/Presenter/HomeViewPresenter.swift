@@ -5,7 +5,8 @@
 //  Created by Jonathan Hernandez on 08/11/21.
 //
 
-import UIKit
+import Foundation
+import OSLog
 
 protocol HomeViewPresenter {
     func fetchAllMovieList()
@@ -46,7 +47,7 @@ final class HomeViewPresenterImp: HomeViewPresenter {
                         self?.dctMoviesBySection.updateValue(viewModels, forKey: sectionMovie)
                         
                     case .failure(let error):
-                        print(error)
+                        os_log("Error: %@", log: .default, type: .error, String(describing: error))
                     }
                     downloadGroup.leave()
                 })
@@ -71,7 +72,7 @@ final class HomeViewPresenterImp: HomeViewPresenter {
                 
                 self?.viewHome?.showMoviesList(arrMovie: movieList)
             case .failure(let error):
-                print(error)
+                os_log("Error: %@", log: .default, type: .error, String(describing: error))
             }
         })
     }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 protocol DetailViewPresenter {
     func fetchAllMovieList()
@@ -59,10 +60,9 @@ final class DetailViewPresenterImp: DetailViewPresenter {
                 }
                 
                 self?.dctMoviesBySection[sectionMovie] = viewModels
-                //self?.dctMoviesBySection.updateValue(viewModels, forKey: sectionMovie)
                 
             case .failure(let error):
-                print(error)
+                os_log("Error: %@", log: .default, type: .error, String(describing: error))
             }
             self?.downloadGroup.leave()
         })
@@ -80,10 +80,9 @@ final class DetailViewPresenterImp: DetailViewPresenter {
                     ReviewViewModel(review: $0)
                 }
                 self?.dctMoviesBySection[sectionMovie] = viewModels
-               // self?.dctMoviesBySection.updateValue(viewModels, forKey: sectionMovie)
                 
             case .failure(let error):
-                print(error)
+                os_log("Error: %@", log: .default, type: .error, String(describing: error))
             }
             self?.downloadGroup.leave()
         })

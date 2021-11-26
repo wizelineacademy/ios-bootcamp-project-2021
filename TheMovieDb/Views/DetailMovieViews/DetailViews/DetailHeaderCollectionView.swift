@@ -69,7 +69,7 @@ extension DetailHeaderCollectionView {
         lblTitle.font = UIFont.preferredFont(forTextStyle: .title1)
         vwContainer.addSubview(lblTitle)
         
-        lblDescription.text = viewModelMovie?.title
+        lblDescription.text = viewModelMovie?.overview
         lblTitle.font = UIFont.preferredFont(forTextStyle: .body)
         vwContainer.addSubview(lblDescription)
        
@@ -81,7 +81,7 @@ extension DetailHeaderCollectionView {
             vwContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             imvPoster.centerYAnchor.constraint(equalTo: vwContainer.centerYAnchor),
-            imvPoster.heightAnchor.constraint(equalTo: vwContainer.heightAnchor, multiplier: 0.8),
+            imvPoster.heightAnchor.constraint(equalTo: imvPoster.widthAnchor, multiplier: 3/2),
             imvPoster.widthAnchor.constraint(equalTo: vwContainer.widthAnchor, multiplier: 0.3),
             imvPoster.leadingAnchor.constraint(equalTo: vwContainer.leadingAnchor, constant: spacing),
             
@@ -91,7 +91,8 @@ extension DetailHeaderCollectionView {
           
             lblDescription.topAnchor.constraint(equalTo: lblTitle.bottomAnchor, constant: spacing * 2),
             lblDescription.leadingAnchor.constraint(equalTo: lblTitle.leadingAnchor),
-            lblDescription.trailingAnchor.constraint(equalTo: lblTitle.trailingAnchor)
+            lblDescription.trailingAnchor.constraint(equalTo: lblTitle.trailingAnchor),
+            lblDescription.bottomAnchor.constraint(lessThanOrEqualTo: vwContainer.bottomAnchor, constant: spacing)
             
         ])
     }

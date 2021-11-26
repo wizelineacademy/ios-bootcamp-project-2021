@@ -12,8 +12,7 @@ struct ReviewViewModel: Hashable {
     let author: String
     let content: String
     let created: String
-    let rating: Double
-    let imageAvatar: URL?
+    let rating: String
     
     func hash(into hasher: inout Hasher) {
       hasher.combine(identifier)
@@ -33,12 +32,6 @@ extension ReviewViewModel {
         self.author = review.author
         self.content = review.content
         self.created = review.createdAt
-        self.rating = review.authorDetails.rating ?? 0
-        
-        if let portraitPhotoURL = review.authorDetails.avatarPath, let url = URL(string: "https://image.tmdb.org/t/p/w500\(portraitPhotoURL)") {
-            self.imageAvatar = url
-        } else {
-            self.imageAvatar = nil
-        }
+        self.rating = String(review.authorDetails.rating ?? 0)
     }
 }

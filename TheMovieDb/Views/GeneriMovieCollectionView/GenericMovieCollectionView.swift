@@ -25,6 +25,8 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
         self.backgroundColor = .systemBackground
         delegate = self
         self.register(LargeCollectionViewCell.self, forCellWithReuseIdentifier: LargeCollectionViewCell.reuseIdentifer)
+        self.register(ReviewCollectionViewCell.self, forCellWithReuseIdentifier: ReviewCollectionViewCell.reuseIdentifer)
+        self.register(OverviewCollectionViewCell.self, forCellWithReuseIdentifier: OverviewCollectionViewCell.reuseIdentifier)
         self.register(
             HeaderCollectionView.self,
             forSupplementaryViewOfKind: "HeaderCollectionView.reuseIdentifier",
@@ -33,6 +35,7 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
             DetailHeaderCollectionView.self,
             forSupplementaryViewOfKind: "HeaderCollectionView.reuseIdentifier",
             withReuseIdentifier: DetailHeaderCollectionView.reuseIdentifier)
+     
     }
     
     required init?(coder: NSCoder) {
@@ -49,20 +52,20 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
                 switch sectionLayoutKind {
                 case .header:
                     guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: LargeCollectionViewCell.reuseIdentifer,
-                        for: indexPath) as? LargeCollectionViewCell,
+                        withReuseIdentifier: OverviewCollectionViewCell.reuseIdentifier,
+                        for: indexPath) as? OverviewCollectionViewCell,
                           let movieItem = movieItem as? MovieViewModel
                     else { fatalError("Could not create new cell") }
+                    cell.viewModelMovie = movieItem
                     return cell
                 case .comment:
-                    
                     guard let cell = collectionView.dequeueReusableCell(
-                        withReuseIdentifier: LargeCollectionViewCell.reuseIdentifer,
-                        for: indexPath) as? LargeCollectionViewCell,
+                        withReuseIdentifier: ReviewCollectionViewCell.reuseIdentifer,
+                        for: indexPath) as? ReviewCollectionViewCell,
                           let movieItem = movieItem as? ReviewViewModel
                     else { fatalError("Could not create new cell") }
                     
-                    cell.title = movieItem.author
+                    cell.viewModelReview = movieItem
                     return cell
                     
                 case .similar, .reccommendattions:
@@ -94,8 +97,7 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
     }()
     
     func generateLayout() -> UICollectionViewLayout {
-      let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
-        layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+      let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int, _) -> NSCollectionLayoutSection? in
           
           if Section.self == SectionMovieDetail.self {
               
@@ -142,18 +144,18 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
     }
     
     func generateCommentLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                              heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .fractionalWidth(2/3))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        let groupFractionalWidth = 0.33
-        let groupFractionalHeight: Float = 0.30
+
+        let groupFractionalWidth = 0.95
+        let groupFractionalHeight: Float =  2/3
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(CGFloat(groupFractionalWidth)),
-            heightDimension: .fractionalHeight(CGFloat(groupFractionalHeight)))
+          widthDimension: .fractionalWidth(CGFloat(groupFractionalWidth)),
+          heightDimension: .fractionalWidth(CGFloat(groupFractionalHeight)))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
         group.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
-        
+
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
             heightDimension: .estimated(44))
@@ -165,7 +167,7 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
         let section = NSCollectionLayoutSection(group: group)
         section.boundarySupplementaryItems = [sectionHeader]
         section.orthogonalScrollingBehavior = .groupPaging
-    
+        
       return section
     }
     
@@ -174,7 +176,7 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
                                               heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
-        let groupFractionalWidth = 0.33
+        let groupFractionalWidth = 1
         let groupFractionalHeight: Float = 0.30
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(CGFloat(groupFractionalWidth)),
@@ -184,7 +186,7 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
         
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(170))
+            heightDimension: .fractionalHeight(0.50))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: "HeaderCollectionView.reuseIdentifier",
