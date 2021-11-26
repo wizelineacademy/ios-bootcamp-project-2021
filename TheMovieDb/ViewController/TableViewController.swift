@@ -45,9 +45,8 @@ final class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewControllerMoviesList = ViewController()
         let category = viewModel.movieOptions[indexPath.row]
-        viewControllerMoviesList.movieListOption = category
+        let viewControllerMoviesList = ViewController(movieOption: category)
         navigationController?.pushViewController(viewControllerMoviesList, animated: true)
     }
     

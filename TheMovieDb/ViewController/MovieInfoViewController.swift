@@ -7,6 +7,7 @@
 
 import UIKit
 import os.log
+import SwiftUI
 
 final class MovieInfoViewController: UIViewController {
     
@@ -162,8 +163,9 @@ final class MovieInfoViewController: UIViewController {
     }
     
    @objc func reviewsDisplay() {
-       let viewControllerReviews = ReviewsViewController()
-       viewControllerReviews.viewModel.movieID = viewModel.movie?.id
-       navigationController?.pushViewController(viewControllerReviews, animated: true)
+       guard let id = viewModel.movie?.id else { return }
+       let reviewsView = ReviewsView(reviewsViewModel: .init(id: id,facade: MovieFacade()))
+       let hostController = UIHostingController(rootView: reviewsView)
+       navigationController?.pushViewController(hostController, animated: true)
        }
 }
