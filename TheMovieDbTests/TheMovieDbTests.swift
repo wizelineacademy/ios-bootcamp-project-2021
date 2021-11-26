@@ -12,23 +12,61 @@ class TheMovieDbTests: XCTestCase {
     
     var mockAPIClient: MockAPIClient!
     var movieModel: MovieModel!
+    var originalNetworkData: [MovieViewModel]!
 
     override func setUp() {
         mockAPIClient = MockAPIClient()
         let movieApiManager = MovieAPIManager(client: mockAPIClient)
         movieModel = MovieModel(movieManager: movieApiManager)
+        
+        setOriginalData()
+    }
+    
+    func setOriginalData() {
+        do {
+            var fileName = "Configuration_example"
+            let configurationExample: ConfigurationWelcome = try FileParser.createMockResponse(filename: fileName)
+            fileName = "Trending_example"
+            let trendingExample: MovieListResults = try FileParser.createMockResponse(filename: fileName)
+            originalNetworkData = trendingExample.results?.map({
+                return MovieViewModel(movie: $0, configuration: configurationExample.image)
+            }) ?? []
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     func testGetListSuccess() {
-        movieModel.getList(movieFeed: MovieFeed.trending) { list in
-            XCTAssertTrue(!list.isEmpty, "List shouldn't be empty")
+        // Create an expectation
+        let expectation = self.expectation(description: "MovieList")
+        var movieList: [MovieViewModel]?
+        
+        movieModel.getList(movieFeed: MovieFeed.trending) {
+            movieList = $0
+            
+            // Fullfil the expectation to let the test runner know that it's OK to proceed
+            expectation.fulfill()
         }
+        // Wait for the expectation to be fullfilled, or time out after 5 seconds.
+        // This is where the test runner will pause
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertTrue(!(movieList?.isEmpty ?? true), "List shouldn't be empty")
+        
+        XCTAssertEqual(movieList?.count, originalNetworkData.count, "Data should be the same")
     }
     
     func testGetListError() {
         mockAPIClient.error = .responseUnsuccessful
-        movieModel.getList(movieFeed: MovieFeed.trending) { list in
-            XCTAssertTrue(list.isEmpty, "List should be empty")
+        
+        let expectation = self.expectation(description: "MovieList")
+        var movieList: [MovieViewModel]?
+        movieModel.getList(movieFeed: MovieFeed.trending) {
+            movieList = $0
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertTrue(movieList?.isEmpty ?? true, "List should be empty")
     }
 }
