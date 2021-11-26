@@ -11,7 +11,7 @@
 "reviews.title.bar.button" = "Comentarios";
 "search.bar.placeholder" = "Buscar películas o personas";
 "alert.button" = "Cancelar";
-"alert.empty.reviews" = "No se encontraron comentarios";
+"alert.empty.response" = "No se encontraron %@";
 "unavailable" = "No disponible";
 "afirmative" = "Sí";
 "negative" = "No";

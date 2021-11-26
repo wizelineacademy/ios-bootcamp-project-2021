@@ -7,6 +7,7 @@
 
 import Foundation
 import os.log
+import Combine
 
 final class PersonDetailViewModel {
     var personID: Int?
@@ -20,6 +21,8 @@ final class PersonDetailViewModel {
     }
     var showError: ((MovieError) -> Void)?
     var facade: MovieService
+    var subscriptions = Set<AnyCancellable>()
+    
     init(facade: MovieService) {
         self.facade = facade
         os_log("PersonDetailViewModel initialized", log: OSLog.viewModel, type: .debug)
@@ -27,15 +30,17 @@ final class PersonDetailViewModel {
     
     func detailPersonID() {
         guard let id = personID else { return }
-        facade.get(search: nil, endpoint: .personDetails(id: id)) { [weak self] (response: Result<Person, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let person):
+        facade.get(type: Person.self, search: nil, endpoint: .personDetails(id: id))
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case let .failure(error):
+                    self.showError?(error)
+                    os_log("PersonDetailViewModel failure", log: OSLog.viewModel, type: .error)
+                case .finished: break
+                }
+            }, receiveValue: { person in
                 self.person = person
-            case .failure(let failureResult):
-                self.showError?(failureResult)
-                os_log("PersonDetailViewModel failure", log: OSLog.viewModel, type: .error)
-            }
-        }
+            })
+            .store(in: &subscriptions)
     }
 }

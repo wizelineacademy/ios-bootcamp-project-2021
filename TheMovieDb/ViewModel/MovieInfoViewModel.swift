@@ -7,6 +7,7 @@
 
 import Foundation
 import os.log
+import Combine
 
 final class MovieInfoViewModel {
     var movieID: Int?
@@ -48,6 +49,7 @@ final class MovieInfoViewModel {
     }
     
     private var facade: MovieService
+    var subscriptions = Set<AnyCancellable>()
     
     init(facade: MovieService) {
         self.facade = facade
@@ -56,65 +58,73 @@ final class MovieInfoViewModel {
     
     func getMovieDetail() {
         guard let id = movieID else { return }
-        facade.get(search: nil, endpoint: .movieDetails(id: id)) { [weak self] (response: Result<Movie, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let movie):
+        facade.get(type: Movie.self, search: nil, endpoint: .movieDetails(id: id))
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case let .failure(error):
+                    self.showError?(error)
+                    os_log("MovieInfoViewModel getMovieDetail failure", log: OSLog.viewModel, type: .error)
+                case .finished: break
+                }
+            }, receiveValue: { movie in
                 self.movie = movie
-            case .failure(let failureResult):
-                self.showError?(failureResult)
-                os_log("MovieInfoViewModel getMovieDetail failure", log: OSLog.viewModel, type: .error)
-            }
-        }
+            })
+            .store(in: &subscriptions)
     }
     
     func similarMovies() {
         guard let id = movieID else { return }
-        facade.get(search: nil, endpoint: .similar(id: id)) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let movieResponse):
+        facade.get(type: MovieResponse<Movie>.self, search: nil, endpoint: .similar(id: id))
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case let .failure(error):
+                    self.showError?(error)
+                    os_log("MovieInfoViewModel similarMovies failure", log: OSLog.viewModel, type: .error)
+                case .finished: break
+                }
+            }, receiveValue: { movieResponse in
                 let movies = movieResponse.results
                 let movieNames = movies?.compactMap({ $0.title }).prefix(3)
                 self.similarMoviesNames = movieNames?.joined(separator: ", ")
-            case .failure(let failureResult):
-                self.showError?(failureResult)
-                os_log("MovieInfoViewModel similarMovies failure", log: OSLog.viewModel, type: .error)
-            }
-        }
+            })
+            .store(in: &subscriptions)
     }
     
     func recomendedMovies() {
         guard let id = movieID else { return }
-        facade.get(search: nil, endpoint: .recommendations(id: id)) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let movieResponse):
+        facade.get(type: MovieResponse<Movie>.self, search: nil, endpoint: .recommendations(id: id))
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case let .failure(error):
+                    self.showError?(error)
+                    os_log("MovieInfoViewModel recomendedMovies failure", log: OSLog.viewModel, type: .error)
+                case .finished: break
+                }
+            }, receiveValue: { movieResponse in
                 guard movieResponse.results?.count ?? 0 > 0 else { return }
                 let movies = movieResponse.results
                 let movieNames = movies?.compactMap({ $0.title }).prefix(3)
                 self.recommendedMoviesNames = movieNames?.joined(separator: ", ")
-            case .failure(let failureResult):
-                self.showError?(failureResult)
-                os_log("MovieInfoViewModel recomendedMovies failure", log: OSLog.viewModel, type: .error)
-            }
-        }
+            })
+            .store(in: &subscriptions)
     }
     
     func castFromMovie() {
         guard let id = movieID else { return }
-        facade.get(search: nil, endpoint: .credits(id: id)) { [weak self] (response: Result<CreditsMovie, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let creditsResponse):
+        facade.get(type: CreditsMovie.self, search: nil, endpoint: .credits(id: id))
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case let .failure(error):
+                    self.showError?(error)
+                    os_log("MovieInfoViewModel castFromMovie failure", log: OSLog.viewModel, type: .error)
+                case .finished: break
+                }
+            }, receiveValue: { creditsResponse in
                 let castMovie = creditsResponse.cast
                 let castNames = castMovie?.compactMap({ $0.name }).prefix(3)
                 self.castMovie = castNames?.joined(separator: ", ")
-            case .failure(let failureResult):
-                self.showError?(failureResult)
-                os_log("MovieInfoViewModel castFromMovie failure", log: OSLog.viewModel, type: .error)
-            }
-        }
+            })
+            .store(in: &subscriptions)
     }
     
     func fetchServices() {

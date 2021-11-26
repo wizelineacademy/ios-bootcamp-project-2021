@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Combine
 
 enum MovieListEndpoint {
     case trending
@@ -48,15 +49,22 @@ struct RequestParams {
     static let language = Locale.current.languageCode ?? "en"
 }
 
-enum MovieError: Error {
+enum MovieError: Error, Identifiable {
+    
     case invalidUrl
     case invalidResponse
     case wrongResponse(status: Int)
     case unknownError(error: Error)
+    case emptyResponse(list: String)
+    
+    
+    var id: String {
+        return titleError
+    }
     
     var titleError: String {
         switch self {
-        case .invalidUrl, .invalidResponse, .wrongResponse, .unknownError: return "Error"
+        case .invalidUrl, .invalidResponse, .wrongResponse, .unknownError, .emptyResponse: return "Error"
         }
     }
     
@@ -66,10 +74,11 @@ enum MovieError: Error {
         case .invalidResponse: return "Unavailable Response"
         case .wrongResponse(let status): return "Service failured with status code \(status)"
         case .unknownError(let error): return "Error \(error.localizedDescription)"
+        case .emptyResponse(let list): return String(format: "alert.empty.response".localized, list)
         }
     }
 }
 
 protocol MovieService {
-    func get<T: Decodable>(search: String?, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void)
+    func get<T: Decodable>(type: T.Type, search: String?, endpoint: MovieListEndpoint) -> AnyPublisher<T, MovieError>
 }

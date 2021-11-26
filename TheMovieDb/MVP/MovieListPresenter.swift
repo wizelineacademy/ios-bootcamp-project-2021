@@ -7,6 +7,7 @@
 
 import Foundation
 import os.log
+import Combine
 
 protocol MovieListView: AnyObject {
     func onUpdateMovies()
@@ -17,6 +18,7 @@ protocol MovieListView: AnyObject {
 final class MovieListPresenter {
     weak private var viewMovieList: MovieListView?
     private let facade: MovieService
+    private var subscriptions = Set<AnyCancellable>()
     var movies: [Movie] = []
     var movieListOption: MoviesOptions {
         didSet {
@@ -46,23 +48,24 @@ final class MovieListPresenter {
         case .upcoming:
             endpoint = .upcoming
         }
-        facade.get(search: nil, endpoint: endpoint) { [weak self] (response: Result<MovieResponse<Movie>, MovieError>) in
-            guard let self = self else { return }
-            
-            switch response {
-            case .success(let sucessResult):
+        
+        facade.get(type: MovieResponse<Movie>.self, search: nil, endpoint: endpoint)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case let .failure(error):
+                    self.viewMovieList?.showError(error)
+                    os_log("MovieListPresenter failure", log: OSLog.viewModel, type: .error)
+                case .finished: break
+                }
+            }, receiveValue: { sucessResult in
                 guard let results = sucessResult.results else {
                     self.viewMovieList?.showError(.invalidResponse)
                     os_log("MovieListPresenter results error", log: OSLog.viewModel, type: .error)
                     return
                 }
                 self.updateMovies(response: results)
-                
-            case .failure(let failureResult):
-                self.viewMovieList?.showError(failureResult)
-                os_log("MovieListPresenter failure", log: OSLog.viewModel, type: .error)
-            }
-        }
+            })
+            .store(in: &subscriptions)
     }
 }
 
