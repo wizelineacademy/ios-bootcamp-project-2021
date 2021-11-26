@@ -17,7 +17,7 @@ class HomeViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-        tableView.rowHeight = 150
+        tableView.rowHeight = 100
         
         facade.getAllMovies {
             self.tableView.reloadData()
@@ -57,6 +57,9 @@ extension HomeViewController {
                 cell.setNeedsLayout()
             }
         }
+//        cell.imageView?.layoutMargins = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
+//        cell.imageView?.layer.cornerRadius = 10
+//        cell.imageView?.clipsToBounds = true
         return cell
     }
     

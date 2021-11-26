@@ -15,7 +15,8 @@ final class DetailsViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var posterImageView: UIImageView!
     @IBOutlet weak var overviewLabel: UILabel!
-     
+    @IBOutlet weak var releaseDate: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // view = detailView // Overrides the view
@@ -23,7 +24,7 @@ final class DetailsViewController: UIViewController {
         let imageUrl = URL(string: basePosterUrl + (movie?.posterPath)!)
         posterImageView.kf.setImage(with: imageUrl)
         titleLabel.text = movie?.title
-
+        releaseDate.text = movie?.releaseDate
         overviewLabel.text = movie?.overview
         
     }
