@@ -23,7 +23,6 @@ class ReviewsViewModelTests: XCTestCase {
     }
     
     func testReviews() {
-        // Given
         let expectedReviews = [ReviewsDetails(author: "Karla", content: "Excelent"),
                                ReviewsDetails(author: "Daniela", content: "Bad movie")]
         var resultReviews = [ReviewsDetails]()
@@ -43,10 +42,8 @@ class ReviewsViewModelTests: XCTestCase {
                 expectation.fulfill()
             }).store(in: &subscriptions)
         
-        // When
         viewModel?.reviewsMovie()
         
-        // Then
         wait(for: [expectation], timeout: 1)
         XCTAssertTrue(resultReviews.count == expectedReviews.count, "Different quantity of reviews.")
         XCTAssertTrue(resultReviews.first?.author == expectedReviews.first?.author, "Different author for first review")
