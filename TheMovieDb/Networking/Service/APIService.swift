@@ -7,33 +7,9 @@
 import Foundation
 import Combine
 
-class APIService: APIMoviesProtocol {
+class APIService: APIMoviesProtocol { 
     
-    func fetchData<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters, completion: @escaping(Result<T, Error>) -> Void) {
-        let  urlBuild = APIBuild(with: parameters, with: endPoint)
-        guard let url = urlBuild.buildURL() else { return }
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            
-            if let error = error {
-                Log.networkLayer(error).description
-                completion(.failure(error))
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let result = try decoder.decode(T.self, from: data!)
-                completion(.success(result))
-            } catch let error {
-                Log.networkLayer(error).description
-                completion(.failure(error))
-            }
-            
-        }.resume()
-        
-    }
-    
-    func fetchDataCombine<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters) -> AnyPublisher<T, APIRequestError> {
+    func fetchData<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters) -> AnyPublisher<T, APIRequestError> {
         let  urlBuild = APIBuild(with: parameters, with: endPoint)
         guard let url = urlBuild.buildURL() else {
             return Fail(outputType: T.self, failure: APIRequestError.badRequest).eraseToAnyPublisher()
@@ -51,7 +27,8 @@ class APIService: APIMoviesProtocol {
             })
             .decode(type: T.self, decoder: decoder)
             .mapError { error in
-                self.handleError(error)
+                Log.networkLayer(error).description
+                return self.handleError(error)
             }
             .receive(on: RunLoop.main)
             .eraseToAnyPublisher()

@@ -7,13 +7,14 @@
 //
 
 import Foundation
-
+import Combine
 final class HomeRemoteDataManager: HomeRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: HomeRemoteDataManagerOutputProtocol?
     private let service: APIMoviesProtocol
     private let defaultParameters = APIParameters()
     private let group = DispatchGroup()
+    private var cancellable = Set<AnyCancellable>()
     private var movies: [MovieGroupSections: [Movie]] = [:]
     
     init(service: APIMoviesProtocol) {
@@ -29,14 +30,14 @@ final class HomeRemoteDataManager: HomeRemoteDataManagerInputProtocol {
     
     private func fetchData(typeMovieSection: MovieGroupSections) {
         group.enter()
-        service.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: {(response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                Log.networkLayer(error).description
-            case .success(let res):
-                self.movies[typeMovieSection] = res.movies
-            }
-            self.group.leave()
-        })
+        service.fetchData(endPoint: typeMovieSection.path, with: defaultParameters)
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { (movies: Movies) in
+                self.movies[typeMovieSection] = movies.movies
+                self.group.leave()
+            }).store(in: &cancellable)
     }
 }

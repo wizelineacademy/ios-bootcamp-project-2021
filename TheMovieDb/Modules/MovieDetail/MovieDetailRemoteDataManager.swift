@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 class MovieDetailRemoteDataManager: MovieDetailRemoteDataManagerInputProtocol {
     var remoteRequestHandler: MovieDetailRemoteDataManagerOutputProtocol?
@@ -14,29 +15,30 @@ class MovieDetailRemoteDataManager: MovieDetailRemoteDataManagerInputProtocol {
     private let defaultParameters = APIParameters()
     var movies: [MovieDetailSections: [Movie]] = [:]
     private let service: APIMoviesProtocol
+    private var cancellable: AnyCancellable?
     
     init(service: APIMoviesProtocol) {
         self.service = service
     }
     
     func fetchRelatedMovies() {
-        MovieDetailSections.allCases.forEach { fetchData(typeMovieSection: $0) }
-        group.notify(queue: .main) {
-            self.remoteRequestHandler?.relatedMoviesFound(self.movies)
-        }
+        self.cancellable = Publishers.Zip(
+            fetchData(typeMovieSection: .recommendations), fetchData(typeMovieSection: .similar)
+        )
+            .sink(receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { (recommendations: Movies, similar: Movies) in
+                self.movies[.recommendations] = recommendations.movies
+                self.movies[.similar] = similar.movies
+                self.remoteRequestHandler?.relatedMoviesFound(self.movies)
+            })
+        
     }
     
-    private func fetchData(typeMovieSection: MovieDetailSections) {
-        group.enter()
-        service.fetchData(endPoint: typeMovieSection.path, with: defaultParameters, completion: { [weak self] (response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let res):
-                self?.movies[typeMovieSection] = res.movies
-            }
-            self?.group.leave()
-        })
+    private func fetchData<T: Decodable>(typeMovieSection: MovieDetailSections) ->  AnyPublisher<T, APIRequestError> {
+        return service.fetchData(endPoint: typeMovieSection.path, with: defaultParameters)
     }
     
 }

@@ -78,7 +78,7 @@ class NetworkLayerTest: XCTestCase {
         let fetchMovies = APIService()
         var cancellables = Set<AnyCancellable>()
         let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
-        fetchMovies.fetchDataCombine(endPoint: .upcoming, with: APIParameters())
+        fetchMovies.fetchData(endPoint: .upcoming, with: APIParameters())
             .sink( receiveCompletion: { (completion) in
                 if case let .failure(error) = completion {
                     XCTAssertTrue(false, "Error in request \(error.localizedDescription)______________")

@@ -21,7 +21,7 @@ final class ReviewsRemoteDataManager: ReviewsRemoteDataManagerInputProtocol {
     func fetchReviews(movie: Movie) {
         let id = String(movie.id)
         let parameter = APIParameters(id: id)
-        service.fetchDataCombine(endPoint: .review, with: parameter)
+        service.fetchData(endPoint: .review, with: parameter)
             .sink( receiveCompletion: { (completion) in
                 if case let .failure(error) = completion {
                     print(error.localizedDescription)

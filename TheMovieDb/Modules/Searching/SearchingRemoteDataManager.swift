@@ -21,7 +21,7 @@ final class SearchingRemoteDataManager: SearchingRemoteDataManagerInputProtocol 
     
     func fetchMovies(_ searchText: String) {
         let parameters = APIParameters(query: searchText)
-        service.fetchDataCombine(endPoint: .search, with: parameters)
+        service.fetchData(endPoint: .search, with: parameters)
             .sink( receiveCompletion: { (completion) in
                 if case let .failure(error) = completion {
                     print(error.localizedDescription)
