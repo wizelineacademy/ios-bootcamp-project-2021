@@ -20,9 +20,11 @@ extension NetworkDispatcher {
       .dataTaskPublisher(for: request)
       .tryMap { (data, response) in
         guard let httpResponse = response as? HTTPURLResponse else {
+          print("response requestFailed")
           throw ApiError.requestFailed
         }
         if httpResponse.statusCode != 200 {
+          print("response unsuccesful")
           throw ApiError.responseUnsuccesful
         } else {
           return data
@@ -31,6 +33,7 @@ extension NetworkDispatcher {
       .decode(type: Element.self, decoder: JSONDecoder())
       .mapError { error in
         print(error.localizedDescription)
+        print("response jsonConversionFailure")
         return ApiError.jsonConversionFailure
         
       }

@@ -14,13 +14,8 @@ class DetailViewController: UIViewController {
   var movieId: Int?
   var movieClient: MovieClient
   var movieVM: MovieDetailsViewModel?
-  
-  var movieDetails: GeneralMovieViewModel?
-  var listCast: ListCastViewModel?
-  var listReview: ListReviewsViewModel?
-  var listSimilarMovies: GeneralMovieViewModel?
-  var listRecommendedMovies: GeneralMovieViewModel?
-  
+  var generalVM: MovieRepository?
+
   var cast: [PersonViewModel]? = []
   var reviews: [ReviewViewModel]? = []
   var similarMovies: [MovieViewModel]? = []
@@ -33,11 +28,7 @@ class DetailViewController: UIViewController {
   init(movieClient: MovieClient, movieId: Int) {
     self.movieClient = movieClient
     self.movieId = movieId
-    self.movieDetails = GeneralMovieViewModel(movieClient: movieClient)
-    self.listCast = ListCastViewModel(movieClient: movieClient)
-    self.listReview = ListReviewsViewModel(movieClient: movieClient)
-    self.listSimilarMovies = GeneralMovieViewModel(movieClient: movieClient)
-    self.listRecommendedMovies = GeneralMovieViewModel(movieClient: movieClient)
+    self.generalVM = MovieRepository(movieClient: movieClient)
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -73,37 +64,68 @@ class DetailViewController: UIViewController {
     }
   }
   
-  var group: DispatchGroup?
+  func getDetails(_ id: Int, _ group: DispatchGroup) {
+    group.enter()
+    generalVM?.getDataMovies(categories: InfoById.movieDetails(id), group: group, kindOfElement: MovieDetails.self, complete: { [weak self] movie in
+      defer { group.leave() }
+      self?.movieVM = MovieDetailsViewModel(movieDetails: movie)
+    })
+  }
+  
+  func getRecommendations(_ id: Int, _ group: DispatchGroup) {
+    group.enter()
+    generalVM?.getDataMovies(categories: InfoById.recommendations(id), group: group, kindOfElement: ListSimilarOrRecommendedMovies.self, complete: { [weak self] movies in
+      defer { group.leave() }
+      guard let listRecommendeMovies = movies.results else { return }
+      self?.recommendedMovies = listRecommendeMovies.map({ recomendedMovie in
+        MovieViewModel(movie: recomendedMovie)
+      })
+    })
+  }
+  
+  func getSimilarMovies(_ id: Int, _ group: DispatchGroup) {
+    group.enter()
+    generalVM?.getDataMovies(categories: InfoById.similar(id), group: group, kindOfElement: ListSimilarOrRecommendedMovies.self, complete: { [weak self] movies in
+      defer { group.leave() }
+      guard let listSimilarMovies = movies.results else { return }
+      self?.similarMovies = listSimilarMovies.map({ similarMovie in
+        MovieViewModel(movie: similarMovie)
+      })
+    })
+  }
+  
+  func getCast(_ id: Int, _ group: DispatchGroup) {
+    group.enter()
+    generalVM?.getDataMovies(categories: InfoById.credits(id), group: group, kindOfElement: Credits.self, complete: { [weak self] credits in
+      defer { group.leave() }
+      guard let cast = credits.cast else { return }
+      self?.cast = cast.map({ person in
+        PersonViewModel(person: person)
+      })
+    })
+  }
+  
+  func castReviews(_ id: Int, _ group: DispatchGroup) {
+    group.enter()
+    generalVM?.getDataMovies(categories: InfoById.reviews(id), group: group, kindOfElement: ListReviews.self, complete: { [weak self] reviews in
+      defer { group.leave() }
+      guard let listReviews = reviews.results else { return }
+      self?.reviews = listReviews.map({ review in
+        ReviewViewModel(review: review)
+      })
+    })
+  }
   
   func getAllInfoDetailMovie() {
-    group = DispatchGroup()
-    guard let id = movieId, group != nil else { return }
-    group?.enter()
-    movieDetails?.getMovieDetails(categories: InfoById.movieDetails(id), group: group!)
-    listCast?.getCast(categories: InfoById.credits(id), group: group!)
-    listReview?.getReviews(categories: InfoById.reviews(id), group: group!)
-    listSimilarMovies?.getSimilarOrRecommendedMovies(categories: InfoById.similar(id), group: group!)
-    listRecommendedMovies?.getSimilarOrRecommendedMovies(categories: InfoById.recommendations(id), group: group!)
-    group?.leave()
-    group?.notify(queue: .main) { [weak self] in
-      self?.updateInfo()
-    }
-  }
-  
-  func updateInfo() {
-    self.movieVM = self.movieDetails?.movieDetails
-    self.similarMovies = self.listSimilarMovies?.listSimilarOrRecommendedViewModel
-    self.recommendedMovies = self.listRecommendedMovies?.listSimilarOrRecommendedViewModel
-    self.cast = listCast?.listCastViewModel
-    self.reviews = self.listReview?.listReviewsViewModel
-    refreshView()
-  }
-  
-  func refreshView() {
-    group = nil
-    DispatchQueue.main.async { [weak self] in
+    let group = DispatchGroup()
+    guard let id = movieId else { return }
+    getDetails(id, group)
+    getRecommendations(id, group)
+    getSimilarMovies(id, group)
+    getCast(id, group)
+    castReviews(id, group)
+    group.notify(queue: .main) { [weak self] in
       self?.detailCollectionView.reloadData()
-      print(self?.group as Any)
     }
   }
   

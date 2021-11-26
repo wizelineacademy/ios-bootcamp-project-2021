@@ -83,7 +83,7 @@ class UnitTestingMovieDBModels_Test: XCTestCase {
     do {
       let item = try JSONDecoder().decode(Person.self, from: json)
       // Then
-      XCTAssertEqual(item.popularity, 9)
+      XCTAssertEqual(item.character, "Kevin McCallister")
     } catch let error {
       print(error.localizedDescription)
     }

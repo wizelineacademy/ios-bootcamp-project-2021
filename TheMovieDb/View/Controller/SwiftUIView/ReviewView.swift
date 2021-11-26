@@ -12,12 +12,12 @@ struct ReviewView: View {
   
   var review: ReviewViewModel?
   
-  func getProfileImage() -> UIImage {
-    let image = CacheImageView()
-    image.loadImage(urlString: review?.profileImageAuthor)
-    guard let uiimage = image.image else { return UIImage(named: "notFoundImage")! }
-    return uiimage
-  }
+//  func getProfileImage() -> UIImage {
+//    let image = CacheImageView()
+//    image.loadImage(urlString: review?.profileImageAuthor)
+//    guard let uiimage = image.image else { return UIImage(named: "notFoundImage")! }
+//    return uiimage
+//  }
   
   var body: some View {
     ZStack {
@@ -43,7 +43,7 @@ struct ReviewView: View {
             Text("Written by")
               .font(.system(size: TextStyle.paragraph.size))
               .fontWeight(.bold)
-            .foregroundColor(Color(DesignColor.whiteDirt.color))
+              .foregroundColor(Color(DesignColor.whiteDirt.color))
             Text(review?.author ?? "username")
               .font(.system(size: TextStyle.paragraph.size))
               .fontWeight(.bold)

@@ -13,7 +13,7 @@ class FeedViewController: UIViewController {
   static let categoryHeaderId = "categoryHeaderId"
 
   var apiClient: MovieClient
-  var movieViewModel: GeneralMovieViewModel?
+  var movieViewModel: MovieRepository?
   
   var categoryMovies: [String: [MovieViewModel]] = [:]
   var searchResult: [MovieViewModel] = []
@@ -29,12 +29,13 @@ class FeedViewController: UIViewController {
     let searchController = SearchBarController(placeholder: "Search a Movie or an Actor", delegate: self)
     searchController.text = lastSearch
     searchController.showCancelButton = !searchController.isSearchBarEmpty
+    searchController.searchBar.searchTextField.textColor = .white
     return searchController
   }()
   
   init(apiClient: MovieClient) {
     self.apiClient = apiClient
-    self.movieViewModel = GeneralMovieViewModel(movieClient: apiClient)
+    self.movieViewModel = MovieRepository(movieClient: apiClient)
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -65,13 +66,21 @@ class FeedViewController: UIViewController {
     navigationController?.navigationBar.tintColor = DesignColor.purple.color
   }
   // MARK: get data from the api using the viewModel
+
   func getMovies() {
     let group = DispatchGroup()
     for categories in MovieFeed.allCases {
-      movieViewModel?.getListMovies(categories: categories, title: categories.title, group: group)
+      group.enter()
+      movieViewModel?.getDataMovies(categories: categories, group: group, kindOfElement: MovieFeedResult.self, complete: { [weak self] movies in
+        defer { group.leave() }
+        guard let listMovies = movies.results else { return }
+        self?.categoryMovies[categories.title] = listMovies.map({ movie in
+          MovieViewModel(movie: movie)
+        })
+      })
     }
     group.notify(queue: .main) {
-      self.categoryMovies = self.movieViewModel!.listMovieViewModel
+      print("reUpdate")
       self.feedCollectionView.reloadData()
     }
   }
@@ -203,12 +212,11 @@ extension FeedViewController: SearchBarDelegate {
   func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {}
   
   func updateSearchResults(_ searchBar: UISearchBar, with text: String) {
-    if !text.isEmpty {
+    if !text.isEmpty && searchResult.isEmpty {
       if timer != nil { timer?.invalidate() }
       var runCount = 0
       timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
         runCount += 1
-        print(runCount)
         if runCount == 2 {
           timer.invalidate()
           runCount = 0
@@ -216,8 +224,7 @@ extension FeedViewController: SearchBarDelegate {
           searchBar.searchTextField.resignFirstResponder()
         }
       }
-    } else if text.isEmpty && searchResult.count != 0 {
-      searchBar.showsCancelButton = false
+    } else if searchResult.count != 0 && text == "" {
       searchResult.removeAll()
       DispatchQueue.main.async { [weak self] in
         self?.feedCollectionView.reloadData()
@@ -229,11 +236,15 @@ extension FeedViewController: SearchBarDelegate {
     searchResult.removeAll()
     let group = DispatchGroup()
     group.enter()
-    movieViewModel?.searchMovies(endPoint: SearchKeyword.keywords, search: searchText, group: group)
-    group.leave()
+    movieViewModel?.getDataMovies(categories: SearchKeyword.keywords, search: searchText, group: group, kindOfElement: MovieFeedResult.self, complete: { [weak self] movieSearch in
+      defer { group.leave() }
+      guard let resultSearch = movieSearch.results else { return }
+      self?.searchResult = resultSearch.map({ movie in
+        MovieViewModel(movie: movie)
+      })
+    })
+    
     group.notify(queue: .main) { [weak self] in
-      guard let resultsMovie = self?.movieViewModel!.searchMovie else { return }
-      self?.searchResult = resultsMovie
       self?.feedCollectionView.reloadData()
     }
   }
