@@ -23,10 +23,6 @@ extension SearchingPresenter: SearchingPresenterProtocol {
         router?.showMovieDetail(from: view, with: movie)
     }
     
-    func viewDidLoad() {
-        // configure load previous searching
-    }
-    
     func searchMovies(_ searchText: String) {
         view?.showSpinnerView()
         interactor?.findMovies(searchText)

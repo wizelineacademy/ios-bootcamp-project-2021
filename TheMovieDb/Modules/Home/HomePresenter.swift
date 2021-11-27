@@ -20,6 +20,7 @@ class HomePresenter {
 extension HomePresenter: HomePresenterProtocol {
     func viewDidLoad() {
         interactor?.getMovies()
+        view?.showSpinner()
     }
     
     func showMovie(_ movie: Movie) {
@@ -30,10 +31,12 @@ extension HomePresenter: HomePresenterProtocol {
 
 extension HomePresenter: HomeInteractorOutputProtocol {
     func onError(errorMessage: String) {
+        view?.hideSpinner()
         view?.showErrorMessage(withMessage: errorMessage)
     }
     
     func moviesObtained(_ movies: [MovieGroupSections: [Movie]]) {
+        view?.hideSpinner()
         view?.showMovies(movies)
     }
 }

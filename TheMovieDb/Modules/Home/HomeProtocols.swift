@@ -15,6 +15,8 @@ protocol HomeViewProtocol: AnyObject {
     
     func showMovies(_ movies: [MovieGroupSections: [Movie]])
     func showErrorMessage(withMessage: String)
+    func showSpinner()
+    func hideSpinner()
 }
 
 protocol HomeRouterProtocol: AnyObject {

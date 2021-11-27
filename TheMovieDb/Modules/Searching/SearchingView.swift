@@ -21,7 +21,6 @@ final class SearchingView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.viewDidLoad()
         configureUI()
     }
     

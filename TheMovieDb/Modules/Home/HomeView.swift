@@ -149,12 +149,12 @@ extension HomeView {
     
     private func getHightLayoutSection() -> NSCollectionLayoutSection {
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(200))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.6))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.5))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.6))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // section
@@ -167,12 +167,23 @@ extension HomeView {
     }
     
     private  func getDefaultLayoutSection() -> NSCollectionLayoutSection {
+        var sizeHeight: NSCollectionLayoutDimension = .fractionalHeight(0.2)
+        var sizeWidth: NSCollectionLayoutDimension = .fractionalWidth(0.25)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            sizeHeight = .fractionalHeight(0.25)
+            sizeWidth = .fractionalWidth(0.20)
+        }
         
-        let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.25), heightDimension: .absolute(150)))
+        // item
+        let itemSize = NSCollectionLayoutSize(widthDimension: sizeWidth, heightDimension: .fractionalHeight(1))
+
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets.trailing = 16
         item.contentInsets.bottom = 16
         
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(150)), subitems: [item])
+        // group
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: sizeHeight)
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets.leading = 16
@@ -192,8 +203,12 @@ extension HomeView {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
         
+        var sizeHeight: NSCollectionLayoutDimension = .fractionalHeight(0.3)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            sizeHeight = .fractionalHeight(0.46)
+        }
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(180))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: sizeHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // section
@@ -211,6 +226,14 @@ extension HomeView {
 }
 
 extension HomeView: HomeViewProtocol {
+    func hideSpinner() {
+        self.removeSpinner()
+    }
+    
+    func showSpinner() {
+        self.showSpinner(onView: view)
+    }
+    
     func showErrorMessage(withMessage: String) {
         self.viewDisplayError(with: withMessage)
     }
