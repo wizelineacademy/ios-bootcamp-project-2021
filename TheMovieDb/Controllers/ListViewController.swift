@@ -29,7 +29,7 @@ class ListViewController: UIViewController {
             return
         }
         let movieAPIManager = MovieAPIManager(client: MovieAPIClient())
-        let model = MovieModel(movieManager: movieAPIManager)
+        let model = MovieAPIModel(movieManager: movieAPIManager)
         listViewModel = ListViewModel(movieModel: model, movieFeed: movieFeed, delegate: self)
         listView = ListView(viewModel: listViewModel, navigationDelegate: self)
         

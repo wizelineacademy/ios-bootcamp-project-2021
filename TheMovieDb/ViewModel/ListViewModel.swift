@@ -13,13 +13,13 @@ protocol ListViewModelDelegate: AnyObject {
 }
 
 class ListViewModel: NSObject {
-    private let movieModel: MovieModel
+    private let movieModel: MovieAPIModel
     private let movieFeed: MovieFeed
     private var movieList: [MovieViewModel] = []
     
     private weak var delegate: ListViewModelDelegate?
     
-    init(movieModel: MovieModel, movieFeed: MovieFeed, delegate: ListViewModelDelegate? = nil) {
+    init(movieModel: MovieAPIModel, movieFeed: MovieFeed, delegate: ListViewModelDelegate? = nil) {
         self.movieModel = movieModel
         self.movieFeed = movieFeed
         self.delegate = delegate
