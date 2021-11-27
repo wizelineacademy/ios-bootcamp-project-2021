@@ -14,6 +14,7 @@ protocol HomeViewProtocol: AnyObject {
     var presenter: HomePresenterProtocol? { get set }
     
     func showMovies(_ movies: [MovieGroupSections: [Movie]])
+    func showErrorMessage(withMessage: String)
 }
 
 protocol HomeRouterProtocol: AnyObject {
@@ -40,24 +41,12 @@ protocol HomePresenterProtocol: AnyObject {
 protocol HomeInteractorOutputProtocol: AnyObject {
     // INTERACTOR -> PRESENTER
     func moviesObtained(_ movies: [MovieGroupSections: [Movie]])
+    func onError(errorMessage: String)
 }
 
-typealias HomeInteractorDataManagerProtocol = HomeInteractorInputProtocol & HomeRemoteDataManagerOutputProtocol
 protocol HomeInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: HomeInteractorOutputProtocol? { get set }
-    var remoteDatamanager: HomeRemoteDataManagerInputProtocol? { get set }
     
     func getMovies()
-}
-
-protocol HomeRemoteDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> REMOTEDATAMANAGER
-    var remoteRequestHandler: HomeRemoteDataManagerOutputProtocol? { get set }
-    func fetchMovies()
-}
-
-protocol HomeRemoteDataManagerOutputProtocol: AnyObject {
-    // REMOTEDATAMANAGER -> INTERACTOR
-    func fetchedMovies(_ movies: [MovieGroupSections: [Movie]])
 }

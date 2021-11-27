@@ -29,6 +29,10 @@ extension HomePresenter: HomePresenterProtocol {
 }
 
 extension HomePresenter: HomeInteractorOutputProtocol {
+    func onError(errorMessage: String) {
+        view?.showErrorMessage(withMessage: errorMessage)
+    }
+    
     func moviesObtained(_ movies: [MovieGroupSections: [Movie]]) {
         view?.showMovies(movies)
     }

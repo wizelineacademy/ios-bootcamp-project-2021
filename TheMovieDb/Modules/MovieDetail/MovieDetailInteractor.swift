@@ -15,19 +15,19 @@ class MovieDetailInteractor: MovieDetailInteractorInputProtocol {
     weak var presenter: MovieDetailInteractorOutputProtocol?
     private var cancellable: AnyCancellable?
     var relatedMovies: [MovieDetailSections: [Movie]] = [:]
-    private var movieDetailWorker: MovieDetailWorkerProtocol!
+    private var moviesWorker: MoviesWorkerProtocol!
     private var movie: Movie!
     
-    init(movieDetailWorker: MovieDetailWorkerProtocol, movie: Movie) {
-        self.movieDetailWorker = movieDetailWorker
+    init(movieDetailWorker: MoviesWorkerProtocol, movie: Movie) {
+        self.moviesWorker = movieDetailWorker
         self.movie = movie
     }
     
     func getRelatedMovies() {
         let parameters = APIParameters(id: String(movie.id))
         self.cancellable = Publishers.Zip(
-            movieDetailWorker.fetchMovies(typeMovieSection: .recommendations, with: parameters),
-            movieDetailWorker.fetchMovies(typeMovieSection: .similar, with: parameters)
+            moviesWorker.fetchMovies(endPoint: .recommendations, with: parameters),
+            moviesWorker.fetchMovies(endPoint: .similar, with: parameters)
         )
             .sink(receiveCompletion: { (completion) in
                 if case let .failure(error) = completion {

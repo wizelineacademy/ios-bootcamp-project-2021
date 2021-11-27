@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class HomeView: UIViewController {
+final class HomeView: UIViewController, DisplayError {
     
     // MARK: Properties
     var presenter: HomePresenterProtocol?
@@ -211,6 +211,10 @@ extension HomeView {
 }
 
 extension HomeView: HomeViewProtocol {
+    func showErrorMessage(withMessage: String) {
+        self.viewDisplayError(with: withMessage)
+    }
+    
     func showMovies(_ movies: [MovieGroupSections: [Movie]]) {
         self.movies = movies
         reloadCollectionView()

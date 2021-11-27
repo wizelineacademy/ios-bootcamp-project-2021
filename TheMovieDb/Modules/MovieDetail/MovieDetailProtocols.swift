@@ -54,8 +54,3 @@ protocol MovieDetailInteractorInputProtocol: AnyObject {
     func getRelatedMovies()
     func getMovie()
 }
-
-protocol MovieDetailWorkerProtocol {
-    // WORKER -> INTERACTOR
-    func fetchMovies(typeMovieSection: MovieDetailSections, with paremeters: APIParameters) -> AnyPublisher<Movies, APIRequestError>
-}
