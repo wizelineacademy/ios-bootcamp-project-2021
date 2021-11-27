@@ -23,14 +23,15 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
     setupSearch()
   }
   lazy private var searchController: SearchBar = {
-    let searchController = SearchBar("Search a movie or an actor", delegate: nil)
+    let searchTitle = NSLocalizedString("SEARCH_TITLE", comment: "Search Title")
+    let searchController = SearchBar(searchTitle, delegate: nil)
     
     searchController.showsCancelButton = !searchController.isSearchBarEmpty
     return searchController
   }()
   
   // Navigation controller setup
-  func configureNavigationController() {
+  private func configureNavigationController() {
     guard let navigationBar = self.navigationController?.navigationBar else { return }
     navigationBar.tintColor = .black
     //    navigationBar.titleTextAttributes = [.foregroundColor: UIColor.black]
@@ -39,7 +40,7 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
     navigationItem.searchController = searchController
   }
   
-  func setupSearch() {
+  private func setupSearch() {
     searchController.searchResultsUpdater = self
     
     let refreshControl = UIRefreshControl()
@@ -48,7 +49,7 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
     resultTableView?.sendSubviewToBack(refreshControl)
   }
   // TableView Configuration
-  func setupTableView() {
+  private func setupTableView() {
     if self.tableView != nil {
       self.tableView?.dataSource = self
       self.tableView?.delegate = self
@@ -139,21 +140,10 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
   }
   
   func requestAPISearch(text: String) {
-    SearchRequester().requestAPI(search: text) { movies in
+    SearchRequester(searchText: text).requestAPI( completion: { movies in
       self.resultSearch = movies
       self.refresh()
-    }
+    })
   }
   
-  //  private func filterContentForSearchText(_ searchText: String) {
-  //      // filter with a simple contains searched text
-  //      resultPokemons = pokemons.filter {
-  //              searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased())
-  //          }
-  //          .sorted {
-  //              $0.id < $1.id
-  //          }
-  //
-  //    tableView?.reloadData()
-  //  }
 }

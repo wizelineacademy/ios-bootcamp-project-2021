@@ -86,6 +86,5 @@ final class SearchBar: UISearchController, SearchBarProtocol {
   func updateSearchResults(for searchController: UISearchController) {
     searchBarDelegate?.updateSearchResults(for: text ?? "")
   }
-  
 
 }

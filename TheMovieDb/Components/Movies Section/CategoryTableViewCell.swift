@@ -51,12 +51,12 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
     super.setSelected(selected, animated: animated)
   }
   
-  func setUpUI() {
+  private func setUpUI() {
     categoryLabel?.font = UIFont.boldSystemFont(ofSize: 20)
     categoryLabel?.textColor = .label
   }
   
-  func setupCollectionView() {
+  private func setupCollectionView() {
     self.collectionView?.dataSource = self
     self.collectionView?.delegate = self
     self.collectionView?.showsHorizontalScrollIndicator = false

@@ -16,26 +16,26 @@ final class MainCoordinator: Coordinator {
   }
   
   func start() {
-    let vc = MainViewController()
-    vc.coordinator = self
-    navigationController.pushViewController(vc, animated: false)
+    let viewController = MainViewController()
+    viewController.coordinator = self
+    navigationController.pushViewController(viewController, animated: false)
   }
   
   func showDetailMovie(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
-    let vc = MovieDetailViewController(movieTitle: movieTitle, movieScore: movieScore, posterPath: posterPath, overview: overview, id: id)
-    vc.coordinator = self
-    navigationController.pushViewController(vc, animated: true)
+    let viewController = MovieDetailViewController(movieTitle: movieTitle, movieScore: movieScore, posterPath: posterPath, overview: overview, id: id)
+    viewController.coordinator = self
+    navigationController.pushViewController(viewController, animated: true)
   }
   
   func showReviews(id: Int) {
-    let vc = ReviewsViewController(id: id)
-    vc.coordinator = self
-    navigationController.pushViewController(vc, animated: true)
+    let viewController = ReviewsViewController(id: id)
+    viewController.coordinator = self
+    navigationController.pushViewController(viewController, animated: true)
   }
   
   func showReviewDetail(author: String, rating: Float, content: String) {
-    let vc = DetailReviewViewController(author: author, rating: rating, content: content)
-    vc.coordinator = self
-    navigationController.pushViewController(vc, animated: true)
+    let viewController = DetailReviewViewController(author: author, rating: rating, content: content)
+    viewController.coordinator = self
+    navigationController.pushViewController(viewController, animated: true)
   }
 }

@@ -47,14 +47,14 @@ final class MovieDetailViewController: UIViewController, UITableViewDelegate, UI
     self.showReviewsButton?.titleLabel?.text = "Reviews"
   }
   
-  func setupUI() {
+  private func setupUI() {
     self.setupImage(posterPath: self.posterPath)
     self.navigationItem.title = self.movieTitle
     self.votingLabel?.text = "Score: \(self.movieScore)"
     self.overviewLabel?.text = self.movieOverview
     self.showReviewsButton?.titleLabel?.text = "Reviews"
   }
-  func setupTable() {
+  private func setupTable() {
     self.tableView?.delegate = self
     self.tableView?.dataSource = self
     self.tableView?.separatorStyle = .none
@@ -64,7 +64,7 @@ final class MovieDetailViewController: UIViewController, UITableViewDelegate, UI
     self.tableView?.register(RecommendedTableViewCell.nib(), forCellReuseIdentifier: RecommendedTableViewCell.identifier)
   }
   
-  func setupImage(posterPath: String) {
+  private func setupImage(posterPath: String) {
     if let url = URL(string: posterPath) {
       posterImageView?.kf.setImage(with: url)
     }

@@ -48,6 +48,7 @@
 		74C375D02734F36C00118BFC /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C375CF2734F36C00118BFC /* CoordinatorProtocol.swift */; };
 		74C375D22734F7CA00118BFC /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C375D12734F7CA00118BFC /* MainCoordinator.swift */; };
 		74E2DAAE272EEE1900D78AC3 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74E2DAAD272EEE1900D78AC3 /* Categories.swift */; };
+		74E3639D2752B21800301E6C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 74E3639F2752B21800301E6C /* Localizable.strings */; };
 		837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EA7258178B6003DFC67 /* AppDelegate.swift */; };
 		837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837B4EA9258178B6003DFC67 /* SceneDelegate.swift */; };
 		837B4EB1258178B9003DFC67 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 837B4EB0258178B9003DFC67 /* Assets.xcassets */; };
@@ -118,6 +119,9 @@
 		74E2DAAD272EEE1900D78AC3 /* Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
 		74E2DAAF272F291E00D78AC3 /* BebasNeue-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BebasNeue-Regular.ttf"; sourceTree = "<group>"; };
 		74E2DAB0272F292800D78AC3 /* BebasNeue-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BebasNeue-Bold.ttf"; sourceTree = "<group>"; };
+		74E3639E2752B21800301E6C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		74E363A02752B2C100301E6C /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		74E363A12752B2C100301E6C /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		837B4EA4258178B6003DFC67 /* TheMovieDb.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TheMovieDb.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		837B4EA7258178B6003DFC67 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		837B4EA9258178B6003DFC67 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -310,6 +314,7 @@
 				837B4EB2258178B9003DFC67 /* LaunchScreen.storyboard */,
 				837B4EB5258178B9003DFC67 /* Info.plist */,
 				7436FDD5272AF6C600998B97 /* Constants.swift */,
+				74E3639F2752B21800301E6C /* Localizable.strings */,
 			);
 			path = TheMovieDb;
 			sourceTree = "<group>";
@@ -421,6 +426,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"en-GB",
 			);
 			mainGroup = 837B4E9B258178B6003DFC67;
 			packageReferences = (
@@ -443,6 +449,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7490CD6827363DE600BE44C3 /* ReviewTableViewCell.xib in Resources */,
+				74E3639D2752B21800301E6C /* Localizable.strings in Resources */,
 				741A7632272F9A250067D3E9 /* MovieDetailViewController.xib in Resources */,
 				742E35F2272CF9ED00EBDF53 /* MovieCollectionViewCell.xib in Resources */,
 				7490CD6C27364A2100BE44C3 /* DetailReviewViewController.xib in Resources */,
@@ -565,10 +572,20 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		74E3639F2752B21800301E6C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				74E3639E2752B21800301E6C /* en */,
+				74E363A12752B2C100301E6C /* en-GB */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		837B4EB2258178B9003DFC67 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				837B4EB3258178B9003DFC67 /* Base */,
+				74E363A02752B2C100301E6C /* en-GB */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -580,6 +597,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -641,6 +659,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

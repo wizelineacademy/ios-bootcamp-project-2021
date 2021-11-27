@@ -29,14 +29,14 @@ final class RecommendedTableViewCell: UITableViewCell, UICollectionViewDataSourc
     // Initialization code
   }
   
-  func setUpUI() {
+  private func setUpUI() {
     typeLabel?.font = UIFont.boldSystemFont(ofSize: 20)
     typeLabel?.textColor = .label
   }
   static func nib() -> UINib {
     return UINib(nibName: "RecommendedTableViewCell", bundle: nil)
   }
-  func setupCollectionView() {
+  private func setupCollectionView() {
     self.collectionView?.dataSource = self
     self.collectionView?.delegate = self
     self.collectionView?.showsHorizontalScrollIndicator = false
@@ -49,7 +49,7 @@ final class RecommendedTableViewCell: UITableViewCell, UICollectionViewDataSourc
     }
   }
   
-  func requestAPI() {
+  private func requestAPI() {
     RecommendationRequester().requestAPI(id: self.id ?? 0) { movies in
       self.movies = movies
       self.collectionView?.reloadData()

@@ -8,18 +8,20 @@
 import Foundation
 
 protocol SearchProtocol {
-  func requestSearch(search: String)
-  func requestAPI(search: String, completion: @escaping ([Movie]) -> Void)
+  func requestSearch()
+  func requestAPI(completion: @escaping ([Movie]) -> Void)
 }
 
 final class SearchRequester: SearchProtocol {
   let group = DispatchGroup()
   
   internal var movies: [Movie] = []
+  let searchText: String?
+  init(searchText: String?) {
+    self.searchText = searchText
+  }
   
-  init() {}
-  
-  func requestSearch(search: String) {
+  func requestSearch() {
     self.group.enter()
     let completion: (Result<MovieList, Error>) -> Void = { [weak self] result in
         debugPrint(result)
@@ -33,11 +35,11 @@ final class SearchRequester: SearchProtocol {
           self?.group.leave()
         }
     }
-    API.searchMovies(search: search).resume(completion: completion)
+    API.searchMovies(search: searchText ?? "").resume(completion: completion)
   }
   
-  func requestAPI(search: String, completion: @escaping ([Movie]) -> Void) {
-    requestSearch(search: search)
+  func requestAPI(completion: @escaping ([Movie]) -> Void) {
+    requestSearch()
     group.notify(queue: .main) {
       completion(self.movies)
     }
