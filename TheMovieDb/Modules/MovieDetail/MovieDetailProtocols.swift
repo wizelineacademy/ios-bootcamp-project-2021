@@ -6,7 +6,7 @@
 //  
 //
 
-import Foundation
+import Combine
 import UIKit
 
 protocol MovieDetailViewProtocol: AnyObject {
@@ -15,6 +15,7 @@ protocol MovieDetailViewProtocol: AnyObject {
     
     func showRealatedMoviews(_ relatedMovies: [MovieDetailSections: [Movie]])
     func setMovie(_ movie: Movie)
+    func showErrorMessage(withMessage: String)
 }
 
 protocol MovieDetailRouterProtocol: AnyObject {
@@ -36,7 +37,6 @@ protocol MovieDetailPresenterProtocol: AnyObject {
     var router: MovieDetailRouterProtocol? { get set }
     
     func viewDidLoad()
-    func setMovie(_ movie: Movie)
     func showReviews(_ movie: Movie)
     func showMovie(_ movie: Movie)
 }
@@ -44,25 +44,18 @@ protocol MovieDetailPresenterProtocol: AnyObject {
 protocol MovieDetailInteractorOutputProtocol: AnyObject {
     // INTERACTOR -> PRESENTER
     func moviesFromInteractor(_ relatedMovies: [MovieDetailSections: [Movie]])
+    func movieFromInteractor(with movie: Movie)
+    func onError(errorMessage: String)
 }
 
-typealias MovieDetailInteractorDataManagerProtocol = MovieDetailInteractorInputProtocol & MovieDetailRemoteDataManagerOutputProtocol
 protocol MovieDetailInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: MovieDetailInteractorOutputProtocol? { get set }
-    var remoteDatamanager: MovieDetailRemoteDataManagerInputProtocol? { get set }
-    
     func getRelatedMovies()
+    func getMovie()
 }
 
-protocol MovieDetailRemoteDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> REMOTEDATAMANAGER
-    var remoteRequestHandler: MovieDetailRemoteDataManagerOutputProtocol? { get set }
-    func fetchRelatedMovies()
-}
-
-protocol MovieDetailRemoteDataManagerOutputProtocol: AnyObject {
-    // REMOTEDATAMANAGER -> INTERACTOR
-    
-    func relatedMoviesFound(_ relatedMovies: [MovieDetailSections: [Movie]])
+protocol MovieDetailWorkerProtocol {
+    // WORKER -> INTERACTOR
+    func fetchMovies(typeMovieSection: MovieDetailSections, with paremeters: APIParameters) -> AnyPublisher<Movies, APIRequestError>
 }

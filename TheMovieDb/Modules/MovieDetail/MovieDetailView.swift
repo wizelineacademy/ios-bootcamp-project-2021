@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class MovieDetailView: UICollectionViewController {
+final class MovieDetailView: UICollectionViewController, DisplayError {
     
     // MARK: Properties
     var presenter: MovieDetailPresenterProtocol?
@@ -129,6 +129,10 @@ extension MovieDetailView {
 }
 
 extension MovieDetailView: MovieDetailViewProtocol {
+    func showErrorMessage(withMessage: String) {
+        self.viewDisplayError(with: withMessage)
+    }
+    
     func setMovie(_ movie: Movie) {
         self.viewModel = MovieDetailViewModel(movie: movie)
     }

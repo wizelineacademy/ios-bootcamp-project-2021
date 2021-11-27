@@ -55,7 +55,7 @@ extension ReviewsView: ReviewsViewProtocol {
     }
     
     func showErrorMessage(withMessage error: String) {
-        self.showDisplayError(with: error)
+        self.viewDisplayError(with: error)
     }
     
     func showReviews(reviewViewModel: [ReviewViewModel]) {

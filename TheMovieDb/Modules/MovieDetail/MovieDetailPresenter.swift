@@ -20,10 +20,7 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
    
     func viewDidLoad() {
         interactor?.getRelatedMovies()
-    }
-    
-    func setMovie(_ movie: Movie) {
-        view?.setMovie(movie)
+        interactor?.getMovie()
     }
     
     func showReviews(_ movie: Movie) {
@@ -38,6 +35,14 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
 }
 
 extension MovieDetailPresenter: MovieDetailInteractorOutputProtocol {
+    func onError(errorMessage: String) {
+        view?.showErrorMessage(withMessage: errorMessage)
+    }
+    
+    func movieFromInteractor(with movie: Movie) {
+        view?.setMovie(movie)
+    }
+    
     func moviesFromInteractor(_ relatedMovies: [MovieDetailSections: [Movie]]) {
         view?.showRealatedMoviews(relatedMovies)
     }
