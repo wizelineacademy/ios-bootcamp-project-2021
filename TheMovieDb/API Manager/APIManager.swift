@@ -25,7 +25,7 @@ enum Topic: String, CaseIterable {
     case nowPlaying = "/movie/now_playing"
     case topRated = "/movie/top_rated"
     case upcoming = "/movie/upcoming"
-    
+
 }
 
 struct HeadersForString {
@@ -33,17 +33,26 @@ struct HeadersForString {
     static let language = "&language=en"
     static let region = "&region=US"
     static let page = "&page=1"
+    static let languageUS = "&language=en-US"
+    static let query = "&query="
+    static let includeAdultFalse = "&include_adult=false"
 }
 
 enum Endpoints: String {
     case similar = "/movie/"
-    
+    case search = "/search/movie"
+
     static func similar(movieId: String) -> String {
         return BaseURL.baseUrl + Endpoints.similar.rawValue + movieId + "/similar?api_key=" + ApiKey.apiKey
     }
     
     static func detailOfMovie(id: String) -> String {
         return BaseURL.baseUrl + "/movie/" + id + "?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US"
+    }
+//  https://api.themoviedb.org/3/search/movie?api_key=&language=en-US&query=Dr&page=1&include_adult=false
+//https://api.themoviedb.org/3/search/movie?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US&query=mulan&page=1&include_adult=false
+    static func search(text: String) -> String {
+        return BaseURL.baseUrl + Endpoints.search.rawValue + HeadersForString.apiKey + ApiKey.apiKey + HeadersForString.languageUS + HeadersForString.query + text + HeadersForString.page + HeadersForString.includeAdultFalse
     }
     
 }
@@ -112,7 +121,10 @@ class MovieDbAPI {
     static func request<T: Decodable>(value: T.Type, request: Request, completion: @escaping (Result< T?, Error>) -> Void ) {
         let group = request.group
         group?.enter()
-        let url = URL(string: request.path)!
+        guard let url = URL(string: request.path) else {
+            completion(.failure(NetworkError.failure))
+            return
+        }
         var request = URLRequest(url: url)
         
         request.setValue(RequestFields.applicationJson, forHTTPHeaderField: RequestFields.contentType)

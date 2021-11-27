@@ -36,6 +36,7 @@ class MoviesViewController: UIViewController, MoviesHomeViewProtocol {
 extension MoviesViewController {
     
     func setUpView() {
+        self.title = "Movies" 
         collectionView.collectionViewLayout = CompotitionalLayoutCreator.createLayoutForMovies()
         dataSource.identifier = MovieCollectionViewCell.identifierToDeque
         collectionView.setup(dataSource: dataSource)

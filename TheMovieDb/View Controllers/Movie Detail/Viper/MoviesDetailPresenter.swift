@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 
 final class MoviesDetailPresenter: MoviesDetailPresenterProtocol {
-    
-    
 
     var view: MoviesDetailViewProtocol?
     var interactor: MoviesDetailInteractorInputProtocol?

@@ -18,7 +18,11 @@ class MovieCollectionViewCell: UICollectionViewCell, CellIdentifierProtocol {
     }
     
     func setInfoWith(movie: Movie) {
-        let url = URL(string: BaseURL.baseUrlForImage + movie.posterPath)
+        guard let poster = movie.posterPath else {
+            imageView.image = UIImage.moviePlaceholder
+            return
+        }
+        let url = URL(string: BaseURL.baseUrlForImage + poster)
         imageView.kf.setImage(with: url)
     }
 

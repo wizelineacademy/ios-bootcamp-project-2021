@@ -25,3 +25,7 @@ extension UICollectionView {
         self.delegate = delegate
     }
 }
+
+extension UIImage {
+    static var moviePlaceholder = UIImage(named: "moviePlaceholder")
+}

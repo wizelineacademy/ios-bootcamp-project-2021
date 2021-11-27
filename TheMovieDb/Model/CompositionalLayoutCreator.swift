@@ -69,4 +69,25 @@ struct CompotitionalLayoutCreator {
         
         return compositionalLayout
     }
+    
+    static func createLayoutForMoviesSearch() -> UICollectionViewCompositionalLayout {
+        
+        let compositionalLayout = UICollectionViewCompositionalLayout { (_, _) -> NSCollectionLayoutSection? in
+            
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalHeight(1)))
+            item.contentInsets.bottom = 1
+            item.contentInsets.trailing = 1
+
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1/3)), subitems: [item])
+            group.contentInsets.bottom = 1
+            
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .none
+            let layout = UICollectionViewCompositionalLayout(section: section)
+
+            return section
+            
+        }
+        return compositionalLayout
+    }
 }

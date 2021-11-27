@@ -48,6 +48,5 @@ protocol MoviesHomeBuilderProtocol {
 }
 
 protocol MoviesHomeAPIDataManagerProtocol {
-    var interactor: MoviesHomeInteractorOutputProtocol? { get set }
     func requestMovies<T: Decodable>(value: T.Type, request: Request, completion: @escaping (Result< T?, Error>) -> Void )
 }

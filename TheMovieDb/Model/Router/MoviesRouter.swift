@@ -20,4 +20,30 @@ final class MoviesRouter {
         return navigationController
     }
     
+    static func buildHomeTabBarViewController() -> UITabBarController? {
+        let storyboad = UIStoryboard(name: "Main", bundle: nil)
+        guard let homeTabBarViewController = storyboad.instantiateViewController(withIdentifier: "HomeTabBarViewController") as? UITabBarController else { return nil}
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .black
+        homeTabBarViewController.tabBar.standardAppearance = appearance
+
+        guard let home = MoviesHomeBuilder.buildModule() else { return nil}
+        let initialNavigationViewController = MoviesRouter.buildInitialNavigationControllerWith(rootViewController: home)
+        
+        let moviesItem = UITabBarItem(tabBarSystemItem: .featured, tag: 0)
+        initialNavigationViewController.tabBarItem = moviesItem
+        
+        guard let searchView = SearchViewBuilder.buildModule() else { return nil }
+        let navigationView = MoviesRouter.buildInitialNavigationControllerWith(rootViewController: searchView)
+        
+        let searchItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
+        navigationView.tabBarItem = searchItem
+        
+        homeTabBarViewController.viewControllers = [initialNavigationViewController, navigationView]
+        
+        return homeTabBarViewController
+        
+        }
+    
 }

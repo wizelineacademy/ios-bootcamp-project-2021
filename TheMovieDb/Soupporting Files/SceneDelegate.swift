@@ -17,10 +17,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let _ = (scene as? UIWindowScene) else { return }
        
-        if let windowScene = scene as? UIWindowScene, let home = MoviesHomeBuilder.buildModule() {
-           let initialNavigationViewController = MoviesRouter.buildInitialNavigationControllerWith(rootViewController: home)
+        if let windowScene = scene as? UIWindowScene, let tabHome = MoviesRouter.buildHomeTabBarViewController() {
                 let window = UIWindow(windowScene: windowScene)
-                window.rootViewController = initialNavigationViewController
+                window.rootViewController = tabHome
                 self.window = window
                 window.makeKeyAndVisible()
             }

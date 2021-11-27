@@ -18,6 +18,6 @@ struct MovieDetail: MovieDetailProtocol, Decodable {
     var popularity: Double
     var title: String
     var id: Int
-    var posterPath: String
+    var posterPath: String?
     var overview: String
 }
