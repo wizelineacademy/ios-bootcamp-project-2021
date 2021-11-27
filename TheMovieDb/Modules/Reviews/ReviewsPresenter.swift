@@ -31,6 +31,14 @@ extension ReviewsPresenter: ReviewsPresenterProtocol {
 }
 
 extension ReviewsPresenter: ReviewsInteractorOutputProtocol {
+    func noReviews(with message: String) {
+        view?.showMessageNoReviews(with: message)
+    }
+    
+    func onError(errorMessage: String) {
+        view?.showErrorMessage(withMessage: errorMessage)
+    }
+    
     func reviewsFromInteractor(reviewViewModel: [ReviewViewModel]) {
         view?.showReviews(reviewViewModel: reviewViewModel)
     }

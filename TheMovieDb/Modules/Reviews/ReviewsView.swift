@@ -9,11 +9,16 @@
 import Foundation
 import UIKit
 
-final class ReviewsView: UICollectionViewController {
+final class ReviewsView: UICollectionViewController, DisplayError {
 
     // MARK: Properties
     var presenter: ReviewsPresenterProtocol?
     private var viewModel = [ReviewViewModel]() // reviews = [Review]()
+    private var noReviewsLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }()
     
     // MARK: - LifeCycle
     init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
@@ -37,15 +42,25 @@ final class ReviewsView: UICollectionViewController {
         self.collectionView!.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reusableIdentifier )
         navigationItem.title = "Reviews"
         collectionView.backgroundColor = .systemBackground
+
     }
 }
 
 extension ReviewsView: ReviewsViewProtocol {
+    func showMessageNoReviews(with message: String) {
+        noReviewsLabel.text = message
+        collectionView.addSubview(noReviewsLabel)
+        noReviewsLabel.centerX(inView: collectionView)
+        noReviewsLabel.centerY(inView: collectionView)
+    }
+    
+    func showErrorMessage(withMessage error: String) {
+        self.showDisplayError(with: error)
+    }
+    
     func showReviews(reviewViewModel: [ReviewViewModel]) {
         self.viewModel = reviewViewModel
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
+        self.collectionView.reloadData()
     }
     
 }

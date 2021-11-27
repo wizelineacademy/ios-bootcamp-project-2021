@@ -10,10 +10,9 @@ import UIKit.UIViewController
 enum ReviewsBuilder: ReviewsBuilderProtocol {
     static func createModule(movie: Movie) -> UIViewController {
         let view = ReviewsView()
-        let service = APIService()
+        let reviewsWorker: ReviewsWorkerProtocol = ReviewsWorker()
         let presenter: ReviewsPresenterInteractorProtocol = ReviewsPresenter()
-        let interactor: ReviewsInteractorDataManagerProtocol = ReviewsInteractor(movie: movie)
-        let remoteDataManager: ReviewsRemoteDataManagerInputProtocol = ReviewsRemoteDataManager(service: service)
+        let interactor: ReviewsInteractorInputProtocol = ReviewsInteractor(movie: movie, reviewWorker: reviewsWorker)
         let router: ReviewsRouterProtocol = ReviewsRouter()
         
         view.presenter = presenter
@@ -23,9 +22,7 @@ enum ReviewsBuilder: ReviewsBuilderProtocol {
         presenter.interactor = interactor
         //
         interactor.presenter = presenter
-        interactor.remoteDatamanager = remoteDataManager
-        remoteDataManager.remoteRequestHandler = interactor
-        
+
         return view
     }
 }
