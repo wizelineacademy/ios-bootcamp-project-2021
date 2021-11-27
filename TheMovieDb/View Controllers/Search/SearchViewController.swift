@@ -11,7 +11,8 @@ class SearchViewController: UIViewController, SearchViewProtocol {
    
     var presenter: SearchViewPresenterProtocol?
     var dataSource = SearchDataSource()
-
+    var delegate = SearchDelegate()
+    
     @IBOutlet weak var collectionView: UICollectionView!
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -26,9 +27,13 @@ class SearchViewController: UIViewController, SearchViewProtocol {
         self.title = "Search"
         collectionView.collectionViewLayout = CompotitionalLayoutCreator.createLayoutForMoviesSearch()
         collectionView.setup(dataSource: dataSource)
+        collectionView.setup(delegate: delegate)
         dataSource.identifier = MovieCollectionViewCell.identifierToDeque
         collectionView.registerNibForCellWith(name: MovieCollectionViewCell.identifierToDeque)
         collectionView.reloadData()
+        delegate.didSelectMovie = { movie in
+            self.presenter?.didSelectMovie(movie: movie)
+        }
     }
     
     func setUpSearchController() {
@@ -46,6 +51,7 @@ class SearchViewController: UIViewController, SearchViewProtocol {
     
     func reloadViewWithMovies(movies: MovieList) {
         self.dataSource.movieList = movies
+        self.delegate.movieList = movies
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }

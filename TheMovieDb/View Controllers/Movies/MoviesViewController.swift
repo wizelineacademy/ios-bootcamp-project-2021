@@ -10,7 +10,7 @@ import UIKit
 class MoviesViewController: UIViewController, MoviesHomeViewProtocol {
     
     @IBOutlet weak var collectionView: UICollectionView!
-    var spinner = UIActivityIndicatorView(style: .whiteLarge)
+    var spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
 
     var dataSource = MoviesDataSource()
     var delegate = MoviesDelegate()

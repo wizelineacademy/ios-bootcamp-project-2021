@@ -83,7 +83,6 @@ struct CompotitionalLayoutCreator {
             
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .none
-            let layout = UICollectionViewCompositionalLayout(section: section)
 
             return section
             

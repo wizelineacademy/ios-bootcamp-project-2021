@@ -19,6 +19,7 @@ protocol SearchViewPresenterProtocol {
     var router: SearchViewRouterProtocol? { get set }
     func viewDidLoad()
     func search(text: String)
+    func didSelectMovie(movie: MovieProtocol)
     
 }
 
@@ -39,7 +40,7 @@ protocol SearchViewInteractorOutputProtocol {
 }
 
 protocol SearchViewRouterProtocol {
-    
+    func showMovieDetailFrom(view: UIViewController, movie: MovieProtocol)
 }
 
 protocol SearchViewBuilderProtocol {

@@ -16,7 +16,9 @@ final class SearchViewBuilder: SearchViewBuilderProtocol {
         let presenter = SearchViewPresenter()
         let interactor = SearchViewInteractor()
         let apiManager = SearchViewAPIDataManager()
+        let router = SearchViewRouter()
         presenter.view = searchViewController
+        presenter.router = router
         presenter.interactor = interactor
         interactor.presenter = presenter
         interactor.apiDataManager = apiManager
