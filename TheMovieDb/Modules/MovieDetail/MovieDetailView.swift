@@ -25,8 +25,7 @@ final class MovieDetailView: UICollectionViewController, DisplayError {
         
     }
     
-    init() {
-        let layout = UICollectionViewFlowLayout()
+    init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         layout.itemSize = CGSize(width: 100, height: 140)
         super.init(collectionViewLayout: layout)
