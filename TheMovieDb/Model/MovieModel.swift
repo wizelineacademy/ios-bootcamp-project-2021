@@ -9,10 +9,10 @@ import Foundation
 
 struct MovieModel {
     
-    let movieClient: MovieClient
+    let movieManager: MovieAPIManager
     
-    init(movieClient: MovieClient) {
-        self.movieClient = movieClient
+    init(movieManager: MovieAPIManager) {
+        self.movieManager = movieManager
     }
     
     func getList(movieFeed: MovieFeed, completion: @escaping (([MovieViewModel]) -> Void)) {
@@ -20,14 +20,14 @@ struct MovieModel {
         let group = DispatchGroup()
         
         group.enter()
-        movieClient.getConfiguration { result in
+        movieManager.getFeed(from: MovieFeed.configuration) { (result: Result<ConfigurationWelcome?, APIError>) in
             switch result {
             case .success(let configuration):
                 guard let configuration = configuration else {
                     group.leave()
                     return
                 }
-                movieClient.getFeed(from: movieFeed, searchId: nil, params: [:]) { result in
+                movieManager.getFeed(from: movieFeed) { (result: Result<MovieListResults?, APIError>) in
                     switch result {
                     case .success(let movieListResults):
                         guard let movieListResults = movieListResults else {

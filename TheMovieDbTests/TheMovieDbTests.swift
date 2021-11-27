@@ -9,25 +9,64 @@ import XCTest
 @testable import TheMovieDb
 
 class TheMovieDbTests: XCTestCase {
+    
+    var mockAPIClient: MockAPIClient!
+    var movieModel: MovieModel!
+    var originalNetworkData: [MovieViewModel]!
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func setUp() {
+        mockAPIClient = MockAPIClient()
+        let movieApiManager = MovieAPIManager(client: mockAPIClient)
+        movieModel = MovieModel(movieManager: movieApiManager)
+        
+        setOriginalData()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func setOriginalData() {
+        do {
+            var fileName = "Configuration_example"
+            let configurationExample: ConfigurationWelcome = try FileParser.createMockResponse(filename: fileName)
+            fileName = "Trending_example"
+            let trendingExample: MovieListResults = try FileParser.createMockResponse(filename: fileName)
+            originalNetworkData = trendingExample.results?.map({
+                return MovieViewModel(movie: $0, configuration: configurationExample.image)
+            }) ?? []
+        } catch {
+            print(error.localizedDescription)
         }
     }
-
+    
+    func testGetListSuccess() {
+        // Create an expectation
+        let expectation = self.expectation(description: "MovieList")
+        var movieList: [MovieViewModel]?
+        
+        movieModel.getList(movieFeed: MovieFeed.trending) {
+            movieList = $0
+            
+            // Fullfil the expectation to let the test runner know that it's OK to proceed
+            expectation.fulfill()
+        }
+        // Wait for the expectation to be fullfilled, or time out after 5 seconds.
+        // This is where the test runner will pause
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertTrue(!(movieList?.isEmpty ?? true), "List shouldn't be empty")
+        
+        XCTAssertEqual(movieList?.count, originalNetworkData.count, "Data should be the same")
+    }
+    
+    func testGetListError() {
+        mockAPIClient.error = .responseUnsuccessful
+        
+        let expectation = self.expectation(description: "MovieList")
+        var movieList: [MovieViewModel]?
+        movieModel.getList(movieFeed: MovieFeed.trending) {
+            movieList = $0
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 5, handler: nil)
+        
+        XCTAssertTrue(movieList?.isEmpty ?? true, "List should be empty")
+    }
 }
