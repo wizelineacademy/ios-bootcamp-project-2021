@@ -6,41 +6,53 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct ReviewRowView: View {
-    let authorName: String
-    let authorImage: Image
-    let date: Date
-    let content: String
+    let review: MovieReviewViewModel
+    @State private var viewMore = false
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                authorImage
+                KFImage(review.getAvatarURL())
                     .resizable()
                     .frame(width: 30, height: 30)
                     .scaledToFit()
                     .layoutPriority(3)
-                Text(authorName)
+                Text(review.userName)
                     .font(Font.system(.title3, design: .rounded))
                     .layoutPriority(2)
                 Spacer()
-                Text(date.description)
+                Text(review.createdAt)
                     .foregroundColor(.secondary)
                     .font(.caption)
                     .layoutPriority(1)
             }
-            Text(content)
+            Text(review.content)
+                .font(.callout)
+                .foregroundColor(.secondary)
+                .lineLimit(viewMore ? nil : Constants.reviewNumberOfLines)
+            Button(action: toggleViewMore, label: {
+                if viewMore {
+                    Label("View Less", systemImage: "arrowtriangle.up.square")
+                } else {
+                    Label("View More", systemImage: "arrowtriangle.down.square")
+                }
+            })
+                .font(.callout)
+        }
+    }
+    
+    func toggleViewMore() {
+        withAnimation {
+            self.viewMore.toggle()
         }
     }
 }
 
 struct ReviewRowView_Previews: PreviewProvider {
-    static let authorName: String = "Misael Very long long name"
-    static let authorImage: Image = Image(systemName: "paperplane.fill")
-    static let date = Date()
-    static let content = "Great review, I would like to be more specific and with more drama, but that's ok for me, at least now. Thanks to the director"
     static var previews: some View {
-        ReviewRowView(authorName: authorName, authorImage: authorImage, date: date, content: content)
+        ReviewRowView(review: MovieReviewViewModel.preview)
     }
 }

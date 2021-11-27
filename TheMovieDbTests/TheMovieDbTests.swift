@@ -29,7 +29,7 @@ class TheMovieDbTests: XCTestCase {
             var fileName = "Configuration_example"
             let configurationExample: ConfigurationWelcome = try FileParser.createMockResponse(filename: fileName)
             fileName = "Trending_example"
-            let trendingExample: MovieListResults = try FileParser.createMockResponse(filename: fileName)
+            let trendingExample: MovieListResult = try FileParser.createMockResponse(filename: fileName)
             originalNetworkData = trendingExample.results?.map({
                 return MovieViewModel(movie: $0, configuration: configurationExample.image)
             }) ?? []
