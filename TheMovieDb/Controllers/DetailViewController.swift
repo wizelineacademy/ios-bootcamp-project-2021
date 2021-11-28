@@ -6,38 +6,33 @@
 //
 
 import UIKit
-import Kingfisher
+import SwiftUI
 
 class DetailViewController: UIViewController {
     
-    var MovieData: Movie?
+    var movieData: Movie?
+    let swiftUI = DetailView()
     
-    @IBOutlet weak var detailTitleLabel: UILabel!
-    @IBOutlet weak var detailRatingLabel: UILabel!
-    @IBOutlet weak var detailDateLabel: UILabel!
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
-    @IBOutlet weak var detailMovieImage: UIImageView!
-    
+    func buildDetail () -> DetailView{
+        var swiftUI = DetailView()
+        swiftUI.movieData = movieData
+        return swiftUI
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //print(MovieData)
+        let contentView = UIHostingController(rootView: buildDetail())
         
-        detailTitleLabel.text = MovieData?.originalTitle
-        detailTitleLabel.adjustsFontSizeToFitWidth = true
-
-        detailDateLabel.text = MovieData?.releaseDate?.readableDate()
-        guard let average = MovieData?.voteAverage else { return }
-        detailRatingLabel.text = "\(average) " + showStar(value: Int(average))
+        //contentView.movieData = movieData
+        addChild(contentView)
+        view.addSubview(contentView.view)
+        contentView.view.translatesAutoresizingMaskIntoConstraints = false
+        contentView.view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        contentView.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        contentView.view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        contentView.view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         
-        detailDescriptionLabel.text = MovieData?.overview
-        guard let backdropPath = MovieData?.backdropPath else { return }
-        let urlString = "\(Constants.URLS.imageURL)\(backdropPath)"
-        
-        if let imageURL = URL(string: urlString){
-            detailMovieImage.kf.setImage(with: imageURL)
-        }
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7A661BCF275309D000C355D1 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A661BCE275309D000C355D1 /* DetailView.swift */; };
 		7AA7CC97275078C500DBE123 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AA7CC96275078C500DBE123 /* Extensions.swift */; };
 		7AB3C42127389A5B0032FB04 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AB3C41F27389A5B0032FB04 /* MovieCell.swift */; };
 		7AB3C42227389A5B0032FB04 /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7AB3C42027389A5B0032FB04 /* MovieCell.xib */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7A661BCE275309D000C355D1 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		7AA7CC96275078C500DBE123 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7AB3C41F27389A5B0032FB04 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		7AB3C42027389A5B0032FB04 /* MovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				837B4EAD258178B6003DFC67 /* Main.storyboard */,
 				7AB3C41F27389A5B0032FB04 /* MovieCell.swift */,
 				7AB3C42027389A5B0032FB04 /* MovieCell.xib */,
+				7A661BCE275309D000C355D1 /* DetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				7ACE59D927475C2D0053EBC4 /* Result.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
 				7ACE59B62741FAED0053EBC4 /* Utils.swift in Sources */,
+				7A661BCF275309D000C355D1 /* DetailView.swift in Sources */,
 				7AEE164D272F9CD700F87606 /* DetailViewController.swift in Sources */,
 				7AB3C42B2738A81A0032FB04 /* MainViewController.swift in Sources */,
 			);

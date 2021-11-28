@@ -62,7 +62,7 @@ extension MainViewController: UITableViewDelegate {
         if segue.identifier == Constants.mainSegueIdentifier {
             let destinationVC = segue.destination as! DetailViewController //as is the
             guard let indexPath = mainTableView.indexPathForSelectedRow else { return }
-            destinationVC.MovieData = mainViewModel.cellForRowAt(indexPath: indexPath)
+            destinationVC.movieData = mainViewModel.cellForRowAt(indexPath: indexPath)
             
         }
     }

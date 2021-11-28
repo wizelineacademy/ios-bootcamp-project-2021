@@ -63,7 +63,7 @@ extension SearchViewController: UITableViewDelegate{
         if segue.identifier == Constants.searchSegueIdentifier {
             let destinationVC = segue.destination as! DetailViewController //as is the
             guard let indexPath = searchTableView.indexPathForSelectedRow else { return }
-            destinationVC.MovieData = searchViewModel.cellForRowAt(indexPath: indexPath)
+            destinationVC.movieData = searchViewModel.cellForRowAt(indexPath: indexPath)
         }
     }
 }
