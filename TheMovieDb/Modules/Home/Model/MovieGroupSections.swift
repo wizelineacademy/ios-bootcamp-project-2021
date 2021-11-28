@@ -16,11 +16,11 @@ enum MovieGroupSections: Int, CaseIterable {
     
     var description: String {
         switch self {
-        case .popular: return "Popular"
-        case .trending: return "Trending"
-        case .playingNow: return "Playing now"
-        case .topRated: return "Top rated"
-        case .upcoming: return "Upcoming"
+        case .popular: return MoviesSectionConst.popular
+        case .trending: return MoviesSectionConst.trending
+        case .playingNow: return MoviesSectionConst.playingNow
+        case .topRated: return MoviesSectionConst.topRated
+        case .upcoming: return MoviesSectionConst.upcoming
         }
     }
     

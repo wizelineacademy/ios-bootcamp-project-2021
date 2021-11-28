@@ -22,17 +22,17 @@ enum APIRequestError: LocalizedError {
     
     var localizedDescription: String {
         switch self {
-        case .invalidRequest: return "Invalid Request"
-        case .badRequest: return "Bad Request"
-        case .unauthorized: return "Unauthorized"
-        case .forbidden: return "No Permission"
-        case .notFound: return "Page not exist"
-        case .error4xx: return "Error 400"
-        case .serverError: return "The service is not working"
-        case .error5xx: return "The service is not available"
-        case .decodingError: return "Error in decoding data"
-        case .urlSessionFailed: return "Error on URL"
-        case .unknownError: return "Unknown Error"
+        case .invalidRequest: return APIErrorConst.invalidRequest
+        case .badRequest: return APIErrorConst.badRequest
+        case .unauthorized: return APIErrorConst.unauthorized
+        case .forbidden: return APIErrorConst.forbidden
+        case .notFound: return APIErrorConst.notFound
+        case .error4xx: return APIErrorConst.error4xx
+        case .serverError: return APIErrorConst.serverError
+        case .error5xx: return APIErrorConst.error5xx
+        case .decodingError: return APIErrorConst.decodingError
+        case .urlSessionFailed: return APIErrorConst.urlSessionFailed
+        case .unknownError: return APIErrorConst.unknownError
         }
     }
 }

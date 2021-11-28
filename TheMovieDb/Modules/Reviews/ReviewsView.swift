@@ -35,7 +35,7 @@ final class ReviewsView: UICollectionViewController, DisplayError {
     // MARK: - Helpers
     private func configureUI() {
         self.collectionView!.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reusableIdentifier )
-        navigationItem.title = "Reviews"
+        navigationItem.title = InterfaceConst.reviews
         collectionView.backgroundColor = .systemBackground
 
     }
