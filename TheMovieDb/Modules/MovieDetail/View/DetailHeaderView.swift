@@ -37,14 +37,14 @@ final class DetailHeaderView: UICollectionReusableView {
     
     private let headerLabel: UILabel = {
         let label = UILabel()
-        label.text = "Recommendations"
+        label.text = MoviesSectionConst.recommendations
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
     
     private let reviewsButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("Reviews", for: .normal)
+        button.setTitle(InterfaceConst.reviews, for: .normal)
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 10
         button.backgroundColor = .systemBlue

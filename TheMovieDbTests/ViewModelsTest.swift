@@ -49,9 +49,9 @@ class ViewModelsTest: XCTestCase {
         let url = URL(string: MovieConst.imageCDN + (viewModel.movie.posterPath ?? (viewModel.movie.backdropPath ?? "")))
         XCTAssertEqual(viewModel.imageUrl, url, "Movie url is not the same in random")
         XCTAssertEqual(viewModel.overview, viewModel.movie.overview, "Overview is not the same")
-        XCTAssertEqual(viewModel.date, "   \(viewModel.movie.releaseDate ?? "")   ", "Date is not the same")
-        XCTAssertEqual(viewModel.popularity, "   \(Int(viewModel.movie.popularity))%   ", "Erro in popularity")
-        XCTAssertEqual(viewModel.votes, "   Votes: \(viewModel.movie.voteCount)   ", "Votes is not equal")
+        XCTAssertEqual(viewModel.date, "   🗓 \(viewModel.movie.releaseDate ?? "")   ", "Date is not the same")
+        XCTAssertEqual(viewModel.popularity, "   🌟 \(Int(viewModel.movie.popularity))%   ", "Erro in popularity")
+        XCTAssertEqual(viewModel.votes, "   👍 \(viewModel.movie.voteCount)   ", "Votes is not equal")
 
         let dummyMovieSpecific = MovieDummy().getSpecificMovie()
         let viewModelSpecific = MovieDetailViewModel(movie: dummyMovieSpecific)

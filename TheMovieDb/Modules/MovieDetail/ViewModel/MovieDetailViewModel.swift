@@ -25,15 +25,15 @@ struct MovieDetailViewModel {
     }
     
     var date: String {
-        return "   \(movie.releaseDate ?? "")   "
+        return "   🗓 \(movie.releaseDate ?? "")   "
     }
     
     var popularity: String {
-        return "   \(Int(movie.popularity))%   "
+        return "   🌟 \(Int(movie.popularity))%   "
     }
     
     var votes: String {
-        return "   Votes: \(movie.voteCount)   "
+        return "   👍 \(movie.voteCount)   "
     }
 
 }

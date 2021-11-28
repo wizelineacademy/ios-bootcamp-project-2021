@@ -44,7 +44,7 @@ final class HomeView: UIViewController, DisplayError {
     }
     
     private func configureUI() {
-        navigationItem.title = "Movies"
+        navigationItem.title = InterfaceConst.moviesTitle
         view.backgroundColor = .systemBackground
     }
     

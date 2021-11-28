@@ -34,8 +34,7 @@ final class ReviewsInteractor: ReviewsInteractorInputProtocol {
                 if viewModel.count > 0 {
                     self.presenter?.reviewsFromInteractor(reviewViewModel: viewModel)
                 } else {
-                    let message = "This movie has no reviews yet 🎬"
-                    self.presenter?.noReviews(with: message)
+                    self.presenter?.noReviews(with: InterfaceConst.noReviews)
                 }
                
             }).store(in: &cancellable)
