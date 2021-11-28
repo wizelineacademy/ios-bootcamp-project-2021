@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class SearchingView: UICollectionViewController {
+final class SearchingView: UICollectionViewController, DisplayError {
 
     // MARK: Properties
     var presenter: SearchingPresenterProtocol?
@@ -125,11 +125,21 @@ extension SearchingView: UISearchBarDelegate {
 }
 
 extension SearchingView: SearchingViewProtocol {
+    func removeMessageLabel() {
+        self.removeMessageOnViewLabel()
+    }
+    
+    func showMessageNoSearchesFound(with message: String) {
+        self.showMessageOnViewLabel(onView: view, message: message)
+    }
+    
+    func showErrorMessage(withMessage: String) {
+        self.viewDisplayError(with: withMessage)
+    }
+    
     func showMoviesResults(_ moviesFound: [MovieViewModel]) {
         viewModel = moviesFound
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
+        self.collectionView.reloadData()
     }
     
     func showSpinnerView() {

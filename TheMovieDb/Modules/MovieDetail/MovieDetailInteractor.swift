@@ -14,7 +14,7 @@ class MovieDetailInteractor: MovieDetailInteractorInputProtocol {
     // MARK: Properties
     weak var presenter: MovieDetailInteractorOutputProtocol?
     private var cancellable: AnyCancellable?
-    var relatedMovies: [MovieDetailSections: [Movie]] = [:]
+    private var relatedMovies: [MovieDetailSections: [Movie]] = [:]
     private var moviesWorker: MoviesWorkerProtocol!
     private var movie: Movie!
     
