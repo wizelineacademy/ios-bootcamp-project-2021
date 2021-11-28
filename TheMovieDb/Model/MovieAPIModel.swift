@@ -1,13 +1,15 @@
 //
-//  MovieModel.swift
+//  MovieAPIModel.swift
 //  TheMovieDb
 //
 //  Created by Misael Chávez on 18/11/21.
 //
 
 import Foundation
+import os
 
-struct MovieModel {
+struct MovieAPIModel {
+    private static let logger = Logger(subsystem: Constants.subsystemName, category: "MovieAPIModel")
     
     let movieManager: MovieAPIManager
     
@@ -27,25 +29,25 @@ struct MovieModel {
                     group.leave()
                     return
                 }
-                movieManager.getFeed(from: movieFeed) { (result: Result<MovieListResults?, APIError>) in
+                movieManager.getFeed(from: movieFeed) { (result: Result<MovieListResult?, APIError>) in
                     switch result {
-                    case .success(let movieListResults):
-                        guard let movieListResults = movieListResults else {
+                    case .success(let movieListResult):
+                        guard let movieListResult = movieListResult else {
                             group.leave()
                             return
                         }
-                        let mappedValues = movieListResults.results?.map({
+                        let mappedValues = movieListResult.results?.map({
                             return MovieViewModel(movie: $0, configuration: configuration.image)
                         }) ?? []
                         movies.append(contentsOf: mappedValues)
                         group.leave()
                     case .failure(let error):
-                        print("The error fetchData \(error.localizedDescription)")
+                        Self.logger.error("The error fetchData \(error.localizedDescription)")
                         group.leave()
                     }
                 }
             case .failure(let error):
-                print("The error fetchConfiguration \(error.localizedDescription)")
+                Self.logger.error("The error fetchConfiguration \(error.localizedDescription)")
                 group.leave()
             }
         }

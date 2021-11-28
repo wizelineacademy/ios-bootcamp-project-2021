@@ -8,6 +8,8 @@
 import Foundation
 
 class MovieAPIClient: APIClient {
+    static let shared = MovieAPIClient()
+    
     let session: URLSession
     
     init(configuration: URLSessionConfiguration) {

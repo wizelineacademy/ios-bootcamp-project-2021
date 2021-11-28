@@ -6,18 +6,20 @@
 //
 
 import XCTest
+import os
 @testable import TheMovieDb
 
 class TheMovieDbTests: XCTestCase {
+    private static let logger = Logger(subsystem: Constants.subsystemName, category: "TheMovieDbTests")
     
     var mockAPIClient: MockAPIClient!
-    var movieModel: MovieModel!
+    var movieModel: MovieAPIModel!
     var originalNetworkData: [MovieViewModel]!
 
     override func setUp() {
         mockAPIClient = MockAPIClient()
         let movieApiManager = MovieAPIManager(client: mockAPIClient)
-        movieModel = MovieModel(movieManager: movieApiManager)
+        movieModel = MovieAPIModel(movieManager: movieApiManager)
         
         setOriginalData()
     }
@@ -27,12 +29,12 @@ class TheMovieDbTests: XCTestCase {
             var fileName = "Configuration_example"
             let configurationExample: ConfigurationWelcome = try FileParser.createMockResponse(filename: fileName)
             fileName = "Trending_example"
-            let trendingExample: MovieListResults = try FileParser.createMockResponse(filename: fileName)
+            let trendingExample: MovieListResult = try FileParser.createMockResponse(filename: fileName)
             originalNetworkData = trendingExample.results?.map({
                 return MovieViewModel(movie: $0, configuration: configurationExample.image)
             }) ?? []
         } catch {
-            print(error.localizedDescription)
+            Self.logger.error("\(error.localizedDescription)")
         }
     }
     

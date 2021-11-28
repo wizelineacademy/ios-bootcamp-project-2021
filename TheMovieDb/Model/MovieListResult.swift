@@ -1,12 +1,18 @@
 //
-//  MovieItem.swift
+//  MovieListResult.swift
 //  TheMovieDb
 //
-//  Created by Misael Chávez on 28/10/21.
+//  Created by Misael Chávez on 31/10/21.
 //
 
 import Foundation
 
+// MARK: - MovieListResult
+struct MovieListResult: Decodable {
+    let results: [MovieItem]?
+}
+
+// MARK: - MovieItem
 struct MovieItem: Decodable {
     let id: Int?
     let originalTitle: String?
@@ -23,7 +29,7 @@ struct MovieItem: Decodable {
     let originalLanguage: String?
     let popularity: Double?
     let mediaType: String?
-    
+
     enum CodingKeys: String, CodingKey {
         case originalTitle = "original_title"
         case posterPath = "poster_path"

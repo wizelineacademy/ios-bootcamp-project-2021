@@ -16,4 +16,7 @@ struct Constants {
     
     // MARK: - OS
     static let subsystemName = "TheMovieDB"
+    
+    // MARK: - Views
+    static let reviewNumberOfLines = 3
 }

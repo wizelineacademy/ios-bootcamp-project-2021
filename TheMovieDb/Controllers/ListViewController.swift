@@ -28,8 +28,8 @@ class ListViewController: UIViewController {
         guard let tabIndex = self.tabBarController?.selectedIndex, let movieFeed = MovieFeed(rawValue: tabIndex) else {
             return
         }
-        let movieAPIManager = MovieAPIManager(client: MovieAPIClient())
-        let model = MovieModel(movieManager: movieAPIManager)
+        let movieAPIManager = MovieAPIManager(client: MovieAPIClient.shared)
+        let model = MovieAPIModel(movieManager: movieAPIManager)
         listViewModel = ListViewModel(movieModel: model, movieFeed: movieFeed, delegate: self)
         listView = ListView(viewModel: listViewModel, navigationDelegate: self)
         
