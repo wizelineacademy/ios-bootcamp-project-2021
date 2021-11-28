@@ -8,21 +8,21 @@
 import Foundation
 import OSLog
 
-class HomeViewPresenter {
-    
-    let service: MovieFeedRepository
+final class HomeViewPresenter {
+
+    private let service: MovieFeedRepository
     
     weak var delegate: HomeViewPresenterDelegate?
     
-    var movies = [Movie]()
+    private var movies = [Movie]()
     
-    var isLoading = false {
+    private var isLoading = false {
         didSet {
             isLoading ? delegate?.didStartLoading() : delegate?.didFinishLoading()
         }
     }
     
-    var loadedPages: Int = .zero
+    private var loadedPages: Int = .zero
     
     var isSearching = false {
         didSet {
