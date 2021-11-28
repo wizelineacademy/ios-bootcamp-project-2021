@@ -24,6 +24,10 @@ final class HomeViewPresenter {
     
     private var loadedPages: Int = .zero
     
+    private var nextPage: Int {
+        loadedPages + 1
+    }
+    
     var isSearching = false {
         didSet {
             currentFeed = isSearching ? .search : .trending
@@ -51,7 +55,7 @@ final class HomeViewPresenter {
         isLoading = true
         service.getMovieFeed(
             on: currentFeed,
-            page: loadedPages + 1,
+            page: nextPage,
             query: search
         ) { [weak self] result in
             switch result {
