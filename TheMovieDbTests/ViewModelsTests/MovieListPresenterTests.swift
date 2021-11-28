@@ -23,6 +23,19 @@ class MovieListPresenterTests: XCTestCase {
         presenter = nil
     }
     
+    func testMovieOptionDidSet() {
+        let expectation = XCTestExpectation(description: "All options tested")
+        expectation.expectedFulfillmentCount = 5
+        MoviesOptions.allCases.forEach { option in
+            presenter?.movieListOption = option
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+        XCTAssertTrue(mockView.updateMoviesCalled, "Option was not setted")
+        XCTAssertTrue(mockView.setTitleCalled, "Set title was not called")
+    }
+    
     func testShowError() {
         facade.failure = true
         presenter?.listMovies()

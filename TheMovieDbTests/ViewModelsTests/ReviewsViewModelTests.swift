@@ -12,17 +12,18 @@ import Combine
 class ReviewsViewModelTests: XCTestCase {
 
     var viewModel: ReviewsViewModel?
+    var facade = MockService()
     var subscriptions = Set<AnyCancellable>()
     
     override func setUp() {
-        viewModel = ReviewsViewModel(id: 0, facade: MockService())
+        viewModel = ReviewsViewModel(id: 0, facade: facade)
     }
     
     override func tearDown() {
         viewModel = nil
     }
     
-    func testReviews() {
+    func testReviewsSuccess() {
         let expectedReviews = [ReviewsDetails(author: "Karla", content: "Excelent"),
                                ReviewsDetails(author: "Daniela", content: "Bad movie")]
         var resultReviews = [ReviewsDetails]()
