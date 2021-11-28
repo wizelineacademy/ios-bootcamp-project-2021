@@ -12,15 +12,21 @@ extension UICollectionView {
     
     func reuse<T: UICollectionViewCell>(identifier: String,
                                         for indexPath: IndexPath) -> T {
-        return dequeueReusableCell(withReuseIdentifier: identifier,
-                                   for: indexPath) as! T
+        if let cell = dequeueReusableCell(withReuseIdentifier: identifier,
+                                          for: indexPath) as? T {
+            return cell
+        }
+        fatalError("cell isn't valid")
     }
     
     func reuse<T: UICollectionReusableView>(reusableType: String,
                                             identifier: String,
                                             for indexPath: IndexPath) -> T {
-        return dequeueReusableSupplementaryView(ofKind: reusableType,
-                                                withReuseIdentifier: identifier,
-                                                for: indexPath) as! T
+        if let reusableView = dequeueReusableSupplementaryView(ofKind: reusableType,
+                                                               withReuseIdentifier: identifier,
+                                                               for: indexPath) as? T {
+            return reusableView
+        }
+        fatalError("reusableView isn't valid")
     }
 }
