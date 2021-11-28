@@ -28,7 +28,7 @@ final class ReviewsInteractor: ReviewsInteractorInputProtocol {
                 if case let .failure(error) = completion {
                     self.presenter?.onError(errorMessage: error.localizedDescription)
                 }
-            }, receiveValue: { (reviewsData: Reviews) in
+            }, receiveValue: { [unowned self] (reviewsData: Reviews) in
                 let reviews = reviewsData.reviews
                 let viewModel = reviews.map { ReviewViewModel(review: $0) }
                 if viewModel.count > 0 {

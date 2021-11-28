@@ -33,7 +33,7 @@ class MovieDetailInteractor: MovieDetailInteractorInputProtocol {
                 if case let .failure(error) = completion {
                     self.presenter?.onError(errorMessage: error.localizedDescription)
                 }
-            }, receiveValue: { (recommendations: Movies, similar: Movies) in
+            }, receiveValue: { [unowned self] (recommendations: Movies, similar: Movies) in
                 self.relatedMovies[.recommendations] = recommendations.movies
                 self.relatedMovies[.similar] = similar.movies
                 self.presenter?.moviesFromInteractor(self.relatedMovies)
