@@ -60,17 +60,18 @@ final class HomeViewPresenter {
         ) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.loadedPages = response.page
-                self?.movies.append(contentsOf: response.results)
-                guard let movies = self?.movies else {
-                    return
-                }
-                self?.delegate?.didUpdateMovies(movies)
+                self?.handleFeedResponse(response)
             case .failure:
                 os_log("Network request error", log: OSLog.networkRequest, type: .debug)
             }
             self?.isLoading = false
         }
+    }
+    
+    func handleFeedResponse(_ response: MovieDBAPIListResponse<Movie>) {
+        loadedPages = response.page
+        movies.append(contentsOf: response.results)
+        delegate?.didUpdateMovies(movies)
     }
     
     func resetFeed() {
