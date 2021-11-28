@@ -34,7 +34,6 @@ protocol SearchingPresenterProtocol: AnyObject {
     var interactor: SearchingInteractorInputProtocol? { get set }
     var router: SearchingRouterProtocol? { get set }
     
-    func viewDidLoad()
     func searchMovies(_ searchText: String)
     func showMovie(_ movie: Movie)
 }

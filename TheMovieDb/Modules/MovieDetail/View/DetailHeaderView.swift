@@ -67,13 +67,13 @@ final class DetailHeaderView: UICollectionReusableView {
     
     // MARK: - Helpers
     private func configureUI() {
-        
+        let height = frame.width * 0.6
         addSubview(headerLabel)
         headerLabel.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
         
         addSubview(imageBackground)
         imageBackground.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
-        imageBackground.setHeight(200)
+        imageBackground.setHeight(height)
         
         stack = UIStackView(arrangedSubviews: [dateLabel, votesLabel, popularityLabel])
         addSubview(stack)

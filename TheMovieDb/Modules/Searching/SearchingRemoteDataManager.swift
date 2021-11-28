@@ -7,10 +7,12 @@
 //
 
 import Foundation
+import Combine
 
 final class SearchingRemoteDataManager: SearchingRemoteDataManagerInputProtocol {
     
     var remoteRequestHandler: SearchingRemoteDataManagerOutputProtocol?
+    private var cancellable = Set<AnyCancellable>()
     private let service: APIMoviesProtocol
     
     init(service: APIMoviesProtocol) {
@@ -19,14 +21,14 @@ final class SearchingRemoteDataManager: SearchingRemoteDataManagerInputProtocol 
     
     func fetchMovies(_ searchText: String) {
         let parameters = APIParameters(query: searchText)
-        service.fetchData(endPoint: .search, with: parameters, completion: { (response: Result<Movies, Error>) in
-            switch response {
-            case .failure(let error):
-                debugPrint(error)
-            case .success(let movies):
+        service.fetchData(endPoint: .search, with: parameters)
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    print(error.localizedDescription)
+                }
+            }, receiveValue: { (movies: Movies) in
                 self.remoteRequestHandler?.moviesFound(found: movies)
-            }
-            
-        })
+            }).store(in: &cancellable)
+        
     }
 }

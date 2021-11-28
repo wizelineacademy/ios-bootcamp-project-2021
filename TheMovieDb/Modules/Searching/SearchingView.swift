@@ -9,19 +9,25 @@
 import Foundation
 import UIKit
 
-final class SearchingView: UIViewController {
+final class SearchingView: UICollectionViewController {
 
     // MARK: Properties
     var presenter: SearchingPresenterProtocol?
-    private var tableView: UITableView!
     private let searchController = UISearchController(searchResultsController: nil)
     private var viewModel: [MovieViewModel] = []
 
     // MARK: Lifecycle
-
+    init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
+        super.init(collectionViewLayout: layout)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        presenter?.viewDidLoad()
         configureUI()
     }
     
@@ -43,14 +49,8 @@ private extension SearchingView {
     }
     
     func configureTableView() {
-        tableView = UITableView(frame: .zero, style: .insetGrouped)
-        view.addSubview(tableView)
-        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        tableView.register(SearchCell.self, forCellReuseIdentifier: SearchCell.reusableIdentifier)
-        tableView.rowHeight = 64
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.keyboardDismissMode = .interactive
+        collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reusableIdentifier)
+        collectionView.keyboardDismissMode = .interactive
     }
     
     func configureSearchController() {
@@ -65,28 +65,54 @@ private extension SearchingView {
     }
 }
 
-// MARK: - UITableDelegate
-extension SearchingView: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+// MARK: - UITCollectionViewControllerDelegate
+extension SearchingView {
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let movie =  viewModel[indexPath.row].movie
         presenter?.showMovie(movie)
     }
 }
 
-// MARK: - UITableViewDataSource
-extension SearchingView: UITableViewDataSource {
+// MARK: - UITCollectionViewControllerDataSource
+extension SearchingView {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: SearchCell.reusableIdentifier, for: indexPath) as? SearchCell else {
-            return SearchCell()
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reusableIdentifier, for: indexPath) as? DefaultSectionCell else {
+            return DefaultSectionCell()
         }
         let viewModel = viewModel[indexPath.row]
         cell.viewModel = viewModel
         return cell
+    }
+    
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension SearchingView: UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return .init(top: 0, left: 20, bottom: 0, right: 20)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var defaultSize: CGSize = .init(width: (view.frame.width - 60) / 3, height: view.frame.height * 0.23)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            defaultSize = .init(width: (view.frame.width - 100) / 5, height: view.frame.height * 0.20)
+        }
+        return defaultSize
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+         10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        10
     }
 }
 
@@ -102,7 +128,7 @@ extension SearchingView: SearchingViewProtocol {
     func showMoviesResults(_ moviesFound: [MovieViewModel]) {
         viewModel = moviesFound
         DispatchQueue.main.async {
-            self.tableView.reloadData()
+            self.collectionView.reloadData()
         }
     }
     

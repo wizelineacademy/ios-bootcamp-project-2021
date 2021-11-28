@@ -28,7 +28,7 @@ enum MovieDetailSections: Int, CaseIterable {
     
     var sizeCell: CGFloat {
         switch self {
-        case .recommendations: return  500
+        case .recommendations: return  1000
         case .similar: return 50
         }
     }

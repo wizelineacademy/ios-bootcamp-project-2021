@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class MovieDetailView: UICollectionViewController {
+final class MovieDetailView: UICollectionViewController, DisplayError {
     
     // MARK: Properties
     var presenter: MovieDetailPresenterProtocol?
@@ -25,8 +25,7 @@ final class MovieDetailView: UICollectionViewController {
         
     }
     
-    init() {
-        let layout = UICollectionViewFlowLayout()
+    init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
         layout.itemSize = CGSize(width: 100, height: 140)
         super.init(collectionViewLayout: layout)
@@ -104,7 +103,19 @@ extension MovieDetailView {
 extension MovieDetailView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         let section = MovieDetailSections(rawValue: section) ?? .similar
-        return CGSize(width: view.frame.height, height: section.sizeCell)
+        switch section {
+        case .recommendations:
+            let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: section.sizeCell)
+            let estimatedSizeCell = DetailHeaderView(frame: frame)
+            estimatedSizeCell.viewModel = viewModel
+            estimatedSizeCell.layoutIfNeeded()
+            let targetSize = CGSize(width: view.frame.width, height: section.sizeCell)
+            let estimatedSize = estimatedSizeCell.systemLayoutSizeFitting(targetSize)
+            return .init(width: view.frame.width, height: estimatedSize.height)
+        case .similar:
+            return CGSize(width: view.frame.height, height: section.sizeCell)
+        }
+        
     }
 }
 
@@ -129,6 +140,10 @@ extension MovieDetailView {
 }
 
 extension MovieDetailView: MovieDetailViewProtocol {
+    func showErrorMessage(withMessage: String) {
+        self.viewDisplayError(with: withMessage)
+    }
+    
     func setMovie(_ movie: Movie) {
         self.viewModel = MovieDetailViewModel(movie: movie)
     }

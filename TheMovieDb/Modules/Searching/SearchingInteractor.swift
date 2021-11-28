@@ -14,9 +14,9 @@ final class SearchingInteractor: SearchingInteractorInputProtocol {
     var remoteDatamanager: SearchingRemoteDataManagerInputProtocol?
 
     func findMovies(_ searchText: String) {
-        DispatchQueue.global(qos: .userInitiated).async {
+     
             self.remoteDatamanager?.fetchMovies(searchText)
-        }
+    
     }
 }
 
