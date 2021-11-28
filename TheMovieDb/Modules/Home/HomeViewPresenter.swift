@@ -8,14 +8,6 @@
 import Foundation
 import OSLog
 
-protocol HomeViewPresenterDelegate: AnyObject {
-    func didStartLoading()
-    func didFinishLoading()
-    func didStartSearching()
-    func didFinishSearching()
-    func didUpdateMovies(_ movies: [Movie])
-}
-
 class HomeViewPresenter {
     
     let service: MovieFeedRepository
