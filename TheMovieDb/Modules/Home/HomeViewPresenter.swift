@@ -8,29 +8,25 @@
 import Foundation
 import OSLog
 
-protocol HomeViewPresenterDelegate: AnyObject {
-    func didStartLoading()
-    func didFinishLoading()
-    func didStartSearching()
-    func didFinishSearching()
-    func didUpdateMovies(_ movies: [Movie])
-}
+final class HomeViewPresenter {
 
-class HomeViewPresenter {
-    
-    let service: MovieFeedRepository
+    private let service: MovieFeedRepository
     
     weak var delegate: HomeViewPresenterDelegate?
     
     private var movies = [Movie]()
     
-    var isLoading = false {
+    private var isLoading = false {
         didSet {
             isLoading ? delegate?.didStartLoading() : delegate?.didFinishLoading()
         }
     }
     
-    var loadedPages: Int = .zero
+    private var loadedPages: Int = .zero
+    
+    private var nextPage: Int {
+        loadedPages + 1
+    }
     
     var isSearching = false {
         didSet {
@@ -59,17 +55,12 @@ class HomeViewPresenter {
         isLoading = true
         service.getMovieFeed(
             on: currentFeed,
-            page: loadedPages + 1,
+            page: nextPage,
             query: search
         ) { [weak self] result in
             switch result {
             case .success(let response):
-                self?.loadedPages = response.page
-                self?.movies.append(contentsOf: response.results)
-                guard let movies = self?.movies else {
-                    return
-                }
-                self?.delegate?.didUpdateMovies(movies)
+                self?.handleFeedResponse(response)
             case .failure:
                 os_log("Network request error", log: OSLog.networkRequest, type: .debug)
             }
@@ -83,6 +74,12 @@ class HomeViewPresenter {
     
     func getMovie(forPosition index: Int) -> Movie {
         movies[index]
+    }
+    
+    func handleFeedResponse(_ response: MovieDBAPIListResponse<Movie>) {
+        loadedPages = response.page
+        movies.append(contentsOf: response.results)
+        delegate?.didUpdateMovies(movies)
     }
     
     func resetFeed() {
