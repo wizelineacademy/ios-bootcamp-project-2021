@@ -25,11 +25,22 @@ extension SearchingPresenter: SearchingPresenterProtocol {
     
     func searchMovies(_ searchText: String) {
         view?.showSpinnerView()
+        view?.removeMessageLabel()
         interactor?.findMovies(searchText)
     }
 }
 
 extension SearchingPresenter: SearchingInteractorOutputProtocol {
+    func noSearchesFound(with message: String) {
+        view?.showMessageNoSearchesFound(with: message)
+        view?.stopSpinnerView()
+    }
+    
+    func onError(errorMessage: String) {
+        view?.stopSpinnerView()
+        view?.showErrorMessage(withMessage: errorMessage)
+    }
+    
     func moviesFound(moviesFound: [MovieViewModel]) {
         view?.stopSpinnerView()
         view?.showMoviesResults(moviesFound)

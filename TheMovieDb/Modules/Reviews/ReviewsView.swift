@@ -14,11 +14,6 @@ final class ReviewsView: UICollectionViewController, DisplayError {
     // MARK: Properties
     var presenter: ReviewsPresenterProtocol?
     private var viewModel = [ReviewViewModel]() // reviews = [Review]()
-    private var noReviewsLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        return label
-    }()
     
     // MARK: - LifeCycle
     init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
@@ -48,10 +43,7 @@ final class ReviewsView: UICollectionViewController, DisplayError {
 
 extension ReviewsView: ReviewsViewProtocol {
     func showMessageNoReviews(with message: String) {
-        noReviewsLabel.text = message
-        collectionView.addSubview(noReviewsLabel)
-        noReviewsLabel.centerX(inView: collectionView)
-        noReviewsLabel.centerY(inView: collectionView)
+        self.showMessageOnViewLabel(onView: view, message: message)
     }
     
     func showErrorMessage(withMessage error: String) {

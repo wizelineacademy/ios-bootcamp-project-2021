@@ -15,6 +15,9 @@ protocol SearchingViewProtocol: AnyObject {
     func showMoviesResults(_ moviesFound: [MovieViewModel])
     func showSpinnerView()
     func stopSpinnerView()
+    func showErrorMessage(withMessage: String)
+    func showMessageNoSearchesFound(with message: String)
+    func removeMessageLabel()
 }
 
 protocol SearchingRouterProtocol: AnyObject {
@@ -41,27 +44,15 @@ protocol SearchingPresenterProtocol: AnyObject {
 protocol SearchingInteractorOutputProtocol: AnyObject {
     // INTERACTOR -> PRESENTER
     func moviesFound(moviesFound: [MovieViewModel])
+    func onError(errorMessage: String)
+    func noSearchesFound(with message: String)
+
 }
 
-typealias SearchingInteractorDataManagerProtocol = SearchingInteractorInputProtocol & SearchingRemoteDataManagerOutputProtocol
 protocol SearchingInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: SearchingInteractorOutputProtocol? { get set }
-    var remoteDatamanager: SearchingRemoteDataManagerInputProtocol? { get set }
     
     func findMovies(_ searchText: String)
     
-}
-
-protocol SearchingRemoteDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> REMOTEDATAMANAGER
-    var remoteRequestHandler: SearchingRemoteDataManagerOutputProtocol? { get set }
-
-    func fetchMovies(_ searchText: String)
-}
-
-protocol SearchingRemoteDataManagerOutputProtocol: AnyObject {
-    // REMOTEDATAMANAGER -> INTERACTOR
-    
-    func moviesFound(found movies: Movies)
 }

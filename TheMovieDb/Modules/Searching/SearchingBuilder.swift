@@ -11,9 +11,9 @@ enum SearchingBuilder: SearchingBuilderProtocol {
     static func createModule() -> UIViewController {
         let view = SearchingView()
         let service = APIService()
+        let moviesWorker = MoviesWorker(service: service)
         let presenter: SearchingPresenterInteractorProtocol = SearchingPresenter()
-        let interactor: SearchingInteractorDataManagerProtocol = SearchingInteractor()
-        let remoteDataManager: SearchingRemoteDataManagerInputProtocol = SearchingRemoteDataManager(service: service)
+        let interactor: SearchingInteractorInputProtocol = SearchingInteractor(movieDetailWorker: moviesWorker)
         let router: SearchingRouterProtocol = SearchingRouter()
         
         view.presenter = presenter
@@ -21,8 +21,6 @@ enum SearchingBuilder: SearchingBuilderProtocol {
         presenter.router = router
         presenter.interactor = interactor
         interactor.presenter = presenter
-        interactor.remoteDatamanager = remoteDataManager
-        remoteDataManager.remoteRequestHandler = interactor
         return view
         
     }
