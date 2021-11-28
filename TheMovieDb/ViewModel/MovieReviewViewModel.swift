@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import os
 
 struct MovieReviewViewModel {
+    private static let logger = Logger(subsystem: Constants.subsystemName, category: "MovieReviewViewModel")
+    
     let id: String
     let content: String
     let createdAt: String
@@ -25,12 +28,19 @@ struct MovieReviewViewModel {
     }
 
     func getAvatarURL() -> URL? {
-        if avatarPath.contains("https") {
-            print(avatarPath)
-            return URL(string: avatarPath)
+        guard !avatarPath.isEmpty else {
+            return nil
         }
-        print(avatarBaseURL + avatarPath)
-        return URL(string: avatarBaseURL + avatarPath)
+        if avatarPath.contains("https"), let range = avatarPath.range(of: "https") {
+            // Se corta a partir del https, ya que en algunas ocasiones la URL
+            // de la imagen es algo como /https://secure.gravatar.com/avatar/992eef352126a53d7e141bf9e8707576.jpg
+            let url = avatarPath[range.lowerBound...]
+            Self.logger.debug("Trying to get image \(url)")
+            return URL(string: String(url))
+        }
+        let url = avatarBaseURL + avatarPath
+        Self.logger.debug("Trying to get image \(url)")
+        return URL(string: url)
     }
 }
 

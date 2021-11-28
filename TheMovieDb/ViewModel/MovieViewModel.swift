@@ -8,6 +8,7 @@
 import Foundation
 
 struct MovieViewModel {
+    let id: Int
     let title: String
     let posterPath: String
     let mediaType: String
@@ -17,6 +18,7 @@ struct MovieViewModel {
     let baseURL: String
     
     init(movie: MovieItem, configuration: ConfigurationImage) {
+        self.id = movie.id ?? 0
         self.title = movie.title ?? ""
         self.posterPath = movie.posterPath ?? ""
         self.mediaType = movie.mediaType ?? ""

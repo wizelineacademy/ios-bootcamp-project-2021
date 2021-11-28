@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import SwiftUI
 
 class DetailViewController: UIViewController {
     lazy private var moviePoster: UIImageView = {
@@ -112,6 +113,7 @@ class DetailViewController: UIViewController {
         view.addSubview(mediaAndReleaseStackView)
         view.addSubview(movieOverview)
         view.addSubview(ratingStackView)
+        view.addSubview(showReviewsButton)
         
         return view
     }()
@@ -124,6 +126,18 @@ class DetailViewController: UIViewController {
         }
         view.tintColor = .systemIndigo
         view.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        return view
+    }()
+    
+    lazy private var showReviewsButton: UIButton = {
+        let view = UIButton()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.setTitle("Show Reviews", for: .normal)
+        if #available(iOS 15.0, *) {
+            view.configuration = UIButton.Configuration.filled()
+        }
+        view.tintColor = .systemIndigo
+        view.addTarget(self, action: #selector(showReviews), for: .touchUpInside)
         return view
     }()
 
@@ -172,7 +186,11 @@ class DetailViewController: UIViewController {
             ratingStackView.topAnchor.constraint(equalTo: movieOverview.bottomAnchor, constant: margin),
             ratingStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: margin),
             ratingStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -margin),
-            ratingStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -margin),
+            
+            showReviewsButton.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: margin),
+            showReviewsButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: margin),
+            showReviewsButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -margin),
+            showReviewsButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
             
             closeButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -30),
             closeButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30),
@@ -207,5 +225,14 @@ class DetailViewController: UIViewController {
 
     @objc func closeView() {
         dismiss(animated: true)
+    }
+    
+    @objc func showReviews() {
+        guard let movieViewModel = movieViewModel else {
+            return
+        }
+        let view = ReviewsView(movieId: movieViewModel.id, imageBaseURL: movieViewModel.baseURL)
+        let hostingController = UIHostingController(rootView: view)
+        present(hostingController, animated: true, completion: nil)
     }
 }

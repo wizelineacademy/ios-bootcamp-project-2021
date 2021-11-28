@@ -16,12 +16,12 @@ struct MovieReviewAPIModel {
         self.movieApiManager = movieApiManager
     }
     
-    func getReviews(imageBaseURL: String, searchId: String, completion: @escaping (([MovieReviewViewModel]) -> Void)) {
+    func getReviews(imageBaseURL: String, movieId: Int, completion: @escaping (([MovieReviewViewModel]) -> Void)) {
         var reviews: [MovieReviewViewModel] = []
         let group = DispatchGroup()
         
         group.enter()
-        movieApiManager.getFeed(from: .reviews, searchId: searchId) { (result: Result<MovieReviewResult?, APIError>) in
+        movieApiManager.getFeed(from: .reviews, searchId: String(movieId)) { (result: Result<MovieReviewResult?, APIError>) in
             switch result {
             case .success(let results):
                 guard let results = results else {
