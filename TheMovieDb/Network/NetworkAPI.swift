@@ -12,7 +12,7 @@ protocol ExecutorRequest {
     func execute<D: Decodable>(request: Request?,
                                onSuccess: @escaping (D?) -> Void,
                                onError: @escaping (Error?) -> Void)
-    func execute<D: Decodable>(request: Request?) -> AnyPublisher<D?, Never>
+    func execute<D: Decodable>(request: Request?) -> AnyPublisher<D?, NetworkError>
 }
 
 final class MockNetworkAPI: ExecutorRequest {
@@ -41,14 +41,29 @@ final class MockNetworkAPI: ExecutorRequest {
         }
     }
     
-    func execute<D>(request: Request?) -> AnyPublisher<D?, Never> where D : Decodable {
-        let decoderKey = request!.decodingKey
+    func execute<D>(request: Request?) -> AnyPublisher<D?, NetworkError> where D : Decodable {
+        guard let request = request else {
+            return Fail(outputType: D?.self, failure: NetworkError.requestFailed)
+                .eraseToAnyPublisher()
+        }
+        guard let endpoint = request.urlEndpoint else {
+            return Fail(outputType: D?.self, failure: NetworkError.invalidData)
+                .eraseToAnyPublisher()
+        }
+        let decoderKey = request.decodingKey
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = decoderKey
-        return URLSession.shared.dataTaskPublisher(for: request!.urlEndpoint!)
+        return URLSession.shared.dataTaskPublisher(for: endpoint)
             .map { $0.data }
             .decode(type: D?.self, decoder: jsonDecoder)
-            .replaceError(with: nil)
+            .mapError({ error in
+                switch error {
+                case is Swift.DecodingError:
+                    return NetworkError.jsonParsingFailed
+                default:
+                    return NetworkError.noResponse
+                }
+            })
             .eraseToAnyPublisher()
     }
 }
@@ -92,14 +107,29 @@ final class NetworkAPI: ExecutorRequest {
         task.resume()
     }
     
-    func execute<D>(request: Request?) -> AnyPublisher<D?, Never> where D : Decodable {
-        let decoderKey = request!.decodingKey
+    func execute<D>(request: Request?) -> AnyPublisher<D?, NetworkError> where D : Decodable {
+        guard let request = request else {
+            return Fail(outputType: D?.self, failure: NetworkError.requestFailed)
+                .eraseToAnyPublisher()
+        }
+        guard let endpoint = request.urlEndpoint else {
+            return Fail(outputType: D?.self, failure: NetworkError.invalidData)
+                .eraseToAnyPublisher()
+        }
+        let decoderKey = request.decodingKey
         let jsonDecoder = JSONDecoder()
         jsonDecoder.keyDecodingStrategy = decoderKey
-        return URLSession.shared.dataTaskPublisher(for: request!.urlEndpoint!)
+        return URLSession.shared.dataTaskPublisher(for: endpoint)
             .map { $0.data }
             .decode(type: D?.self, decoder: jsonDecoder)
-            .replaceError(with: nil)
+            .mapError({ error in
+                switch error {
+                case is Swift.DecodingError:
+                    return NetworkError.jsonParsingFailed
+                default:
+                    return NetworkError.noResponse
+                }
+            })
             .eraseToAnyPublisher()
     }
 }

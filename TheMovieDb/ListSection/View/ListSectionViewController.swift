@@ -88,8 +88,10 @@ final class ListSectionViewController: UICollectionViewController {
         let factory = DefaultDetailSceneFactory()
         factory.configurator = DefaultDetailSceneConfigurator()
         let viewController = factory.makeDetailScene(movie: movie)
-        viewController.hidesBottomBarWhenPushed = true
-        navigationController?.pushViewController(viewController, animated: true)
+        viewController?.hidesBottomBarWhenPushed = true
+        if let viewController = viewController {
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
 }
 
@@ -98,9 +100,16 @@ private extension ListSectionViewController {
     func callService() {
         executor.execute(request: self.request)
             .receive(on: DispatchQueue.main)
-            .sink { (response: PageModel<MovieModel>?) in
-                self.onSuccessResponse(response)
-            }.store(in: &cancellables)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    Toast.showToast(title: error.localizedDescription)
+                default:
+                    return
+                }
+            }, receiveValue: { [weak self] (response: PageModel<MovieModel>?) in
+                self?.onSuccessResponse(response)
+            }).store(in: &cancellables)
     }
     
     func onSuccessResponse(_ response: PageModel<MovieModel>?) {

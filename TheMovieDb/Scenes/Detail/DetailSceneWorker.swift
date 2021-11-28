@@ -29,12 +29,19 @@ extension DetailSceneWorker: DetailSceneLogic {
                             completion: @escaping ([ReviewModel], [MovieModel]) -> Void) {
         Publishers.Zip(
             service.execute(request: reviewRequest),
-            service.execute(request: recommendationRequest)
-        ).receive(on: DispatchQueue.main)
-            .sink { (reviewsPage: PageModel<ReviewModel>?, recommendationsPage: PageModel<MovieModel>?) in
+            service.execute(request: recommendationRequest))
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .failure(let error):
+                    Toast.showToast(title: error.localizedDescription)
+                default:
+                    return
+                }
+            }, receiveValue: { (reviewsPage: PageModel<ReviewModel>?, recommendationsPage: PageModel<MovieModel>?) in
                 let reviews = reviewsPage?.results ?? []
                 let recommendations = recommendationsPage?.results ?? []
                 completion(reviews, recommendations)
-            }.store(in: &bag)
+            }).store(in: &bag)
     }
 }

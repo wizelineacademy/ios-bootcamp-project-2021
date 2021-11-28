@@ -8,33 +8,20 @@
 import Foundation
 
 enum EndpointConstants {
-    static var baseURL: String {
-        return "https://api.themoviedb.org"
-    }
     
-    static var trending: String {
-        return "/3/trending/movie/day"
-    }
+    static var baseURL: String = "https://api.themoviedb.org"
     
-    static var nowPlaying: String {
-        return "/3/movie/now_playing"
-    }
+    static var trending: String = "/3/trending/movie/day"
     
-    static var popular: String {
-        return "/3/movie/popular"
-    }
+    static var nowPlaying: String = "/3/movie/now_playing"
     
-    static var topRated: String {
-        return "/3/movie/top_rated"
-    }
+    static var popular: String = "/3/movie/popular"
     
-    static var upcoming: String {
-        return "/3/movie/upcoming"
-    }
+    static var topRated: String = "/3/movie/top_rated"
     
-    static var search: String {
-        return "/3/search/movie"
-    }
+    static var upcoming: String = "/3/movie/upcoming"
+    
+    static var search: String = "/3/search/movie"
     
     static func reviews(id: Int) -> String {
         let id: String = String(id)
