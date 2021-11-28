@@ -35,7 +35,7 @@ class HomeInteractor: HomeInteractorInputProtocol {
                 if case let .failure(error) = completion {
                     self.presenter?.onError(errorMessage: error.localizedDescription)
                 }
-            }, receiveValue: { (movies: Movies) in
+            }, receiveValue: { [unowned self] (movies: Movies) in
                 self.movies[typeMovieSection] = movies.movies
                 self.group.leave()
             }).store(in: &cancellable)

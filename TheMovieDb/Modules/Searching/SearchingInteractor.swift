@@ -24,7 +24,7 @@ final class SearchingInteractor: SearchingInteractorInputProtocol {
                 if case let .failure(error) = completion {
                     self.presenter?.onError(errorMessage: error.localizedDescription)
                 }
-            }, receiveValue: { (movies: Movies) in
+            }, receiveValue: { [unowned self] (movies: Movies) in
                 let movies = movies.movies
                 let viewModel = movies.map { MovieViewModel(movie: $0) }
                 self.presenter?.moviesFound(moviesFound: viewModel)
