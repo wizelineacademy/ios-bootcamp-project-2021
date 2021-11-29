@@ -88,9 +88,9 @@ struct MovieDBAPI: APIClient {
                     DispatchQueue.main.async {
                         completion(.success(result))
                     }
-                } catch let error {
+                } catch {
                     DispatchQueue.main.async {
-                        completion(.failure(error))
+                        completion(.failure(NetworkError.decodingFailed))
                     }
                 }
             case .failure(let error):
