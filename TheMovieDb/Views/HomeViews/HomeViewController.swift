@@ -13,7 +13,15 @@ class HomeViewController: UIViewController, HomeView {
     
     // Private Instances
     private var latestSearch: String?
-    private var movieHomeCollectionView: GenericMovieCollectionView<SectionMovie>!
+    private lazy var movieHomeCollectionView: GenericMovieCollectionView<SectionMovie> = {
+        let movieHomeCollectionView = GenericMovieCollectionView<SectionMovie>(frame: view.bounds)
+        movieHomeCollectionView.delegateCollection = self
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        movieHomeCollectionView.refreshControl = refreshControl
+        movieHomeCollectionView.sendSubviewToBack(refreshControl)
+        return movieHomeCollectionView
+    }()
     
     // Lazy Vars
     lazy private var searchController: SearchBar = {
@@ -35,21 +43,9 @@ class HomeViewController: UIViewController, HomeView {
 
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        setUpCollectionView()
+        view.addSubview(movieHomeCollectionView)
         presenter?.fetchAllMovieList()
     }
-  
-    // Methods To Configure Views
-    func setUpCollectionView() {
-        movieHomeCollectionView = GenericMovieCollectionView<SectionMovie>(frame: view.bounds)
-        movieHomeCollectionView.delegateCollection = self
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
-        movieHomeCollectionView.refreshControl = refreshControl
-        movieHomeCollectionView.sendSubviewToBack(refreshControl)
-        view.addSubview(movieHomeCollectionView)
-    }
-    
   
     // Methods to conform HomeView
     func showEmptyState() {
@@ -72,10 +68,7 @@ class HomeViewController: UIViewController, HomeView {
     }
     
     func stopLoading() {
-        guard
-            let collectionView = movieHomeCollectionView,
-            let refreshControl = collectionView.refreshControl
-        else { return }
+    
 
         refreshControl.endRefreshing()
     }
