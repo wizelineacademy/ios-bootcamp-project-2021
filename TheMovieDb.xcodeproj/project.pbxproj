@@ -23,6 +23,8 @@
 		5E6F87412737625500CA652D /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E6F87402737625500CA652D /* DetailViewModel.swift */; };
 		5EAA31862732140100F7ECE8 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA31852732140100F7ECE8 /* LoadingViewController.swift */; };
 		5EAA318927321D0500F7ECE8 /* UIViewController+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EAA318827321D0500F7ECE8 /* UIViewController+extension.swift */; };
+		5EBB2F99274D7758000491A4 /* UIImageView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBB2F98274D7758000491A4 /* UIImageView+extension.swift */; };
+		5EBB2F9B274D78C8000491A4 /* Cache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EBB2F9A274D78C8000491A4 /* Cache.swift */; };
 		5ED1337D273C438F0070B911 /* ReviewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED1337C273C438F0070B911 /* ReviewsView.swift */; };
 		5ED1337F273C51C00070B911 /* ReviewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED1337E273C51C00070B911 /* ReviewsViewModel.swift */; };
 		5EE70029273B587E0039D6EF /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EE70028273B587E0039D6EF /* Review.swift */; };
@@ -75,6 +77,8 @@
 		5E6F87402737625500CA652D /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		5EAA31852732140100F7ECE8 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		5EAA318827321D0500F7ECE8 /* UIViewController+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+extension.swift"; sourceTree = "<group>"; };
+		5EBB2F98274D7758000491A4 /* UIImageView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+extension.swift"; sourceTree = "<group>"; };
+		5EBB2F9A274D78C8000491A4 /* Cache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cache.swift; sourceTree = "<group>"; };
 		5ED1337C273C438F0070B911 /* ReviewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsView.swift; sourceTree = "<group>"; };
 		5ED1337E273C51C00070B911 /* ReviewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsViewModel.swift; sourceTree = "<group>"; };
 		5EE70028273B587E0039D6EF /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
@@ -167,6 +171,8 @@
 				5EAA318827321D0500F7ECE8 /* UIViewController+extension.swift */,
 				5E371265273DF08F00EB4F5D /* String+extension.swift */,
 				5E0404EE274890A100E351B1 /* OSLog+extension.swift */,
+				5EBB2F98274D7758000491A4 /* UIImageView+extension.swift */,
+				5EBB2F9A274D78C8000491A4 /* Cache.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -443,6 +449,7 @@
 				837B4EAC258178B6003DFC67 /* HomeView.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				5ED1337F273C51C00070B911 /* ReviewsViewModel.swift in Sources */,
+				5EBB2F99274D7758000491A4 /* UIImageView+extension.swift in Sources */,
 				5ED1337D273C438F0070B911 /* ReviewsView.swift in Sources */,
 				5E0B4D84273AFAD20018AE5E /* MovieCastResponse.swift in Sources */,
 				5E371266273DF08F00EB4F5D /* String+extension.swift in Sources */,
@@ -456,6 +463,7 @@
 				5EAA318927321D0500F7ECE8 /* UIViewController+extension.swift in Sources */,
 				5EE800A1272A2C77003DD525 /* HTTPMethod.swift in Sources */,
 				5EE70029273B587E0039D6EF /* Review.swift in Sources */,
+				5EBB2F9B274D78C8000491A4 /* Cache.swift in Sources */,
 				5EE8009F272A2461003DD525 /* MovieListResponse.swift in Sources */,
 				5E06585F2727700D00F1DF9A /* Movie.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
