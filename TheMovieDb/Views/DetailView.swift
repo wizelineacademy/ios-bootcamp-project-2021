@@ -13,17 +13,17 @@ struct DetailView: View {
     
     func buildBackdropImage() -> BackdropImage {
         var backdropImage = BackdropImage()
-        
-        backdropImage.backdropPath = movieData?.backdropPath ?? "https://www.themoviedb.org/t/p/w533_and_h300_bestv2/xikDpZZAQjzI2ZuaylyjNnOuhKF.jpg"
-        
+        if let backPath = movieData?.backdropPath {
+            backdropImage.backdropPath = backPath
+        }
         return backdropImage
-        
     }
     
     func buildCirclePosterImage () -> CirclePosterImage {
         var circlePosterImage = CirclePosterImage()
-        
-        circlePosterImage.posterPath = movieData?.posterPath ?? "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/jeggetf6lrd0dhtcbqJH75Sik4K.jpg"
+        if let posterPath = movieData?.posterPath {
+            circlePosterImage.posterPath = posterPath
+        }
         
         return circlePosterImage
     }
@@ -31,7 +31,7 @@ struct DetailView: View {
     
     var body: some View {
         ScrollView{
-            VStack{
+            VStack(alignment: .center){
                 buildBackdropImage()
                     .frame(height: 300, alignment: .top)
                 buildCirclePosterImage()
@@ -39,24 +39,32 @@ struct DetailView: View {
                     .padding(.bottom, -200)
                 Text(movieData?.originalTitle ?? "Movie Title Placeholder")
                     .font(.title)
+                    .multilineTextAlignment(.center)
+                    .padding(.all)
                 HStack{
                     Text("Rating:")
-                    Text(showStar(value: Int(movieData?.voteAverage ?? 0.0)))
+                    Text(Utils.showStar(value: Int(movieData?.voteAverage ?? 0.0)))
+                    Spacer()
                     Text("Release:")
-                    Text(movieData?.releaseDate?.readableDate() ?? "29 April 1992")
+                    Text(movieData?.releaseDate?.readableDate() ?? "10 September 1992")
                 }
+                .padding(.bottom)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+                
                 Divider()
                 
                 Text("Description")
                     .font(.title2)
+                    .padding(.bottom)
                 Text(movieData?.overview ?? "This is an overview Placeholder")
                     .multilineTextAlignment(.center)
                     .lineLimit(5)
+                    .padding(.bottom)
             }
+            .frame(width: 400)
         }
-        .frame(width: 400)
+        .padding(.horizontal)
     }
 }
 
@@ -77,9 +85,9 @@ struct CirclePosterImage: View {
         KFImage(URL(string:urlString))
             .resizable()
             .scaledToFit()
-            .frame(width: 200, height: 350)
-            .clipShape(Circle())
-            .overlay(Circle().stroke(.gray, lineWidth: 1))
+            .frame(width: 100, height: 150)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .overlay(RoundedRectangle(cornerRadius: 10).stroke(.gray, lineWidth: 1))
             .shadow(radius: 7)
     }
 }

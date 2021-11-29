@@ -13,7 +13,16 @@ class MainViewController: UIViewController{
     @IBOutlet weak var mainSegmentedControl: UISegmentedControl!
     @IBOutlet weak var mainTableView: UITableView!
     
-    private let mainViewModel = MainViewModel()
+    private var mainViewModel = MainViewModel()
+    
+    init(mainViewModel: MainViewModel = MainViewModel()) {
+        self.mainViewModel = mainViewModel
+        super.init(nibName: "MainViewController", bundle: nil)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

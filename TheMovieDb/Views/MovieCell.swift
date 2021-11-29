@@ -23,6 +23,19 @@ class MovieCell: UITableViewCell {
         updateUI(title: movie.originalTitle, releaseDate: movie.releaseDate, rating: movie.voteAverage, overview: movie.overview, poster: movie.posterPath)
     }
     
+    func showStar(value: Int) -> String {
+        var star:String = ""
+        switch value {
+        case 0..<2: star = "★☆☆☆☆"
+        case 2..<4: star = "★★☆☆☆"
+        case 4..<6: star = "★★★☆☆"
+        case 6..<8: star = "★★★★☆"
+        case 8...10: star = "★★★★★"
+        default: star = "TBD"
+        }
+        return star
+    }
+    
     
     private func updateUI(title: String?, releaseDate: String?, rating: Double?, overview: String?, poster: String?){
         self.movieTitleLabel.text = title
@@ -30,7 +43,7 @@ class MovieCell: UITableViewCell {
 
         self.releaseDateLabel.text = releaseDate?.readableDate()
         guard let average = rating else { return }
-        self.ratingLabel.text =  showStar(value: Int(average))
+        self.ratingLabel.text = Utils.showStar(value: Int(average))
         self.movieOverviewLabel.text = overview
         
         guard let posterPath = poster else { return }

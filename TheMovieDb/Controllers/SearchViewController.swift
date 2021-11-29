@@ -14,6 +14,15 @@ class SearchViewController: UIViewController {
     
     private var searchViewModel = SearchViewModel()
     
+    init(searchViewModel: SearchViewModel = SearchViewModel()) {
+        self.searchViewModel = searchViewModel
+        super.init(nibName: "SearchViewController", bundle: nil)
+    }
+    
+    required init?(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
