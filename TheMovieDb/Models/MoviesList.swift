@@ -38,7 +38,9 @@ struct Movie: Decodable {
     } catch {
       self.posterPath = ""
     }
+    
     self.voteAverage = try container.decode(Float.self, forKey: .vote_average)
+    
     let releaseDateConverted = try container.decode(String.self, forKey: .release_date)
     do {
       self.releaseDate = releaseDateConverted.changeToDate()

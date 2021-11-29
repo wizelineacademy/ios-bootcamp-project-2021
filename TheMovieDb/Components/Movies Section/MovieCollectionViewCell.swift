@@ -10,13 +10,12 @@ import Kingfisher
 
 final class MovieCollectionViewCell: UICollectionViewCell {
   
-  @IBOutlet weak var movieImageView: UIImageView?
-  @IBOutlet weak var movieLabel: UILabel?
-  @IBOutlet weak var scoreLabel: UILabel?
+  @IBOutlet private var movieImageView: UIImageView?
+  @IBOutlet private var movieLabel: UILabel?
+  @IBOutlet private var scoreLabel: UILabel?
   
   static let identifier = "MovieCollectionViewCell"
-  private var overview = ""
-  private var id = 0
+  private var movieViewModel: MovieViewModel?
   override func awakeFromNib() {
     super.awakeFromNib()
     setupUI()
@@ -26,7 +25,7 @@ final class MovieCollectionViewCell: UICollectionViewCell {
       return UINib(nibName: "MovieCollectionViewCell", bundle: nil)
   }
   
-  func setupUI() {
+  private func setupUI() {
     // Movie Image
     movieImageView?.contentMode = .scaleAspectFill
     movieImageView?.layer.cornerRadius = 10
@@ -37,6 +36,14 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     // Movie Score
     scoreLabel?.font = UIFont.movieScore
     scoreLabel?.text = ""
+    
+  }
+  private func addInformationUI() {
+    self.movieLabel?.text = movieViewModel?.title
+    if movieViewModel?.score != 0 {
+      self.scoreLabel?.text = "\(String(movieViewModel?.score ?? 0))"
+    }
+    self.setupImage(posterPath: movieViewModel?.posterPath ?? "")
   }
   func setupImage(posterPath: String) {
     if let url = URL(string: posterPath) {
@@ -44,14 +51,9 @@ final class MovieCollectionViewCell: UICollectionViewCell {
     }
   }
   
-  func configure(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
-    self.movieLabel?.text = movieTitle
-    if movieScore != 0 {
-      self.scoreLabel?.text = "\(movieScore)"
-    }
-    self.setupImage(posterPath: posterPath)
-    self.overview = overview
-    self.id = id
+  func configure(_ movieViewModel: MovieViewModel?) {
+    self.movieViewModel = movieViewModel
+    addInformationUI()
     
   }
   

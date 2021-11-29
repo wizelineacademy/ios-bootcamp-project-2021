@@ -9,10 +9,11 @@ import UIKit
 
 final class ReviewTableViewCell: UITableViewCell {
   
-  @IBOutlet weak var authorLabel: UILabel?
-  @IBOutlet weak var contentLabel: UILabel?
-  @IBOutlet weak var ratingLabel: UILabel?
+  @IBOutlet private var authorLabel: UILabel?
+  @IBOutlet private var contentLabel: UILabel?
+  @IBOutlet private var ratingLabel: UILabel?
   
+  private var reviewViewModel: ReviewViewModel?
   static let identifier = "ReviewTableViewCell"
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -23,16 +24,15 @@ final class ReviewTableViewCell: UITableViewCell {
     return UINib(nibName: "ReviewTableViewCell", bundle: nil)
   }
   
-  func configure(author: String, rating: Float, content: String) {
-    self.authorLabel?.text = author
-    self.ratingLabel?.text = "\(rating)"
-    self.contentLabel?.text = content
+  private func setupUI() {
+    self.authorLabel?.text = reviewViewModel?.author
+    self.ratingLabel?.text = "\(reviewViewModel?.rating ?? 0)"
+    self.contentLabel?.text = reviewViewModel?.content
   }
   
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    
-    // Configure the view for the selected state
+  func configure(_ reviewViewModel: ReviewViewModel?) {
+    self.reviewViewModel = reviewViewModel
+    setupUI()
   }
   
 }

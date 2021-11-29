@@ -21,8 +21,8 @@ final class MainCoordinator: Coordinator {
     navigationController.pushViewController(viewController, animated: false)
   }
   
-  func showDetailMovie(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
-    let viewController = MovieDetailViewController(movieTitle: movieTitle, movieScore: movieScore, posterPath: posterPath, overview: overview, id: id)
+  func showDetailMovie(_ movieViewModel: MovieViewModel?) {
+    let viewController = MovieDetailViewController(movieViewModel: movieViewModel ?? nil)
     viewController.coordinator = self
     navigationController.pushViewController(viewController, animated: true)
   }
@@ -33,8 +33,8 @@ final class MainCoordinator: Coordinator {
     navigationController.pushViewController(viewController, animated: true)
   }
   
-  func showReviewDetail(author: String, rating: Float, content: String) {
-    let viewController = DetailReviewViewController(author: author, rating: rating, content: content)
+  func showReviewDetail(_ reviewViewModel: ReviewViewModel?) {
+    let viewController = DetailReviewViewController( reviewViewModel)
     viewController.coordinator = self
     navigationController.pushViewController(viewController, animated: true)
   }

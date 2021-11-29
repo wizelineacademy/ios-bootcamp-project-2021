@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol CircularProgressBarViewP {
+protocol CircularProgressBarViewProtocol {
   func progressAnimation(duration: TimeInterval)
   func createCircularPath()
 }
 
-final class CircularProgressBarView: UIView, CircularProgressBarViewP {
+final class CircularProgressBarView: UIView, CircularProgressBarViewProtocol {
   
   private var circleLayer = CAShapeLayer()
   private var progressLayer = CAShapeLayer()

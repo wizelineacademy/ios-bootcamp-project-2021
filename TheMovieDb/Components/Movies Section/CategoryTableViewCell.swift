@@ -9,11 +9,10 @@ import UIKit
 
 final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UICollectionViewDataSource {
   
-  @IBOutlet weak var categoryLabel: UILabel?
-  @IBOutlet weak var collectionView: UICollectionView?
+  @IBOutlet private var categoryLabel: UILabel?
+  @IBOutlet private var collectionView: UICollectionView?
   
   private var movies: [Categories: [Movie]] = [:]
-  private var recommendedMovies: [Recommendations: [Movie]] = [:]
   
   private var category: Categories?
   private var movieId: Int?
@@ -45,10 +44,6 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
     if let categoriesVar = categories {
       self.category = categoriesVar
     }
-  }
-  
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
   }
   
   private func setUpUI() {
@@ -87,42 +82,42 @@ final class CategoryTableViewCell: UITableViewCell, UICollectionViewDelegate, UI
       movie = movies[.upcomingMovies]?[indexPath.row]
     }
     
-    cell.configure(movieTitle: movie?.title ?? "", movieScore: movie?.voteAverage ?? 0.0, posterPath: movie?.posterPath ?? "", overview: movie?.overview ?? "", id: movie?.id ?? 0)
+    cell.configure(MovieViewModel(movie))
     return cell
   }
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    var movie: Movie?
+    var movieViewModel: MovieViewModel?
     switch self.category {
     case .popularMovies:
-      movie = movies[.popularMovies]?[indexPath.row]
+      movieViewModel = MovieListViewModel(movies: movies[.popularMovies]).movieAtIndex(indexPath.row)
     case .trendingMovies:
-      movie = movies[.trendingMovies]?[indexPath.row]
+      movieViewModel = MovieListViewModel(movies: movies[.trendingMovies]).movieAtIndex(indexPath.row)
     case .nowPlayingMovies:
-      movie = movies[.nowPlayingMovies]?[indexPath.row]
+      movieViewModel = MovieListViewModel(movies: movies[.nowPlayingMovies]).movieAtIndex(indexPath.row)
     case .topRatedMovies:
-      movie = movies[.topRatedMovies]?[indexPath.row]
+      movieViewModel = MovieListViewModel(movies: movies[.topRatedMovies]).movieAtIndex(indexPath.row)
     case .upcomingMovies:
-      movie = movies[.upcomingMovies]?[indexPath.row]
+      movieViewModel = MovieListViewModel(movies: movies[.upcomingMovies]).movieAtIndex(indexPath.row)
     case .none:
-      movie = movies[.upcomingMovies]?[indexPath.row]
+      movieViewModel = MovieListViewModel(movies: movies[.upcomingMovies]).movieAtIndex(indexPath.row)
     }
     
-    delegate?.changeDetailVC(movieTitle: movie?.title ?? "", movieScore: movie?.voteAverage ?? 0, posterPath: movie?.posterPath ?? "", overview: movie?.overview ?? "", id: movie?.id ?? 0)
+    delegate?.changeDetailVC(movieViewModel: movieViewModel)
     
   }
   
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     switch self.category {
     case .trendingMovies:
-      return movies[.trendingMovies]?.count ?? 0
+      return MovieListViewModel(movies: movies[.trendingMovies]).numberRows()
     case .nowPlayingMovies:
-      return movies[.nowPlayingMovies]?.count ?? 0
+      return MovieListViewModel(movies: movies[.nowPlayingMovies]).numberRows()
     case .popularMovies:
-      return movies[.popularMovies]?.count ?? 0
+      return MovieListViewModel(movies: movies[.popularMovies]).numberRows()
     case .topRatedMovies:
-      return movies[.topRatedMovies]?.count ?? 0
+      return MovieListViewModel(movies: movies[.topRatedMovies]).numberRows()
     case .upcomingMovies:
-      return movies[.upcomingMovies]?.count ?? 0
+      return MovieListViewModel(movies: movies[.upcomingMovies]).numberRows()
     case .none:
       return 0
     }

@@ -9,22 +9,21 @@ import UIKit
 
 final class DetailReviewViewController: UIViewController {
   
-  @IBOutlet weak var ratingLabel: UILabel?
-  @IBOutlet weak var authorLabel: UILabel?
-  @IBOutlet weak var contentLabel: UILabel?
-  private var author: String?
-  private var rating: Float?
-  private var content: String?
+  @IBOutlet private var ratingLabel: UILabel?
+  @IBOutlet private var authorLabel: UILabel?
+  @IBOutlet private var contentLabel: UILabel?
+//  private var author: String?
+//  private var rating: Float?
+//  private var content: String?
+  private var reviewViewModel: ReviewViewModel?
   weak var coordinator: MainCoordinator?
   override func viewDidLoad() {
     super.viewDidLoad()
     setupUI()
   }
   
-  init(author: String, rating: Float, content: String) {
-    self.author = author
-    self.content = content
-    self.rating = rating
+  init(_ reviewViewModel: ReviewViewModel?) {
+    self.reviewViewModel = reviewViewModel
     super.init(nibName: "DetailReviewViewController", bundle: nil)
   }
   
@@ -32,11 +31,11 @@ final class DetailReviewViewController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
-  func setupUI() {
-    self.navigationItem.title = self.author
+  private func setupUI() {
+    self.navigationItem.title = self.reviewViewModel?.author
     self.contentLabel?.numberOfLines = 0
-    self.authorLabel?.text = self.author
-    self.contentLabel?.text = self.content
-    self.ratingLabel?.text = "Rating: \(self.rating ?? 0)"
+    self.authorLabel?.text = self.reviewViewModel?.author
+    self.contentLabel?.text = self.reviewViewModel?.content
+    self.ratingLabel?.text = "Rating: \(self.reviewViewModel?.rating ?? 0)"
   }
 }

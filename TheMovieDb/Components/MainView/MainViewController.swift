@@ -9,10 +9,10 @@ import UIKit
 
 final class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ChangeViewDelegate, UISearchResultsUpdating {
   
-  @IBOutlet weak var tableView: UITableView?
-  @IBOutlet weak var resultTableView: UITableView?
-  private var resultSearch: [Movie]?
-  
+  @IBOutlet private var tableView: UITableView?
+  @IBOutlet private var resultTableView: UITableView?
+//  private var resultSearch: [Movie]?
+  private var searchMoviesViewModel: MovieListViewModel?
   // All categories
   weak var coordinator: MainCoordinator?
   
@@ -85,7 +85,7 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
     case self.tableView:
       return CategoriesText.allCases.count
     case self.resultTableView:
-      return self.resultSearch?.count ?? 0
+      return self.searchMoviesViewModel?.numberRows() ?? 0
     default:
       return CategoriesText.allCases.count
     }
@@ -107,7 +107,7 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
         return CategoryTableViewCell()
       }
       if !searchController.isSearchBarEmpty {
-        cell.configure(movieTitle: resultSearch?[indexPath.row].title ?? "", posterPath: resultSearch?[indexPath.row].posterPath ?? "")
+        cell.configure(movieViewModel: searchMoviesViewModel?.movieAtIndex(indexPath.row))
       }
       
       return cell
@@ -125,13 +125,13 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if tableView == self.resultTableView {
-      let movie = resultSearch?[indexPath.row]
-      coordinator?.showDetailMovie(movieTitle: movie?.title ?? "", movieScore: movie?.voteAverage ?? 0, posterPath: movie?.posterPath ?? "", overview: movie?.overview ?? "", id: movie?.id ?? 0)
+      let movieViewModel = searchMoviesViewModel?.movieAtIndex(indexPath.row)
+      coordinator?.showDetailMovie(movieViewModel)
     }
   }
   
-  func changeDetailVC(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
-    coordinator?.showDetailMovie(movieTitle: movieTitle, movieScore: movieScore, posterPath: posterPath, overview: overview, id: id)
+  func changeDetailVC(movieViewModel: MovieViewModel?) {
+    coordinator?.showDetailMovie(movieViewModel ?? MovieViewModel(nil))
   }
   
   func updateSearchResults(for searchController: UISearchController) {
@@ -140,8 +140,9 @@ final class MainViewController: UIViewController, UITableViewDataSource, UITable
   }
   
   func requestAPISearch(text: String) {
-    SearchRequester(searchText: text).requestAPI( completion: { movies in
-      self.resultSearch = movies
+    SearchRequester(searchText: text).requestAPI(completion: { movies in
+      
+      self.searchMoviesViewModel = MovieListViewModel(movies)
       self.refresh()
     })
   }

@@ -9,10 +9,10 @@ import UIKit
 
 final class ResultSearchTableViewCell: UITableViewCell {
   
-  @IBOutlet weak var titleLabel: UILabel?
-  @IBOutlet weak var imageResult: UIImageView?
+  @IBOutlet private var titleLabel: UILabel?
+  @IBOutlet private var imageResult: UIImageView?
   static let identifier = "ResultSearchTableViewCell"
-  
+  private var movieViewModel: MovieViewModel?
   override func awakeFromNib() {
     super.awakeFromNib()
   }
@@ -20,19 +20,21 @@ final class ResultSearchTableViewCell: UITableViewCell {
   static func nib() -> UINib {
     return UINib(nibName: "ResultSearchTableViewCell", bundle: nil)
   }
-  func configure(movieTitle: String, posterPath: String?) {
-    self.titleLabel?.text = movieTitle
-    self.setupImage(posterPath: posterPath ?? "")
+  
+  private func setupUI() {
+    self.titleLabel?.text = movieViewModel?.title
+    self.setupImage(posterPath: movieViewModel?.posterPath ?? "")
   }
   
-  func setupImage(posterPath: String) {
+  func configure(movieViewModel: MovieViewModel?) {
+    self.movieViewModel = movieViewModel
+    setupUI()
+  }
+  
+  private func setupImage(posterPath: String) {
     if let url = URL(string: posterPath) {
       imageResult?.kf.setImage(with: url)
     }
-  }
-  
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
   }
   
 }

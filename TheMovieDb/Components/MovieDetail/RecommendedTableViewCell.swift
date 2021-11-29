@@ -9,18 +9,14 @@ import UIKit
 
 final class RecommendedTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate {
   
-  @IBOutlet weak var typeLabel: UILabel?
-  @IBOutlet weak var collectionView: UICollectionView?
+  @IBOutlet private var typeLabel: UILabel?
+  @IBOutlet private var collectionView: UICollectionView?
   
   static let identifier = "RecommendedTableViewCell"
   private var type: Recommendations?
   private var movies: [Recommendations?: [Movie?]]?
   private var id: Int?
   weak var delegate: ChangeViewDelegate?
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-
-  }
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -84,15 +80,15 @@ final class RecommendedTableViewCell: UITableViewCell, UICollectionViewDataSourc
     switch self.type {
     case .recommendedMovies:
       if let movie = movies?[.recommendedMovies]?[indexPath.row] {
-        cell.configure(movieTitle: movie.title, movieScore: movie.voteAverage, posterPath: movie.posterPath ?? "", overview: movie.overview, id: movie.id)
+        cell.configure(MovieViewModel(movie))
       }
       
     case .similarMovies:
       if let movie = movies?[.similarMovies]?[indexPath.row] {
-        cell.configure(movieTitle: movie.title, movieScore: movie.voteAverage, posterPath: movie.posterPath ?? "", overview: movie.overview, id: movie.id)
+        cell.configure(MovieViewModel(movie))
       }
     case .none:
-      cell.configure(movieTitle: "", movieScore: 0, posterPath: "", overview: "", id: 0)
+      cell.configure(MovieViewModel(nil))
     }
     
     return cell
@@ -110,7 +106,7 @@ final class RecommendedTableViewCell: UITableViewCell, UICollectionViewDataSourc
     case .none:
       movie = movies?[.recommendedMovies]?[indexPath.row]
     }
-    delegate?.changeDetailVC(movieTitle: movie?.title ?? "", movieScore: movie?.voteAverage ?? 0, posterPath: movie?.posterPath ?? "", overview: movie?.overview ?? "", id: movie?.id ?? 0)
+    delegate?.changeDetailVC(movieViewModel: MovieViewModel(movie))
   }
   
 }
