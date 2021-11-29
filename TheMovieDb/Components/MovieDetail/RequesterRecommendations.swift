@@ -27,12 +27,10 @@ final class RecommendationRequester: RecommendationProtocol {
         switch result {
         case .success(let response):
           self?.movies[.recommendedMovies] = response.results
-          print(response)
           self?.group.leave()
           
         default:
           self?.movies[.recommendedMovies] = []
-          print("ERROR RECOMMENDED")
           self?.group.leave()
         }
     }
@@ -46,10 +44,7 @@ final class RecommendationRequester: RecommendationProtocol {
         switch result {
         case .success(let response):
           self?.movies[.similarMovies] = response.results
-          print(response)
-          
           self?.group.leave()
-          
         default:
           self?.movies[.similarMovies] = []
           self?.group.leave()

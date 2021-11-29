@@ -12,7 +12,10 @@ extension String {
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "en_US_POSIX") // set locale to reliable US_POSIX
     dateFormatter.dateFormat = "yyyy-MM-dd"
-    let date = dateFormatter.date(from: self)!
+    guard let date = dateFormatter.date(from: self) else {
+      return Date()
+    }
     return date
+    
   }
 }

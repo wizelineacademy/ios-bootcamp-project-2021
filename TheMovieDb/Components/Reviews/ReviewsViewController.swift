@@ -7,13 +7,15 @@
 
 import UIKit
 
-class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+final class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
-  @IBOutlet weak var tableView: UITableView?
-  private var reviews: [Review]?
+  @IBOutlet private var tableView: UITableView?
+  
+//  private var reviews: [Review]?
   private var id: Int?
   weak var coordinator: MainCoordinator?
   
+  private var reviewListViewModel: ReviewListViewModel?
   init(id: Int) {
     super.init(nibName: "ReviewsViewController", bundle: nil)
     self.id = id
@@ -30,17 +32,19 @@ class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewD
     setupTableView()
     setupUI()
   }
-  func requestAPI() {
-    ReviewsRequester().requestAPI(id: self.id ?? 0) { reviews in
-      self.reviews = reviews
+  
+  private func requestAPI() {
+    ReviewsRequester(id: self.id ?? 0).requestAPI(completion: { reviews in
+//      self.reviews = reviews
+      self.reviewListViewModel = ReviewListViewModel(reviews)
       self.tableView?.reloadData()
-    }
+    })
   }
-  func setupUI() {
+  private func setupUI() {
     self.navigationItem.title = "Reviews"
   }
   
-  func setupTableView() {
+  private func setupTableView() {
     self.tableView?.delegate = self
     self.tableView?.dataSource = self
 //    self.tableView?.showsVerticalScrollIndicator = false
@@ -49,15 +53,20 @@ class ReviewsViewController: UIViewController, UITableViewDelegate, UITableViewD
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.reviews?.count ?? 0
+    return self.reviewListViewModel?.numberRows() ?? 0
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: ReviewTableViewCell.identifier) as? ReviewTableViewCell else {
       return ReviewTableViewCell()
     }
-    cell.configure(author: self.reviews?[indexPath.row].author ?? "", rating: self.reviews?[indexPath.row].rating ?? 0, content: self.reviews?[indexPath.row].content ?? "")
+    cell.configure(self.reviewListViewModel?.reviewAtIndex(indexPath.row))
     return cell
+  }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let reviewViewModel = self.reviewListViewModel?.reviewAtIndex(indexPath.row)
+    coordinator?.showReviewDetail(reviewViewModel)
+    tableView.deselectRow(at: indexPath, animated: true)
   }
    
 }

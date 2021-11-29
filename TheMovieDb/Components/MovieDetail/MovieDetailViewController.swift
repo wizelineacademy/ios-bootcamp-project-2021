@@ -7,29 +7,27 @@
 
 import UIKit
 
-class MovieDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChangeViewDelegate {
+final class MovieDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ChangeViewDelegate {
   
-  @IBOutlet weak var posterImageView: UIImageView?
-  @IBOutlet weak var informationView: UIView?
-  @IBOutlet weak var votingLabel: UILabel?
-  @IBOutlet weak var overviewLabel: UILabel?
-  @IBOutlet weak var tableView: UITableView?
-  @IBOutlet weak var showReviewsButton: UIButton?
+  @IBOutlet private var posterImageView: UIImageView?
+  @IBOutlet private var informationView: UIView?
+  @IBOutlet private var votingLabel: UILabel?
+  @IBOutlet private var overviewLabel: UILabel?
+  @IBOutlet private var tableView: UITableView?
+  @IBOutlet private var showReviewsButton: UIButton?
   
-  private var movieId: Int
-  private var posterPath: String
-  private var movieTitle: String
-  private var movieScore: Float
-  private var movieOverview: String
+//  private var movieId: Int
+//  private var posterPath: String
+//  private var movieTitle: String
+//  private var movieScore: Float
+//  private var movieOverview: String
+  
+  private var movieViewModel: MovieViewModel?
   
   weak var coordinator: MainCoordinator?
   
-  init(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
-    self.posterPath = posterPath
-    self.movieScore = movieScore
-    self.movieTitle = movieTitle
-    self.movieOverview = overview
-    self.movieId = id
+  init(movieViewModel: MovieViewModel?) {
+    self.movieViewModel = movieViewModel
     super.init(nibName: "MovieDetailViewController", bundle: nil)
   }
   
@@ -47,14 +45,14 @@ class MovieDetailViewController: UIViewController, UITableViewDelegate, UITableV
     self.showReviewsButton?.titleLabel?.text = "Reviews"
   }
   
-  func setupUI() {
-    self.setupImage(posterPath: self.posterPath)
-    self.navigationItem.title = self.movieTitle
-    self.votingLabel?.text = "Score: \(self.movieScore)"
-    self.overviewLabel?.text = self.movieOverview
+  private func setupUI() {
+    self.setupImage(posterPath: self.movieViewModel?.posterPath)
+    self.navigationItem.title = self.movieViewModel?.title
+    self.votingLabel?.text = "Score: \(self.movieViewModel?.score ?? 0)"
+    self.overviewLabel?.text = self.movieViewModel?.overview
     self.showReviewsButton?.titleLabel?.text = "Reviews"
   }
-  func setupTable() {
+  private func setupTable() {
     self.tableView?.delegate = self
     self.tableView?.dataSource = self
     self.tableView?.separatorStyle = .none
@@ -64,9 +62,8 @@ class MovieDetailViewController: UIViewController, UITableViewDelegate, UITableV
     self.tableView?.register(RecommendedTableViewCell.nib(), forCellReuseIdentifier: RecommendedTableViewCell.identifier)
   }
   
-  func setupImage(posterPath: String) {
-    print(posterPath)
-    if let url = URL(string: posterPath) {
+  private func setupImage(posterPath: String?) {
+    if let url = URL(string: posterPath ?? "") {
       posterImageView?.kf.setImage(with: url)
     }
     
@@ -81,16 +78,16 @@ class MovieDetailViewController: UIViewController, UITableViewDelegate, UITableV
       return RecommendedTableViewCell()
     }
     cell.delegate = self
-    cell.configure(title: RecommendationsText.allCases[indexPath.row].rawValue, type: Recommendations.allCases[indexPath.row], id: movieId )
+    cell.configure(title: RecommendationsText.allCases[indexPath.row].rawValue, type: Recommendations.allCases[indexPath.row], id: self.movieViewModel?.id ?? 0 )
     
     return cell
   }
   
-  func changeDetailVC(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
-    coordinator?.showDetailMovie(movieTitle: movieTitle, movieScore: movieScore, posterPath: posterPath, overview: overview, id: id)
+  func changeDetailVC(movieViewModel: MovieViewModel?) {
+    coordinator?.showDetailMovie(movieViewModel ?? nil)
   }
   @IBAction func reviewsTapped(_ sender: Any) {
-    coordinator?.showReviews(id: self.movieId)
+    coordinator?.showReviews(id: self.movieViewModel?.id ?? 0)
   }
   
 }

@@ -8,18 +8,20 @@
 import Foundation
 
 protocol ReviewsProtocol {
-  func requestAPIReviews(id: Int)
-  func requestAPI(id: Int, completion: @escaping ([Review]) -> Void)
+  func requestAPIReviews()
+  func requestAPI(completion: @escaping ([Review]) -> Void)
 }
 
 final class ReviewsRequester: ReviewsProtocol {
   let group = DispatchGroup()
-  
+  let id: Int?
   internal var reviews: [Review] = []
   
-  init() {}
+  init(id: Int) {
+    self.id = id
+  }
   
-  func requestAPIReviews(id: Int) {
+  func requestAPIReviews() {
     self.group.enter()
     let completion: (Result<ReviewsList, Error>) -> Void = { [weak self] result in
         debugPrint(result)
@@ -33,11 +35,11 @@ final class ReviewsRequester: ReviewsProtocol {
           self?.group.leave()
         }
     }
-    API.getReviews(id: id).resume(completion: completion)
+    API.getReviews(id: id ?? 0).resume(completion: completion)
   }
   
-  func requestAPI(id: Int, completion: @escaping ([Review]) -> Void) {
-    requestAPIReviews(id: id)
+  func requestAPI(completion: @escaping ([Review]) -> Void) {
+    requestAPIReviews()
     group.notify(queue: .main) {
       completion(self.reviews)
     }

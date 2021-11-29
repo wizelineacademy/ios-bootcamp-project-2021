@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-class MainCoordinator: Coordinator {
+final class MainCoordinator: Coordinator {
   var children = [Coordinator]()
   var navigationController: UINavigationController
   
@@ -16,20 +16,26 @@ class MainCoordinator: Coordinator {
   }
   
   func start() {
-    let vc = MainViewController()
-    vc.coordinator = self
-    navigationController.pushViewController(vc, animated: false)
+    let viewController = MainViewController()
+    viewController.coordinator = self
+    navigationController.pushViewController(viewController, animated: false)
   }
   
-  func showDetailMovie(movieTitle: String, movieScore: Float, posterPath: String, overview: String, id: Int) {
-    let vc = MovieDetailViewController(movieTitle: movieTitle, movieScore: movieScore, posterPath: posterPath, overview: overview, id: id)
-    vc.coordinator = self
-    navigationController.pushViewController(vc, animated: true)
+  func showDetailMovie(_ movieViewModel: MovieViewModel?) {
+    let viewController = MovieDetailViewController(movieViewModel: movieViewModel ?? nil)
+    viewController.coordinator = self
+    navigationController.pushViewController(viewController, animated: true)
   }
   
   func showReviews(id: Int) {
-    let vc = ReviewsViewController(id: id)
-    vc.coordinator = self
-    navigationController.pushViewController(vc, animated: true)
+    let viewController = ReviewsViewController(id: id)
+    viewController.coordinator = self
+    navigationController.pushViewController(viewController, animated: true)
+  }
+  
+  func showReviewDetail(_ reviewViewModel: ReviewViewModel?) {
+    let viewController = DetailReviewViewController( reviewViewModel)
+    viewController.coordinator = self
+    navigationController.pushViewController(viewController, animated: true)
   }
 }
