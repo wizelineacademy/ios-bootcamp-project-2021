@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController" customModule="TheMovieDb" customModuleProvider="target">
+            <connections>
+                <outlet property="resultTableView" destination="PaG-bG-eio" id="bLB-TL-gSM"/>
+                <outlet property="tableView" destination="39m-F8-OYb" id="gcG-Mb-68j"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="39m-F8-OYb">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="PaG-bG-eio">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="39m-F8-OYb" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="BDd-0r-zHj"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="PaG-bG-eio" secondAttribute="trailing" id="Hh2-IG-8Ak"/>
+                <constraint firstItem="39m-F8-OYb" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="R5x-lM-vFE"/>
+                <constraint firstItem="39m-F8-OYb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="VLN-1M-IK8"/>
+                <constraint firstItem="PaG-bG-eio" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="doc-YD-xIR"/>
+                <constraint firstItem="39m-F8-OYb" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="leT-J3-Ypd"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="PaG-bG-eio" secondAttribute="bottom" id="oq3-Ue-n0m"/>
+                <constraint firstItem="PaG-bG-eio" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="p2g-s2-Ihf"/>
+            </constraints>
+            <point key="canvasLocation" x="158" y="41"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

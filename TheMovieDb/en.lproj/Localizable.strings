@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  TheMovieDb
+
+  Created by Juan David Torres on 27/11/21.
+  
+*/
+"SEARCH_TITLE" = "Search by movie or actor";
+
