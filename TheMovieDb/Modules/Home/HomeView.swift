@@ -36,15 +36,23 @@ final class HomeView: UIViewController {
     
     var presenter = HomeViewPresenter()
     
-    @IBOutlet weak var feedType: UICollectionView!
+    private lazy var feedType: UICollectionView = {
+        var flowLayout = UICollectionViewFlowLayout()
+        flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        flowLayout.scrollDirection = .horizontal
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        return collection
+    }()
     
-    @IBOutlet weak var movieFeed: UICollectionView!
+    private lazy var movieFeed: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collection = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        return collection
+    }()
     
     lazy var loader = LoadingViewController()
     
     lazy private var searchController = UISearchController()
-    
-    private lazy var moviesDataSource = makeDataSource()
     
     enum Section: Int, CaseIterable {
         case all
@@ -56,16 +64,6 @@ final class HomeView: UIViewController {
     
     private var firstLoaded = true
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        title = "home.navigation.title".localized
-        presenter.delegate = self
-        configureSearch()
-        configureFeedCollection()
-        configureTypesCollection()
-        presenter.getMoviesIfNeeded(search: nil)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if firstLoaded {
@@ -74,16 +72,57 @@ final class HomeView: UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.delegate = self
+        presenter.getMoviesIfNeeded(search: nil)
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+    
+    override func loadView() {
+        super.loadView()
+        setupUI()
+        configureSearch()
+        configureFeedCollection()
+        configureTypesCollection()
+        activateConstraints()
+    }
+    
+    func setupUI() {
+        title = "home.navigation.title".localized
+        view.addSubview(movieFeed)
+        view.addSubview(feedType)
+    }
+    
+    func activateConstraints() {
+        movieFeed.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            movieFeed.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            movieFeed.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            movieFeed.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            movieFeed.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        feedType.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            feedType.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            feedType.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            feedType.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            feedType.heightAnchor.constraint(equalToConstant: 60)
+        ])
+    }
+    
     func configureTypesCollection() {
-        feedType.allowsMultipleSelection = false
+        feedType.register(FeedTypeCell.self, forCellWithReuseIdentifier: FeedTypeCell.cellIdentifier)
         feedType.dataSource = self
         feedType.delegate = self
         feedType.backgroundColor = .clear
     }
     
     func configureFeedCollection() {
+        movieFeed.register(MoviesFeedCell.self, forCellWithReuseIdentifier: MoviesFeedCell.cellIdentifier)
         movieFeed.collectionViewLayout = makeCollectionViewLayout()
-        movieFeed.dataSource = moviesDataSource
+        movieFeed.dataSource = self
         movieFeed.delegate = self
     }
     
@@ -104,10 +143,17 @@ extension HomeView: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        if presenter.isSearching {
-            return searchFeeds.count
-        } else {
-            return normalFeeds.count
+        switch collectionView {
+        case movieFeed:
+            return presenter.getMoviesCount()
+        case feedType:
+            if presenter.isSearching {
+                return searchFeeds.count
+            } else {
+                return normalFeeds.count
+            }
+        default:
+            return 0
         }
     }
     
@@ -115,16 +161,28 @@ extension HomeView: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: FeedTypeCell.cellIdentifier,
-            for: indexPath
-        ) as? FeedTypeCell
-        if presenter.isSearching {
-            cell?.updateUI(withFeedTitle: searchFeeds[indexPath.row].feedTitle)
-        } else {
-            cell?.updateUI(withFeedTitle: normalFeeds[indexPath.row].feedTitle)
+        switch collectionView {
+        case movieFeed:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: MoviesFeedCell.cellIdentifier,
+                for: indexPath
+            ) as? MoviesFeedCell
+            cell?.updateUI(withMovie: presenter.getMovie(forPosition: indexPath.row))
+            return cell ?? UICollectionViewCell()
+        case feedType:
+            let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: FeedTypeCell.cellIdentifier,
+                for: indexPath
+            ) as? FeedTypeCell
+            if presenter.isSearching {
+                cell?.updateUI(withFeedTitle: searchFeeds[indexPath.row].feedTitle)
+            } else {
+                cell?.updateUI(withFeedTitle: normalFeeds[indexPath.row].feedTitle)
+            }
+            return cell ?? UICollectionViewCell()
+        default:
+            return UICollectionViewCell()
         }
-        return cell ?? UICollectionViewCell()
     }
     
 }
@@ -151,9 +209,7 @@ extension HomeView: UICollectionViewDelegate {
     ) {
         switch collectionView {
         case movieFeed:
-            guard let selectedMovie = moviesDataSource.itemIdentifier(for: indexPath) else {
-                return
-            }
+            let selectedMovie = presenter.getMovie(forPosition: indexPath.row)
             let viewModel = DetailViewModel(
                 dependencies: DetailViewModel.Dependencies(movie: selectedMovie)
             )
@@ -169,19 +225,6 @@ extension HomeView: UICollectionViewDelegate {
 }
 
 private extension HomeView {
-    func makeDataSource() -> UICollectionViewDiffableDataSource<Section, Movie> {
-        return UICollectionViewDiffableDataSource(
-            collectionView: movieFeed
-        ) { collectionView, indexPath, movie in
-            let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: MoviesFeedCell.cellIdentifier,
-                for: indexPath
-            ) as? MoviesFeedCell
-            cell?.updateUI(withMovie: movie)
-            return cell
-        }
-    }
-    
     func makeGridLayoutSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(0.5),
@@ -213,10 +256,7 @@ private extension HomeView {
     }
     
     func updateFeed(withMovies movies: [Movie]) {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
-        snapshot.appendSections(Section.allCases)
-        snapshot.appendItems(movies)
-        moviesDataSource.apply(snapshot, animatingDifferences: true)
+        movieFeed.reloadData()
     }
 }
 

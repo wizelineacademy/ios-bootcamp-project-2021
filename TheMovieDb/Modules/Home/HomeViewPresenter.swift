@@ -68,6 +68,14 @@ final class HomeViewPresenter {
         }
     }
     
+    func getMoviesCount() -> Int {
+        movies.count
+    }
+    
+    func getMovie(forPosition index: Int) -> Movie {
+        movies[index]
+    }
+    
     func handleFeedResponse(_ response: MovieDBAPIListResponse<Movie>) {
         loadedPages = response.page
         movies.append(contentsOf: response.results)
