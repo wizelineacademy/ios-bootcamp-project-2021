@@ -19,7 +19,7 @@ struct PersonViewModel {
   
   var name: String { person.name }
   
-  var character: String? { person.character }
+  var character: String { person.character }
   
   var profilePath: String? {
     let url: String?

@@ -315,8 +315,8 @@
 				D3E0121427301F1000882F27 /* URLComponent */,
 				D3E0121227301E8500882F27 /* ApiError.swift */,
 				D3E0123B273022E900882F27 /* MovieClient.swift */,
-				D3E0123D2730232400882F27 /* Result.swift */,
 				D32DC1E4274A951D00D2865E /* NetworkDispatcher.swift */,
+				D3E0123D2730232400882F27 /* Result.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -357,6 +357,7 @@
 		D3E012212730200F00882F27 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D3B756D62742F6DF0076B047 /* SearchBarController.swift */,
 				837B4EAB258178B6003DFC67 /* FeedViewController.swift */,
 				D3D50C282732C8B1002C487F /* DetailViewController.swift */,
 				D3232910274D36C40021404F /* SwiftUIView */,
@@ -395,7 +396,6 @@
 			isa = PBXGroup;
 			children = (
 				D393509E273D55D800482AE7 /* LayoutUI.swift */,
-				D3B756D62742F6DF0076B047 /* SearchBarController.swift */,
 				D37F92032740265A00F49E61 /* MovieSection.swift */,
 				D3117BE32746ED5B00DCD791 /* Extensions.swift */,
 				D3DEF21127440089006D5507 /* CacheImage */,

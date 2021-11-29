@@ -25,7 +25,7 @@ struct MovieDetailsViewModel {
   
   var status: String { movieDetails.status }
   
-  var releaseDate: String { movieDetails.getMovieReleaseDateFormat() }
+  var releaseDate: String? { movieDetails.getMovieReleaseDateFormat() }
   
   var voteAverage: Float { movieDetails.voteAverage }
   

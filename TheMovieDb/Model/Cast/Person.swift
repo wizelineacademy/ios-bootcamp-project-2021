@@ -12,7 +12,7 @@ struct Person: Codable {
   let id: Int
   let name: String
   let profilePath: String?
-  let character: String?
+  let character: String
 
   private enum CodingKeys: String, CodingKey {
     case id

@@ -80,7 +80,6 @@ class FeedViewController: UIViewController {
       })
     }
     group.notify(queue: .main) {
-      print("reUpdate")
       self.feedCollectionView.reloadData()
     }
   }
@@ -226,6 +225,7 @@ extension FeedViewController: SearchBarDelegate {
       }
     } else if searchResult.count != 0 && text == "" {
       searchResult.removeAll()
+      searchBar.showsCancelButton = false
       DispatchQueue.main.async { [weak self] in
         self?.feedCollectionView.reloadData()
       }

@@ -12,7 +12,7 @@ struct MovieDetails: Codable {
   let id: Int
   let title: String
   let overview: String
-  let releaseDate: String
+  let releaseDate: String?
   let voteAverage: Float
   let budget: Int
   let backDropPath: String?
@@ -38,6 +38,7 @@ struct MovieDetails: Codable {
 extension MovieDetails {
   
   func getDate() -> Date? {
+    guard let releaseDate = self.releaseDate else { return nil }
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
     return formatter.date(from: releaseDate )
