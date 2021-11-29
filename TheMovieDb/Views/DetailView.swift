@@ -28,10 +28,9 @@ struct DetailView: View {
         return circlePosterImage
     }
     
-    
     var body: some View {
-        ScrollView{
-            VStack(alignment: .center){
+        ScrollView {
+            VStack(alignment: .center) {
                 buildBackdropImage()
                     .frame(height: 300, alignment: .top)
                 buildCirclePosterImage()
@@ -41,7 +40,7 @@ struct DetailView: View {
                     .font(.title)
                     .multilineTextAlignment(.center)
                     .padding(.all)
-                HStack{
+                HStack {
                     Text("Rating:")
                     Text(Utils.showStar(value: Int(movieData?.voteAverage ?? 0.0)))
                     Spacer()
@@ -82,7 +81,7 @@ struct CirclePosterImage: View {
     var posterPath: String = String()
     var body: some View {
         let urlString = "\(Constants.URLS.imageURL)\(posterPath)"
-        KFImage(URL(string:urlString))
+        KFImage(URL(string: urlString))
             .resizable()
             .scaledToFit()
             .frame(width: 100, height: 150)
@@ -91,7 +90,6 @@ struct CirclePosterImage: View {
             .shadow(radius: 7)
     }
 }
-
 
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {

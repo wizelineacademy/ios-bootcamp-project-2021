@@ -7,9 +7,8 @@
 
 import UIKit
 
-class MainViewController: UIViewController{
+class MainViewController: UIViewController {
     
-
     @IBOutlet weak var mainSegmentedControl: UISegmentedControl!
     @IBOutlet weak var mainTableView: UITableView!
     
@@ -39,7 +38,6 @@ class MainViewController: UIViewController{
         }
     }
 
-    
 }
 
 extension MainViewController {
@@ -54,7 +52,7 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! MovieCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as? MovieCell else { return UITableViewCell() }
         let movie = mainViewModel.cellForRowAt(indexPath: indexPath)
         cell.setCellWithValuesOf(movie)
         return cell
@@ -63,17 +61,21 @@ extension MainViewController: UITableViewDataSource {
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: Constants.mainSegueIdentifier, sender: self)
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let detailViewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else { return }
+        detailViewController.movieData = mainViewModel.cellForRowAt(indexPath: indexPath)
+        show(detailViewController, sender: self)
+        // performSegue(withIdentifier: Constants.mainSegueIdentifier, sender: self)
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.mainSegueIdentifier {
-            let destinationVC = segue.destination as! DetailViewController //as is the
+            let destinationVC = segue.destination as! DetailViewController
             guard let indexPath = mainTableView.indexPathForSelectedRow else { return }
             destinationVC.movieData = mainViewModel.cellForRowAt(indexPath: indexPath)
             
         }
-    }
+    }*/
 
 }

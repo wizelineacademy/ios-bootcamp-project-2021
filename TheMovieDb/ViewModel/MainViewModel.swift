@@ -11,13 +11,11 @@ public class MainViewModel {
     private var client = MovieClient()
     private var movies = [Movie]()
     
-    
     init(client: MovieClient = MovieClient()) {
         self.client = client
     }
     
-   
-    func loadMoviesData(with index: Int, completion: @escaping () -> ()) {
+    func loadMoviesData(with index: Int, completion: @escaping () -> Void) {
         
         var endpoint: MovieFeed {
             switch index {

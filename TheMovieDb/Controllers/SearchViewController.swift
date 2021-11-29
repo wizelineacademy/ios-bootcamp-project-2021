@@ -49,31 +49,34 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
-extension SearchViewController: UITableViewDataSource{
+extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         searchViewModel.numberOfRowsInSection(section: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as! MovieCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: Constants.cellIdentifier, for: indexPath) as? MovieCell else { return UITableViewCell() }
         let movie = searchViewModel.cellForRowAt(indexPath: indexPath)
         cell.setCellWithValuesOf(movie)
         return cell
     }
 }
 
-extension SearchViewController: UITableViewDelegate{
+extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: Constants.searchSegueIdentifier, sender: self)
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let detailViewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else { return }
+        detailViewController.movieData = searchViewModel.cellForRowAt(indexPath: indexPath)
+        show(detailViewController, sender: self)
+        // performSegue(withIdentifier: Constants.searchSegueIdentifier, sender: self)
         
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == Constants.searchSegueIdentifier {
-            let destinationVC = segue.destination as! DetailViewController //as is the
+            let destinationVC = segue.destination as! DetailViewController
             guard let indexPath = searchTableView.indexPathForSelectedRow else { return }
             destinationVC.movieData = searchViewModel.cellForRowAt(indexPath: indexPath)
         }
-    }
+    }*/
 }
-

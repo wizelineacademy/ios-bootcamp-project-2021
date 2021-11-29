@@ -12,7 +12,7 @@
         <!--Detail View Controller-->
         <scene sceneID="9FZ-QQ-dy8">
             <objects>
-                <viewController id="ZSC-7V-vYZ" customClass="DetailViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="ZSC-7V-vYZ" customClass="DetailViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="LEt-Ih-egk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -7,19 +7,14 @@
 
 import Foundation
 
-
 public class SearchViewModel {
     private var client = MovieClient()
     private var movies = [Movie]()
-
-
-
     init(client: MovieClient = MovieClient()) {
         self.client = client
     }
 
-
-    func searchMovie(with query: String?, completion: @escaping () -> ()) {
+    func searchMovie(with query: String?, completion: @escaping () -> Void) {
         guard let query = query, !query.isEmpty else { return }
         client.getSearch(query: query, params: nil) { [weak self] (result) in
   

@@ -13,19 +13,17 @@ class DetailViewController: UIViewController {
     var movieData: Movie?
     let swiftUI = DetailView()
     
-    func buildDetail () -> DetailView{
+    func buildDetail () -> DetailView {
         var swiftUI = DetailView()
         swiftUI.movieData = movieData
         return swiftUI
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let contentView = UIHostingController(rootView: buildDetail())
         
-        //contentView.movieData = movieData
         addChild(contentView)
         view.addSubview(contentView.view)
         contentView.view.translatesAutoresizingMaskIntoConstraints = false

@@ -19,13 +19,13 @@ class MovieClient: APIClient {
     }
     
     func getFeed(from movieFeedType: MovieFeed, completion: @escaping (Result<MoviesData?, APIError>) -> Void) {
-        fetch(with: movieFeedType.request , decode: { json -> MoviesData? in
+        fetch(with: movieFeedType.request, decode: { json -> MoviesData? in
             guard let movieFeedResult = json as? MoviesData else { return  nil }
             return movieFeedResult
         }, completion: completion)
     }
     
-    func getSearch(query: String, params: [String: String]?, completion: @escaping (Result<MoviesData?, APIError>) -> Void){
+    func getSearch(query: String, params: [String: String]?, completion: @escaping (Result<MoviesData?, APIError>) -> Void) {
         
         guard var urlComponents = URLComponents(string: "\(Constants.URLS.movieBaseURL)\(Constants.MovieControl.search)") else { return }
         
@@ -42,11 +42,9 @@ class MovieClient: APIClient {
         
         guard let url = urlComponents.url else { return }
         
-        
-        fetch(with: URLRequest(url: url) , decode: { json -> MoviesData? in
+        fetch(with: URLRequest(url: url), decode: { json -> MoviesData? in
             guard let movieFeedResult = json as? MoviesData else { return  nil }
             return movieFeedResult
         }, completion: completion)
     }
-    
 }

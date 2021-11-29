@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Constants { //constants
+struct Constants {
     static let cellIdentifier: String = "ReusableCell"
     static let cellXibName: String = "MovieCell"
     static let mainSegueIdentifier: String = "showDetail"

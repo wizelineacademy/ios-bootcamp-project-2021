@@ -14,4 +14,3 @@ func dataTask(with url: String, completionHandler: @escaping (Data?, URLResponse
     return self.dataTask(with: URLRequest(url: url), completionHandler: completionHandler)
     }
 }*/
-
