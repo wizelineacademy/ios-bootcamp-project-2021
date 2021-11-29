@@ -6,19 +6,16 @@
 //
 
 import SwiftUI
-import Kingfisher
 
 struct ReviewsRowView: View {
     let review: MovieReviewViewModel
     @State private var viewMore = false
+    @State private var avatarImage: Image = Image(systemName: "person.crop.circle")
     
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             HStack {
-                KFImage(review.getAvatarURL())
-                    .placeholder {
-                        Image(systemName: "person.crop.circle")
-                    }
+                avatarImage
                     .resizable()
                     .frame(width: 30, height: 30)
                     .scaledToFit()
@@ -46,11 +43,22 @@ struct ReviewsRowView: View {
             }
         }
         .padding(.vertical, 10)
+        .onAppear(perform: getUserImage)
     }
     
     func toggleViewMore() {
         withAnimation(.easeInOut) {
             self.viewMore.toggle()
+        }
+    }
+    
+    func getUserImage() {
+        if let avatarURL = review.getAvatarURL() {
+            ImageDownloader.getImage(withURL: avatarURL) { image in
+                if let image = image {
+                    self.avatarImage = Image(uiImage: image)
+                }
+            }
         }
     }
 }

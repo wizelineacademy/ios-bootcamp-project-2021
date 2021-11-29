@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 import SwiftUI
 
 class DetailViewController: UIViewController {
@@ -208,12 +207,9 @@ class DetailViewController: UIViewController {
         }
         
         if let posterURL = movieViewModel.posterURL {
-            self.moviePoster.kf.indicatorType = .activity
-            self.moviePoster.kf.setImage(
-                with: posterURL,
-                placeholder: UIImage(systemName: "film"),
-                options: nil,
-                completionHandler: nil)
+            ImageDownloader.getImage(withURL: posterURL) { image in
+                self.moviePoster.image = image
+            }
         }
         
         self.movieTitle.text = movieViewModel.title
