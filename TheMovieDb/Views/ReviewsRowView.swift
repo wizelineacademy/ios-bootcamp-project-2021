@@ -53,11 +53,13 @@ struct ReviewsRowView: View {
     }
     
     func getUserImage() {
-        if let avatarURL = review.getAvatarURL() {
-            ImageDownloader.getImage(withURL: avatarURL) { image in
-                if let image = image {
-                    self.avatarImage = Image(uiImage: image)
-                }
+        guard let avatarURL = review.getAvatarURL() else {
+            return
+        }
+        
+        ImageDownloader.getImage(withURL: avatarURL) { image in
+            if let image = image {
+                self.avatarImage = Image(uiImage: image)
             }
         }
     }
