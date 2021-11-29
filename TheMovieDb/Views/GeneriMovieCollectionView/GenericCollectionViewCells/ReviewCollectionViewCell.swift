@@ -116,8 +116,7 @@ extension ReviewCollectionViewCell {
             vwContainer.topAnchor.constraint(equalTo: self.topAnchor),
             vwContainer.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            
-            userLabel.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant:  spacing * 2),
+            userLabel.topAnchor.constraint(equalTo: vwContainer.topAnchor, constant: spacing * 2),
             userLabel.leadingAnchor.constraint(equalTo: vwContainer.leadingAnchor, constant: spacing),
             userLabel.trailingAnchor.constraint(equalTo: vwContainer.trailingAnchor, constant: -spacing),
             

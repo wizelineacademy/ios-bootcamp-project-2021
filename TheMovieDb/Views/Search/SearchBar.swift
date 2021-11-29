@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 protocol SearchBarDelegate: AnyObject {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar)
@@ -53,9 +54,10 @@ class SearchBar: UISearchController, SearchBarProtocol {
 
     init(_ placeholder: String?, delegate: SearchBarDelegate?) {
         self.searchBarDelegate = delegate
-        super.init(searchResultsController: nil)
+        super.init(searchResultsController: SearchMovieController())
         self.obscuresBackgroundDuringPresentation = false
         self.searchResultsUpdater = self
+       
         searchBar.delegate = self
         searchBar.showsCancelButton = false
         searchBar.placeholder = placeholder

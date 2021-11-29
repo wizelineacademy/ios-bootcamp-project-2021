@@ -14,7 +14,6 @@ class HomeViewController: UIViewController, HomeView {
     // Private Instances
     private var latestSearch: String?
     private var movieHomeCollectionView: GenericMovieCollectionView<SectionMovie>!
-    private var tableView: GenericTableViewController!
     
     // Lazy Vars
     lazy private var searchController: SearchBar = {
@@ -37,7 +36,6 @@ class HomeViewController: UIViewController, HomeView {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         setUpCollectionView()
-        setUpTableView()
         presenter?.fetchAllMovieList()
     }
   
@@ -52,19 +50,7 @@ class HomeViewController: UIViewController, HomeView {
         view.addSubview(movieHomeCollectionView)
     }
     
-    func setUpTableView() {
-        tableView = GenericTableViewController(frame: view.bounds)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(tableView)
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
-        tableView.isHidden = true
-    }
-    
+  
     // Methods to conform HomeView
     func showEmptyState() {
         print("")
@@ -77,8 +63,8 @@ class HomeViewController: UIViewController, HomeView {
         movieHomeCollectionView.reloadData()
     }
     
-    func showMoviesList(arrMovie: [Movie]) {
-        tableView.arrMovies = arrMovie
+   func showMoviesList(arrMovie: [Movie]) {
+        //tableView.arrMovies = arrMovie
     }
     
     func showLoading() {
@@ -103,11 +89,11 @@ class HomeViewController: UIViewController, HomeView {
 
 extension HomeViewController: SearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        tableView.isHidden = false
+        //tableView.isHidden = false
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        tableView.isHidden = true
+        //tableView.isHidden = true
     }
     
     func updateSearchResults(for text: String) {
