@@ -13,6 +13,7 @@ protocol MovieListView: AnyObject {
     func onUpdateMovies()
     func showError(_ error: MovieError)
     func didSetTitle(title: String)
+    func didSelectMovie(with id: Int)
 }
 
 final class MovieListPresenter {
@@ -66,6 +67,16 @@ final class MovieListPresenter {
                 self.updateMovies(response: results)
             })
             .store(in: &subscriptions)
+    }
+    
+    func didSelectMovie(at position: Int) {
+        let movie = movies[position]
+        
+        guard let movieId = movie.id else {
+            return
+        }
+        
+        self.viewMovieList?.didSelectMovie(with: movieId)
     }
 }
 

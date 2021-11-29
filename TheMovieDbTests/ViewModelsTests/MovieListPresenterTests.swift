@@ -69,4 +69,17 @@ class MovieListPresenterTests: XCTestCase {
     func testTitle() {
         XCTAssert(mockView.title == "Trending", "Failure")
     }
+    
+    func testDidSelectMovie() {
+        presenter?.listMovies()
+        presenter?.didSelectMovie(at: 0)
+        XCTAssertTrue(mockView.didSelectMovieCalled, "Did select was not called")
+    }
+    
+    func testDidSelectMovieFailed() {
+        presenter?.listMovies()
+        presenter?.movies[3].id = nil
+        presenter?.didSelectMovie(at: 3)
+        XCTAssertFalse(mockView.didSelectMovieCalled, "The movie Id exists and should not exist")
+    }
 }

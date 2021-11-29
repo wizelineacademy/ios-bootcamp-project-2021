@@ -12,15 +12,15 @@ final class ViewController: UIViewController {
     
     private var presenter: MovieListPresenter?
     
-    private var tableView: UITableView = {
+    var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
     
-    init(movieOption: MoviesOptions) {
+    init(movieOption: MoviesOptions, facade: MovieService) {
         super.init(nibName: nil, bundle: nil)
-        presenter = MovieListPresenter(view: self as MovieListView, facade: MovieFacade(), movieOption: movieOption)
+        presenter = MovieListPresenter(view: self as MovieListView, facade: facade, movieOption: movieOption)
     }
     
     required init?(coder: NSCoder) {
@@ -79,9 +79,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewControllerMovieInfo = MovieInfoViewController()
-        viewControllerMovieInfo.viewModel.movieID = presenter?.movies[indexPath.row].id
-        navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
+        presenter?.didSelectMovie(at: indexPath.row)
     }
 }
 
@@ -99,6 +97,12 @@ extension ViewController: MovieListView {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    func didSelectMovie(with id: Int) {
+        let viewControllerMovieInfo = MovieInfoViewController(facade: MovieFacade())
+        viewControllerMovieInfo.viewModel?.movieID = id
+        navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
     }
 }
 

@@ -23,6 +23,22 @@ class ReviewsViewModelTests: XCTestCase {
         viewModel = nil
     }
     
+    func testReviewsFailure() {
+        facade.failure = true
+        let expectation = XCTestExpectation(description: "Reviews received")
+        expectation.expectedFulfillmentCount = 2
+        
+        viewModel?.$activeError
+            .sink(receiveValue: { _ in
+                expectation.fulfill()
+            })
+            .store(in: &subscriptions)
+        
+        viewModel?.reviewsMovie()
+        wait(for: [expectation], timeout: 1)
+        XCTAssertNotNil(viewModel?.activeError, "Did not received an active error")
+    }
+    
     func testReviewsSuccess() {
         let expectedReviews = [ReviewsDetails(author: "Karla", content: "Excelent"),
                                ReviewsDetails(author: "Daniela", content: "Bad movie")]

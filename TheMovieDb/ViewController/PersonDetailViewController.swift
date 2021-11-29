@@ -10,7 +10,7 @@ import os.log
 
 final class PersonDetailViewController: UIViewController {
     
-    var viewModel: PersonDetailViewModel = .init(facade: MovieFacade())
+    var viewModel: PersonDetailViewModel?
     let personName = UILabel()
     let imagePerson = UIImageView()
     let textPerson = UITextView()
@@ -28,17 +28,26 @@ final class PersonDetailViewController: UIViewController {
         return stackView
     }()
     
+    init(facade: MovieService) {
+        super.init(nibName: nil, bundle: nil)
+        viewModel = PersonDetailViewModel(facade: facade)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addAllViews()
-        viewModel.loadPerson = { [weak self] in self?.setupUI() }
+        viewModel?.loadPerson = { [weak self] in self?.setupUI() }
         setupPersonNameLabel()
         setupImagePerson()
         setupTextPerson()
         setupStackView()
         configureUIDetailPerson()
-        viewModel.detailPersonID()
+        viewModel?.detailPersonID()
         os_log("PersonDetailViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
     
@@ -104,18 +113,18 @@ final class PersonDetailViewController: UIViewController {
     }
     
     func setupUI() {
-        personName.text = viewModel.person?.name
-        imagePerson.setImage(path: viewModel.person?.profilePath)
-        idLabel.text = "ID: \(viewModel.person?.id ?? 0)"
+        personName.text = viewModel?.person?.name
+        imagePerson.setImage(path: viewModel?.person?.profilePath)
+        idLabel.text = "ID: \(viewModel?.person?.id ?? 0)"
         let popularity = "popularity.person".localized
-        popularityLabel.text = String(format: popularity, "\(viewModel.person?.popularity ?? 0.0)")
+        popularityLabel.text = String(format: popularity, "\(viewModel?.person?.popularity ?? 0.0)")
         let knownFor = "known.for.department".localized
-        knownForDepartmentLabel.text = String(format: knownFor, viewModel.person?.knownForDepartment ?? "unavailable".localized)
+        knownForDepartmentLabel.text = String(format: knownFor, viewModel?.person?.knownForDepartment ?? "unavailable".localized)
         let biography = "biography".localized
-        textPerson.text = String(format: biography, viewModel.person?.biography ?? "unavailable".localized)
+        textPerson.text = String(format: biography, viewModel?.person?.biography ?? "unavailable".localized)
         let birthday = "birthday".localized
-        birthdayLabel.text = String(format: birthday, viewModel.person?.birthday ?? "unavailable".localized)
+        birthdayLabel.text = String(format: birthday, viewModel?.person?.birthday ?? "unavailable".localized)
         let deathday = "deathday".localized
-        deathdayLabel.text = String(format: deathday, viewModel.person?.deathday ?? "unavailable".localized)
+        deathdayLabel.text = String(format: deathday, viewModel?.person?.deathday ?? "unavailable".localized)
     }
 }
