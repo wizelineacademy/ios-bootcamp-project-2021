@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class LargeCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifer = "large-movie-cell-reuse-identifier"
@@ -20,7 +19,7 @@ class LargeCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    var portraitPhotoURL: URL? {
+    var portraitPhotoURL: String? {
         didSet {
             configure()
         }
@@ -44,7 +43,7 @@ extension LargeCollectionViewCell {
         contentView.addSubview(contentContainer)
         
         portraitImageView.translatesAutoresizingMaskIntoConstraints = false
-        portraitImageView.kf.setImage(with: portraitPhotoURL)
+        portraitImageView.loadImage(urlString: portraitPhotoURL ?? "")
         portraitImageView.layer.cornerRadius = 4
         portraitImageView.clipsToBounds = true
         contentContainer.addSubview(portraitImageView)

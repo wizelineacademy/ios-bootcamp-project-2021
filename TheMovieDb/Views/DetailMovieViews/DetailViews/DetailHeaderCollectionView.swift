@@ -60,7 +60,7 @@ extension DetailHeaderCollectionView {
         
         self.addSubview(vwContainer)
        
-        imvPoster.kf.setImage(with: viewModelMovie?.image)
+        imvPoster.loadImage(urlString: viewModelMovie?.image ?? "")
         imvPoster.layer.cornerRadius = 4
         imvPoster.clipsToBounds = true
         vwContainer.addSubview(imvPoster)

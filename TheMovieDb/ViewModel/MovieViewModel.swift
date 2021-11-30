@@ -10,7 +10,7 @@ import Foundation
 struct MovieViewModel: Hashable {
     let id: Int
     let title: String
-    let image: URL?
+    let image: String
     let originalTitle, overview, releaseDate: String
     let voteAverage: String
     let voteCount: String
@@ -39,11 +39,7 @@ extension MovieViewModel {
         self.voteCount = String(movie.voteCount ?? 0)
         self.voteAverage = String(movie.voteAverage ?? 0)
         self.popularity = String(movie.popularity ?? 0)
-        
-        if let portraitPhotoURL = movie.posterPath, let url = URL(string: "https://image.tmdb.org/t/p/w500\(portraitPhotoURL)") {
-            self.image = url
-        } else {
-            self.image = nil
-        }
+        self.image = "https://image.tmdb.org/t/p/w500\(movie.posterPath ?? "")"
+      
     }
 }

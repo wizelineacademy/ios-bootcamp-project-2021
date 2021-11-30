@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 protocol GenericTableViewDelegate: AnyObject {
     func selectedTableItem(movie: MovieViewModel)

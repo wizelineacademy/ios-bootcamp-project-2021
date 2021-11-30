@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Kingfisher
+
 class GenericMovieTableViewCell: UITableViewCell {
     static let reuseIdentifier = "cellGenericMovieTableViewCell"
     var movie: MovieViewModel? {
@@ -82,7 +82,7 @@ extension GenericMovieTableViewCell {
         self.addSubview(vwContainer)
                
         posterImage.translatesAutoresizingMaskIntoConstraints = false
-        posterImage.kf.setImage(with: movie?.image)
+        //posterImage.kf.setImage(with: movie?.image)
         posterImage.layer.cornerRadius = 4
         posterImage.clipsToBounds = true
         vwContainer.addSubview(posterImage)
