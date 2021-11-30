@@ -1,0 +1,49 @@
+/* 
+  Localizable.strings
+  TheMovieDb
+
+  Created by Karla Rubiano on 18/11/21.
+  
+*/
+
+// MARK: - Titles/Messages
+"title.initial.table.view" = "Show Movies";
+"reviews.title.bar.button" = "Reviews";
+"search.bar.placeholder" = "Search for movies or person";
+"alert.button" = "Dismiss";
+"alert.empty.response" = "%@ Not Found";
+"unavailable" = "Unavailable";
+"afirmative" = "Yes";
+"negative" = "No";
+"author" = "Author: %@";
+
+// MARK: - Type Search
+"person" = "Person";
+"movie" = "Movie";
+
+// MARK: - Movies Options
+"trending" = "Trending";
+"now.playing" = "Now Playing";
+"popular" = "Popular";
+"top.rated" = "Top Rated";
+"upcoming" = "Upcoming";
+
+// MARK: - Movie Details
+"original.title" = "Original Title: %@";
+"overview" = "Overview: %@";
+"original.language.movie" = "Original Language: %@";
+"popularity.movie" = "Popularity: %@";
+"id.movie" = "ID: %@";
+"adult.movie" = "Adult Movie: %@";
+"release.date.movie" = "Release Date: %@";
+"similar.movies" = "Similar Movies: %@";
+"recomendations" = "Recomendations: %@";
+"cast" = "Cast: %@";
+
+// MARK: - Person Detail
+"popularity.person" = "Popularity: %@";
+"known.for.department" = "Known for Department: %@";
+"biography" = "Biography: %@";
+"birthday" = "Birthday: %@";
+"deathday" = "Deathday: %@";
+

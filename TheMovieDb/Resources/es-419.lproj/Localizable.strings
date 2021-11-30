@@ -1,0 +1,48 @@
+/* 
+  Localizable.strings
+  TheMovieDb
+
+  Created by Karla Rubiano on 18/11/21.
+  
+*/
+
+// MARK: - Titles/Messages
+"title.initial.table.view" = "Mostrar Películas";
+"reviews.title.bar.button" = "Comentarios";
+"search.bar.placeholder" = "Buscar películas o personas";
+"alert.button" = "Cancelar";
+"alert.empty.response" = "No se encontraron %@";
+"unavailable" = "No disponible";
+"afirmative" = "Sí";
+"negative" = "No";
+"author" = "Autor: %@";
+
+// MARK: - Type Search
+"person" = "Persona";
+"movie" = "Pelicula";
+
+// MARK: - Movies Options
+"trending" = "Tendencias";
+"now.playing" = "En cartelera";
+"popular" = "Populares";
+"top.rated" = "Mejores calificadas";
+"upcoming" = "Próximos estrenos";
+
+// MARK: - Movie Details
+"original.title" = "Título Original: %@";
+"overview" = "Sinópsis: %@";
+"original.language.movie" = "Idioma Original: %@";
+"popularity.movie" = "Popularidad: %@";
+"id.movie" = "ID: %@";
+"adult.movie" = "Película Adultos: %@";
+"release.date.movie" = "Fecha de Estreno: %@";
+"similar.movies" = "Películas similares: %@";
+"recomendations" = "Recomendaciones: %@";
+"cast" = "Elenco: %@";
+
+// MARK: - Person Detail
+"popularity.person" = "Popularidad: %@";
+"known.for.department" = "Conocido como: %@";
+"biography" = "Biografía: %@";
+"birthday" = "Fecha de nacimiento: %@";
+"deathday" = "Fecha de fallecimiento: %@";
