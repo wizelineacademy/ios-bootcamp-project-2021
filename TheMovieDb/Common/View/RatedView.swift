@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 final class RatedView: UIView {
     
@@ -97,6 +98,31 @@ final class RatedView: UIView {
         DispatchQueue.main.async {
             self.layer.addSublayer(self.ratingShape)
         }
+    }
+}
+
+struct RatedSwiftUIView: UIViewRepresentable {
+    
+    @Binding var valueRating: Float
+    
+    let maxValue: Float
+    let placeholderText: String
+    let strokeWidth: CGFloat
+    let strokeColor: UIColor?
+    let backStrokeColor: UIColor?
+    let fontType: UIFont
+    
+    func makeUIView(context: Context) -> RatedView {
+        let ratedView = RatedView(frame: .zero, maxValue: maxValue, placeholderText: placeholderText)
+        ratedView.strokeWidth = strokeWidth
+        ratedView.strokeColor = strokeColor
+        ratedView.backStrokeColor = backStrokeColor
+        ratedView.fontType = fontType
+        return ratedView
+    }
+    
+    func updateUIView(_ uiView: RatedView, context: Context) {
+        uiView.value = valueRating
     }
 }
 

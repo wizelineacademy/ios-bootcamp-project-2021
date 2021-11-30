@@ -20,11 +20,13 @@ protocol DataSourceProtocol {
 
 final class DetailDataSource: DataSourceProtocol {
     var items: [AnyHashable] = []
+    weak var delegate: DetailReviewsCellDelegate?
     
     private let item: MovieModel
     
-    init(item: MovieModel) {
+    init(item: MovieModel, delegate: DetailReviewsCellDelegate) {
         self.item = item
+        self.delegate = delegate
         items.append(MovieRatingModel(rating: item.voteAverage,
                                       popularity: item.popularity,
                                       voteCount: item.voteCount))
@@ -48,6 +50,7 @@ final class DetailDataSource: DataSourceProtocol {
         case is MovieReviewsModel:
             let cell: DetailReviewsCell? = collectionView?.reuse(identifier: DetailReviewsCell.identifier,
                                                                  for: indexPath)
+            cell?.delegate = delegate
             cell?.reviewsModel = item as? MovieReviewsModel
             return cell
         case is MovieRecommendationsModel:

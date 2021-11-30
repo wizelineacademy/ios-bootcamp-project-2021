@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol DetailReviewsCellDelegate: AnyObject {
+    
+    func didSelectReview(_ review: ReviewModel?)
+}
+
 final class DetailReviewsCell: UICollectionViewCell {
     
     static let identifier: String = "detail-reviews-cell"
@@ -38,6 +43,7 @@ final class DetailReviewsCell: UICollectionViewCell {
         return pageControl
     }()
     
+    weak var delegate: DetailReviewsCellDelegate?
     var reviewsModel: MovieReviewsModel? {
         didSet {
             titleLabel.text = reviewsModel?.title
@@ -126,5 +132,10 @@ extension DetailReviewsCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return reviewsModel?.reviews.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let item = reviewsModel?.reviews[indexPath.row]
+        delegate?.didSelectReview(item)
     }
 }
