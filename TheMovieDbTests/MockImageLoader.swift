@@ -6,3 +6,15 @@
 //
 
 import Foundation
+@testable import TheMovieDb
+import UIKit
+
+class MockImageLoader: ImageProvider {
+    
+    var image: UIImage?
+    
+    func getImage(withURL url: URL, completion: @escaping (UIImage?) -> Void) {
+        completion(image)
+    }
+    
+}

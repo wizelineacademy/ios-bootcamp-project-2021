@@ -79,6 +79,26 @@ class HomePresenterTests: XCTestCase {
         XCTAssertEqual(sut.getMoviesCount(), 5)
     }
     
+    func testNilImageAfterImageLoadWithInvalidURL() {
+        service.list = MovieDBAPIListResponse(page: 1, results: [MovieStubGenerator.generateMovie(withPosterPath: false)], totalPages: 1, totalResults: 1)
+        sut.getMoviesIfNeeded(search: nil)
+        let expectation = self.expectation(description: "nilImageAfterImageLoadWithInvalidURL")
+        var result: UIImage?
+        sut.getMoviePoster(forPosition: 0) { image in
+            result = image
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNil(result)
+    }
+    
+    func testGetCorrectMovieOnPosition() {
+        let list = MovieStubGenerator.generateMovies(5)
+        service.list = MovieDBAPIListResponse(page: 1, results: list, totalPages: 1, totalResults: 5)
+        sut.getMoviesIfNeeded(search: nil)
+        XCTAssertEqual(sut.getMovie(forPosition: 0), list[0])
+    }
+    
 }
 
 class MockMovieFeedRepository: MovieFeedRepository {
