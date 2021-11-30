@@ -9,7 +9,8 @@ import Foundation
 import UIKit
 
 final class MoviesDetailPresenter: MoviesDetailPresenterProtocol {
-
+   
+    var didFetchMovies: Bool = false
     var view: MoviesDetailViewProtocol?
     var interactor: MoviesDetailInteractorInputProtocol?
     var router: MoviesDetailRouterProtocol?

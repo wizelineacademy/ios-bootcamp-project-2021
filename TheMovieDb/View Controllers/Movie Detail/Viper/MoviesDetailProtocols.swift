@@ -16,6 +16,8 @@ protocol MoviesDetailPresenterProtocol {
     func loadMovieDetail(movie: MovieProtocol)
     func loadSimilarMoviesFor(movie: MovieProtocol)
     func didSelectSimilarMovie(movie: MovieProtocol)
+    var didFetchMovies: Bool { get set }
+
 }
 
 // View
