@@ -12,14 +12,14 @@ protocol TabBarFactory {
     
     var configurator: TabBarSceneConfigurator? { get set }
     
-    func makeDetailScene(_ tabs: [UIViewController]?) -> UITabBarController?
+    func makeDetailScene() -> UITabBarController?
 }
 
 final class DefaultTabBarFactory: TabBarFactory {
     
     var configurator: TabBarSceneConfigurator?
     
-    func makeDetailScene(_ tabs: [UIViewController]?) -> UITabBarController? {
-        return configurator?.configured(tabs)
+    func makeDetailScene() -> UITabBarController? {
+        return configurator?.configured()
     }
 }

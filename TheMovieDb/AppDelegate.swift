@@ -19,14 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarFactory.configurator = configuration
         
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        var viewControllers: [UIViewController] = []
-        if let homeViewController = getHomeSections() {
-            viewControllers.append(homeViewController)
-        }
-        if let searchViewController = getSearchSections() {
-            viewControllers.append(searchViewController)
-        }
-        self.window?.rootViewController = tabBarFactory.makeDetailScene(viewControllers)
+        self.window?.rootViewController = tabBarFactory.makeDetailScene()
         self.window?.makeKeyAndVisible()
         return true
     }
@@ -43,19 +36,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
-    
-    func getHomeSections() -> UIViewController? {
-        let configuration = DefaultHomeSceneConfigurator()
-        let factory = DefaultHomeSceneFactory()
-        factory.configurator = configuration
-        return factory.makeHomeScene()
-    }
-    
-    func getSearchSections() -> UIViewController? {
-        let configuration = DefaultSearchSceneConfigurator()
-        let factory = DefaultSearchSceneFactory()
-        factory.configurator = configuration
-        return factory.makeSearchScene(request: SearchRequest())
     }
 }
