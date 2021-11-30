@@ -37,14 +37,6 @@ extension Request {
         
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = method.rawValue
-        
-        do {
-            if let params = params {
-                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: params, options: [])
-            }
-        } catch {
-            return nil
-        }
         return urlRequest
     }
     
