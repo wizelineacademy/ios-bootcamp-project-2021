@@ -14,9 +14,9 @@ struct ReviewDetailViewUI: View {
             Text(presenter.review?.content ?? "")
         }.padding(
             EdgeInsets(
-                top: InterfaceConst.zeroValue,
+                top: InterfaceConst.initZeroValue,
                 leading: InterfaceConst.secondaryPadding,
-                bottom: InterfaceConst.zeroValue,
+                bottom: InterfaceConst.initZeroValue,
                 trailing: InterfaceConst.secondaryPadding)
         )
         .navigationTitle(presenter.review?.author ?? "")

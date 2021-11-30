@@ -58,7 +58,7 @@ final class HomeView: UIViewController, DisplayError, DisplaySpinner {
 extension HomeView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let section = MovieGroupSections(rawValue: section) ?? .trending
-        return movies[section]?.count ?? 0
+        return movies[section]?.count ?? InterfaceConst.defaultValueItemsCell
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -149,47 +149,61 @@ extension HomeView {
     
     private func getHightLayoutSection() -> NSCollectionLayoutSection {
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.6))
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(InterfaceConst.fractionWidthDefaultValueSection), heightDimension: .fractionalWidth(InterfaceConst.fractionHightLayoutSection)
+        )
+        
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: InterfaceConst.initZeroValue, leading: InterfaceConst.initZeroValue, bottom: InterfaceConst.initZeroValue, trailing: InterfaceConst.initZeroValue
+        )
         
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.6))
+        let groupSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(InterfaceConst.fractionWidthDefaultValueSection), heightDimension: .fractionalWidth(InterfaceConst.fractionHightLayoutSection)
+        )
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: InterfaceConst.initZeroValue, leading: InterfaceConst.initZeroValue, bottom: InterfaceConst.initZeroValue, trailing: InterfaceConst.initZeroValue
+        )
         
         return section
         
     }
     
     private  func getDefaultLayoutSection() -> NSCollectionLayoutSection {
-        var sizeHeight: NSCollectionLayoutDimension = .fractionalHeight(0.2)
-        var sizeWidth: NSCollectionLayoutDimension = .fractionalWidth(0.25)
+        var sizeHeight: NSCollectionLayoutDimension = .fractionalHeight(InterfaceConst.fractionDefaultHeightSection)
+        var sizeWidth: NSCollectionLayoutDimension = .fractionalWidth(InterfaceConst.fractionDefaultWidthSection)
         if UIDevice.current.userInterfaceIdiom == .pad {
-            sizeHeight = .fractionalHeight(0.25)
-            sizeWidth = .fractionalWidth(0.20)
+            sizeHeight = .fractionalHeight(InterfaceConst.fractionDefaultHeightPadSection)
+            sizeWidth = .fractionalWidth(InterfaceConst.fractionDefaultWidthPadSection)
         }
         
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: sizeWidth, heightDimension: .fractionalHeight(1))
+        let itemSize = NSCollectionLayoutSize(widthDimension: sizeWidth, heightDimension: .fractionalHeight(InterfaceConst.fractionWidthDefaultValueSection))
 
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets.trailing = 16
-        item.contentInsets.bottom = 16
+        item.contentInsets.trailing = InterfaceConst.paddingDefaultLayout
+        item.contentInsets.bottom = InterfaceConst.paddingDefaultLayout
         
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: sizeHeight)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(InterfaceConst.fractionWidthDefaultValueSection), heightDimension: sizeHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets.leading = 16
+        section.contentInsets.leading = InterfaceConst.paddingDefaultLayout
         section.orthogonalScrollingBehavior = .continuous
         section.boundarySupplementaryItems = [
-            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35)), elementKind: categoryHomeHeaderId, alignment: .topLeading)
+            .init(
+                layoutSize: .init(
+                    widthDimension: .fractionalWidth(InterfaceConst.fractionWidthDefaultValueSection), heightDimension: .absolute(InterfaceConst.headerHeight)
+                ),
+                elementKind: categoryHomeHeaderId, alignment: .topLeading
+            )
         ]
         
         return section
@@ -199,25 +213,38 @@ extension HomeView {
     private func getTopRatedLayoutSection() -> NSCollectionLayoutSection {
         
         // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.5), heightDimension: .fractionalHeight(1))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+        let itemSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(InterfaceConst.fractionTopRatedWidthSection), heightDimension: .fractionalHeight(InterfaceConst.fractionTopRatedHeightSection)
+        )
         
-        var sizeHeight: NSCollectionLayoutDimension = .fractionalHeight(0.3)
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        item.contentInsets = NSDirectionalEdgeInsets(
+            top: InterfaceConst.initZeroValue, leading: InterfaceConst.initZeroValue, bottom: InterfaceConst.initZeroValue, trailing: InterfaceConst.initZeroValue
+        )
+        
+        var sizeHeight: NSCollectionLayoutDimension = .fractionalHeight(InterfaceConst.fractionTopRatedHeightDimensionSection)
         if UIDevice.current.userInterfaceIdiom == .pad {
-            sizeHeight = .fractionalHeight(0.46)
+            sizeHeight = .fractionalHeight(InterfaceConst.fractionTopRatedHeightDimensionPadSection)
         }
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: sizeHeight)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(InterfaceConst.fractionWidthDefaultValueSection), heightDimension: sizeHeight)
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         
         // section
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(
+            top: InterfaceConst.initZeroValue, leading: InterfaceConst.paddingDefaultLayout, bottom: InterfaceConst.initZeroValue, trailing: InterfaceConst.initZeroValue
+        )
         
         section.boundarySupplementaryItems = [
-            .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(35)), elementKind: categoryHomeHeaderId, alignment: .topLeading)
+            .init(
+                layoutSize:
+                        .init(
+                            widthDimension: .fractionalWidth(InterfaceConst.fractionWidthDefaultValueSection), heightDimension: .absolute(InterfaceConst.headerHeight)
+                        ),
+                elementKind: categoryHomeHeaderId, alignment: .topLeading
+            )
         ]
         
         return section

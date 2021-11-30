@@ -95,11 +95,19 @@ extension SearchingView {
 extension SearchingView: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return .init(top: 0, left: 20, bottom: 0, right: 20)
+        return .init(
+            top: InterfaceConst.initZeroValue,
+            left: InterfaceConst.paddingPrimaryValue,
+            bottom: InterfaceConst.initZeroValue,
+            right: InterfaceConst.paddingPrimaryValue
+        )
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var defaultSize: CGSize = .init(width: (view.frame.width - 60) / 3, height: view.frame.height * 0.23)
+        var defaultSize: CGSize = .init(
+            width: (view.frame.width - InterfaceConst.widthMovieCellMinus) / InterfaceConst.divideInto3,
+            height: view.frame.height * InterfaceConst.heightMovieCell
+        )
         if UIDevice.current.userInterfaceIdiom == .pad {
             defaultSize = .init(width: (view.frame.width - 100) / 5, height: view.frame.height * 0.20)
         }
@@ -108,11 +116,11 @@ extension SearchingView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-         10
+        InterfaceConst.paddingDefault
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        10
+        InterfaceConst.paddingDefault
     }
 }
 

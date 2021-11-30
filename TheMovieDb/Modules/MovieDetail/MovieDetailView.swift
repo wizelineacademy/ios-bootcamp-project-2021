@@ -26,8 +26,13 @@ final class MovieDetailView: UICollectionViewController, DisplayError {
     }
     
     init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        layout.itemSize = CGSize(width: 100, height: 140)
+        layout.sectionInset = UIEdgeInsets(
+            top: InterfaceConst.initZeroValue,
+            left: InterfaceConst.paddingDefault,
+            bottom: InterfaceConst.initZeroValue,
+            right: InterfaceConst.paddingDefault
+        )
+        layout.itemSize = CGSize(width: InterfaceConst.widthItemCellMovieDetail, height: InterfaceConst.heightItemCellMovieDetail)
         super.init(collectionViewLayout: layout)
     }
     
@@ -56,7 +61,7 @@ final class MovieDetailView: UICollectionViewController, DisplayError {
 extension MovieDetailView {
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let section = MovieDetailSections(rawValue: section) ?? .similar
-        guard let movies = movies[section] else { return 0}
+        guard let movies = movies[section] else { return InterfaceConst.defaultValueItemsCell }
         return movies.count
     }
     
@@ -105,7 +110,7 @@ extension MovieDetailView: UICollectionViewDelegateFlowLayout {
         let section = MovieDetailSections(rawValue: section) ?? .similar
         switch section {
         case .recommendations:
-            let frame = CGRect(x: 0, y: 0, width: view.frame.width, height: section.sizeCell)
+            let frame = CGRect(x: InterfaceConst.initZeroValue, y: InterfaceConst.initZeroValue, width: view.frame.width, height: section.sizeCell)
             let estimatedSizeCell = DetailHeaderView(frame: frame)
             estimatedSizeCell.viewModel = viewModel
             estimatedSizeCell.layoutIfNeeded()

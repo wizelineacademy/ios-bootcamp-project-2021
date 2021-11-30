@@ -22,7 +22,7 @@ final class DetailHeaderView: UICollectionReusableView {
     
     private let overviewLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = InterfaceConst.initZeroNumberLineValue
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
@@ -38,7 +38,7 @@ final class DetailHeaderView: UICollectionReusableView {
     private let headerLabel: UILabel = {
         let label = UILabel()
         label.text = MoviesSectionConst.recommendations
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.headerFontSize)
         return label
     }()
     
@@ -46,7 +46,7 @@ final class DetailHeaderView: UICollectionReusableView {
         let button = UIButton(type: .system)
         button.setTitle(InterfaceConst.reviews, for: .normal)
         button.layer.masksToBounds = true
-        button.layer.cornerRadius = 10
+        button.layer.cornerRadius = InterfaceConst.defaultCornerRadius
         button.backgroundColor = .systemBlue
         button.tintColor = .white
         return button
@@ -73,9 +73,16 @@ final class DetailHeaderView: UICollectionReusableView {
     
     // MARK: - Helpers
     private func configureUI() {
-        let height = frame.width * 0.6
+        let height = frame.width * InterfaceConst.fractionHightLayoutSection
         addSubview(headerLabel)
-        headerLabel.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
+        headerLabel.anchor(
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingLeft: InterfaceConst.paddingDefault,
+            paddingBottom: InterfaceConst.paddingDefault,
+            paddingRight: InterfaceConst.paddingDefault
+        )
         
         addSubview(imageBackground)
         imageBackground.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
@@ -83,22 +90,48 @@ final class DetailHeaderView: UICollectionReusableView {
         
         stack = UIStackView(arrangedSubviews: [dateLabel, votesLabel, popularityLabel])
         addSubview(stack)
-        stack.anchor(top: imageBackground.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10)
+        stack.anchor(
+            top: imageBackground.bottomAnchor,
+            left: leftAnchor, right: rightAnchor,
+            paddingTop: InterfaceConst.paddingDefault,
+            paddingLeft: InterfaceConst.paddingDefault,
+            paddingRight: InterfaceConst.paddingDefault
+        )
         stack.distribution = .equalSpacing
-        stack.setHeight(25)
+        stack.setHeight(InterfaceConst.heightTagsDetailView)
         
         configureLabelToTag(label: dateLabel)
         configureLabelToTag(label: votesLabel, colorBackground: .systemPurple)
         configureLabelToTag(label: popularityLabel, colorBackground: .systemGreen)
         
         addSubview(reviewsButton)
-        reviewsButton.anchor( left: leftAnchor, bottom: headerLabel.topAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
-        reviewsButton.setHeight(30)
+        reviewsButton.anchor(
+            left: leftAnchor,
+            bottom: headerLabel.topAnchor,
+            right: rightAnchor, paddingTop:
+                InterfaceConst.paddingDefault,
+            paddingLeft: InterfaceConst.paddingDefault,
+            paddingBottom: InterfaceConst.paddingDefault,
+            paddingRight: InterfaceConst.paddingDefault
+        )
+        reviewsButton.setHeight(InterfaceConst.heighReviewButton)
         reviewsButton.addTarget(self, action: #selector(handleReview), for: .touchUpInside)
         
+        configureOverviewLabel()
+    }
+    
+    private func configureOverviewLabel() {
         addSubview(overviewLabel)
-        overviewLabel.anchor(top: stack.bottomAnchor, left: leftAnchor, bottom: reviewsButton.topAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
-        
+        overviewLabel.anchor(
+            top: stack.bottomAnchor,
+            left: leftAnchor,
+            bottom: reviewsButton.topAnchor,
+            right: rightAnchor,
+            paddingTop: InterfaceConst.paddingDefault,
+            paddingLeft: InterfaceConst.paddingDefault,
+            paddingBottom: InterfaceConst.paddingDefault,
+            paddingRight: InterfaceConst.paddingDefault
+        )
     }
     
     private func configure() {
@@ -112,11 +145,11 @@ final class DetailHeaderView: UICollectionReusableView {
     
     private func configureLabelToTag(label: UILabel, colorBackground: UIColor = .blue) {
         label.backgroundColor = .clear
-        label.layer.cornerRadius = 10
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.layer.cornerRadius = InterfaceConst.defaultCornerRadius
+        label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.fontSizeTag)
         label.layer.masksToBounds = true
         label.layer.borderColor = colorBackground.cgColor
-        label.layer.borderWidth = 3.0
+        label.layer.borderWidth = InterfaceConst.borderWidthTag
     }
     // MARK: - Actions
     

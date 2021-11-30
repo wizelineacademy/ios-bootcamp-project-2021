@@ -28,7 +28,7 @@ final class SearchingInteractor: SearchingInteractorInputProtocol {
                 let movies = movies.movies
                 let viewModel = movies.map { MovieViewModel(movie: $0) }
                 self.presenter?.moviesFound(moviesFound: viewModel)
-                if viewModel.count == 0 {
+                if viewModel.count == InterfaceConst.noResultsValue {
                     self.presenter?.noSearchesFound(with: InterfaceConst.noMovies)
                 }
      

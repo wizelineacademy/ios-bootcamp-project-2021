@@ -18,8 +18,7 @@ final class HomeHeader: UICollectionReusableView, Reusable {
     
     private let headerLabel: UILabel = {
        let label = UILabel()
-        label.text = "Category"
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.headerFontSize)
         return label
     }()
     
