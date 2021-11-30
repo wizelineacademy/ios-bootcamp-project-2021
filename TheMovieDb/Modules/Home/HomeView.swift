@@ -34,7 +34,7 @@ private extension FeedTypes {
 
 final class HomeView: UIViewController {
     
-    var presenter = HomeViewPresenter()
+    var presenter = HomePresenter()
     
     private lazy var feedType: UICollectionView = {
         var flowLayout = UICollectionViewFlowLayout()
@@ -167,7 +167,9 @@ extension HomeView: UICollectionViewDataSource {
                 withReuseIdentifier: MoviesFeedCell.cellIdentifier,
                 for: indexPath
             ) as? MoviesFeedCell
-            cell?.updateUI(withMovie: presenter.getMovie(forPosition: indexPath.row))
+            presenter.getMoviePoster(forPosition: indexPath.row) { image in
+                cell?.updateUI(withMoviePoster: image)
+            }
             return cell ?? UICollectionViewCell()
         case feedType:
             let cell = collectionView.dequeueReusableCell(
@@ -279,7 +281,7 @@ extension HomeView: UISearchControllerDelegate {
     }
 }
 
-extension HomeView: HomeViewPresenterDelegate {
+extension HomeView: HomePresenterDelegate {
     
     func didStartLoading() {
         add(loader)

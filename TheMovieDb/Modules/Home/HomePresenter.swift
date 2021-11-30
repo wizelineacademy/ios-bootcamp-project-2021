@@ -1,5 +1,5 @@
 //
-//  HomeViewPresenter.swift
+//  HomePresenter.swift
 //  TheMovieDb
 //
 //  Created by Ricardo Ramirez on 20/11/21.
@@ -7,12 +7,17 @@
 
 import Foundation
 import OSLog
+import UIKit
 
-final class HomeViewPresenter {
+final class HomePresenter {
 
     private let service: MovieFeedRepository
     
-    weak var delegate: HomeViewPresenterDelegate?
+    private let imageLoader: ImageProvider
+    
+    weak var delegate: HomePresenterDelegate?
+    
+    private let cache = Cache<String, UIImage>()
     
     private var movies = [Movie]()
     
@@ -44,8 +49,9 @@ final class HomeViewPresenter {
         }
     }
     
-    init(service: MovieFeedRepository = MovieDBAPI()) {
+    init(service: MovieFeedRepository = MovieDBAPI(), imageLoader: ImageProvider = ImageLoader()) {
         self.service = service
+        self.imageLoader = imageLoader
     }
     
     func getMoviesIfNeeded(search: String? = nil) {
@@ -74,6 +80,16 @@ final class HomeViewPresenter {
     
     func getMovie(forPosition index: Int) -> Movie {
         movies[index]
+    }
+    
+    func getMoviePoster(forPosition index: Int, completion: @escaping (UIImage?) -> Void) {
+        guard let posterpath = movies[index].posterPath,
+              let posterURL = URL(string: MovieDBAPI.APIConstants.imageUrl + posterpath)
+            else {
+            completion(nil)
+            return
+        }
+        imageLoader.getImage(withURL: posterURL, completion: completion)
     }
     
     func handleFeedResponse(_ response: MovieDBAPIListResponse<Movie>) {

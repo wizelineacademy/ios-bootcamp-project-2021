@@ -9,7 +9,9 @@ import Foundation
 
 enum NetworkError: Error {
     case invalidRequest
+    case serverError
     case noData
+    case decodingFailed
 }
 
 protocol NetworkDispatcher {
@@ -21,9 +23,9 @@ protocol NetworkDispatcher {
 
 struct URLSessionNetworkDispatcher: NetworkDispatcher {
     
-    private let urlSession: URLSession
+    private let urlSession: URLSessionProtocol
     
-    init(urlSession: URLSession = URLSession.shared) {
+    init(urlSession: URLSessionProtocol = URLSession.shared) {
         self.urlSession = urlSession
     }
     
@@ -37,7 +39,7 @@ struct URLSessionNetworkDispatcher: NetworkDispatcher {
         }
         urlSession.dataTask(with: urlRequest) { (data, _, error) in
             if let error = error {
-                completion(.failure(error))
+                completion(.failure(NetworkError.serverError))
                 return
             }
             

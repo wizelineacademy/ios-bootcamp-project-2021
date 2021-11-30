@@ -7,6 +7,7 @@
 
 import Foundation
 import OSLog
+import UIKit
 
 protocol ViewModel {
     associatedtype Dependencies
@@ -24,13 +25,17 @@ class DetailViewModel: ViewModel {
     
     weak var delegate: DetailViewModelDelegate?
     
+    private let cache = Cache<String, UIImage>()
+    
     struct Dependencies {
         let movie: Movie
         let service: DetailMovieRepository
+        let imageLoader: ImageProvider
         
-        init(movie: Movie, service: DetailMovieRepository = MovieDBAPI()) {
+        init(movie: Movie, service: DetailMovieRepository = MovieDBAPI(), imageLoader: ImageProvider = ImageLoader()) {
             self.movie = movie
             self.service = service
+            self.imageLoader = imageLoader
         }
     }
     
@@ -64,6 +69,16 @@ class DetailViewModel: ViewModel {
     
     func getMoviePosterPath() -> String? {
         dependencies.movie.posterPath
+    }
+    
+    func getMoviePoster(completion: @escaping (UIImage?) -> Void) {
+        guard let posterpath = dependencies.movie.posterPath,
+              let posterURL = URL(string: MovieDBAPI.APIConstants.imageUrl + posterpath)
+            else {
+            completion(nil)
+            return
+        }
+        dependencies.imageLoader.getImage(withURL: posterURL, completion: completion)
     }
     
     func getSimilarMovies() -> String? {
