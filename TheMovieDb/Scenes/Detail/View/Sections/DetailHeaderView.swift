@@ -16,6 +16,7 @@ final class DetailHeaderView: UICollectionReusableView {
         let image = UIImageView(frame: .zero)
         image.contentMode = .scaleAspectFill
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.clipsToBounds = true
         return image
     }()
     

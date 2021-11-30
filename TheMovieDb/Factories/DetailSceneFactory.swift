@@ -14,6 +14,7 @@ protocol DetailSceneFactory {
 }
 
 final class DefaultDetailSceneFactory: DetailSceneFactory {
+    
     var configurator: DetailSceneConfigurator?
     
     func makeDetailScene(movie: MovieModel) -> UIViewController? {

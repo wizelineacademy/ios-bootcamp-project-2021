@@ -16,6 +16,7 @@ protocol DetailSceneInteractorOutput: AnyObject {
 final class DetailSceneInteractor {
     var presenter: DetailScenePresenterInput?
     var worker: DetailSceneWorker?
+    var isPaginationEnabled: Bool = true
 }
 
 extension DetailSceneInteractor: DetailSceneInteractorInput {

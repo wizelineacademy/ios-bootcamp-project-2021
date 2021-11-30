@@ -51,6 +51,12 @@ final class HomeViewCell: UICollectionViewCell {
         }
     }
     
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentView.layer.cornerRadius = 8
+        setupUI()
+    }
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         contentView.layer.cornerRadius = 8

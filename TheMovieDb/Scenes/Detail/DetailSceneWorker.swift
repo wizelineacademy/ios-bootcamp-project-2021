@@ -24,6 +24,7 @@ final class DetailSceneWorker {
 }
 
 extension DetailSceneWorker: DetailSceneLogic {
+    
     func callDetailServices(reviewRequest: ReviewRequest,
                             recommendationRequest: RecommendationsRequest,
                             completion: @escaping ([ReviewModel], [MovieModel]) -> Void) {
