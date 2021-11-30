@@ -16,19 +16,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
 
         if let scene = scene as? UIWindowScene {
-            var viewControllers: [UIViewController] = []
-            if let homeViewController = getHomeSections() {
-                viewControllers.append(homeViewController)
-            }
-            if let searchViewController = getSearchSections() {
-                viewControllers.append(searchViewController)
-            }
             let configuration = DefaultTabBarSceneConfigurator()
             let tabBarFactory = DefaultTabBarFactory()
             tabBarFactory.configurator = configuration
             window?.makeKeyAndVisible()
             let window = UIWindow(windowScene: scene)
-            window.rootViewController = tabBarFactory.makeDetailScene(viewControllers)
+            window.rootViewController = tabBarFactory.makeDetailScene()
             self.window = window
             window.makeKeyAndVisible()
         }
@@ -60,20 +53,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-    }
-    
-    func getHomeSections() -> UIViewController? {
-        let configuration = DefaultHomeSceneConfigurator()
-        let factory = DefaultHomeSceneFactory()
-        factory.configurator = configuration
-        return factory.makeHomeScene()
-    }
-    
-    func getSearchSections() -> UIViewController? {
-        let configuration = DefaultSearchSceneConfigurator()
-        let factory = DefaultSearchSceneFactory()
-        factory.configurator = configuration
-        return factory.makeSearchScene(request: SearchRequest())
     }
 }
 
