@@ -8,7 +8,7 @@
 import Foundation
 import OSLog
 
-final class HomeViewPresenter {
+final class HomePresenter {
 
     private let service: MovieFeedRepository
     
