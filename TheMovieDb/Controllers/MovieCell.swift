@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class MovieCell: UICollectionViewCell {
     static let cellIdentifier = "MovieCell"
@@ -71,12 +70,9 @@ class MovieCell: UICollectionViewCell {
             self.movieTitle.text = movieViewModel.title
             self.movieRating.text = String(movieViewModel.rating)
             if let posterURL = movieViewModel.posterURL {
-                self.movieImage.kf.indicatorType = .activity
-                self.movieImage.kf.setImage(
-                    with: posterURL,
-                    placeholder: UIImage(systemName: "film"),
-                    options: nil,
-                    completionHandler: nil)
+                ImageDownloader.getImage(withURL: posterURL) { image in
+                    self.movieImage.image = image
+                }
             }
         }
     }
