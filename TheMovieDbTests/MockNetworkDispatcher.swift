@@ -18,12 +18,7 @@ class MockNetworkDispatcher: NetworkDispatcher {
         if let data = data {
             completion(.success(data))
         } else {
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.failure(NSError(domain: "", code: 0, userInfo: nil)))
-            }
-            
+            completion(.failure(error ?? NSError(domain: "", code: 0, userInfo: nil)))
         }
     }
     
