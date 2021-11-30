@@ -14,10 +14,10 @@ extension UIView {
         left: NSLayoutXAxisAnchor? = nil,
         bottom: NSLayoutYAxisAnchor? = nil,
         right: NSLayoutXAxisAnchor? = nil,
-        paddingTop: CGFloat = 0,
-        paddingLeft: CGFloat = 0,
-        paddingBottom: CGFloat = 0,
-        paddingRight: CGFloat = 0,
+        paddingTop: CGFloat = InterfaceConst.zeroValue,
+        paddingLeft: CGFloat = InterfaceConst.zeroValue,
+        paddingBottom: CGFloat = InterfaceConst.zeroValue,
+        paddingRight: CGFloat = InterfaceConst.zeroValue,
         width: CGFloat? = nil,
         height: CGFloat? = nil
     ) {

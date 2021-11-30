@@ -34,7 +34,7 @@ extension DisplaySpinner where Self: UIViewController {
         let spinnerView = view.viewWithTag(InterfaceConst.defaultViewTag)
         DispatchQueue.main.async {
             UIView.animate(withDuration: InterfaceConst.defaultTimeAnimation) {
-                spinnerView?.alpha = InterfaceConst.zeroAlphaValue
+                spinnerView?.alpha = InterfaceConst.zeroValue
             } completion: { _ in
                 spinnerView?.removeFromSuperview()
             }

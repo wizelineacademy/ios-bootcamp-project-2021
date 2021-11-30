@@ -52,7 +52,13 @@ final class DetailHeaderView: UICollectionReusableView {
         return button
     }()
     
-    private let imageBackground = BackgroundImageView()
+    private let imageBackground: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .darkGray
+        return imageView
+    }()
     
     // MARK: - Life Cycle
     override init(frame: CGRect) {

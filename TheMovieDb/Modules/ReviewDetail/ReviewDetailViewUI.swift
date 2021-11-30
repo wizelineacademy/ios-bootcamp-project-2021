@@ -12,8 +12,14 @@ struct ReviewDetailViewUI: View {
     var body: some View {
         ScrollView {
             Text(presenter.review?.content ?? "")
-        }.padding()
-            .navigationTitle(presenter.review?.author ?? "")
+        }.padding(
+            EdgeInsets(
+                top: InterfaceConst.zeroValue,
+                leading: InterfaceConst.secondaryPadding,
+                bottom: InterfaceConst.zeroValue,
+                trailing: InterfaceConst.secondaryPadding)
+        )
+        .navigationTitle(presenter.review?.author ?? "")
     }
     
 }

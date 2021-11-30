@@ -14,7 +14,7 @@ protocol DisplayError {
 extension DisplayError where Self: UIViewController {
     func viewDisplayError(with message: String) {
         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        alert.addAction(UIAlertAction(title: InterfaceConst.okButton, style: .default, handler: nil))
         self.present(alert, animated: true)
     }
 }

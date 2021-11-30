@@ -15,7 +15,13 @@ final class ReviewCell: UICollectionViewCell, Reusable {
             configure()
         }
     }
-    private let logoImageView = BackgroundImageView()
+    private let logoImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .darkGray
+        return imageView
+    }()
     
     private let authorNameLabel: UILabel = {
         let label = UILabel()

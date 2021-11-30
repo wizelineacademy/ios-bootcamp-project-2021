@@ -17,11 +17,16 @@ final class HightSectionCell: UICollectionViewCell, Reusable {
         }
     }
     
-    private let imageBackground = BackgroundImageView()
+    private let imageBackground: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .darkGray
+        return imageView
+    }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "The Batman"
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .white
         return label

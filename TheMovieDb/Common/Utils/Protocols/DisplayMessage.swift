@@ -17,7 +17,7 @@ extension DisplayMessage where Self: UIViewController {
             let label = UILabel()
             label.text = message
             label.tag = InterfaceConst.defaultViewTag
-            label.font = UIFont.boldSystemFont(ofSize: 16)
+            label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.defaultFontSize)
             return label
         }()
         

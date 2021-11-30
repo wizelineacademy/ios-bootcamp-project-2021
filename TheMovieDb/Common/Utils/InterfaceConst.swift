@@ -17,9 +17,12 @@ enum InterfaceConst {
     static let search = "Search".localized()
     static let noMovies = "No movies".localized()
     static let noReviews = "No Reviews".localized()
+    static let okButton = "Ok".localized()
+    static let defaultFontSize = 16.0
     static let defaultViewTag = 1
     static let blueAppColor = "BlueAppColor"
     static let defaultTimeAnimation = 0.5
-    static let zeroAlphaValue = 0.0
+    static let zeroValue = 0.0
+    static let secondaryPadding = 15.0
     
 }

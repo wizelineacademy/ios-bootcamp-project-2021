@@ -34,7 +34,6 @@
 		4546A262272B848800D77147 /* APIUrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4546A261272B848800D77147 /* APIUrlBuilder.swift */; };
 		455C5ACF2734DE3D00ADE036 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5ACE2734DE3D00ADE036 /* Reusable.swift */; };
 		455C5AD12734E20400ADE036 /* ReviewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5AD02734E20400ADE036 /* ReviewViewModel.swift */; };
-		455C5AD32734ECE700ADE036 /* BackgroundImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455C5AD22734ECE700ADE036 /* BackgroundImageView.swift */; };
 		456AAFEC2751E1CA00568A28 /* DisplayError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 456AAFEB2751E1CA00568A28 /* DisplayError.swift */; };
 		457931732730E00F00A79E2D /* APIMoviesProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 457931722730E00F00A79E2D /* APIMoviesProtocol.swift */; };
 		4579317927310C3000A79E2D /* AuthorReview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4579317827310C3000A79E2D /* AuthorReview.swift */; };
@@ -143,7 +142,6 @@
 		4546A261272B848800D77147 /* APIUrlBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIUrlBuilder.swift; sourceTree = "<group>"; };
 		455C5ACE2734DE3D00ADE036 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		455C5AD02734E20400ADE036 /* ReviewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewViewModel.swift; sourceTree = "<group>"; };
-		455C5AD22734ECE700ADE036 /* BackgroundImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackgroundImageView.swift; sourceTree = "<group>"; };
 		456AAFEB2751E1CA00568A28 /* DisplayError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayError.swift; sourceTree = "<group>"; };
 		457931722730E00F00A79E2D /* APIMoviesProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIMoviesProtocol.swift; sourceTree = "<group>"; };
 		4579317827310C3000A79E2D /* AuthorReview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorReview.swift; sourceTree = "<group>"; };
@@ -333,7 +331,6 @@
 		45A64D472728ECDD00159CE6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				455C5AD22734ECE700ADE036 /* BackgroundImageView.swift */,
 				45BB7AB6272DB7DC00DE07C3 /* DefaultSecctionCell.swift */,
 				45C5A89C2752A867000712AE /* LaunchScreen.storyboard */,
 			);
@@ -784,7 +781,6 @@
 				452BD82B272A364800F842F5 /* APIEndPoints.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				45334C6E2747735600CB40DD /* SearchingBuilder.swift in Sources */,
-				455C5AD32734ECE700ADE036 /* BackgroundImageView.swift in Sources */,
 				458FF0F3274CBBCB0037B1CD /* ReviewDetailProtocols.swift in Sources */,
 				456AAFEC2751E1CA00568A28 /* DisplayError.swift in Sources */,
 				452BD82F272A3A5700F842F5 /* APIService.swift in Sources */,
