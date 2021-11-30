@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class HomeView: UIViewController, DisplayError {
+final class HomeView: UIViewController, DisplayError, DisplaySpinner {
     
     // MARK: Properties
     var presenter: HomePresenterProtocol?
@@ -227,11 +227,11 @@ extension HomeView {
 
 extension HomeView: HomeViewProtocol {
     func hideSpinner() {
-        self.removeSpinner()
+        removeSpinner()
     }
     
     func showSpinner() {
-        self.showSpinner(onView: view)
+        displaySpinner()
     }
     
     func showErrorMessage(withMessage: String) {

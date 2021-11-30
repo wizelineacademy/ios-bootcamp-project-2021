@@ -25,7 +25,7 @@ extension SearchingPresenter: SearchingPresenterProtocol {
     
     func searchMovies(_ searchText: String) {
         view?.showSpinnerView()
-        view?.removeMessageLabel()
+        view?.removeMessageSearchesNotFound()
         interactor?.findMovies(searchText)
     }
 }

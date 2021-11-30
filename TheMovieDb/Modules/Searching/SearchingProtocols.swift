@@ -17,7 +17,7 @@ protocol SearchingViewProtocol: AnyObject {
     func stopSpinnerView()
     func showErrorMessage(withMessage: String)
     func showMessageNoSearchesFound(with message: String)
-    func removeMessageLabel()
+    func removeMessageSearchesNotFound()
 }
 
 protocol SearchingRouterProtocol: AnyObject {

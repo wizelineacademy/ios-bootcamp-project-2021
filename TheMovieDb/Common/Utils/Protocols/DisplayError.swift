@@ -5,7 +5,7 @@
 //  Created by Javier Cueto on 26/11/21.
 //
 
-import UIKit
+import UIKit.UIViewController
 
 protocol DisplayError {
     func viewDisplayError(with message: String)

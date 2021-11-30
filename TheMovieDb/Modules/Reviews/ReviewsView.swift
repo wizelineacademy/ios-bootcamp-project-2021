@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class ReviewsView: UICollectionViewController, DisplayError {
+final class ReviewsView: UICollectionViewController, DisplayError, DisplayMessage {
 
     // MARK: Properties
     var presenter: ReviewsPresenterProtocol?
@@ -43,11 +43,11 @@ final class ReviewsView: UICollectionViewController, DisplayError {
 
 extension ReviewsView: ReviewsViewProtocol {
     func showMessageNoReviews(with message: String) {
-        self.showMessageOnViewLabel(onView: view, message: message)
+        displayMessageLabel(with: message)
     }
     
     func showErrorMessage(withMessage error: String) {
-        self.viewDisplayError(with: error)
+        viewDisplayError(with: error)
     }
     
     func showReviews(reviewViewModel: [ReviewViewModel]) {
