@@ -7,7 +7,7 @@
 
 import Foundation
 
-class APIBuild: APIBuildProtocol {
+class APIUrlBuilder: APIBuildProtocol {
     // MARK: - Properties
     let parameters: APIParameters
     let api: APIEndPoints
@@ -29,7 +29,8 @@ class APIBuild: APIBuildProtocol {
             url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.parameters.language + self.parameters.region + self.parameters.page
             
         case .keyword, .search:
-            url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.parameters.language + self.parameters.query + self.parameters.page
+            let queryEncoding = self.parameters.query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.parameters.language + queryEncoding + self.parameters.page
             
         case .review, .similar, .recommendations:
             let reviewAPI =  safeApi.replacingOccurrences(of: "[id]", with: self.parameters.id)

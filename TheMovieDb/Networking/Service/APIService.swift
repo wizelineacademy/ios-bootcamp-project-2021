@@ -10,7 +10,7 @@ import Combine
 struct APIService: APIMoviesProtocol { 
     
     func fetchData<T: Decodable>(endPoint: APIEndPoints, with parameters: APIParameters) -> AnyPublisher<T, APIRequestError> {
-        let  urlBuild = APIBuild(with: parameters, with: endPoint)
+        let  urlBuild = APIUrlBuilder(with: parameters, with: endPoint)
         guard let url = urlBuild.buildURL() else {
             return Fail(outputType: T.self, failure: APIRequestError.badRequest).eraseToAnyPublisher()
         }
