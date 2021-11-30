@@ -43,16 +43,10 @@ final class MoviesFeedCell: UICollectionViewCell {
         ])
     }
     
-    func updateUI(withMovie movie: Movie) {
-        if let posterpath = movie.posterPath,
-           let posterURL = URL(string: MovieDBAPI.APIConstants.imageUrl + posterpath) {
-            if let cached = cache[posterURL.absoluteString] {
-                poster.image = cached
-            } else {
-                poster.load(url: posterURL) { [weak self] image in
-                    self?.cache[posterURL.absoluteString] = image
-                }
-            }
+    func updateUI(withMoviePoster posterImage: UIImage?) {
+        if posterImage == nil {
+            poster.contentMode = .scaleAspectFit
         }
+        poster.image = posterImage ?? UIImage(named: "moviePosterPlaceholder")
     }
 }

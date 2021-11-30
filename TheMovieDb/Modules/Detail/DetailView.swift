@@ -103,15 +103,11 @@ final class DetailView: UIViewController {
         infoContainer.addArrangedSubview(similarMovies)
         infoContainer.addArrangedSubview(recommendationMovies)
         infoContainer.addArrangedSubview(movieCast)
-        if let posterpath = viewModel.getMoviePosterPath(),
-           let posterURL = URL(string: MovieDBAPI.APIConstants.imageUrl + posterpath) {
-            if let cached = cache[posterURL.absoluteString] {
-                poster.image = cached
-            } else {
-                poster.load(url: posterURL) { [weak self] image in
-                    self?.cache[posterURL.absoluteString] = image
-                }
+        viewModel.getMoviePoster { [weak self] image in
+            if image == nil {
+                self?.poster.contentMode = .scaleAspectFit
             }
+            self?.poster.image = image
         }
     }
     

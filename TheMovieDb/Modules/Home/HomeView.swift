@@ -167,7 +167,9 @@ extension HomeView: UICollectionViewDataSource {
                 withReuseIdentifier: MoviesFeedCell.cellIdentifier,
                 for: indexPath
             ) as? MoviesFeedCell
-            cell?.updateUI(withMovie: presenter.getMovie(forPosition: indexPath.row))
+            presenter.getMoviePoster(forPosition: indexPath.row) { image in
+                cell?.updateUI(withMoviePoster: image)
+            }
             return cell ?? UICollectionViewCell()
         case feedType:
             let cell = collectionView.dequeueReusableCell(
