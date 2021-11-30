@@ -11,7 +11,8 @@ import Combine
 protocol DetailSceneLogic {
     func callDetailServices(reviewRequest: ReviewRequest,
                             recommendationRequest: RecommendationsRequest,
-                            completion: @escaping ([ReviewModel], [MovieModel]) -> Void)
+                            completion: @escaping ([ReviewModel], [MovieModel]) -> Void,
+                            onError: @escaping (NetworkError) -> Void)
 }
 
 final class DetailSceneWorker {
@@ -24,9 +25,11 @@ final class DetailSceneWorker {
 }
 
 extension DetailSceneWorker: DetailSceneLogic {
+    
     func callDetailServices(reviewRequest: ReviewRequest,
                             recommendationRequest: RecommendationsRequest,
-                            completion: @escaping ([ReviewModel], [MovieModel]) -> Void) {
+                            completion: @escaping ([ReviewModel], [MovieModel]) -> Void,
+                            onError: @escaping (NetworkError) -> Void) {
         Publishers.Zip(
             service.execute(request: reviewRequest),
             service.execute(request: recommendationRequest))
@@ -34,7 +37,7 @@ extension DetailSceneWorker: DetailSceneLogic {
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
-                    Toast.showToast(title: error.localizedDescription)
+                    onError(error)
                 default:
                     return
                 }

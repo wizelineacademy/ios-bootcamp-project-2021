@@ -22,6 +22,7 @@ final class ListSectionCell: UICollectionViewCell {
         let image = UIImageView(frame: .zero)
         image.layer.cornerRadius = 8
         image.translatesAutoresizingMaskIntoConstraints = false
+        image.contentMode = .scaleAspectFill
         return image
     }()
     

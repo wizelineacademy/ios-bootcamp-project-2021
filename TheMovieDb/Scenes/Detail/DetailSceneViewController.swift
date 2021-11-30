@@ -10,6 +10,7 @@ import Combine
 
 protocol DetailSceneViewControllerInput: AnyObject {
     func showMovieDetails(reviews: [ReviewModel], recommendations: [MovieModel])
+    func showErrorMessage(message: String)
 }
 
 protocol DetailSceneViewControllerOutput: AnyObject {
@@ -86,5 +87,9 @@ extension DetailSceneViewController: DetailSceneViewControllerInput {
         dataSource.appendReviewItems(reviews: reviews)
         dataSource.appendRecommendationItems(recomendations: recommendations)
         collectionView.reloadData()
+    }
+    
+    func showErrorMessage(message: String) {
+        router?.showToast(message: message)
     }
 }

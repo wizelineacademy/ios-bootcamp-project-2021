@@ -1,22 +1,30 @@
 //
-//  ListSectionViewController.swift
+//  ListSectionSceneViewController.swift
 //  TheMovieDb
 //
-//  Created by Juan Alfredo García González on 30/10/21.
+//  Created by Juan Alfredo García González on 28/11/21.
 //
 
 import UIKit
 import Combine
 
-final class ListSectionViewController: UICollectionViewController {
+protocol ListSectionSceneViewControllerInput: AnyObject {
+    func showResults(page: PageModel<MovieModel>)
+    func showErrorMessage(message: String)
+}
+
+protocol ListSectionSceneViewControllerOutput: AnyObject {
+    func callSectionQuery()
+    func resetCounter()
+}
+
+final class ListSectionSceneViewController: UICollectionViewController {
     
-    static let segueIdentifier: String = "go-to-list-section"
+    var interactor: ListSectionSceneInteractorInput?
+    var router: ListSectionSceneRoutingLogic?
     
-    private var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
-    private let executor: ExecutorRequest
     private var isPaginationEnabled: Bool = true
     private let navigationTitle: String
-    private var request: (Request & PageableModel)?
     private var items: [MovieModel] = []
     
     private lazy var refreshControl: UIRefreshControl = {
@@ -25,13 +33,10 @@ final class ListSectionViewController: UICollectionViewController {
         return refresh
     }()
     
-    init?(title: String,
-          executor: ExecutorRequest = NetworkAPI(),
-          request: (Request & PageableModel)?, coder: NSCoder) {
-        self.navigationTitle = title
-        self.executor = executor
-        self.request = request
-        super.init(coder: coder)
+    init(section: HomeSections) {
+        let identifier = String(describing: ListSectionSceneViewController.self)
+        self.navigationTitle = section.title
+        super.init(nibName: identifier, bundle: Bundle.main)
     }
     
     required init?(coder: NSCoder) {
@@ -40,10 +45,11 @@ final class ListSectionViewController: UICollectionViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.register(ListSectionCell.self, forCellWithReuseIdentifier: ListSectionCell.identifier)
         navigationItem.title = navigationTitle
         collectionView.refreshControl = refreshControl
         collectionView.collectionViewLayout = ListSectionFlowLayout()
-        callService()
+        interactor?.callSectionQuery()
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -69,7 +75,7 @@ final class ListSectionViewController: UICollectionViewController {
             (collectionView.contentSize.height - collectionView.bounds.size.height) {
             if !isPaginationEnabled {
                 isPaginationEnabled = true
-                callService()
+                interactor?.callSectionQuery()
             }
         }
     }
@@ -77,9 +83,9 @@ final class ListSectionViewController: UICollectionViewController {
     @objc private func clearList() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.items = []
-            self.request?.clearPages()
+            self.interactor?.resetCounter()
             self.collectionView.reloadData()
-            self.callService()
+            self.interactor?.callSectionQuery()
         }
     }
 
@@ -95,37 +101,15 @@ final class ListSectionViewController: UICollectionViewController {
     }
 }
 
-private extension ListSectionViewController {
-    
-    func callService() {
-        executor.execute(request: self.request)
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    Toast.showToast(title: error.localizedDescription)
-                default:
-                    return
-                }
-            }, receiveValue: { [weak self] (response: PageModel<MovieModel>?) in
-                self?.onSuccessResponse(response)
-            }).store(in: &cancellables)
-    }
-    
-    func onSuccessResponse(_ response: PageModel<MovieModel>?) {
-        request?.nextPage()
+extension ListSectionSceneViewController: ListSectionSceneViewControllerInput {
+   
+    func showResults(page: PageModel<MovieModel>) {
         isPaginationEnabled = false
-        items.append(contentsOf: response?.results ?? [])
-        refreshControl.endRefreshing()
+        items.append(contentsOf: page.results)
         collectionView.reloadData()
     }
     
-    func onErrorResponse(_ error: Error?) {
-        isPaginationEnabled = false
-        refreshControl.endRefreshing()
-        guard let error = error as? NetworkError else {
-            return
-        }
-        Toast.showToast(title: error.localizedDescription)
+    func showErrorMessage(message: String) {
+        router?.showToast(message: message)
     }
 }
