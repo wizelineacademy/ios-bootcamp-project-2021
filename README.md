@@ -165,12 +165,13 @@ Using what you've build from previous deliverable:
 
 Finish any pending functionality or address any comment you receive from your previous deliverables.
 
-* Refactor applying other design pattern (e.g. MVP)
-* Apply RxSwift or Combine
-* Integrate SwiftInject lib
-* Use Memory Graph to debug the application
-* Profiling of memory leaks, stack review, performance review (General profiling based on learned with Instruments)
-* Apply SwiftUI in at least one view
+Keep using the same app from the previous phase:
+
+- Refactor applying another design pattern (e.g. MVP) for at least one screen. 
+- Apply RxSwift or Combine.
+- Use the Memory Graph to debug the application.
+- Profiling of memory leaks, stack review, performance review (General profiling based on learned with Instruments)
+ - Apply SwiftUI on at least one screen.
 
 ## Submitting the deliverables
 
