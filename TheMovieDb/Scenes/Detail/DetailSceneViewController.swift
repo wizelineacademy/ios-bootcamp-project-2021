@@ -24,12 +24,13 @@ final class DetailSceneViewController: UICollectionViewController {
     var interactor: DetailSceneInteractorInput?
     var router: DetailSceneRoutingLogic?
     private let movie: MovieModel
-    private let dataSource: DetailDataSource
+    private lazy var dataSource: DetailDataSource = {
+        return DetailDataSource(item: movie, delegate: self)
+    }()
     private var cancellables: Set<AnyCancellable> = Set<AnyCancellable>()
     
     init(movie: MovieModel) {
         self.movie = movie
-        dataSource = DetailDataSource(item: movie)
         let identifier = String(describing: DetailSceneViewController.self)
         super.init(nibName: identifier, bundle: Bundle.main)
     }
@@ -91,5 +92,14 @@ extension DetailSceneViewController: DetailSceneViewControllerInput {
     
     func showErrorMessage(message: String) {
         router?.showToast(message: message)
+    }
+}
+
+extension DetailSceneViewController: DetailReviewsCellDelegate {
+    func didSelectReview(_ review: ReviewModel?) {
+        guard let review = review else {
+            return
+        }
+        router?.showReviewDetail(review: review)
     }
 }

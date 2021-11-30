@@ -79,6 +79,9 @@
 		26F5D11127547FDB00D28A36 /* ListSectionSceneWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5D11027547FDB00D28A36 /* ListSectionSceneWorker.swift */; };
 		26F5D11327547FF500D28A36 /* ListSectionSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5D11227547FF500D28A36 /* ListSectionSceneRouter.swift */; };
 		26F5D1152754801000D28A36 /* ListSectionSceneConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5D1142754801000D28A36 /* ListSectionSceneConfigurator.swift */; };
+		26F5D11827569FDB00D28A36 /* ReviewSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5D11727569FDB00D28A36 /* ReviewSceneView.swift */; };
+		26F5D11A2756A73E00D28A36 /* AuthorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5D1192756A73E00D28A36 /* AuthorView.swift */; };
+		26F5D11C2756B29200D28A36 /* DescriptionReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F5D11B2756B29200D28A36 /* DescriptionReviewView.swift */; };
 		26F8093F274B3E7A009BE9A7 /* DetailSceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F8093E274B3E7A009BE9A7 /* DetailSceneRouter.swift */; };
 		26F94A112735BBE10061A3A5 /* DetailRatingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F94A102735BBE10061A3A5 /* DetailRatingCell.swift */; };
 		26F94A142735BF120061A3A5 /* DetailSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F94A132735BF120061A3A5 /* DetailSection.swift */; };
@@ -198,6 +201,9 @@
 		26F5D11027547FDB00D28A36 /* ListSectionSceneWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionSceneWorker.swift; sourceTree = "<group>"; };
 		26F5D11227547FF500D28A36 /* ListSectionSceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionSceneRouter.swift; sourceTree = "<group>"; };
 		26F5D1142754801000D28A36 /* ListSectionSceneConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionSceneConfigurator.swift; sourceTree = "<group>"; };
+		26F5D11727569FDB00D28A36 /* ReviewSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewSceneView.swift; sourceTree = "<group>"; };
+		26F5D1192756A73E00D28A36 /* AuthorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorView.swift; sourceTree = "<group>"; };
+		26F5D11B2756B29200D28A36 /* DescriptionReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DescriptionReviewView.swift; sourceTree = "<group>"; };
 		26F8093E274B3E7A009BE9A7 /* DetailSceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSceneRouter.swift; sourceTree = "<group>"; };
 		26F94A102735BBE10061A3A5 /* DetailRatingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRatingCell.swift; sourceTree = "<group>"; };
 		26F94A132735BF120061A3A5 /* DetailSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSection.swift; sourceTree = "<group>"; };
@@ -448,6 +454,7 @@
 		26F5D0DA274F06E600D28A36 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				26F5D11627569FBA00D28A36 /* Review */,
 				26D22347272E0DE80009A395 /* ListSection */,
 				26F5D0F52754572F00D28A36 /* Search */,
 				26F5D0E4275402A900D28A36 /* Home */,
@@ -497,6 +504,16 @@
 				26F5D1022754587100D28A36 /* SearchSceneConfigurator.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		26F5D11627569FBA00D28A36 /* Review */ = {
+			isa = PBXGroup;
+			children = (
+				26F5D11727569FDB00D28A36 /* ReviewSceneView.swift */,
+				26F5D1192756A73E00D28A36 /* AuthorView.swift */,
+				26F5D11B2756B29200D28A36 /* DescriptionReviewView.swift */,
+			);
+			path = Review;
 			sourceTree = "<group>";
 		};
 		26F94A152735DB790061A3A5 /* Adapter */ = {
@@ -770,9 +787,11 @@
 				26EED582272F7FE2005BED5A /* MovieModel.swift in Sources */,
 				26F5D0EA27540EBD00D28A36 /* HomeSceneWorker.swift in Sources */,
 				26F5D10F27547FCC00D28A36 /* ListSectionSceneInteractor.swift in Sources */,
+				26F5D11827569FDB00D28A36 /* ReviewSceneView.swift in Sources */,
 				26FD1CCA27486A21008853D5 /* ReviewRequest.swift in Sources */,
 				26F5D0DC2753F30C00D28A36 /* TabBarFactory.swift in Sources */,
 				26F5D0E32753F72100D28A36 /* TabBarSceneRoutingLogic.swift in Sources */,
+				26F5D11A2756A73E00D28A36 /* AuthorView.swift in Sources */,
 				26150DB6273310750028A207 /* PageableModel.swift in Sources */,
 				26F94A112735BBE10061A3A5 /* DetailRatingCell.swift in Sources */,
 				26D2234F272E161E0009A395 /* ListSectionCell.swift in Sources */,
@@ -781,6 +800,7 @@
 				26C3B31B273B462900AE8D80 /* ReviewModel.swift in Sources */,
 				262894F8274B3C9C00FA6F9C /* DetailScenePresenter.swift in Sources */,
 				26F5D10727547EFF00D28A36 /* ListSectionSceneFactory.swift in Sources */,
+				26F5D11C2756B29200D28A36 /* DescriptionReviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

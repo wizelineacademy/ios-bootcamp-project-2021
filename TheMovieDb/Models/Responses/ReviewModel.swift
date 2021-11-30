@@ -9,5 +9,13 @@ import Foundation
 
 struct ReviewModel: Codable, Hashable {
     let author: String?
+    let authorDetails: AuthorDetail?
     let content: String
+}
+
+struct AuthorDetail: Codable, Hashable {
+    let name: String?
+    let username: String?
+    let rating: Double?
+    let avatarPath: String?
 }
