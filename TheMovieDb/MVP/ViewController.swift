@@ -11,21 +11,27 @@ import os.log
 final class ViewController: UIViewController {
     
     private var presenter: MovieListPresenter?
-    private var movieListOption: MoviesOptions = .nowPlaying
     
-    private var tableView: UITableView = {
+    var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
-   
+    
+    init(movieOption: MoviesOptions, facade: MovieService) {
+        super.init(nibName: nil, bundle: nil)
+        presenter = MovieListPresenter(view: self as MovieListView, facade: facade, movieOption: movieOption)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         configureTableView()
         configureUI()
         setupNavigationBar()
-        presenter = MovieListPresenter(view: self as MovieListView, facade: MovieFacade(), movieOption: movieListOption)
         presenter?.listMovies()
         os_log("ViewController did load!", log: OSLog.viewCycle, type: .debug)
     }
@@ -73,9 +79,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewControllerMovieInfo = MovieInfoViewController()
-        viewControllerMovieInfo.viewModel.movieID = presenter?.movies[indexPath.row].id
-        navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
+        presenter?.didSelectMovie(at: indexPath.row)
     }
 }
 
@@ -93,6 +97,12 @@ extension ViewController: MovieListView {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+    
+    func didSelectMovie(with id: Int) {
+        let viewControllerMovieInfo = MovieInfoViewController(facade: MovieFacade())
+        viewControllerMovieInfo.viewModel?.movieID = id
+        navigationController?.pushViewController(viewControllerMovieInfo, animated: true)
     }
 }
 

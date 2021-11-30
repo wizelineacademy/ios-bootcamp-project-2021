@@ -7,16 +7,15 @@
 
 import Foundation
 import os.log
+import Combine
 
 struct MovieFacade: MovieService {
     
-    
-    func get<T: Decodable>(search: String? = nil, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) {
+    func get<T: Decodable>(type: T.Type, search: String?, endpoint: MovieListEndpoint) -> AnyPublisher<T, MovieError> {
         
         guard let baseURL = URL(string:"https://api.themoviedb.org/3/") else {
-            returnResponse(.failure(.invalidUrl))
             os_log("Network request error!", log: OSLog.networkRequest, type: .error)
-            return
+            return Fail(error: MovieError.invalidUrl).eraseToAnyPublisher()
         }
 
         var components = URLComponents()
@@ -31,44 +30,22 @@ struct MovieFacade: MovieService {
         }
         
         guard let url = components.url(relativeTo: baseURL) else {
-            returnResponse(.failure(.invalidUrl))
             os_log("Network request error!", log: OSLog.networkRequest, type: .error)
-            return
+            return Fail(error: MovieError.invalidUrl).eraseToAnyPublisher()
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = HTTPMethod.get.rawValue
         
-        let taskRequest = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            
-            if let error = error {
-                returnResponse(.failure(.unknownError(error: error)))
-                print("Error took place \(error.localizedDescription)")
-                os_log("Network request error!", log: OSLog.networkRequest, type: .error)
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                returnResponse(.failure(.invalidResponse))
-                os_log("Network request error!", log: OSLog.networkRequest, type: .error)
-                return
-            }
-            
-            if let data = data {
-                let jsonDecoder = JSONDecoder()
-                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                
-                do {
-                    let moviesDecoded = try jsonDecoder.decode(T.self, from: data)
-                    returnResponse(.success(moviesDecoded))
-                } catch {
-                    returnResponse(.failure(.wrongResponse(status: response.statusCode)))
-                    os_log("Network request error!", log: OSLog.networkRequest, type: .error)
-                }
-            }
-        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        taskRequest.resume()
-        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .map(\.data)
+            .decode(type: T.self, decoder: decoder)
+            .mapError({ error -> MovieError in
+                return MovieError.unknownError(error: error)
+            })
+            .eraseToAnyPublisher()
         }
 }

@@ -13,6 +13,7 @@ final class MockMovieListView: MovieListView {
     var setTitleCalled = false
     var showErrorCalled =  false
     var updateMoviesCalled = false
+    var didSelectMovieCalled = false
     var title = ""
     
     func didSetTitle(title: String) {
@@ -26,6 +27,10 @@ final class MockMovieListView: MovieListView {
     
     func onUpdateMovies() {
         updateMoviesCalled = true
+    }
+    
+    func didSelectMovie(with id: Int) {
+        didSelectMovieCalled = true
     }
 }
 

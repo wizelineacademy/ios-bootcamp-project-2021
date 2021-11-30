@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct ReviewsDetails: Decodable {
+struct ReviewsDetails: Decodable, Identifiable {
+    var id: String?
     var author: String?
     var content: String?
 }

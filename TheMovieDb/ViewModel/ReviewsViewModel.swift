@@ -6,40 +6,42 @@
 //
 
 import Foundation
+import Combine
 import os.log
 
-final class ReviewsViewModel {
-    var movieID: Int?
-    var movie: Movie?
-    var reviews: [ReviewsDetails] = []
-    var showError: ((MovieError) -> Void)?
-    var facade: MovieService
-    init(facade: MovieService) {
+final class ReviewsViewModel: ObservableObject {
+    private var movieID: Int?
+    private var facade: MovieService
+    private var subscriptions = Set<AnyCancellable>()
+    
+    @Published var reviews: [ReviewsDetails] = []
+    @Published var activeError: MovieError?
+
+    init(id: Int, facade: MovieService) {
+        self.movieID = id
         self.facade = facade
         os_log("ReviewsViewModel initialized", log: OSLog.viewModel, type: .debug)
     }
-    var reloadData: (() -> Void)?
-    var showEmptyReviewsAlert: (() -> Void)?
     
     func reviewsMovie() {
         guard let id = movieID else { return }
-        facade.get(search: nil, endpoint: .reviews(id: id)) { [weak self] (response: Result<MovieResponse<ReviewsDetails>, MovieError>) in
-            guard let self = self else { return }
-            switch response {
-            case.success(let reviewsResponse):
+        facade.get(type: MovieResponse<ReviewsDetails>.self, search: nil, endpoint: .reviews(id: id))
+            .receive(on: RunLoop.main)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case let .failure(error):
+                    self.activeError = error
+                    os_log("ReviewsViewModel failure", log: OSLog.viewModel, type: .error)
+                case .finished: break
+                }
+            }, receiveValue: { reviewsResponse in
                 guard let reviews = reviewsResponse.results,
-                        !reviews.isEmpty else {
-                    self.showEmptyReviewsAlert?()
-                    return
-                }
+                      !reviews.isEmpty else {
+                          self.activeError = .emptyResponse(list: "reviews.title.bar.button".localized)
+                          return
+                      }
                 self.reviews = reviews
-                DispatchQueue.main.async {
-                    self.reloadData?()
-                }
-            case .failure(let failureResult):
-                self.showError?(failureResult)
-                os_log("ReviewsViewModel failure", log: OSLog.viewModel, type: .error)
-            }
-        }
+            })
+            .store(in: &subscriptions)
     }
 }

@@ -24,7 +24,7 @@ struct Constants {
     static let titleInitialTableView = "title.initial.table.view".localized
     static let searchBarPlaceholder = "search.bar.placeholder".localized
     static let alertButton = "alert.button".localized
-    static let alertEmptyReviews = "alert.empty.reviews".localized
+    static let alertEmptyRespone = "alert.empty.response".localized
     
     // MARK: - ImageURL
     static let imageBaseUrl = "https://image.tmdb.org/t/p/w500"

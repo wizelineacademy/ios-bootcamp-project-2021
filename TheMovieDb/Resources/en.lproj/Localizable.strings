@@ -11,7 +11,7 @@
 "reviews.title.bar.button" = "Reviews";
 "search.bar.placeholder" = "Search for movies or person";
 "alert.button" = "Dismiss";
-"alert.empty.reviews" = "Reviews Not Found";
+"alert.empty.response" = "%@ Not Found";
 "unavailable" = "Unavailable";
 "afirmative" = "Yes";
 "negative" = "No";

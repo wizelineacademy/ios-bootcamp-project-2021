@@ -11,16 +11,23 @@ import XCTest
 class SearchViewModelTests: XCTestCase {
     
     var viewModel: SearchViewModel?
+    var facade = MockService()
     
     override func setUp() {
-        viewModel = SearchViewModel(facade: MockService())
+        viewModel = SearchViewModel(facade: facade)
     }
     
     override func tearDown() {
         viewModel = nil
     }
     
-    func testSearchResponse() {
+    func testSearchResponseFailure() {
+        facade.failure = true
+        viewModel?.searchObjects(with: "")
+        XCTAssertTrue(viewModel?.searchResult.count == 0, "Received search results")
+    }
+    
+    func testSearchResponseSuccess() {
         let expectedSearchResponse = [SearchObject(id: 001,
                                                    name: nil,
                                                    title: "Dune",

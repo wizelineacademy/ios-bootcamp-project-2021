@@ -6,42 +6,75 @@
 //
 
 import Foundation
+import Combine
 @testable import TheMovieDb
 
 final class MockService: MovieService {
     
     var failure = false
+    private var cancellables = Set<AnyCancellable>()
     
-    func get<T>(search: String?, endpoint: MovieListEndpoint, returnResponse: @escaping (Result<T, MovieError>) -> Void) where T : Decodable {
+    func get<T: Decodable>(type: T.Type, search: String?, endpoint: MovieListEndpoint) -> AnyPublisher<T, MovieError> {
         guard !failure else {
-            returnResponse(.failure(.invalidResponse))
-            return
+            return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
         }
         switch endpoint {
         case .trending, .nowPlaying, .popular, .topRated, .upcoming:
-            guard let moviesResponse = mockedMovies() as? T else { return }
-            returnResponse(.success(moviesResponse))
+            guard let moviesResponse = mockedMovies() as? T else {
+                return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
+            }
+            return Just(moviesResponse)
+                .setFailureType(to: MovieError.self)
+                .eraseToAnyPublisher()
         case .search:
-            guard let searchResponse = mockedSearchObject() as? T else { return }
-            returnResponse(.success(searchResponse))
+            guard let searchResponse = mockedSearchObject() as? T else {
+                return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
+            }
+            return Just(searchResponse)
+                .setFailureType(to: MovieError.self)
+                .eraseToAnyPublisher()
         case .movieDetails(_):
-            guard let movieDetail = mockedMovies().results?[0] as? T else { return }
-            returnResponse(.success(movieDetail))
+            guard let movieDetail = mockedMovies().results?[0] as? T else {
+                return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
+            }
+            return Just(movieDetail)
+                .setFailureType(to: MovieError.self)
+                .eraseToAnyPublisher()
         case .personDetails(_):
-            guard let personDetail = Person(id: 005, biography: "", knownForDepartment: "Actor", name: "Brad Pit", popularity: 5.1, profilePath: "", birthday: "", deathday: "") as? T else { return }
-            returnResponse(.success(personDetail))
+            guard let personDetail = Person(id: 005, biography: "", knownForDepartment: "Actor", name: "Brad Pit", popularity: 5.1, profilePath: "", birthday: "", deathday: "") as? T else {
+                return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
+            }
+            return Just(personDetail)
+                .setFailureType(to: MovieError.self)
+                .eraseToAnyPublisher()
         case .similar(_):
-            guard let movieSimilar = mockedMovies() as? T else { return }
-            returnResponse(.success(movieSimilar))
+            guard let movieSimilar = mockedMovies() as? T else {
+                return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
+            }
+            return Just(movieSimilar)
+                .setFailureType(to: MovieError.self)
+                .eraseToAnyPublisher()
         case .recommendations(_):
-            guard let movieRecomended = mockedMovies() as? T else { return }
-            returnResponse(.success(movieRecomended))
+            guard let movieRecomended = mockedMovies() as? T else {
+                return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
+            }
+            return Just(movieRecomended)
+                .setFailureType(to: MovieError.self)
+                .eraseToAnyPublisher()
         case .reviews(_):
-            guard let reviewsResponse = mockedReview() as? T else { return }
-            returnResponse(.success(reviewsResponse))
+            guard let reviewsResponse = mockedReview() as? T else {
+                return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
+            }
+            return Just(reviewsResponse)
+                .setFailureType(to: MovieError.self)
+                .eraseToAnyPublisher()
         case .credits(_):
-            guard let creditsResponse = mockedCredits() as? T else { return }
-            returnResponse(.success(creditsResponse))
+            guard let creditsResponse = mockedCredits() as? T else {
+                return Fail(error: MovieError.invalidResponse).eraseToAnyPublisher()
+            }
+            return Just(creditsResponse)
+                .setFailureType(to: MovieError.self)
+                .eraseToAnyPublisher()
         }
     }
     

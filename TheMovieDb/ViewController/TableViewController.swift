@@ -45,14 +45,13 @@ final class TableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewControllerMoviesList = ViewController()
         let category = viewModel.movieOptions[indexPath.row]
-        viewControllerMoviesList.movieListOption = category
+        let viewControllerMoviesList = ViewController(movieOption: category, facade: MovieFacade())
         navigationController?.pushViewController(viewControllerMoviesList, animated: true)
     }
     
     @objc func searchTapped() {
-        let searchTableViewController = SearchTableViewController()
+        let searchTableViewController = SearchTableViewController(facade: MovieFacade())
         navigationController?.pushViewController(searchTableViewController, animated: true)
     }
 }

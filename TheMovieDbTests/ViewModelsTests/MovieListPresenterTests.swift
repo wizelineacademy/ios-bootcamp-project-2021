@@ -23,6 +23,19 @@ class MovieListPresenterTests: XCTestCase {
         presenter = nil
     }
     
+    func testMovieOptionDidSet() {
+        let expectation = XCTestExpectation(description: "All options tested")
+        expectation.expectedFulfillmentCount = 5
+        MoviesOptions.allCases.forEach { option in
+            presenter?.movieListOption = option
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: 1)
+        XCTAssertTrue(mockView.updateMoviesCalled, "Option was not setted")
+        XCTAssertTrue(mockView.setTitleCalled, "Set title was not called")
+    }
+    
     func testShowError() {
         facade.failure = true
         presenter?.listMovies()
@@ -55,5 +68,18 @@ class MovieListPresenterTests: XCTestCase {
     
     func testTitle() {
         XCTAssert(mockView.title == "Trending", "Failure")
+    }
+    
+    func testDidSelectMovie() {
+        presenter?.listMovies()
+        presenter?.didSelectMovie(at: 0)
+        XCTAssertTrue(mockView.didSelectMovieCalled, "Did select was not called")
+    }
+    
+    func testDidSelectMovieFailed() {
+        presenter?.listMovies()
+        presenter?.movies[3].id = nil
+        presenter?.didSelectMovie(at: 3)
+        XCTAssertFalse(mockView.didSelectMovieCalled, "The movie Id exists and should not exist")
     }
 }

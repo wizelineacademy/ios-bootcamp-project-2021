@@ -11,9 +11,10 @@ import XCTest
 class MovieInfoViewModelTests: XCTestCase {
     
     var viewModel: MovieInfoViewModel?
+    var facade = MockService()
     
     override func setUp() {
-        viewModel = MovieInfoViewModel(facade: MockService())
+        viewModel = MovieInfoViewModel(facade: facade)
         viewModel?.movieID = 1
     }
     
@@ -21,7 +22,16 @@ class MovieInfoViewModelTests: XCTestCase {
         viewModel = nil
     }
     
-    func testMovieDetail() {
+    func testMovieDetailFailure() {
+        facade.failure = true
+        viewModel?.fetchServices()
+        XCTAssertNil(viewModel?.movie, "Failure failed")
+        XCTAssertNil(viewModel?.similarMoviesNames, "Failure failed")
+        XCTAssertNil(viewModel?.recommendedMoviesNames, "Failure failed")
+        XCTAssertNil(viewModel?.castMovie, "Failure failed")
+    }
+    
+    func testMovieDetailSuccess() {
         let expectedMovie = Movie(posterPath: "",
                                   overview: "",
                                   id: 001,
@@ -37,25 +47,37 @@ class MovieInfoViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel?.movie?.releaseDate, expectedMovie.releaseDate, "Failure movie release date")
     }
     
-    func testSimilarMovies() {
+    func testSimilarMoviesFailure() {
+        facade.failure = true
+        viewModel?.similarMovies()
+        XCTAssertNil(viewModel?.castMovie, "Failure failed")
+    }
+    
+    func testSimilarMoviesSuccess() {
         viewModel?.similarMovies()
         XCTAssert(viewModel?.similarMoviesNames == "Dune, No time to die, Eternals", "Failure response")
     }
     
-    func testRecomendedMovies() {
+    func testRecommendedMoviesFailure() {
+        facade.failure = true
+        viewModel?.recomendedMovies()
+        XCTAssertNil(viewModel?.recommendedMoviesNames, "Failure failed")
+    }
+    
+    func testRecomendedMoviesSuccess() {
         viewModel?.recomendedMovies()
         XCTAssert(viewModel?.recommendedMoviesNames == "Dune, No time to die, Eternals", "Failure response")
     }
     
-    func testCastMovie() {
+    func testCastMovieFailure() {
+        facade.failure = true
         viewModel?.castFromMovie()
-        XCTAssert(viewModel?.castMovie == "Brad Pit, Keanu Revees, Jennifer Aniston", "Failure response")
+        XCTAssertNil(viewModel?.castMovie, "Failure failed")
     }
     
-    func testFetchService() {
-        viewModel?.fetchServices()
-        XCTAssertNotNil(viewModel?.movie)
-        XCTAssertNotNil(viewModel?.similarMoviesNames)
+    func testCastMovieSuccess() {
+        viewModel?.castFromMovie()
+        XCTAssert(viewModel?.castMovie == "Brad Pit, Keanu Revees, Jennifer Aniston", "Failure response")
     }
 
 }

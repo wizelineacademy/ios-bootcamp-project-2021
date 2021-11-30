@@ -7,6 +7,7 @@
 
 import Foundation
 import os.log
+import Combine
 
 final class SearchViewModel {
     
@@ -26,16 +27,22 @@ final class SearchViewModel {
     }
     
     var showError: ((MovieError) -> Void)?
+    var subscriptions = Set<AnyCancellable>()
     
     func searchObjects(with text: String) {
-        facade.get(search: text, endpoint: .search) { [weak self] (response: Result<MovieResponse<SearchObject>, MovieError>) in
-            guard let self = self else { return }
-            
-            switch response {
-            case .success(let movieResponse):
+        facade.get(type: MovieResponse<SearchObject>.self, search: text, endpoint: .search)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case let .failure(error):
+                    self.showError?(error)
+                    os_log("SearchViewModel failure", log: OSLog.viewModel, type: .error)
+
+                case .finished: break
+                }
+            }, receiveValue: { movieResponse in
                 guard let resultObject = movieResponse.results else {
                     self.showError?(.invalidResponse)
-                    os_log("SearchViewModel error", log: OSLog.viewModel, type: .error)
+                    os_log("SearchViewModel failure", log: OSLog.viewModel, type: .error)
                     return
                 }
                 var searchArray: [SearchObject] = []
@@ -45,10 +52,7 @@ final class SearchViewModel {
                     }
                 }
                 self.searchResult = searchArray
-            case .failure(let failureResult):
-                self.showError?(failureResult)
-                os_log("SearchViewModel failure", log: OSLog.viewModel, type: .error)
-            }
-        }
+            })
+            .store(in: &subscriptions)
     }
 }
