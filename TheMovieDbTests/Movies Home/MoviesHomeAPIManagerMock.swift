@@ -1,16 +1,15 @@
 //
-//  MoviesHomeAPIDataManager.swift
-//  TheMovieDb
+//  MoviesHomeAPIManagerMock.swift
+//  TheMovieDbTests
 //
-//  Created by developer on 24/11/21.
+//  Created by developer on 29/11/21.
 //
 
-import Foundation
+import XCTest
+@testable import TheMovieDb
 
-final class MoviesHomeAPIDataManager: MoviesHomeAPIDataManagerProtocol {
-        
-    func requestMovies<T: Decodable>(value: T.Type, request: Request, completion: @escaping (Result< T?, Error>) -> Void ) {
-       
+class MoviesHomeAPIManagerMock: MoviesHomeAPIDataManagerProtocol {
+    func requestMovies<T>(value: T.Type, request: Request, completion: @escaping (Result<T?, Error>) -> Void) where T: Decodable {
         MovieDbAPI.request(value: T.self, request: request) {  result in
             switch result {
             case .success(let result):

@@ -16,10 +16,12 @@ struct MoviesDetailBuilder: MoviesDetailBuilderProtocol {
         let presenter = MoviesDetailPresenter()
         let interactor = MoviesDetailInteractor()
         let router = MoviesDetailRouter()
+        let apiDataManager = MoviesDetailAPIDataManager()
         presenter.view = moviesDetailViewController
         presenter.interactor = interactor
         presenter.router = router
         interactor.presenter = presenter
+        interactor.apiDataManager = apiDataManager
         
         moviesDetailViewController.presenter = presenter
         return moviesDetailViewController

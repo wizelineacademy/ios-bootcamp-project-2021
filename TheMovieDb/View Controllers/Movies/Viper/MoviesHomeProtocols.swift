@@ -13,9 +13,14 @@ protocol MoviesHomePresenterProtocol: AnyObject {
     var view: MoviesHomeViewProtocol? { get set }
     var interactor: MoviesHomeInteractorInputProtocol? { get set }
     var router: MoviesHomeRouterProtocol? { get set }
-    
+    var didFetchMovies: Bool { get set }
+
     func viewDidLoad()
     func didSelectMovie(movie: MovieProtocol)
+}
+
+extension MoviesHomePresenterProtocol {
+    var didFetchMovies: Bool { return false}
 }
 // Presenter -> View
 protocol MoviesHomeViewProtocol: AnyObject {

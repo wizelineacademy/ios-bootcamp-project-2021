@@ -28,6 +28,7 @@ protocol MoviesDetailViewProtocol {
 // Interractor
 protocol MoviesDetailInteractorInputProtocol {
     var presenter: MoviesDetailInteractorOutputProtocol? { get set }
+    var apiDataManager: MoviesDetailAPIDataManagerProtocol? { get set }
     func fetchDetail(of movie: MovieProtocol)
     func fetchSimilarMoviesFor(movie: MovieProtocol)
 }
@@ -47,4 +48,10 @@ protocol MoviesDetailBuilderProtocol {
 
 protocol MoviesDetailRouterProtocol {
     func pushDetailViewControllerFrom(view: UIViewController, with movie: MovieProtocol)
+}
+
+protocol MoviesDetailAPIDataManagerProtocol {
+    func requestMovieDetail<T: Decodable>(value: T.Type, request: Request, completion: @escaping (Result< T?, Error>) -> Void )
+    func requestSimilarMovies<T: Decodable>(value: T.Type, request: Request, completion: @escaping (Result< T?, Error>) -> Void )
+    
 }
