@@ -11,7 +11,8 @@ import Combine
 protocol SearchSceneLogic {
     func resetCounter()
     func callSearchQuery(query: String,
-                         completion: @escaping (PageModel<MovieModel>) -> Void)
+                         completion: @escaping (PageModel<MovieModel>) -> Void,
+                         onError: @escaping (NetworkError) -> Void)
 }
 
 final class SearchSceneWorker {
@@ -33,14 +34,15 @@ extension SearchSceneWorker: SearchSceneLogic {
     }
     
     func callSearchQuery(query: String,
-                         completion: @escaping (PageModel<MovieModel>) -> Void) {
+                         completion: @escaping (PageModel<MovieModel>) -> Void,
+                         onError: @escaping (NetworkError) -> Void) {
         request?.searchText(query)
         service.execute(request: request)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
-                    Toast.showToast(title: error.localizedDescription)
+                    onError(error)
                 default:
                     return
                 }

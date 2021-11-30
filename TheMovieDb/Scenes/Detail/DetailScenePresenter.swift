@@ -19,4 +19,8 @@ extension DetailScenePresenter: DetailScenePresenterInput {
     func showDetailMovie(reviews: [ReviewModel], recommendations: [MovieModel]) {
         viewController?.showMovieDetails(reviews: reviews, recommendations: recommendations)
     }
+    
+    func showErrorMessage(message: String) {
+        viewController?.showErrorMessage(message: message)
+    }
 }

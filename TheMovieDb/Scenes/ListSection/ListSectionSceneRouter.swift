@@ -10,6 +10,7 @@ import UIKit
 
 protocol ListSectionSceneRoutingLogic {
     func showDetailMovie(_ movie: MovieModel)
+    func showToast(message: String)
 }
 
 final class ListSectionSceneRouter {
@@ -27,5 +28,9 @@ extension ListSectionSceneRouter: ListSectionSceneRoutingLogic {
         if let viewController = viewController {
             source?.navigationController?.pushViewController(viewController, animated: true)
         }
+    }
+    
+    func showToast(message: String) {
+        Toast.showToast(title: message)
     }
 }

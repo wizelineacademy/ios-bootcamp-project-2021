@@ -11,6 +11,7 @@ typealias SearchSceneInteractorInput = SearchSceneViewControllerOutput
 
 protocol SearchSceneInteractorOutput: AnyObject {
     func showQueryResult(result: PageModel<MovieModel>)
+    func showErrorMessage(message: String)
 }
 
 final class SearchSceneInteractor {
@@ -24,6 +25,8 @@ extension SearchSceneInteractor: SearchSceneInteractorInput {
         worker?.callSearchQuery(query: query,
                                 completion: { result in
             self.presenter?.showQueryResult(result: result)
+        }, onError: { error in
+            self.presenter?.showErrorMessage(message: error.localizedDescription)
         })
     }
     

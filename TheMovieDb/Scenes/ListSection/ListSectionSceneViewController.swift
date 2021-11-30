@@ -10,6 +10,7 @@ import Combine
 
 protocol ListSectionSceneViewControllerInput: AnyObject {
     func showResults(page: PageModel<MovieModel>)
+    func showErrorMessage(message: String)
 }
 
 protocol ListSectionSceneViewControllerOutput: AnyObject {
@@ -106,5 +107,9 @@ extension ListSectionSceneViewController: ListSectionSceneViewControllerInput {
         isPaginationEnabled = false
         items.append(contentsOf: page.results)
         collectionView.reloadData()
+    }
+    
+    func showErrorMessage(message: String) {
+        router?.showToast(message: message)
     }
 }

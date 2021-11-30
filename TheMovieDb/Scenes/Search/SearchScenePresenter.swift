@@ -19,4 +19,8 @@ extension SearchScenePresenter: SearchScenePresenterInput {
     func showQueryResult(result: PageModel<MovieModel>) {
         viewController?.showSearchResult(page: result)
     }
+    
+    func showErrorMessage(message: String) {
+        viewController?.showErrorMessage(message: message)
+    }
 }

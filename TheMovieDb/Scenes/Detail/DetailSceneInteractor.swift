@@ -11,6 +11,7 @@ typealias DetailSceneInteractorInput = DetailSceneViewControllerOutput
 
 protocol DetailSceneInteractorOutput: AnyObject {
     func showDetailMovie(reviews: [ReviewModel], recommendations: [MovieModel])
+    func showErrorMessage(message: String)
 }
 
 final class DetailSceneInteractor {
@@ -26,6 +27,8 @@ extension DetailSceneInteractor: DetailSceneInteractorInput {
                                    recommendationRequest: recommendationRequest,
                                    completion: { reviews, recommendations in
             self.presenter?.showDetailMovie(reviews: reviews, recommendations: recommendations)
+        }, onError: { error in
+            self.presenter?.showErrorMessage(message: error.localizedDescription)
         })
     }
 }

@@ -10,6 +10,7 @@ import Combine
 
 protocol SearchSceneViewControllerInput: AnyObject {
     func showSearchResult(page: PageModel<MovieModel>)
+    func showErrorMessage(message: String)
 }
 
 protocol SearchSceneViewControllerOutput: AnyObject {
@@ -102,9 +103,14 @@ extension SearchSceneViewController: UISearchBarDelegate {
 }
 
 extension SearchSceneViewController: SearchSceneViewControllerInput {
+    
     func showSearchResult(page: PageModel<MovieModel>) {
         isPaginationEnabled = false
         items.append(contentsOf: page.results)
         collectionView.reloadData()
+    }
+    
+    func showErrorMessage(message: String) {
+        router?.showToast(message: message)
     }
 }

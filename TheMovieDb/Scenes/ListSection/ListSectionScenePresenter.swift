@@ -19,4 +19,8 @@ extension ListSectionScenePresenter: ListSectionScenePresenterInput {
     func showResults(result: PageModel<MovieModel>) {
         viewController?.showResults(page: result)
     }
+    
+    func showError(message: String) {
+        viewController?.showErrorMessage(message: message)
+    }
 }

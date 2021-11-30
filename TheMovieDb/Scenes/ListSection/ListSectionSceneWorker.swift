@@ -10,7 +10,8 @@ import Combine
 
 protocol ListSectionSceneLogic {
     func resetCounter()
-    func callToMoviesRequest(completion: @escaping (PageModel<MovieModel>) -> Void)
+    func callToMoviesRequest(completion: @escaping (PageModel<MovieModel>) -> Void,
+                             onError: @escaping (NetworkError) -> Void)
 }
 
 final class ListSectionSceneWorker {
@@ -31,13 +32,14 @@ extension ListSectionSceneWorker: ListSectionSceneLogic {
         request?.clearPages()
     }
     
-    func callToMoviesRequest(completion: @escaping (PageModel<MovieModel>) -> Void) {
+    func callToMoviesRequest(completion: @escaping (PageModel<MovieModel>) -> Void,
+                             onError: @escaping (NetworkError) -> Void) {
         service.execute(request: request)
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
-                    Toast.showToast(title: error.localizedDescription)
+                    onError(error)
                 default:
                     return
                 }
