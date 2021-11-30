@@ -35,19 +35,16 @@ class MovieDBAPITests: XCTestCase {
         """.data(using: .utf8)
         
         let expectation = self.expectation(description: "successExecute")
-        var result: Int?
+        var result: Result<SimpleRequest.ResponseType, Error>?
         sut.execute(SimpleRequest()) { response in
-            switch response {
-            case .success(let response):
-                result = response.testInt
-            default:
-                break
-            }
+            result = response
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertEqual(result, 0)
+        let data = try? result?.get()
+        XCTAssertNotNil(data)
+        XCTAssertEqual(data?.testInt, 0)
     }
     
     func testSuccessExecuteWithIncorrectData() {
@@ -58,38 +55,28 @@ class MovieDBAPITests: XCTestCase {
         """.data(using: .utf8)
         
         let expectation = self.expectation(description: "successExecute")
-        var result: Error?
+        var result: Result<SimpleRequest.ResponseType, Error>?
         sut.execute(SimpleRequest()) { response in
-            switch response {
-            case .failure(let error):
-                result = error
-            default:
-                break
-            }
+            result = response
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertNotNil(result as? NetworkError)
+        XCTAssertThrowsError(try result?.get())
     }
     
     func testFailureExecute() {
         networkDispatcher.error = NetworkError.invalidRequest
         
         let expectation = self.expectation(description: "failureExecute")
-        var result: Error?
+        var result: Result<SimpleRequest.ResponseType, Error>?
         sut.execute(SimpleRequest()) { response in
-            switch response {
-            case .failure(let error):
-                result = error
-            default:
-                break
-            }
+            result = response
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertNotNil(result as? NetworkError)
+        XCTAssertThrowsError(try result?.get())
     }
     
     func testGetRelatedMovies() {
@@ -111,25 +98,22 @@ class MovieDBAPITests: XCTestCase {
         """.data(using: .utf8)
         
         let expectation = self.expectation(description: "getRelatedMovies")
-        var result: MovieDBAPIListResponse<Movie>?
+        var result: Result<MovieDBAPIListResponse<Movie>, Error>?
         sut.getRelatedMovies(
             for: MovieStubGenerator.generateMovie(),
                on: .recommendation
         ) { response in
-            switch response {
-            case .success(let response):
-                result = response
-            default:
-                break
-            }
+            result = response
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertEqual(result?.page, 1)
-        XCTAssertEqual(result?.totalPages, 792)
-        XCTAssertEqual(result?.totalResults, 15831)
-        XCTAssertEqual(result?.results.count, 1)
+        let data = try? result?.get()
+        XCTAssertNotNil(data)
+        XCTAssertEqual(data?.page, 1)
+        XCTAssertEqual(data?.totalPages, 792)
+        XCTAssertEqual(data?.totalResults, 15831)
+        XCTAssertEqual(data?.results.count, 1)
     }
     
     func testGetMovieCast() {
@@ -146,20 +130,17 @@ class MovieDBAPITests: XCTestCase {
         """.data(using: .utf8)
         
         let expectation = self.expectation(description: "getMovieCast")
-        var result: MovieCastResponse?
+        var result: Result<MovieCastResponse, Error>?
         sut.getMovieCast(for: MovieStubGenerator.generateMovie()) { response in
-            switch response {
-            case .success(let response):
-                result = response
-            default:
-                break
-            }
+            result = response
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertEqual(result?.cast.count, 1)
-        XCTAssertEqual(result?.id, 287)
+        let data = try? result?.get()
+        XCTAssertNotNil(data)
+        XCTAssertEqual(data?.cast.count, 1)
+        XCTAssertEqual(data?.id, 287)
     }
     
     func testGetMovieReviews() {
@@ -179,20 +160,17 @@ class MovieDBAPITests: XCTestCase {
               }
         """.data(using: .utf8)
         let expectation = self.expectation(description: "getMovieReviews")
-        var result: MovieDBAPIListResponse<Review>?
+        var result: Result<MovieDBAPIListResponse<Review>, Error>?
         sut.getMoviewReviews(for: MovieStubGenerator.generateMovie(), page: 1) { response in
-            switch response {
-            case .success(let response):
-                result = response
-            default:
-                break
-            }
+            result = response
             expectation.fulfill()
         }
         
         waitForExpectations(timeout: 1, handler: nil)
-        XCTAssertEqual(result?.results.count, 1)
-        XCTAssertEqual(result?.page, 1)
+        let data = try? result?.get()
+        XCTAssertNotNil(data)
+        XCTAssertEqual(data?.results.count, 1)
+        XCTAssertEqual(data?.page, 1)
     }
     
 }

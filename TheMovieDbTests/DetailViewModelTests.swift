@@ -75,10 +75,13 @@ class DetailViewModelTests: XCTestCase {
     
     func testFinishLoadingWhenFetchingRelatedData() {
         sut.requestRelatedMovieData()
+        let expectation = self.expectation(description: "finishLoadingWhenFetchingRelatedData")
         delegate.updateCompletion = {
-            XCTAssertNotNil(self.delegate.isLoading)
-            XCTAssertFalse(self.delegate.isLoading!)
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(self.delegate.isLoading)
+        XCTAssertFalse(self.delegate.isLoading!)
     }
     
     func testSimilarMoviesAfterSuccessFetching() {
@@ -89,9 +92,12 @@ class DetailViewModelTests: XCTestCase {
             totalResults: 5
         )
         sut.requestRelatedMovieData()
+        let expectation = self.expectation(description: "similarMoviesAfterSuccessFetching")
         delegate.updateCompletion = {
-            XCTAssertNotNil(self.sut.getSimilarMovies())
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(self.sut.getSimilarMovies())
     }
     
     func testRecommendationMoviesAfterSuccessFetching() {
@@ -102,17 +108,23 @@ class DetailViewModelTests: XCTestCase {
             totalResults: 5
         )
         sut.requestRelatedMovieData()
+        let expectation = self.expectation(description: "recommendationMoviesAfterSuccessFetching")
         delegate.updateCompletion = {
-            XCTAssertNotNil(self.sut.getRecommendationMovies())
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(self.sut.getRecommendationMovies())
     }
     
     func testCastAfterSuccessFetching() {
         service.cast = MovieCastResponse(id: 1, cast: CastStrubGenerator.generateCastMembers(10))
         sut.requestRelatedMovieData()
+        let expectation = self.expectation(description: "similarMoviesAfterSuccessFetching")
         delegate.updateCompletion = {
-            XCTAssertNotNil(self.sut.getCast())
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(self.sut.getCast())
     }
 
 }
