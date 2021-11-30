@@ -34,7 +34,7 @@ private extension FeedTypes {
 
 final class HomeView: UIViewController {
     
-    var presenter = HomeViewPresenter()
+    var presenter = HomePresenter()
     
     private lazy var feedType: UICollectionView = {
         var flowLayout = UICollectionViewFlowLayout()
@@ -279,7 +279,7 @@ extension HomeView: UISearchControllerDelegate {
     }
 }
 
-extension HomeView: HomeViewPresenterDelegate {
+extension HomeView: HomePresenterDelegate {
     
     func didStartLoading() {
         add(loader)

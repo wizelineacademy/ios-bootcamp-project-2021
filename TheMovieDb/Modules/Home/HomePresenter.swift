@@ -1,5 +1,5 @@
 //
-//  HomeViewPresenter.swift
+//  HomePresenter.swift
 //  TheMovieDb
 //
 //  Created by Ricardo Ramirez on 20/11/21.
@@ -12,7 +12,7 @@ final class HomePresenter {
 
     private let service: MovieFeedRepository
     
-    weak var delegate: HomeViewPresenterDelegate?
+    weak var delegate: HomePresenterDelegate?
     
     private var movies = [Movie]()
     
