@@ -82,10 +82,9 @@ extension ReviewCollectionViewCell {
     func setUpUI() {
         vwContainer.layer.cornerRadius = 4
         vwContainer.clipsToBounds = true
-        vwContainer.backgroundColor = .lightGray
+        vwContainer.backgroundColor = .secondarySystemBackground
         self.addSubview(vwContainer)
        
-        
         userLabel.text = viewModelReview?.author
         userLabel.font = UIFont.preferredFont(forTextStyle: .title3)
         vwContainer.addSubview(userLabel)

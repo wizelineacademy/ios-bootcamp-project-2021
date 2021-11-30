@@ -11,6 +11,6 @@ protocol HomeView: AnyObject {
     func showLoading()
     func stopLoading()
     func showMoviesHome(arrMovie: [SectionMovie: [MovieViewModel]])
-    func showMoviesList(arrMovie: [Movie])
+    func showMoviesList(arrMovie: [MovieViewModel])
     func showEmptyState()
 }

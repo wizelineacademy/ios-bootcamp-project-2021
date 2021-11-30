@@ -8,7 +8,7 @@
 import UIKit
 
 protocol GenericMovieCollectionViewDelegate: AnyObject {
-    func selectedItem(movie: MovieViewModel)
+    func selectedCollectionItem<T>(movie: T)
 }
 
 class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollectionViewDelegate {
@@ -173,11 +173,11 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
     
     func generateHeaderLayout() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1),
-                                              heightDimension: .fractionalHeight(1))
+                                              heightDimension: .estimated(70))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         let groupFractionalWidth = 1
-        let groupFractionalHeight: Float = 0.30
+        let groupFractionalHeight: Float = 0.2
         let groupSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(CGFloat(groupFractionalWidth)),
             heightDimension: .fractionalHeight(CGFloat(groupFractionalHeight)))
@@ -186,7 +186,7 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
         
         let headerSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(0.50))
+            heightDimension: .fractionalHeight(0.4))
         let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: "HeaderCollectionView.reuseIdentifier",
@@ -248,7 +248,11 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let item = dataSourceMovie.itemIdentifier(for: indexPath) as? MovieViewModel else { return }
-        delegateCollection?.selectedItem(movie: item)
+        if let item = dataSourceMovie.itemIdentifier(for: indexPath) as? MovieViewModel{
+            delegateCollection?.selectedCollectionItem(movie: item)
+        } else if let item = dataSourceMovie.itemIdentifier(for: indexPath) as? ReviewViewModel{
+            delegateCollection?.selectedCollectionItem(movie: item)
+        }
+        
     }
 }

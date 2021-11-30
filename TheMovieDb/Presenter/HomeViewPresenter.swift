@@ -69,8 +69,10 @@ final class HomeViewPresenterImp: HomeViewPresenter {
                 guard let movieResult = respMovie,
                       let movieList = movieResult.results
                 else { return }
-                
-                self?.viewHome?.showMoviesList(arrMovie: movieList)
+                let viewModels = movieList.map {
+                    MovieViewModel(movie: $0)
+                }
+                self?.viewHome?.showMoviesList(arrMovie: viewModels)
             case .failure(let error):
                 os_log("Error: %@", log: .default, type: .error, String(describing: error))
             }

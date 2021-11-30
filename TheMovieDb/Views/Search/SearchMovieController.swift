@@ -9,10 +9,10 @@ import UIKit
 
 class SearchMovieController: UIViewController {
     
-    private var tableView: GenericTableViewController!
+    var tableView: GenericTableViewController!
+  
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
         setUpTableView()
         // Do any additional setup after loading the view.
     }
@@ -27,7 +27,7 @@ class SearchMovieController: UIViewController {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        tableView.isHidden = true
+        
     }
 
 }

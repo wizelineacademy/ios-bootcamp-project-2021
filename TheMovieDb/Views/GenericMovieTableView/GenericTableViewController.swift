@@ -8,37 +8,70 @@
 import UIKit
 import Kingfisher
 
+protocol GenericTableViewDelegate: AnyObject {
+    func selectedTableItem(movie: MovieViewModel)
+    func didScroll()
+}
+
 class GenericTableViewController: UITableView {
-    var arrMovies: [Movie] = [] {
+  
+    weak var delegateTable: GenericTableViewDelegate?
+    private lazy var dataTableSource = makeDataSource()
+    var arrMovies: [MovieViewModel] = [] {
         didSet {
-            delegate = self
-            dataSource = self
-            setUpCell()
-            self.reloadData()
+            update()
         }
     }
     
-    private func setUpCell() {
-        self.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    public init(frame: CGRect) {
+        super.init(frame: frame, style: .plain)
+        delegate = self
+        self.register(GenericMovieTableViewCell.self, forCellReuseIdentifier: GenericMovieTableViewCell.reuseIdentifier)
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
-extension GenericTableViewController: UITableViewDelegate, UITableViewDataSource {
- 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arrMovies.count
+extension GenericTableViewController {
+    enum Section: CaseIterable {
+        case movies
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        var content = cell.defaultContentConfiguration()
-        content.text = arrMovies[indexPath.row].title
+    func makeDataSource() -> UITableViewDiffableDataSource<Section, MovieViewModel> {
+        return UITableViewDiffableDataSource(
+            tableView: self,
+            cellProvider: {  tableView, indexPath, movieItem in
+                guard let cell = tableView.dequeueReusableCell(
+                    withIdentifier: GenericMovieTableViewCell.reuseIdentifier,
+                    for: indexPath) as? GenericMovieTableViewCell                else { fatalError("Could not create new cell") }
+                cell.movie = movieItem
+                return cell
+            }
+        )
+    }
 
-        // Customize appearance.
-        content.imageProperties.tintColor = .purple
+    func update() {
+            var snapshot = NSDiffableDataSourceSnapshot<Section, MovieViewModel>()
+            snapshot.appendSections(Section.allCases)
+            snapshot.appendItems(arrMovies, toSection: .movies)
+            self.dataTableSource.apply(snapshot, animatingDifferences: true)
+    }
+}
 
-        cell.contentConfiguration = content
-        return cell
+extension GenericTableViewController: UITableViewDelegate {
+   
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let item = dataTableSource.itemIdentifier(for: indexPath) else { return }
+        delegateTable?.selectedTableItem(movie: item)
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        delegateTable?.didScroll()
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.setNeedsLayout()
     }
 }
