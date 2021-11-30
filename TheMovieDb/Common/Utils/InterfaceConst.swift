@@ -40,7 +40,8 @@ enum InterfaceConst {
     static let zeroPositionSublayer: UInt32 = 0
     static let divideInto4 = 4.0
     static let divideInto2 = 2.0
-    static let divideInto3 = 3
+    static let divideInto3 = 3.0
+    static let divideInto5 = 5.0
     static let minimumScaleFactorFontSize = 0.2
     // home CollectionViewLayout
     static let fractionWidthDefaultValueSection = 1.0
@@ -66,7 +67,12 @@ enum InterfaceConst {
     static let widthItemCellMovieDetail = 100
     // SearchView
     static let widthMovieCellMinus = 60
-
     static let heightMovieCell = 0.23
+    static let widthMovieCellPadMinus = 100
+    static let heightMoviePadCell = 0.20
+    // Reviews
+    static let reviewImageSizeMinus = 30.0
+    static let heightCellReview = 200.0
+    static let widthtCellReviewMinus = 20
     
 }

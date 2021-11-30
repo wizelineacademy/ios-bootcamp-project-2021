@@ -109,7 +109,10 @@ extension SearchingView: UICollectionViewDelegateFlowLayout {
             height: view.frame.height * InterfaceConst.heightMovieCell
         )
         if UIDevice.current.userInterfaceIdiom == .pad {
-            defaultSize = .init(width: (view.frame.width - 100) / 5, height: view.frame.height * 0.20)
+            defaultSize = .init(
+                width: (view.frame.width - InterfaceConst.widthMovieCellPadMinus) / InterfaceConst.divideInto5,
+                height: view.frame.height * InterfaceConst.heightMoviePadCell
+            )
         }
         return defaultSize
         

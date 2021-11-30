@@ -17,7 +17,12 @@ final class ReviewsView: UICollectionViewController, DisplayError, DisplayMessag
     
     // MARK: - LifeCycle
     init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
-        layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = .init(
+            top: InterfaceConst.initZeroValue,
+            left: InterfaceConst.paddingDefault,
+            bottom: InterfaceConst.initZeroValue,
+            right: InterfaceConst.paddingDefault
+        )
         super.init(collectionViewLayout: layout)
     }
     
@@ -76,7 +81,7 @@ extension ReviewsView {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ReviewsView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width - 20, height: 200)
+        return .init(width: view.frame.width - InterfaceConst.reviewImageSizeMinus, height: InterfaceConst.heightCellReview)
     }
 }
 

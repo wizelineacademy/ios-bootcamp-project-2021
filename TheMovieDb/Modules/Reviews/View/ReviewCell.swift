@@ -25,16 +25,16 @@ final class ReviewCell: UICollectionViewCell, Reusable {
     
     private let authorNameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 18)
-        label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.headerFontSize)
+        label.numberOfLines = InterfaceConst.initZeroNumberLineValue
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.defaultFontSize)
+        label.numberOfLines = InterfaceConst.initZeroNumberLineValue
         return label
     }()
     // MARK: - Life Cycle
@@ -50,22 +50,31 @@ final class ReviewCell: UICollectionViewCell, Reusable {
 
     // MARK: - Helpers
     private func configureUI() {
-        layer.cornerRadius = 10
+        layer.cornerRadius = InterfaceConst.defaultCornerRadius
         backgroundColor = .systemGray5
         
         addSubview(descriptionLabel)
-        descriptionLabel.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
-        descriptionLabel.setHeight((frame.height / 2))
+        descriptionLabel.anchor(
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: InterfaceConst.paddingDefault,
+            paddingLeft: InterfaceConst.paddingDefault,
+            paddingBottom: InterfaceConst.paddingDefault,
+            paddingRight: InterfaceConst.paddingDefault
+        )
+        
+        descriptionLabel.setHeight((frame.height / InterfaceConst.divideInto2))
         
         addSubview(logoImageView)
-        logoImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: 10, paddingLeft: 10)
-        logoImageView.setWidth((frame.height / 2) - 30)
-        logoImageView.setHeight((frame.height / 2) - 30)
+        logoImageView.anchor(top: topAnchor, left: leftAnchor, paddingTop: InterfaceConst.paddingDefault, paddingLeft: InterfaceConst.paddingDefault)
+        logoImageView.setWidth((frame.height / InterfaceConst.divideInto2) - InterfaceConst.reviewImageSizeMinus)
+        logoImageView.setHeight((frame.height / InterfaceConst.divideInto2) - InterfaceConst.reviewImageSizeMinus)
         
-        logoImageView.layer.cornerRadius = 10
+        logoImageView.layer.cornerRadius = InterfaceConst.defaultCornerRadius
         
         addSubview(authorNameLabel)
-        authorNameLabel.anchor(top: topAnchor, left: logoImageView.rightAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10)
+        authorNameLabel.anchor(top: topAnchor, left: logoImageView.rightAnchor, right: rightAnchor, paddingTop: InterfaceConst.paddingDefault, paddingLeft: InterfaceConst.paddingDefault)
         
     }
     
