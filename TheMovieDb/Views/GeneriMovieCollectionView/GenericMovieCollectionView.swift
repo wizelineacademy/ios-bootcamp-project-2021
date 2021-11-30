@@ -248,9 +248,9 @@ class GenericMovieCollectionView<Section: Hashable>: UICollectionView, UICollect
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let item = dataSourceMovie.itemIdentifier(for: indexPath) as? MovieViewModel{
+        if let item = dataSourceMovie.itemIdentifier(for: indexPath) as? MovieViewModel {
             delegateCollection?.selectedCollectionItem(movie: item)
-        } else if let item = dataSourceMovie.itemIdentifier(for: indexPath) as? ReviewViewModel{
+        } else if let item = dataSourceMovie.itemIdentifier(for: indexPath) as? ReviewViewModel {
             delegateCollection?.selectedCollectionItem(movie: item)
         }
         

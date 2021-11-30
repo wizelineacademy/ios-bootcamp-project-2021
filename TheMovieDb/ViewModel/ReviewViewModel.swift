@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct ReviewViewModel: Hashable {
-   
+struct ReviewViewModel: Hashable, Identifiable {
+    var id: String
     let author: String
     let content: String
     let created: String
@@ -28,7 +28,7 @@ struct ReviewViewModel: Hashable {
 
 extension ReviewViewModel {
     init(review: Review) {
-        
+        self.id = review.id
         self.author = review.author
         self.content = review.content
         self.created = review.createdAt

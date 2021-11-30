@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class HomeViewController: UIViewController, HomeView {
    
     var presenter: HomeViewPresenter?
