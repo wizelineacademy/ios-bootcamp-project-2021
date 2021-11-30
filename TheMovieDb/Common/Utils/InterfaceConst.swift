@@ -66,13 +66,12 @@ enum InterfaceConst {
     static let heightItemCellMovieDetail = 140
     static let widthItemCellMovieDetail = 100
     // SearchView
-    static let widthMovieCellMinus = 60
+    static let widthMovieCellMinus = 60.0
     static let heightMovieCell = 0.23
-    static let widthMovieCellPadMinus = 100
+    static let widthMovieCellPadMinus = 100.0
     static let heightMoviePadCell = 0.20
     // Reviews
     static let reviewImageSizeMinus = 30.0
     static let heightCellReview = 200.0
-    static let widthtCellReviewMinus = 20
     
 }
