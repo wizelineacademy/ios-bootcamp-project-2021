@@ -33,7 +33,7 @@ extension UIImageView {
         if let error = error {
             Log.imageService(error).description
             DispatchQueue.main.async {
-                self.image = #imageLiteral(resourceName: "default")
+                self.image = UIImage(named: InterfaceConst.defaultImage) ?? UIImage()
             }
             return true
         }
@@ -50,6 +50,12 @@ extension UIImageView {
                 }
             } else {
                 if let httpResponse = response as? HTTPURLResponse {
+                    DispatchQueue.main.async {
+                        let defaultImage: UIImage? = UIImage(named: InterfaceConst.defaultImage)
+                        self.image = defaultImage
+                        MovieConst.imageCache.setObject(defaultImage ?? UIImage(), forKey: url.absoluteString as NSString)
+                    }
+                   
                     Log.generalInfo("image not found. Status :\(httpResponse.statusCode)").description
                 }
                 

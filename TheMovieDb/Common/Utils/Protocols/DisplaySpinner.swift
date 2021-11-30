@@ -17,7 +17,6 @@ extension DisplaySpinner where Self: UIViewController {
         let spinnerView = UIView.init(frame: view.bounds)
         spinnerView.backgroundColor = .systemBackground
         spinnerView.tag = InterfaceConst.defaultViewTag
-        
         let spinnerIndicator = UIActivityIndicatorView.init(style: .large)
         spinnerIndicator.startAnimating()
         spinnerIndicator.center = spinnerView.center
@@ -31,8 +30,8 @@ extension DisplaySpinner where Self: UIViewController {
     }
     
     func removeSpinner() {
-        let spinnerView = view.viewWithTag(InterfaceConst.defaultViewTag)
         DispatchQueue.main.async {
+            let spinnerView = self.view.viewWithTag(InterfaceConst.defaultViewTag)
             UIView.animate(withDuration: InterfaceConst.defaultTimeAnimation) {
                 spinnerView?.alpha = InterfaceConst.zeroValue
             } completion: { _ in

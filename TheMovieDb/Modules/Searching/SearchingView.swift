@@ -138,16 +138,18 @@ extension SearchingView: SearchingViewProtocol {
     }
     
     func showMoviesResults(_ moviesFound: [MovieViewModel]) {
-        viewModel = moviesFound
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.viewModel = moviesFound
+            self.collectionView.reloadData()
+        }
     }
     
     func showSpinnerView() {
-        displaySpinner()
+        self.displaySpinner()
     }
     
     func stopSpinnerView() {
-        removeSpinner()
+        self.removeSpinner()
     }
     
 }

@@ -32,18 +32,18 @@ extension SearchingPresenter: SearchingPresenterProtocol {
 
 extension SearchingPresenter: SearchingInteractorOutputProtocol {
     func noSearchesFound(with message: String) {
-        view?.showMessageNoSearchesFound(with: message)
         view?.stopSpinnerView()
+        view?.showMessageNoSearchesFound(with: message)
     }
     
     func onError(errorMessage: String) {
-        view?.stopSpinnerView()
         view?.showErrorMessage(withMessage: errorMessage)
+        view?.stopSpinnerView()
     }
     
     func moviesFound(moviesFound: [MovieViewModel]) {
-        view?.stopSpinnerView()
         view?.showMoviesResults(moviesFound)
+        view?.stopSpinnerView()
     }
 
 }

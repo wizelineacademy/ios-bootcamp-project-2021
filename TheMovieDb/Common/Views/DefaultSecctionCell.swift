@@ -17,10 +17,9 @@ final class DefaultSectionCell: UICollectionViewCell, Reusable {
     
     private let imageBackground: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = #imageLiteral(resourceName: "noImage")
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = InterfaceConst.defaultCornerRadius
         imageView.backgroundColor = .darkGray
         return imageView
     }()
