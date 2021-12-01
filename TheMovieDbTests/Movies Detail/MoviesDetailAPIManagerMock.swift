@@ -9,7 +9,7 @@ import XCTest
 @testable import TheMovieDb
 
 class MoviesDetailAPIManagerMock: XCTestCase, MoviesDetailAPIDataManagerProtocol {
-    func requestMovieDetail<T>(value: T.Type, request: Request, completion: @escaping (Result<T?, Error>) -> Void) where T : Decodable {
+    func requestMovieDetail<T>(value: T.Type, request: Request, completion: @escaping (Result<T?, Error>) -> Void) where T: Decodable {
         MovieDbAPI.request(value: T.self, request: request) {  result in
             switch result {
             case .success(let result):
@@ -21,7 +21,7 @@ class MoviesDetailAPIManagerMock: XCTestCase, MoviesDetailAPIDataManagerProtocol
         }
     }
     
-    func requestSimilarMovies<T>(value: T.Type, request: Request, completion: @escaping (Result<T?, Error>) -> Void) where T : Decodable {
+    func requestSimilarMovies<T>(value: T.Type, request: Request, completion: @escaping (Result<T?, Error>) -> Void) where T: Decodable {
         MovieDbAPI.request(value: T.self, request: request) {  result in
             switch result {
             case .success(let result):
