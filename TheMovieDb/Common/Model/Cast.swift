@@ -10,5 +10,5 @@ import Foundation
 struct Cast: Decodable {
     let name: String?
     let character: String?
-    let profile_path: String?
+    let profilePath: String?
 }

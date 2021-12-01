@@ -110,7 +110,7 @@ final class DetailHeaderView: UICollectionReusableView {
         reviewsButton.setHeight(InterfaceConst.heighReviewButton)
         reviewsButton.addTarget(self, action: #selector(handleReviewButton), for: .touchUpInside)
         
-        configureButtonsToView(button: castButton, colorBackground: .label, title: InterfaceConst.cast)
+        configureButtonsToView(button: castButton, colorBackground: .blue, title: InterfaceConst.cast)
         castButton.setHeight(InterfaceConst.heighReviewButton)
         castButton.addTarget(self, action: #selector(handleCastButton), for: .touchUpInside)
         

@@ -13,7 +13,7 @@ protocol MovieDetailViewProtocol: AnyObject {
     // PRESENTER -> VIEW
     var presenter: MovieDetailPresenterProtocol? { get set }
     
-    func showRealatedMoviews(_ relatedMovies: [MovieDetailSections: [Movie]])
+    func showRealatedMovies(_ relatedMovies: [MovieDetailSections: [Movie]])
     func setMovie(_ movie: Movie)
     func showErrorMessage(withMessage: String)
 }
@@ -21,6 +21,7 @@ protocol MovieDetailViewProtocol: AnyObject {
 protocol MovieDetailRouterProtocol: AnyObject {
     // PRESENTER -> ROUTER
     func showReviews(from view: MovieDetailViewProtocol, with movie: Movie)
+    func showCast(from view: MovieDetailViewProtocol, with movie: Movie)
     func showMovie(from view: MovieDetailViewProtocol, with movie: Movie)
 }
 
@@ -38,6 +39,7 @@ protocol MovieDetailPresenterProtocol: AnyObject {
     
     func viewDidLoad()
     func showReviews(_ movie: Movie)
+    func showCast(_ movie: Movie)
     func showMovie(_ movie: Movie)
 }
 

@@ -32,7 +32,7 @@ class APIUrlBuilder: APIBuildProtocol {
             let queryEncoding = self.parameters.query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
             url = APIConst.baseUrl + safeApi + APIConst.apiKey + self.parameters.language + queryEncoding + self.parameters.page
             
-        case .review, .similar, .recommendations:
+        case .review, .similar, .recommendations, .credits:
             let reviewAPI =  safeApi.replacingOccurrences(of: "[id]", with: self.parameters.id)
             url = APIConst.baseUrl + reviewAPI + APIConst.apiKey + self.parameters.language + self.parameters.page
         }

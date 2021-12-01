@@ -28,6 +28,11 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
         router?.showReviews(from: view, with: movie)
     }
     
+    func showCast(_ movie: Movie) {
+        guard let view = view else { return }
+        router?.showCast(from: view, with: movie)
+    }
+    
     func showMovie(_ movie: Movie) {
         guard let view = view else { return }
         router?.showMovie(from: view, with: movie)
@@ -44,7 +49,7 @@ extension MovieDetailPresenter: MovieDetailInteractorOutputProtocol {
     }
     
     func moviesFromInteractor(_ relatedMovies: [MovieDetailSections: [Movie]]) {
-        view?.showRealatedMoviews(relatedMovies)
+        view?.showRealatedMovies(relatedMovies)
     }
     
 }

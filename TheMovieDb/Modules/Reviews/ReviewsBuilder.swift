@@ -16,11 +16,9 @@ enum ReviewsBuilder: ReviewsBuilderProtocol {
         let router: ReviewsRouterProtocol = ReviewsRouter()
         
         view.presenter = presenter
-        //
         presenter.view = view
         presenter.router = router
         presenter.interactor = interactor
-        //
         interactor.presenter = presenter
 
         return view

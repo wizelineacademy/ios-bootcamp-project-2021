@@ -127,7 +127,7 @@ extension MovieDetailView: UICollectionViewDelegateFlowLayout {
 // MARK: - DetailHeaderViewDelegate
 extension MovieDetailView: DetailHeaderViewDelegate {
     func openCasts(_ detailHeaderView: DetailHeaderView, with movie: Movie) {
-        print("s")
+        presenter?.showCast(movie)
     }
     
     func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie) {
@@ -157,7 +157,7 @@ extension MovieDetailView: MovieDetailViewProtocol {
         self.viewModel = MovieDetailViewModel(movie: movie)
     }
     
-    func showRealatedMoviews(_ relatedMovies: [MovieDetailSections: [Movie]]) {
+    func showRealatedMovies(_ relatedMovies: [MovieDetailSections: [Movie]]) {
         movies = relatedMovies
         self.reloadCollectionView()
     }

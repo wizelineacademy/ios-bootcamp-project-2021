@@ -8,5 +8,5 @@
 import Foundation
 
 struct CreditsMovie: Decodable {
-    let cast: [Cast]?
+    let cast: [Cast]
 }

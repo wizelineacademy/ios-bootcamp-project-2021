@@ -1,20 +1,18 @@
 //
-//  SearchingView.swift
+//  CastView.swift
 //  TheMovieDb
 //
-//  Created by Javier Cueto on 14/11/21.
-//  
+//  Created by Javier Cueto on 30/11/21.
 //
 
 import Foundation
 import UIKit
 
-final class SearchingView: UICollectionViewController, DisplayError, DisplaySpinner, DisplayMessage {
+final class CastView: UICollectionViewController, DisplayError, DisplayMessage, DisplaySpinner {
 
     // MARK: Properties
-    var presenter: SearchingPresenterProtocol?
-    private let searchController = UISearchController(searchResultsController: nil)
-    private var viewModel: [MovieViewModel] = []
+    var presenter: CastPresenterProtocol?
+    private var viewModel: [CastViewModel] = []
 
     // MARK: Lifecycle
     init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
@@ -28,61 +26,36 @@ final class SearchingView: UICollectionViewController, DisplayError, DisplaySpin
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter?.viewDidLoad()
         configureUI()
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        DispatchQueue.main.async {
-            self.searchController.searchBar.becomeFirstResponder()
-        }
-    }
-    
+
 }
 
 // MARK: Helpers
-private extension SearchingView {
+private extension CastView {
     func configureUI() {
         configureCollectionView()
-        configureSearchController()
-
+        navigationItem.title = InterfaceConst.cast
     }
     
     func configureCollectionView() {
-        collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reusableIdentifier)
+        collectionView.register(CastCell.self, forCellWithReuseIdentifier: CastCell.reusableIdentifier)
         collectionView.keyboardDismissMode = .interactive
     }
     
-    func configureSearchController() {
-        searchController.searchBar.delegate = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.placeholder = InterfaceConst.search
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = false
-        navigationItem.titleView?.isHidden = true
-        definesPresentationContext = false
-    }
-}
-
-// MARK: - UITCollectionViewControllerDelegate
-extension SearchingView {
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie =  viewModel[indexPath.row].movie
-        presenter?.showMovie(movie)
-    }
 }
 
 // MARK: - UITCollectionViewControllerDataSource
-extension SearchingView {
+extension CastView {
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reusableIdentifier, for: indexPath) as? DefaultSectionCell else {
-            return DefaultSectionCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CastCell.reusableIdentifier, for: indexPath) as? CastCell else {
+            return CastCell()
         }
         let viewModel = viewModel[indexPath.row]
         cell.viewModel = viewModel
@@ -92,7 +65,7 @@ extension SearchingView {
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
-extension SearchingView: UICollectionViewDelegateFlowLayout {
+extension CastView: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return .init(
@@ -127,32 +100,18 @@ extension SearchingView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - UISearchBarDelegate
-extension SearchingView: UISearchBarDelegate {
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text else { return }
-        presenter?.searchMovies(text)
-    }
-}
-
-extension SearchingView: SearchingViewProtocol {
-    func removeMessageSearchesNotFound() {
-        removeMessageLabel()
+extension CastView: CastViewProtocol {
+    func showCast(castViewModel: [CastViewModel]) {
+        viewModel = castViewModel
+        collectionView.reloadData()
     }
     
-    func showMessageNoSearchesFound(with message: String) {
+    func showErrorMessage(withMessage error: String) {
+        viewDisplayError(with: error)
+    }
+    
+    func showMessageNoCast(with message: String) {
         displayMessageLabel(with: message)
-    }
-    
-    func showErrorMessage(withMessage: String) {
-        viewDisplayError(with: withMessage)
-    }
-    
-    func showMoviesResults(_ moviesFound: [MovieViewModel]) {
-        DispatchQueue.main.async {
-            self.viewModel = moviesFound
-            self.collectionView.reloadData()
-        }
     }
     
     func showSpinnerView() {

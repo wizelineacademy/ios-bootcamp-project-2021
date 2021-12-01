@@ -18,12 +18,14 @@ enum InterfaceConst {
     static let search = "Search".localized()
     static let noMovies = "No movies".localized()
     static let noReviews = "No Reviews".localized()
+    static let noCast = "No Cast".localized()
     static let okButton = "Ok".localized()
     static let defaultImage = "default"
     static let blueAppColor = "BlueAppColor"
     static let noResultsValue = 0
     // interface values numbers
     static let defaultFontSize = 16.0
+    static let normalFontSize = 14.0
     static let defaultValueItemsCell = 0
     static let titleFontSize = 20.0
     static let topRatedNumberFontSize = 150.0
@@ -37,7 +39,7 @@ enum InterfaceConst {
     static let oneValue = 1.0
     static let secondaryPadding = 15.0
     static let topRatedNumberPadding = 60.0
-    static let defaultCornerRadius = 10.0
+    static let defaultCornerRadius = 7.0
     static let zeroPositionSublayer: UInt32 = 0
     static let divideInto4 = 4.0
     static let divideInto2 = 2.0
@@ -53,6 +55,7 @@ enum InterfaceConst {
     static let fractionDefaultWidthPadSection = 0.20
     static let paddingDefaultLayout = 16.0
     static let paddingDefault = 10.0
+    static let paddingLittle = 3.0
     static let paddingPrimaryValue = 20.0
     static let headerHeight = 35.0
     static let fractionTopRatedHeightSection = 1.0

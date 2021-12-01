@@ -17,6 +17,13 @@ class MovieDetailRouter: MovieDetailRouterProtocol {
         view.present(nav, animated: true)
     }
     
+    func showCast(from view: MovieDetailViewProtocol, with movie: Movie) {
+        let castView = CastBuilder.createModule(movie: movie)
+        guard let view = view as? MovieDetailView else { return }
+        let nav = UINavigationController(rootViewController: castView)
+        view.present(nav, animated: true)
+    }
+    
     func showMovie(from view: MovieDetailViewProtocol, with movie: Movie) {
         let controller = MovieDetailBuilder.createModule(with: movie)
         guard let view = view as? MovieDetailView else { return }
