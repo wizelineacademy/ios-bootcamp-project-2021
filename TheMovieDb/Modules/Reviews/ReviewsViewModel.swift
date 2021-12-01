@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import OSLog
 
 class ReviewsViewModel: ViewModel, ObservableObject {
     
@@ -54,8 +55,8 @@ class ReviewsViewModel: ViewModel, ObservableObject {
                 self.reviews.append(contentsOf: data.results)
                 self.loadedPages = data.page
                 self.totalPages = data.totalPages
-            case .failure(let error):
-                print(error)
+            case .failure:
+                os_log("Network request error", log: OSLog.networkRequest, type: .debug)
             }
             self.isLoading.toggle()
         }

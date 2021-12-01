@@ -18,14 +18,20 @@ class DetailViewModelTests: XCTestCase {
     
     var delegate: MockDetailViewModelDelegate!
     
+    var dependencies: DetailViewModel.Dependencies!
+    
+    var imageLoader: MockImageLoader!
+    
     override func setUp() {
         super.setUp()
         self.service = MockDetailMovieRepository()
         self.movie = MovieStubGenerator.generateMovie()
         self.delegate = MockDetailViewModelDelegate()
-        let dependencies = DetailViewModel.Dependencies(
+        self.imageLoader = MockImageLoader()
+        self.dependencies = DetailViewModel.Dependencies(
             movie: movie,
-            service: service
+            service: service,
+            imageLoader: imageLoader
         )
         self.sut = DetailViewModel(dependencies: dependencies)
         self.sut.delegate = delegate
@@ -36,6 +42,8 @@ class DetailViewModelTests: XCTestCase {
         self.service = nil
         self.movie = nil
         self.delegate = nil
+        self.imageLoader = nil
+        self.dependencies = nil
         super.tearDown()
     }
     
@@ -75,10 +83,13 @@ class DetailViewModelTests: XCTestCase {
     
     func testFinishLoadingWhenFetchingRelatedData() {
         sut.requestRelatedMovieData()
+        let expectation = self.expectation(description: "finishLoadingWhenFetchingRelatedData")
         delegate.updateCompletion = {
-            XCTAssertNotNil(self.delegate.isLoading)
-            XCTAssertFalse(self.delegate.isLoading!)
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(self.delegate.isLoading)
+        XCTAssertFalse(self.delegate.isLoading!)
     }
     
     func testSimilarMoviesAfterSuccessFetching() {
@@ -89,9 +100,12 @@ class DetailViewModelTests: XCTestCase {
             totalResults: 5
         )
         sut.requestRelatedMovieData()
+        let expectation = self.expectation(description: "similarMoviesAfterSuccessFetching")
         delegate.updateCompletion = {
-            XCTAssertNotNil(self.sut.getSimilarMovies())
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(self.sut.getSimilarMovies())
     }
     
     func testRecommendationMoviesAfterSuccessFetching() {
@@ -102,17 +116,52 @@ class DetailViewModelTests: XCTestCase {
             totalResults: 5
         )
         sut.requestRelatedMovieData()
+        let expectation = self.expectation(description: "recommendationMoviesAfterSuccessFetching")
         delegate.updateCompletion = {
-            XCTAssertNotNil(self.sut.getRecommendationMovies())
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(self.sut.getRecommendationMovies())
     }
     
     func testCastAfterSuccessFetching() {
         service.cast = MovieCastResponse(id: 1, cast: CastStrubGenerator.generateCastMembers(10))
         sut.requestRelatedMovieData()
+        let expectation = self.expectation(description: "similarMoviesAfterSuccessFetching")
         delegate.updateCompletion = {
-            XCTAssertNotNil(self.sut.getCast())
+            expectation.fulfill()
         }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(self.sut.getCast())
+    }
+    
+    func testNilImageAfterImageLoadWithInvalidURL() {
+        dependencies = DetailViewModel.Dependencies(
+            movie: MovieStubGenerator.generateMovie(withPosterPath: false),
+            service: service,
+            imageLoader: imageLoader
+        )
+        self.sut = DetailViewModel(dependencies: dependencies)
+        let expectation = self.expectation(description: "nilImageAfterImageLoadWithInvalidURL")
+        var result: UIImage?
+        sut.getMoviePoster { image in
+            result = image
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNil(result)
+    }
+    
+    func testImageAfterImageLoad() {
+        imageLoader.image = UIImage()
+        let expectation = self.expectation(description: "imageAfterImageLoad")
+        var result: UIImage?
+        sut.getMoviePoster { image in
+            result = image
+            expectation.fulfill()
+        }
+        waitForExpectations(timeout: 1, handler: nil)
+        XCTAssertNotNil(result)
     }
 
 }
@@ -162,9 +211,9 @@ class MockDetailMovieRepository: DetailMovieRepository {
 
 class MovieStubGenerator {
     
-    class func generateMovie() -> Movie {
+    class func generateMovie(withPosterPath: Bool = true) -> Movie {
         Movie(
-            posterPath: UUID().uuidString,
+            posterPath: withPosterPath ? UUID().uuidString : nil,
             overview: UUID().uuidString,
             releaseDate: String(Int.random(in: 1888..<2021)),
             id: Int.random(in: 1..<1000000),

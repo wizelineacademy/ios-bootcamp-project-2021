@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Kingfisher
+//import Kingfisher
 import SwiftUI
 
 enum RelatedMovieTypes {
@@ -20,16 +20,14 @@ final class DetailView: UIViewController {
     
     private let loader = LoadingViewController()
     
+    private let cache = Cache<String, UIImage>()
+    
     private lazy var scroll = UIScrollView()
     
     private lazy var mainContainer = UIView()
     
     private lazy var poster: UIImageView = {
         let iv = UIImageView()
-        if let posterpath = viewModel.getMoviePosterPath(),
-           let posterURL = URL(string: MovieDBAPI.APIConstants.imageUrl + posterpath) {
-            iv.kf.setImage(with: posterURL)
-        }
         iv.contentMode = .scaleAspectFill
         return iv
     }()
@@ -105,6 +103,12 @@ final class DetailView: UIViewController {
         infoContainer.addArrangedSubview(similarMovies)
         infoContainer.addArrangedSubview(recommendationMovies)
         infoContainer.addArrangedSubview(movieCast)
+        viewModel.getMoviePoster { [weak self] image in
+            if image == nil {
+                self?.poster.contentMode = .scaleAspectFit
+            }
+            self?.poster.image = image
+        }
     }
     
     func addConstraints() {
