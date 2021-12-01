@@ -45,7 +45,6 @@
 		D3B462F02741BB510014AB2B /* CacheImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B462EF2741BB510014AB2B /* CacheImageView.swift */; };
 		D3B756D72742F6DF0076B047 /* SearchBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B756D62742F6DF0076B047 /* SearchBarController.swift */; };
 		D3B756D92742FE840076B047 /* SearchKeyword.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B756D82742FE840076B047 /* SearchKeyword.swift */; };
-		D3D123662730770000E164E1 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D3D123652730770000E164E1 /* Kingfisher */; };
 		D3D50C292732C8B1002C487F /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3D50C282732C8B1002C487F /* DetailViewController.swift */; };
 		D3DEF213274400B1006D5507 /* DiscardableImageCacheItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DEF212274400B1006D5507 /* DiscardableImageCacheItem.swift */; };
 		D3E0121327301E8500882F27 /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0121227301E8500882F27 /* ApiError.swift */; };
@@ -60,6 +59,7 @@
 		D3E0123C273022E900882F27 /* MovieClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0123B273022E900882F27 /* MovieClient.swift */; };
 		D3E0123E2730232400882F27 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E0123D2730232400882F27 /* Result.swift */; };
 		D3E5E7CE27330C5B002AE950 /* MovieDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E5E7CD27330C5B002AE950 /* MovieDetails.swift */; };
+		D3E88DD4275668B2009E2A09 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E88DD3275668B2009E2A09 /* LaunchViewController.swift */; };
 		D3F283ED2731C550003A3A13 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F283EC2731C550003A3A13 /* TextStyle.swift */; };
 		D3F283EF2731CAD3003A3A13 /* DesignColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F283EE2731CAD3003A3A13 /* DesignColor.swift */; };
 		D3F283F12731D0F7003A3A13 /* LabelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F283F02731D0F7003A3A13 /* LabelBuilder.swift */; };
@@ -140,6 +140,7 @@
 		D3E0123B273022E900882F27 /* MovieClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieClient.swift; sourceTree = "<group>"; };
 		D3E0123D2730232400882F27 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		D3E5E7CD27330C5B002AE950 /* MovieDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetails.swift; sourceTree = "<group>"; };
+		D3E88DD3275668B2009E2A09 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		D3F283EC2731C550003A3A13 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
 		D3F283EE2731CAD3003A3A13 /* DesignColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignColor.swift; sourceTree = "<group>"; };
 		D3F283F02731D0F7003A3A13 /* LabelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelBuilder.swift; sourceTree = "<group>"; };
@@ -151,7 +152,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3232918274D68C00021404F /* SDWebImageSwiftUI in Frameworks */,
-				D3D123662730770000E164E1 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,9 +314,9 @@
 			children = (
 				D3E0121427301F1000882F27 /* URLComponent */,
 				D3E0121227301E8500882F27 /* ApiError.swift */,
+				D3E0123D2730232400882F27 /* Result.swift */,
 				D3E0123B273022E900882F27 /* MovieClient.swift */,
 				D32DC1E4274A951D00D2865E /* NetworkDispatcher.swift */,
-				D3E0123D2730232400882F27 /* Result.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -357,6 +357,7 @@
 		D3E012212730200F00882F27 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				D3E88DD3275668B2009E2A09 /* LaunchViewController.swift */,
 				D3B756D62742F6DF0076B047 /* SearchBarController.swift */,
 				837B4EAB258178B6003DFC67 /* FeedViewController.swift */,
 				D3D50C282732C8B1002C487F /* DetailViewController.swift */,
@@ -432,7 +433,6 @@
 			);
 			name = TheMovieDb;
 			packageProductDependencies = (
-				D3D123652730770000E164E1 /* Kingfisher */,
 				D3232917274D68C00021404F /* SDWebImageSwiftUI */,
 			);
 			productName = TheMovieDb;
@@ -507,7 +507,6 @@
 			);
 			mainGroup = 837B4E9B258178B6003DFC67;
 			packageReferences = (
-				D3D123642730770000E164E1 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				D3232916274D68C00021404F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 837B4EA5258178B6003DFC67 /* Products */;
@@ -603,6 +602,7 @@
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				837B4EAA258178B6003DFC67 /* SceneDelegate.swift in Sources */,
 				D3E0123E2730232400882F27 /* Result.swift in Sources */,
+				D3E88DD4275668B2009E2A09 /* LaunchViewController.swift in Sources */,
 				D3D50C292732C8B1002C487F /* DetailViewController.swift in Sources */,
 				D3117BE42746ED5B00DCD791 /* Extensions.swift in Sources */,
 				D3E0121A27301F4C00882F27 /* InfoById.swift in Sources */,
@@ -952,14 +952,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		D3D123642730770000E164E1 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -967,11 +959,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3232916274D68C00021404F /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
-		};
-		D3D123652730770000E164E1 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3D123642730770000E164E1 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

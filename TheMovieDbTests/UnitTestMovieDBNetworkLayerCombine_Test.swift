@@ -61,6 +61,7 @@ class UnitTestMovieDBNetworkLayerCombine_Test: XCTestCase {
         details = MovieDetailsViewModel(movieDetails: moviesDetails)
       })
       .store(in: &cancellables)
+    
     wait(for: [promise], timeout: 10)
     // Then
     XCTAssertEqual(details?.title, "Fight Club")

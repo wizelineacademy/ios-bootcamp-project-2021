@@ -45,6 +45,7 @@ class FeedViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    overrideUserInterfaceStyle = .dark
     setupCollectionView()
     getMovies()
   }
@@ -219,7 +220,7 @@ extension FeedViewController: SearchBarDelegate {
         if runCount == 2 {
           timer.invalidate()
           runCount = 0
-          self?.searchMovies(searchText: text)
+          self?.searchMovies(searchText: text, searchBar: searchBar)
           searchBar.searchTextField.resignFirstResponder()
         }
       }
@@ -232,20 +233,33 @@ extension FeedViewController: SearchBarDelegate {
     }
   }
   
-  private func searchMovies(searchText: String) {
+  private func searchMovies(searchText: String, searchBar: UISearchBar) {
     searchResult.removeAll()
     let group = DispatchGroup()
     group.enter()
     movieViewModel?.getDataMovies(categories: SearchKeyword.keywords, search: searchText, group: group, kindOfElement: MovieFeedResult.self, complete: { [weak self] movieSearch in
       defer { group.leave() }
       guard let resultSearch = movieSearch.results else { return }
-      self?.searchResult = resultSearch.map({ movie in
-        MovieViewModel(movie: movie)
-      })
+      if movieSearch.results?.count == 0 {
+        DispatchQueue.main.async {
+          self?.showAlertNoResults()
+        }
+      } else {
+        self?.searchResult = resultSearch.map({ movie in
+          MovieViewModel(movie: movie)
+        })
+      }
     })
     
     group.notify(queue: .main) { [weak self] in
       self?.feedCollectionView.reloadData()
     }
   }
+  
+  func showAlertNoResults() {
+    let alert = UIAlertController(title: "Oops! Sorry", message: "We couldn't find you are looking for", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    self.present(alert, animated: true)
+  }
+  
 }

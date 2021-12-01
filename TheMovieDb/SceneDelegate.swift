@@ -14,15 +14,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let window = UIWindow(windowScene: windowScene)
-    setFirstViewController(window)
+    setLaunchViewController(window)
+
   }
   
-  fileprivate func setFirstViewController(_ window: UIWindow) {
-    let apiClient = MovieClient.shared
-    let feedViewController = FeedViewController(apiClient: apiClient)
-    let navigationController = UINavigationController()
-    navigationController.viewControllers = [feedViewController]
-    window.rootViewController = navigationController
+  fileprivate func setLaunchViewController(_ window: UIWindow) {
+    let launchViewController = LaunchViewController()
+    window.rootViewController = launchViewController
     self.window = window
     self.window?.makeKeyAndVisible()
   }
