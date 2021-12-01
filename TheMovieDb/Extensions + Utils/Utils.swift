@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Utils {
+enum Utils {
    static func showStar(value: Int) -> String {
         var star: String = ""
         switch value {

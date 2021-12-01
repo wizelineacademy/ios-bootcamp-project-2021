@@ -16,7 +16,7 @@ class SearchViewController: UIViewController {
     
     init(searchViewModel: SearchViewModel = SearchViewModel()) {
         self.searchViewModel = searchViewModel
-        super.init(nibName: "SearchViewController", bundle: nil)
+        super.init(nibName: Constants.searchViewControllerName, bundle: nil)
     }
     
     required init?(coder decoder: NSCoder) {
@@ -39,8 +39,8 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
-        searchViewModel.searchMovie(with: searchBar.text) {
-            self.searchTableView.reloadData()
+        searchViewModel.searchMovie(with: searchBar.text) { [weak self] in
+            self?.searchTableView.reloadData()
         }
     }
     
@@ -51,7 +51,7 @@ extension SearchViewController: UISearchBarDelegate {
 
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        searchViewModel.numberOfRowsInSection(section: section)
+        searchViewModel.numberOfRowsInSection()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,19 +64,9 @@ extension SearchViewController: UITableViewDataSource {
 
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let detailViewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else { return }
+        let storyboard: UIStoryboard = UIStoryboard(name: Constants.storyboardName, bundle: nil)
+        guard let detailViewController = storyboard.instantiateViewController(withIdentifier: Constants.detailViewControllerName) as? DetailViewController else { return }
         detailViewController.movieData = searchViewModel.cellForRowAt(indexPath: indexPath)
         show(detailViewController, sender: self)
-        // performSegue(withIdentifier: Constants.searchSegueIdentifier, sender: self)
-        
     }
-    
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.searchSegueIdentifier {
-            let destinationVC = segue.destination as! DetailViewController
-            guard let indexPath = searchTableView.indexPathForSelectedRow else { return }
-            destinationVC.movieData = searchViewModel.cellForRowAt(indexPath: indexPath)
-        }
-    }*/
 }

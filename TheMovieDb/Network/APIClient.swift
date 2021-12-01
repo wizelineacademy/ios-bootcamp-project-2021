@@ -36,7 +36,7 @@ extension APIClient {
         }
         return task
     }
-    
+        
     func fetch<T: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> T?, completion: @escaping (Result<T, APIError>) -> Void) {
             let task = decodingTask(with: request, decodingType: T.self) { (json, error) in
                 

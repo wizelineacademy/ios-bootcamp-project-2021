@@ -36,7 +36,7 @@ struct DetailView: View {
                 buildCirclePosterImage()
                     .offset(y: -130)
                     .padding(.bottom, -200)
-                Text(movieData?.originalTitle ?? "Movie Title Placeholder")
+                Text(movieData?.title ?? "Movie Title Placeholder")
                     .font(.title)
                     .multilineTextAlignment(.center)
                     .padding(.all)
@@ -50,18 +50,21 @@ struct DetailView: View {
                 .padding(.bottom)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
+                .frame(width: UIScreen.main.bounds.width - 20)
                 
                 Divider()
+                    .frame(width: UIScreen.main.bounds.width - 20)
                 
                 Text("Description")
                     .font(.title2)
                     .padding(.bottom)
                 Text(movieData?.overview ?? "This is an overview Placeholder")
                     .multilineTextAlignment(.center)
-                    .lineLimit(5)
+                    .lineLimit(10)
                     .padding(.bottom)
+                    .frame(width: UIScreen.main.bounds.width - 20)
             }
-            .frame(width: 400)
+            .frame(width: UIScreen.main.bounds.width)
         }
         .padding(.horizontal)
     }

@@ -13,10 +13,11 @@ class MainViewController: UIViewController {
     @IBOutlet weak var mainTableView: UITableView!
     
     private var mainViewModel = MainViewModel()
+    var pageIndex: Int = 1
     
     init(mainViewModel: MainViewModel = MainViewModel()) {
         self.mainViewModel = mainViewModel
-        super.init(nibName: "MainViewController", bundle: nil)
+        super.init(nibName: Constants.mainViewControllerName, bundle: nil)
     }
     
     required init?(coder decoder: NSCoder) {
@@ -28,13 +29,15 @@ class MainViewController: UIViewController {
         mainTableView.dataSource = self
         mainTableView.delegate = self
         mainTableView.register(UINib(nibName: Constants.cellXibName, bundle: nil), forCellReuseIdentifier: Constants.cellIdentifier)
-        setupTableView()
+        setupTableView(page: pageIndex)
         
     }
     
-    private func setupTableView() {
-        mainViewModel.loadMoviesData(with: mainSegmentedControl.selectedSegmentIndex) {
-            self.mainTableView.reloadData()
+    private func setupTableView(page: Int) {
+        mainViewModel.loadMoviesData(with: mainSegmentedControl.selectedSegmentIndex, page: page) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.mainTableView.reloadData()
+            }
         }
     }
 
@@ -42,13 +45,15 @@ class MainViewController: UIViewController {
 
 extension MainViewController {
     @IBAction func mainSegmentedControlPressed(_ sender: UISegmentedControl) {
-        setupTableView()
+        pageIndex = 1
+        mainViewModel.resetMovies()
+        setupTableView(page: pageIndex)
     }
 }
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        mainViewModel.numberOfRowsInSection(section: section)
+        mainViewModel.numberOfRowsInSection()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -57,25 +62,23 @@ extension MainViewController: UITableViewDataSource {
         cell.setCellWithValuesOf(movie)
         return cell
     }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+       let height = scrollView.frame.size.height
+       let contentYoffset = scrollView.contentOffset.y
+       let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+       if distanceFromBottom < height {
+           pageIndex += 1
+           setupTableView(page: pageIndex)
+       }
+    }
 }
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let detailViewController = storyboard.instantiateViewController(withIdentifier: "DetailViewController") as? DetailViewController else { return }
+        let storyboard: UIStoryboard = UIStoryboard(name: Constants.storyboardName, bundle: nil)
+        guard let detailViewController = storyboard.instantiateViewController(withIdentifier: Constants.detailViewControllerName) as? DetailViewController else { return }
         detailViewController.movieData = mainViewModel.cellForRowAt(indexPath: indexPath)
         show(detailViewController, sender: self)
-        // performSegue(withIdentifier: Constants.mainSegueIdentifier, sender: self)
-        
     }
-    
-    /*override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.mainSegueIdentifier {
-            let destinationVC = segue.destination as! DetailViewController
-            guard let indexPath = mainTableView.indexPathForSelectedRow else { return }
-            destinationVC.movieData = mainViewModel.cellForRowAt(indexPath: indexPath)
-            
-        }
-    }*/
-
 }

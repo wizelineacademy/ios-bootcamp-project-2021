@@ -10,8 +10,10 @@ import Foundation
 struct Constants {
     static let cellIdentifier: String = "ReusableCell"
     static let cellXibName: String = "MovieCell"
-    static let mainSegueIdentifier: String = "showDetail"
-    static let searchSegueIdentifier: String = "showSearchDetail"
+    static let mainViewControllerName: String = "MainViewController"
+    static let searchViewControllerName: String = "SearchViewController"
+    static let detailViewControllerName: String = "DetailViewController"
+    static let storyboardName: String = "Main"
     
     struct MovieControl {
         static let nowPlaying: String = "/3/movie/now_playing"
@@ -25,6 +27,7 @@ struct Constants {
     struct URLS {
         static let imageURL: String = "https://image.tmdb.org/t/p/w500"
         static let movieBaseURL: String = "https://api.themoviedb.org"
+        static let apiKeyQuery: String = "?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
         static let apiKey: String = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
     }
     

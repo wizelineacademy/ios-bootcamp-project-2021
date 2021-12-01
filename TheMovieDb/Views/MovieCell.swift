@@ -19,7 +19,7 @@ class MovieCell: UITableViewCell {
     private var urlString: String = ""
     
     func setCellWithValuesOf(_ movie: Movie) {
-        updateUI(title: movie.originalTitle, releaseDate: movie.releaseDate, rating: movie.voteAverage, overview: movie.overview, poster: movie.posterPath)
+        updateUI(title: movie.title, releaseDate: movie.releaseDate, rating: movie.voteAverage, overview: movie.overview, poster: movie.posterPath)
     }
     
     private func updateUI(title: String?, releaseDate: String?, rating: Double?, overview: String?, poster: String?) {

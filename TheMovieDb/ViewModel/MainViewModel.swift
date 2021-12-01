@@ -9,21 +9,21 @@ import Foundation
 
 public class MainViewModel {
     private var client = MovieClient()
-    private var movies = [Movie]()
+    private var movies: [Movie] = []
     
     init(client: MovieClient = MovieClient()) {
         self.client = client
     }
     
-    func loadMoviesData(with index: Int, completion: @escaping () -> Void) {
+    func loadMoviesData(with index: Int, page: Int, completion: @escaping () -> Void) {
         
         var endpoint: MovieFeed {
             switch index {
-            case 0: return .nowPlaying
-            case 1: return .popular
-            case 2: return .topRated
-            case 3: return .upcoming
-            case 4: return .trending
+            case 0: return .nowPlaying(page)
+            case 1: return .popular(page)
+            case 2: return .topRated(page)
+            case 3: return .upcoming(page)
+            case 4: return .trending(page)
             default: fatalError()
             }
         }
@@ -33,7 +33,7 @@ public class MainViewModel {
             switch result {
             case .success(let listOf):
                 guard let movieResult = listOf?.results else { return }
-                self?.movies = movieResult
+                self?.movies += movieResult
                 completion()
             case .failure(let error):
                 print("Error: \(error)")
@@ -42,7 +42,11 @@ public class MainViewModel {
 
     }
     
-    func numberOfRowsInSection(section: Int) -> Int {
+    func resetMovies() {
+        movies = []
+    }
+    
+    func numberOfRowsInSection() -> Int {
         return movies.count
     }
     

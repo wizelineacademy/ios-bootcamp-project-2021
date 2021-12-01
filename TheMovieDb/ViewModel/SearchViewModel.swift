@@ -9,7 +9,7 @@ import Foundation
 
 public class SearchViewModel {
     private var client = MovieClient()
-    private var movies = [Movie]()
+    var movies = [Movie]()
     init(client: MovieClient = MovieClient()) {
         self.client = client
     }
@@ -29,7 +29,7 @@ public class SearchViewModel {
         }
     }
     
-    func numberOfRowsInSection(section: Int) -> Int {
+    func numberOfRowsInSection() -> Int {
         return movies.count
     }
     

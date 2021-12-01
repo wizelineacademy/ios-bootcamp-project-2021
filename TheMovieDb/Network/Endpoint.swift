@@ -12,14 +12,12 @@ protocol Endpoint {
     var path: String { get }
 }
 extension Endpoint {
-    var apiKey: String {
-        return "api_key=\(Constants.URLS.apiKey)"
+    var urlString: String {
+        base + path
     }
     
     var urlComponents: URLComponents {
-        var components = URLComponents(string: base)!
-        components.path = path
-        components.query = apiKey
+        let components = URLComponents(string: base + path)!
         return components
     }
     
