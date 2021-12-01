@@ -1,15 +1,14 @@
 //
-//  DetailViewController.swift
+//  DetailView.swift
 //  TheMovieDb
 //
-//  Created by Misael Chávez on 05/11/21.
+//  Created by Misael Chávez on 30/11/21.
 //
 
 import UIKit
-import SwiftUI
 
-class DetailViewController: UIViewController {
-    lazy private var moviePoster: UIImageView = {
+class DetailView: UIView {
+    lazy var moviePoster: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "square")
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -19,7 +18,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var movieTitle: UILabel = {
+    lazy var movieTitle: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .preferredFont(forTextStyle: .title3)
@@ -28,7 +27,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var movieMediaType: UILabel = {
+    lazy var movieMediaType: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .preferredFont(forTextStyle: .subheadline)
@@ -36,7 +35,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var movieReleaseDate: UILabel = {
+    lazy var movieReleaseDate: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .preferredFont(forTextStyle: .subheadline)
@@ -45,7 +44,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var movieOverview: UILabel = {
+    lazy var movieOverview: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = .preferredFont(forTextStyle: .body)
@@ -55,7 +54,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var movieRating: UILabel = {
+    lazy var movieRating: UILabel = {
         let view = UILabel()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.font = UIFont.boldSystemFont(ofSize: 18)
@@ -64,7 +63,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var mediaAndReleaseStackView: UIStackView = {
+    lazy var mediaAndReleaseStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
@@ -79,7 +78,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var starImageView: UIImageView = {
+    lazy var starImageView: UIImageView = {
         let view = UIImageView()
         view.image = UIImage(systemName: "star.fill")
         view.tintColor = .systemYellow
@@ -88,7 +87,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var ratingStackView: UIStackView = {
+    lazy var ratingStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .horizontal
@@ -103,7 +102,7 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var scrollView: UIScrollView = {
+    lazy var scrollView: UIScrollView = {
         let view = UIScrollView()
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -117,18 +116,17 @@ class DetailViewController: UIViewController {
         return view
     }()
     
-    lazy private var closeButton: UIButton = {
+    lazy var closeButton: UIButton = {
         let view = UIButton(type: UIButton.ButtonType.close)
         view.translatesAutoresizingMaskIntoConstraints = false
         if #available(iOS 15.0, *) {
             view.configuration = UIButton.Configuration.filled()
         }
         view.tintColor = .systemIndigo
-        view.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         return view
     }()
     
-    lazy private var showReviewsButton: UIButton = {
+    lazy var showReviewsButton: UIButton = {
         let view = UIButton()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.setTitle("Show Reviews", for: .normal)
@@ -136,34 +134,41 @@ class DetailViewController: UIViewController {
             view.configuration = UIButton.Configuration.filled()
         }
         view.tintColor = .systemIndigo
-        view.addTarget(self, action: #selector(showReviews), for: .touchUpInside)
         return view
     }()
-
-    var movieViewModel: MovieViewModel?
     
     // General margin for ui elements
     private let margin: CGFloat = 10
     
+    private let bottomMargin: CGFloat = 20.0
+    
     // General corner radius
     private let cornerRadius: CGFloat = 10.0
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        setupUI()
-        setupData()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setupComponents()
+        setupConstraints()
     }
     
-    private func setupUI() {
-        view.addSubview(scrollView)
-        view.addSubview(closeButton)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupComponents() {
+        addSubview(scrollView)
+        addSubview(closeButton)
         
+        backgroundColor = UIColor.systemBackground
+    }
+    
+    func setupConstraints() {
         NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            scrollView.topAnchor.constraint(equalTo: topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            scrollView.widthAnchor.constraint(equalTo: widthAnchor),
             
             moviePoster.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
             moviePoster.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -189,46 +194,12 @@ class DetailViewController: UIViewController {
             showReviewsButton.topAnchor.constraint(equalTo: ratingStackView.bottomAnchor, constant: margin),
             showReviewsButton.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: margin),
             showReviewsButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -margin),
-            showReviewsButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -20),
+            showReviewsButton.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -bottomMargin),
             
             closeButton.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -30),
             closeButton.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 30),
             closeButton.heightAnchor.constraint(equalToConstant: 40),
             closeButton.widthAnchor.constraint(equalToConstant: 40)
         ])
-        
-        view.backgroundColor = UIColor.systemBackground
-        
-    }
-    
-    private func setupData() {
-        guard var movieViewModel = movieViewModel else {
-            return
-        }
-        
-        if let posterURL = movieViewModel.posterURL {
-            ImageDownloader.getImage(withURL: posterURL) { image in
-                self.moviePoster.image = image
-            }
-        }
-        
-        self.movieTitle.text = movieViewModel.title
-        self.movieMediaType.text = movieViewModel.mediaType
-        self.movieReleaseDate.text = movieViewModel.releaseDate
-        self.movieOverview.text = movieViewModel.overview
-        self.movieRating.text = String(movieViewModel.rating)
-    }
-
-    @objc func closeView() {
-        dismiss(animated: true)
-    }
-    
-    @objc func showReviews() {
-        guard let movieViewModel = movieViewModel else {
-            return
-        }
-        let view = ReviewsView(movieId: movieViewModel.id, imageBaseURL: movieViewModel.baseURL)
-        let hostingController = UIHostingController(rootView: view)
-        present(hostingController, animated: true, completion: nil)
     }
 }

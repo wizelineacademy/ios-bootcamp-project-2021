@@ -69,7 +69,7 @@ class MovieCell: UICollectionViewCell {
         didSet {
             self.movieTitle.text = movieViewModel.title
             self.movieRating.text = String(movieViewModel.rating)
-            if let posterURL = movieViewModel.posterURL {
+            if let posterURL = movieViewModel.getPosterURL() {
                 ImageDownloader.getImage(withURL: posterURL) { image in
                     self.movieImage.image = image
                 }
