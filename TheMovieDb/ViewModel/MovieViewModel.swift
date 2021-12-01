@@ -32,7 +32,7 @@ struct MovieViewModel {
         self.baseURL = configuration.getSecureBasePosterURL()
     }
     
-    lazy var posterURL: URL? = {
+    func getPosterURL() -> URL? {
         return URL(string: baseURL + posterPath)
-    }()
+    }
 }

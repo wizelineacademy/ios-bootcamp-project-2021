@@ -89,8 +89,7 @@ extension ListViewController: ListViewModelDelegate {
 // MARK: - Navigation
 extension ListViewController: NavigationDelegate {
     func navigate(movieViewModel: MovieViewModel) {
-        let detailViewController = DetailViewController()
-        detailViewController.movieViewModel = movieViewModel
+        let detailViewController = DetailViewController(movieViewModel: movieViewModel)
         guard let navigation = navigationController else {
             return
         }
