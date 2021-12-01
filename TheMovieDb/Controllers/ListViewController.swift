@@ -16,6 +16,12 @@ class ListViewController: UIViewController {
         return view
     }()
     
+    lazy private var searchController: SearchBar = {
+        let searchController = SearchBar("Search movie", delegate: self)
+        searchController.showsCancelButton = !searchController.isSearchBarEmpty
+        return searchController
+    }()
+    
     // general margin for ui elements
     private let margin: CGFloat = 10
     
@@ -60,6 +66,10 @@ class ListViewController: UIViewController {
         navbar.largeTitleTextAttributes = [.foregroundColor: UIColor.systemIndigo]
         navbar.titleTextAttributes = [.foregroundColor: UIColor.systemIndigo]
         navbar.prefersLargeTitles = true
+
+        // Set up the searchController parameters.
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
         
         // Customize tab bar
         guard let tabBar = self.tabBarController?.tabBar else {
@@ -95,4 +105,27 @@ extension ListViewController: NavigationDelegate {
         }
         navigation.showDetailViewController(detailViewController, sender: self)
     }
+}
+
+// MARK: - Search Bar
+extension ListViewController: SearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        print(#function)
+    }
+
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        print(#function)
+    }
+
+    func updateSearchResults(for text: String) {
+        print(#function)
+        let movieAPIManager = MovieAPIManager(client: MovieAPIClient.shared)
+        let model = MovieAPIModel(movieManager: movieAPIManager)
+        let movieFeed = MovieFeed.search
+        movieFeed.defaultParams["query"] = text
+        listViewModel = ListViewModel(movieModel: model, movieFeed: movieFeed, delegate: self)
+        listView = ListView(viewModel: listViewModel, navigationDelegate: self)
+        listView.viewModel.refresh()
+    }
+
 }

@@ -10,6 +10,7 @@ import UIKit
 protocol NavigationDelegate: AnyObject {
     func navigate(movieViewModel: MovieViewModel)
 }
+
 class ListView: NSObject {
     
     lazy var collectionView: UICollectionView = {

@@ -9,7 +9,7 @@ import Foundation
 
 protocol EndPoint {
     var base: String { get }
-    var defaultParams: [String: String] { get }
+    var defaultParams: [String: String] { get set }
     func getPath(searchId: String?) -> String
 }
 
