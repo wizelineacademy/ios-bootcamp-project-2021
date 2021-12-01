@@ -11,19 +11,17 @@ enum MovieDetailBuilder {
     static func createModule(with movie: Movie) -> UIViewController {
         let view = MovieDetailView()
         let service = APIService()
+        let moviesWorker = MoviesWorker(service: service)
         let presenter: MovieDetailPresenterInteractorProtocol = MovieDetailPresenter()
-        let interactor: MovieDetailInteractorDataManagerProtocol = MovieDetailInteractor()
-        let remoteDataManager: MovieDetailRemoteDataManagerInputProtocol = MovieDetailRemoteDataManager(service: service)
+        let interactor: MovieDetailInteractorInputProtocol = MovieDetailInteractor(movieDetailWorker: moviesWorker, movie: movie)
+
         let router: MovieDetailRouterProtocol = MovieDetailRouter()
         
         view.presenter = presenter
         presenter.view = view
         presenter.router = router
         presenter.interactor = interactor
-        presenter.setMovie(movie)
         interactor.presenter = presenter
-        interactor.remoteDatamanager = remoteDataManager
-        remoteDataManager.remoteRequestHandler = interactor
         
         return view
     }

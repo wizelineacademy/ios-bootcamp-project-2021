@@ -14,23 +14,25 @@ final class TopRatedSectionCell: UICollectionViewCell, Reusable {
             configure()
         }
     }
-    public var numberTop = 0
+    public var numberTop = InterfaceConst.initZeroValue
     private let imageBackground: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
-        imageView.layer.cornerRadius = 10
+        imageView.layer.cornerRadius = InterfaceConst.defaultCornerRadius
         imageView.backgroundColor = .darkGray
         return imageView
     }()
     
     private let numberTopLabel: UILabel = {
         let label = UILabel()
-        label.text = "1"
         label.adjustsFontSizeToFitWidth = true
-        label.minimumScaleFactor = 0.2
-        label.font = UIFont.boldSystemFont(ofSize: 250)
-        label.numberOfLines = 0
+        label.minimumScaleFactor = InterfaceConst.minimumScaleFactorFontSize
+        label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.topRatedNumberFontSize)
+        label.numberOfLines = InterfaceConst.initZeroNumberLineValue
+        label.shadowColor = UIColor.systemBackground
+        label.shadowOffset = CGSize(width: InterfaceConst.topRatedNumberShadowWidthOffset, height: InterfaceConst.topRatedNumberShadowHightOffset)
+    
         return label
     }()
     
@@ -48,10 +50,10 @@ final class TopRatedSectionCell: UICollectionViewCell, Reusable {
     // MARK: - Helpers
     private func configureUI() {
         addSubview(imageBackground)
-        imageBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingLeft: 60)
+        imageBackground.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingLeft: InterfaceConst.topRatedNumberPadding)
         addSubview(numberTopLabel)
         numberTopLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor)
-        numberTopLabel.setWidth(frame.width/2)
+        numberTopLabel.setWidth(frame.width / InterfaceConst.divideInto2)
     }
     
     private func configure() {

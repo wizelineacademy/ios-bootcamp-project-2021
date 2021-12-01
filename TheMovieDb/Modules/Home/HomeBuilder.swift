@@ -11,9 +11,9 @@ enum HomeBuilder: HomeBuilderProtocol {
     static func createModule() -> UIViewController {
         let view = HomeView()
         let service = APIService()
+        let moviesWorker = MoviesWorker(service: service)
         let presenter: HomePresenterViewInteractorProtocol = HomePresenter()
-        let interactor: HomeInteractorDataManagerProtocol = HomeInteractor()
-        let remoteDataManager: HomeRemoteDataManagerInputProtocol = HomeRemoteDataManager(service: service)
+        let interactor: HomeInteractorInputProtocol = HomeInteractor(movieDetailWorker: moviesWorker)
         let wireFrame: HomeRouterProtocol = HomeWireFrame()
         
         view.presenter = presenter
@@ -21,8 +21,6 @@ enum HomeBuilder: HomeBuilderProtocol {
         presenter.router = wireFrame
         presenter.interactor = interactor
         interactor.presenter = presenter
-        interactor.remoteDatamanager = remoteDataManager
-        remoteDataManager.remoteRequestHandler = interactor
         
         return view
     }

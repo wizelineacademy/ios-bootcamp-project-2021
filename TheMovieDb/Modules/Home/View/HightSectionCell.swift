@@ -17,12 +17,17 @@ final class HightSectionCell: UICollectionViewCell, Reusable {
         }
     }
     
-    private let imageBackground = BackgroundImageView()
+    private let imageBackground: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.backgroundColor = .darkGray
+        return imageView
+    }()
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "The Batman"
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.titleFontSize)
         label.textColor = .white
         return label
     }()
@@ -30,12 +35,12 @@ final class HightSectionCell: UICollectionViewCell, Reusable {
     private lazy var viewTitle: UIView = {
         let view = UIView()
         let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor.black.withAlphaComponent(1.0).cgColor,
-                                UIColor.black.withAlphaComponent(0.0).cgColor]
-        gradientLayer.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.height / 4)
-        gradientLayer.startPoint = CGPoint(x: 1.0, y: 1.0)
-        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.0)
-        view.layer.insertSublayer(gradientLayer, at: 0)
+        gradientLayer.colors = [UIColor.black.withAlphaComponent(InterfaceConst.oneValue).cgColor,
+                                UIColor.black.withAlphaComponent(InterfaceConst.initZeroValue).cgColor]
+        gradientLayer.frame = CGRect(x: InterfaceConst.initZeroValue, y: InterfaceConst.initZeroValue, width: frame.width, height: frame.height / InterfaceConst.divideInto4)
+        gradientLayer.startPoint = CGPoint(x: InterfaceConst.oneValue, y: InterfaceConst.oneValue)
+        gradientLayer.endPoint = CGPoint(x: InterfaceConst.oneValue, y: InterfaceConst.initZeroValue)
+        view.layer.insertSublayer(gradientLayer, at: InterfaceConst.zeroPositionSublayer)
         return view
     }()
     
@@ -57,7 +62,7 @@ final class HightSectionCell: UICollectionViewCell, Reusable {
         
         addSubview(viewTitle)
         viewTitle.anchor(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor)
-        viewTitle.setHeight(frame.height / 4)
+        viewTitle.setHeight(frame.height / InterfaceConst.divideInto4)
         
         viewTitle.addSubview(titleLabel)
         titleLabel.centerY(inView: viewTitle)

@@ -16,5 +16,5 @@ enum APIEndPoints: String {
     case review = "/movie/[id]/reviews"
     case similar = "/movie/[id]/similar"
     case recommendations = "/movie/[id]/recommendations"
-    
+    case credits = "/movie/[id]/credits"
 }
