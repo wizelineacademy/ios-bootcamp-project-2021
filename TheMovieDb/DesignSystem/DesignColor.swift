@@ -7,14 +7,17 @@
 
 import UIKit
 
+// MARK: enum for manage the color in the app
+
 enum DesignColor {
   case black
   case darkGray
   case white
   case gray
   case lightGray
-  case darkCyan
+  case purple
   case whiteDirt
+  case transparentWhite
 }
 
 extension DesignColor {
@@ -28,12 +31,14 @@ extension DesignColor {
       return UIColor(red: 156/255, green: 156/255, blue: 156/255, alpha: 1)
     case .lightGray:
       return UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1)
-    case .darkCyan:
-      return UIColor(red: 39/255, green: 152/255, blue: 176/255, alpha: 1)
+    case .purple:
+      return UIColor(red: 132/255, green: 39/255, blue: 176/255, alpha: 1)
     case .black:
-      return UIColor(red: 31/255, green: 31/255, blue: 31/255, alpha: 1)
+      return UIColor(red: 10/255, green: 10/255, blue: 10/255, alpha: 1)
     case .whiteDirt:
       return UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
+    case .transparentWhite:
+      return .init(white: 0.4, alpha: 0.1)
     }
   }
 }

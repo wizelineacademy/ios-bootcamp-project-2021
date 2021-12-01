@@ -8,11 +8,8 @@
 import Foundation
 
 enum MovieRegion {
-  case US
-  case CO
-  case BR
-  case MX
-  case ES
+  
+  case US, CO, BR, MX, ES
   
 }
 

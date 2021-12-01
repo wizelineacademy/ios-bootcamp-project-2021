@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SimilarMovie: Codable {
+struct SimilarOrRecommendedMovie: Codable {
   
   let id: Int
   let title: String
@@ -20,6 +20,6 @@ struct SimilarMovie: Codable {
   }
 }
 
-struct ListSimilarMovies: Decodable {
-  let results: [SimilarMovie]?
+struct ListSimilarOrRecommendedMovies: Decodable {
+  let results: [SimilarOrRecommendedMovie]?
 }

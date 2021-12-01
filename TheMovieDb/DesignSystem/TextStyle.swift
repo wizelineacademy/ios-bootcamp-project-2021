@@ -7,6 +7,8 @@
 
 import UIKit
 
+// MARK: enum for manage the text style in the app
+
 enum TextStyle {
   
   case title, subtitle, headline, subheadline, caption, paragraph
@@ -17,8 +19,8 @@ enum TextStyle {
     case .subtitle: return 18
     case .headline: return 20
     case .subheadline: return 16
-    case .caption: return 12
-    case .paragraph: return 14
+    case .caption: return 14
+    case .paragraph: return 15
     }
   }
 }

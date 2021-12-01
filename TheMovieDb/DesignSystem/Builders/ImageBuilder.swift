@@ -7,9 +7,11 @@
 
 import UIKit
 
+// MARK: Builder for UIImageView element
+
 class ImageBuilder {
   
-  var image = UIImageView()
+  var image = CacheImageView()
   
   func sizeAndAspectImage(width: CGFloat, height: CGFloat, aspectRatio: UIView.ContentMode ) -> ImageBuilder {
     self.image.frame = .init(x: 0, y: 0, width: width, height: height)
@@ -17,8 +19,13 @@ class ImageBuilder {
     return self
   }
   
-  func roundCorners(circle: Bool, radius: CGFloat?, clipped: Bool) -> ImageBuilder {
-    self.image.layer.cornerRadius = circle ? self.image.frame.height / 2 : radius ?? 0
+  func aspectImage(aspectRatio: UIView.ContentMode) -> ImageBuilder {
+    self.image.contentMode = aspectRatio
+    return self
+  }
+  
+  func roundCorners(circle: Bool, radius: CGFloat, clipped: Bool) -> ImageBuilder {
+    self.image.layer.cornerRadius = circle ? radius / 2 : radius
     self.image.clipsToBounds = clipped
     return self
   }
@@ -52,7 +59,17 @@ class ImageBuilder {
     return self
   }
   
-  func build() -> UIImageView {
+  func setPlaceHolder(image: UIImage?) -> ImageBuilder {
+    guard let placeholder = image else { return self }
+    self.image.emptyImage = placeholder
+    return self
+  }
+  func setTinColor(color: DesignColor) -> ImageBuilder {
+    self.image.tintColor = color.color
+    return self
+  }
+  
+  func build() -> CacheImageView {
     return image
   }
   

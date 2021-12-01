@@ -9,10 +9,7 @@ import Foundation
 
 enum MovieLanguage {
   
-  case en
-  case es
-  case pr
-  case fr
+  case en, es, pr, fr
   
 }
 

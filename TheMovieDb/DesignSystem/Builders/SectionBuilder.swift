@@ -7,36 +7,26 @@
 
 import UIKit
 
+// MARK: Builder for NSCollectionLayoutSection element and build easy the section in composition layout
+
 class SectionBuilder {
   
   var item: NSCollectionLayoutItem?
   var group: NSCollectionLayoutGroup?
   var section: NSCollectionLayoutSection?
   
-  func createItem(width: CGFloat, height: CGFloat) -> SectionBuilder {
-    self.item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .fractionalHeight(height)))
-    return self
+  enum Axis {
+    case horizontal, vertical
   }
   
-  func itemConstraints(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> SectionBuilder {
-    self.item?.contentInsets = .init(top: top, leading: leading, bottom: bottom, trailing: trailing)
-    return self
+  enum TypeOfCollectionLayout {
+    case item, group, section
   }
-  
-  func createGroupHorizontal(width: CGFloat, height: CGFloat) -> SectionBuilder {
+
+  func createItemAndGroup(item: (w: CGFloat, h: CGFloat), group: (w: CGFloat, h: CGFloat), groupAxis: Axis) -> SectionBuilder {
+    self.item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(item.w), heightDimension: .fractionalHeight(item.h)))
     guard let item = self.item else { fatalError("you need to create first the item") }
-    self.group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .estimated(height)), subitems: [item])
-    return self
-  }
-  
-  func createGroupVertical(width: CGFloat, height: CGFloat, estimated: Bool) -> SectionBuilder {
-    guard let item = self.item else { fatalError("you need to create first the item") }
-    self.group = NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: estimated ? .estimated(height) : .fractionalHeight(height)), subitems: [item])
-    return self
-  }
-  
-  func groupConstraints(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> SectionBuilder {
-    self.group?.contentInsets = .init(top: top, leading: leading, bottom: bottom, trailing: trailing)
+    self.group = groupAxis == .horizontal ? NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(group.w), heightDimension: .estimated(group.h)), subitems: [item]) : NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(group.w), heightDimension: .estimated(group.h)), subitems: [item])
     return self
   }
   
@@ -46,8 +36,12 @@ class SectionBuilder {
     return self
   }
   
-  func sectionConstraints(top: CGFloat, leading: CGFloat, bottom: CGFloat, trailing: CGFloat) -> SectionBuilder {
-    self.section?.contentInsets = .init(top: top, leading: leading, bottom: bottom, trailing: trailing)
+  func constraints(type collectionLayout: TypeOfCollectionLayout, contentInsets: NSDirectionalEdgeInsets) -> SectionBuilder {
+    switch collectionLayout {
+    case .item: self.item?.contentInsets = contentInsets
+    case .group: self.group?.contentInsets = contentInsets
+    case .section: self.section?.contentInsets = contentInsets
+    }
     return self
   }
   
@@ -66,5 +60,5 @@ class SectionBuilder {
     guard let section = self.section else { fatalError("you need to create first the section") }
     return section
   }
-  
+
 }
