@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 struct AuthorReview: Decodable {
     let name: String

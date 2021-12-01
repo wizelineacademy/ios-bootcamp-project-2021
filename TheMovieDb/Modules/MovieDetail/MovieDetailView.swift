@@ -126,6 +126,10 @@ extension MovieDetailView: UICollectionViewDelegateFlowLayout {
 
 // MARK: - DetailHeaderViewDelegate
 extension MovieDetailView: DetailHeaderViewDelegate {
+    func openCasts(_ detailHeaderView: DetailHeaderView, with movie: Movie) {
+        print("s")
+    }
+    
     func openReviews(_ detailHeaderView: DetailHeaderView, with movie: Movie) {
         presenter?.showReviews(movie)
     }

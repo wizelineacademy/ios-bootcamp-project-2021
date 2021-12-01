@@ -53,7 +53,7 @@ extension UIImageView {
                     self.image = downloadedImage
                 }
             } else {
-                //if there is not error and the response is not a image, default image will be returned and saved in cache
+                // if there is not error and the response is not a image, default image will be returned and saved in cache
                 if let httpResponse = response as? HTTPURLResponse {
                     Log.generalInfo("image not found. Status :\(httpResponse.statusCode)").description
                 }

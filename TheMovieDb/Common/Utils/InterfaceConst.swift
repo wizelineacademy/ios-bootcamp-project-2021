@@ -14,6 +14,7 @@ enum InterfaceConst {
     static let searchSelectedIcon = "text.magnifyingglass"
     static let moviesTitle = "Movies".localized()
     static let reviews = "Reviews".localized()
+    static let cast = "Cast".localized()
     static let search = "Search".localized()
     static let noMovies = "No movies".localized()
     static let noReviews = "No Reviews".localized()
