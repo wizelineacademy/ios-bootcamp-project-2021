@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 final class MoviesDetailPresenter: MoviesDetailPresenterProtocol {
-   
+    
     var didFetchMovies: Bool = false
     var view: MoviesDetailViewProtocol?
     var interactor: MoviesDetailInteractorInputProtocol?
@@ -20,13 +20,19 @@ final class MoviesDetailPresenter: MoviesDetailPresenterProtocol {
     }
     
     func loadSimilarMoviesFor(movie: MovieProtocol) {
-      
+        
         interactor?.fetchSimilarMoviesFor(movie: movie)
     }
     
     func didSelectSimilarMovie(movie: MovieProtocol) {
         if let movieDetailViewController = view as? UIViewController {
             router?.pushDetailViewControllerFrom(view: movieDetailViewController, with: movie)
+        }
+    }
+    
+    func loadReviewsOf(movie: MovieProtocol) {
+        if let reviewsViewController = view as? UIViewController {
+            router?.pushReviewsViewControllerFrom(view: reviewsViewController, with: movie)
         }
     }
     

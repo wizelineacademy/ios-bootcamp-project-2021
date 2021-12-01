@@ -42,4 +42,18 @@ struct AttributedTextCreator {
 
         return firstString
     }
+    
+    static func textForMovieDetailInfo(review: ReviewProtocol) -> NSAttributedString {
+        
+        let firstAttributes: [NSAttributedString.Key: Any] = [ .foregroundColor: UIColor.white, .font: UIFont.boldSystemFont(ofSize: 25)]
+        let secondAttributes: [NSAttributedString.Key: Any] = [ .foregroundColor: UIColor.white, .font: UIFont.systemFont(ofSize: 14)]
+    
+        let firstString = NSMutableAttributedString(string: review.author + "\n", attributes: firstAttributes)
+        let secondString = NSMutableAttributedString(string: review.content, attributes: secondAttributes)
+
+        firstString.append(secondString)
+    
+        return firstString
+    }
+
 }

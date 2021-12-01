@@ -8,7 +8,7 @@
 import UIKit
 
 class MovieDetailViewController: UIViewController, MoviesDetailViewProtocol {
-  
+    
     @IBOutlet weak var collectionView: UICollectionView!
     let dataSource = MovieDetailDataSource()
     let delegate = MovieDetailDelegate()
@@ -42,11 +42,22 @@ class MovieDetailViewController: UIViewController, MoviesDetailViewProtocol {
         collectionView.registerNibForCellWith(name: HeaderCollectionViewCell.identifierToDeque)
         collectionView.registerNibForCellWith(name: MovieCollectionViewCell.identifierToDeque)
         collectionView.reloadData()
+    
+        let navigationItemReviews = UIBarButtonItem(image: UIImage(named: "reviews"), style: .plain, target: self, action: #selector(showReviewScreen))
+        self.navigationItem.rightBarButtonItem = navigationItemReviews
+        
     }
     
     func addDidSelectMovieClousure() {
         delegate.didSelectSimilarMovie = { [weak self] movie in
             self?.presenter?.didSelectSimilarMovie(movie: movie)
+        }
+    }
+    
+    @objc func showReviewScreen() {
+        print("show reviews")
+        if let movie = self.movie {
+          presenter?.loadReviewsOf(movie: movie)
         }
     }
 }

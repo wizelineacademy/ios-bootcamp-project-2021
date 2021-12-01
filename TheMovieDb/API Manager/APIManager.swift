@@ -41,7 +41,7 @@ struct HeadersForString {
 enum Endpoints: String {
     case similar = "/movie/"
     case search = "/search/movie"
-
+    case reviews = "/reviews"
     static func similar(movieId: String) -> String {
         return BaseURL.baseUrl + Endpoints.similar.rawValue + movieId + "/similar?api_key=" + ApiKey.apiKey
     }
@@ -49,12 +49,15 @@ enum Endpoints: String {
     static func detailOfMovie(id: String) -> String {
         return BaseURL.baseUrl + "/movie/" + id + "?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US"
     }
-//  https://api.themoviedb.org/3/search/movie?api_key=&language=en-US&query=Dr&page=1&include_adult=false
-//https://api.themoviedb.org/3/search/movie?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en-US&query=mulan&page=1&include_adult=false
+    
     static func search(text: String) -> String {
         return BaseURL.baseUrl + Endpoints.search.rawValue + HeadersForString.apiKey + ApiKey.apiKey + HeadersForString.languageUS + HeadersForString.query + text + HeadersForString.page + HeadersForString.includeAdultFalse
     }
     
+//https://api.themoviedb.org/3/movie/603/reviews?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&language=en&language=en-US
+    static func reviewsOfMovie(id: String) -> String {
+       return BaseURL.baseUrl + "/movie/" + id + Endpoints.reviews.rawValue +  HeadersForString.apiKey + ApiKey.apiKey + HeadersForString.languageUS
+    }
 }
 
 extension Topic {

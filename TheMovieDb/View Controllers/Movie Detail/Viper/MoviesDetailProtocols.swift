@@ -16,8 +16,9 @@ protocol MoviesDetailPresenterProtocol {
     func loadMovieDetail(movie: MovieProtocol)
     func loadSimilarMoviesFor(movie: MovieProtocol)
     func didSelectSimilarMovie(movie: MovieProtocol)
+    func loadReviewsOf(movie: MovieProtocol)
     var didFetchMovies: Bool { get set }
-
+    
 }
 
 // View
@@ -50,6 +51,7 @@ protocol MoviesDetailBuilderProtocol {
 
 protocol MoviesDetailRouterProtocol {
     func pushDetailViewControllerFrom(view: UIViewController, with movie: MovieProtocol)
+    func pushReviewsViewControllerFrom(view: UIViewController, with movie: MovieProtocol)
 }
 
 protocol MoviesDetailAPIDataManagerProtocol {
