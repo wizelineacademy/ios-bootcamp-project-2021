@@ -14,7 +14,9 @@ extension UIImageView {
         guard let url = url else { return }
         
         if let image = MovieConst.imageCache.object(forKey: url.absoluteString as NSString) {
-            self.image = image
+            DispatchQueue.main.async {
+                self.image = image
+            }
             return
         } else {
             let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -44,8 +46,8 @@ extension UIImageView {
         if let data = data {
             let downloadedImage = UIImage(data: data)
             if downloadedImage != nil {
-                MovieConst.imageCache.setObject(downloadedImage!, forKey: url.absoluteString as NSString)
                 DispatchQueue.main.async {
+                    MovieConst.imageCache.setObject(downloadedImage!, forKey: url.absoluteString as NSString)
                     self.image = downloadedImage
                 }
             } else {
