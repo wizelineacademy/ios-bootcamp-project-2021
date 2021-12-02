@@ -25,6 +25,12 @@ class ListView: NSObject {
         return collection
     }()
     
+    lazy var nothingFoundView: NothingFoundView = {
+        let nothingFoundView = NothingFoundView(frame: .zero)
+        nothingFoundView.translatesAutoresizingMaskIntoConstraints = false
+        return nothingFoundView
+    }()
+    
     var viewModel: ListViewModel
     private weak var navigationDelegate: NavigationDelegate?
     

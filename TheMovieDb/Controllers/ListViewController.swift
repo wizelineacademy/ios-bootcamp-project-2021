@@ -27,13 +27,18 @@ class ListViewController: UIViewController {
     
     private var listView: ListView!
     private var listViewModel: ListViewModel!
+    
+    // Timer for the search
+    private var searchTimer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let tabIndex = self.tabBarController?.selectedIndex, let movieFeed = MovieFeed(rawValue: tabIndex) else {
+        guard let tabIndex = self.tabBarController?.selectedIndex,
+              let feedType = FeedType(rawValue: tabIndex) else {
             return
         }
+        let movieFeed = MovieFeed(feedType: feedType)
         let movieAPIManager = MovieAPIManager(client: MovieAPIClient.shared)
         let model = MovieAPIModel(movieManager: movieAPIManager)
         listViewModel = ListViewModel(movieModel: model, movieFeed: movieFeed, delegate: self)
@@ -50,7 +55,6 @@ class ListViewController: UIViewController {
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            
             listView.collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             listView.collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             listView.collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -79,6 +83,21 @@ class ListViewController: UIViewController {
         tabBar.tintColor = .systemIndigo
     }
     
+    private func addNothingFoundToSuperView() {
+        view.addSubview(listView.nothingFoundView)
+        
+        NSLayoutConstraint.activate([
+            listView.nothingFoundView.topAnchor.constraint(equalTo: view.topAnchor),
+            listView.nothingFoundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            listView.nothingFoundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            listView.nothingFoundView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+    }
+    
+    private func removeNothingFoundFromSuperView() {
+        listView.nothingFoundView.removeFromSuperview()
+    }
+    
 }
 
 // MARK: - UI Updates
@@ -91,8 +110,15 @@ extension ListViewController: ListViewModelDelegate {
     func didEndRefreshing() {
         self.activityIndicator.stopAnimating()
         self.activityIndicator.isHidden = true
-        listView?.collectionView.refreshControl?.endRefreshing()
-        listView?.collectionView.reloadData()
+        
+        removeNothingFoundFromSuperView()
+        
+        listView.collectionView.refreshControl?.endRefreshing()
+        listView.collectionView.reloadData()
+    }
+    
+    func nothingFound() {
+        addNothingFoundToSuperView()
     }
 }
 
@@ -109,22 +135,33 @@ extension ListViewController: NavigationDelegate {
 
 // MARK: - Search Bar
 extension ListViewController: SearchBarDelegate {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        print(#function)
-    }
-
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        print(#function)
-    }
 
     func updateSearchResults(for text: String) {
-        print(#function)
-        let movieAPIManager = MovieAPIManager(client: MovieAPIClient.shared)
-        let model = MovieAPIModel(movieManager: movieAPIManager)
-        let movieFeed = MovieFeed.search
-        movieFeed.defaultParams["query"] = text
-        listViewModel = ListViewModel(movieModel: model, movieFeed: movieFeed, delegate: self)
-        listView = ListView(viewModel: listViewModel, navigationDelegate: self)
+        guard !text.isEmpty else {
+            return
+        }
+        
+        searchTimer?.invalidate()
+        
+        searchTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false, block: { [weak self] _ in
+            var movieFeed = MovieFeed(feedType: .search)
+            var params = movieFeed.params
+            params["query"] = text
+            movieFeed.params = params
+            self?.changeFeed(to: movieFeed)
+        })
+    }
+    
+    func searchBarCancelledButton(_ searchBar: UISearchBar) {
+        guard let tabIndex = self.tabBarController?.selectedIndex,
+              let feedType = FeedType(rawValue: tabIndex) else {
+            return
+        }
+        changeFeed(to: MovieFeed(feedType: feedType))
+    }
+    
+    func changeFeed(to movieFeed: MovieFeed) {
+        listViewModel.movieFeed = movieFeed
         listView.viewModel.refresh()
     }
 

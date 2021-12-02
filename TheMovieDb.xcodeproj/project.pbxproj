@@ -51,6 +51,7 @@
 		FCA94ED52746E70300A5EB8D /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCA94ED42746E70300A5EB8D /* MovieViewModel.swift */; };
 		FCADE2C6275568A3003DDFF7 /* ImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCADE2C5275568A3003DDFF7 /* ImageDownloader.swift */; };
 		FCB40F2227339F1100F39478 /* ColumnFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB40F2127339F1100F39478 /* ColumnFlowLayout.swift */; };
+		FCB5BF1827582F6A00E8597D /* NothingFoundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCB5BF1727582F6A00E8597D /* NothingFoundView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -123,6 +124,7 @@
 		FCA94ED42746E70300A5EB8D /* MovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModel.swift; sourceTree = "<group>"; };
 		FCADE2C5275568A3003DDFF7 /* ImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloader.swift; sourceTree = "<group>"; };
 		FCB40F2127339F1100F39478 /* ColumnFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColumnFlowLayout.swift; sourceTree = "<group>"; };
+		FCB5BF1727582F6A00E8597D /* NothingFoundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothingFoundView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,6 +239,7 @@
 				FC72AFC62752162500326E7C /* ReviewsView.swift */,
 				FC72AFC827521D9000326E7C /* ReviewsRowView.swift */,
 				FC87D3E527541E9400845B39 /* ReviewsListView.swift */,
+				FCB5BF1727582F6A00E8597D /* NothingFoundView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				FC94C47D273107CF00E5BB5E /* MovieCell.swift in Sources */,
 				FCB40F2227339F1100F39478 /* ColumnFlowLayout.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
+				FCB5BF1827582F6A00E8597D /* NothingFoundView.swift in Sources */,
 				FCA1ABFA2756F49800F6F690 /* DetailWorker.swift in Sources */,
 				FCA1ABFE2756F49800F6F690 /* DetailInteractor.swift in Sources */,
 				FC3E4031272F1091002E207D /* EndPoint.swift in Sources */,

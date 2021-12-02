@@ -15,7 +15,7 @@ class MovieAPIManager {
     }
     
     func getFeed<T: Decodable>(from movieFeedType: MovieFeed, searchId: String? = nil, completion: @escaping (Result<T?, APIError>) -> Void) {
-        client.fetch(with: movieFeedType.getRequest(id: searchId, params: movieFeedType.defaultParams), decode: { json -> T? in
+        client.fetch(with: movieFeedType.getRequest(id: searchId), decode: { json -> T? in
             guard let data = json as? T else {
                 return nil
             }

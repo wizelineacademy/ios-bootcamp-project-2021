@@ -22,7 +22,7 @@ struct MovieAPIModel {
         let group = DispatchGroup()
         
         group.enter()
-        movieManager.getFeed(from: MovieFeed.configuration) { (result: Result<ConfigurationWelcome?, APIError>) in
+        movieManager.getFeed(from: MovieFeed(feedType: .configuration)) { (result: Result<ConfigurationWelcome?, APIError>) in
             switch result {
             case .success(let configuration):
                 guard let configuration = configuration else {

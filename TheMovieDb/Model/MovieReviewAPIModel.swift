@@ -21,7 +21,7 @@ struct MovieReviewAPIModel {
         let group = DispatchGroup()
         
         group.enter()
-        movieApiManager.getFeed(from: .reviews, searchId: String(movieId)) { (result: Result<MovieReviewResult?, APIError>) in
+        movieApiManager.getFeed(from: MovieFeed(feedType: .reviews), searchId: String(movieId)) { (result: Result<MovieReviewResult?, APIError>) in
             switch result {
             case .success(let results):
                 guard let results = results else {

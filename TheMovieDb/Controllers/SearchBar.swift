@@ -8,8 +8,7 @@
 import UIKit
 
 protocol SearchBarDelegate: AnyObject {
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar)
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar)
+    func searchBarCancelledButton(_ searchBar: UISearchBar)
     func updateSearchResults(for text: String)
 }
 
@@ -17,7 +16,6 @@ protocol SearchBarProtocol: UISearchBarDelegate & UISearchResultsUpdating {
 
     var text: String? { get set }
     var isSearchBarEmpty: Bool { get }
-    var isFiltering: Bool { get }
     var showsCancelButton: Bool { get set }
 }
 
@@ -35,11 +33,7 @@ class SearchBar: UISearchController, SearchBarProtocol {
     }
 
     public var isSearchBarEmpty: Bool {
-      searchBar.text?.isEmpty ?? true
-    }
-
-    public var isFiltering: Bool {
-      isActive && !isSearchBarEmpty
+        searchBar.text?.isEmpty ?? true
     }
 
     public var showsCancelButton: Bool = false {
@@ -64,15 +58,17 @@ class SearchBar: UISearchController, SearchBarProtocol {
 
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         showsCancelButton = true
-        searchBarDelegate?.searchBarTextDidBeginEditing(searchBar)
     }
 
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         showsCancelButton = !isSearchBarEmpty
-        searchBarDelegate?.searchBarTextDidEndEditing(searchBar)
     }
 
     func updateSearchResults(for searchController: UISearchController) {
         searchBarDelegate?.updateSearchResults(for: text ?? "")
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBarDelegate?.searchBarCancelledButton(searchBar)
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MovieFeed: Int {
+enum FeedType: Int {
     case trending = 0
     case nowPlaying
     case popular
@@ -21,21 +21,35 @@ enum MovieFeed: Int {
     case configuration
 }
 
-extension MovieFeed: EndPoint {
-    var base: String {
-        return Constants.apiBaseURL
-    }
+struct MovieFeed: EndPoint {
+    let feedType: FeedType
     
-    var defaultParams: [String: String] {
-        [
+    private var defaultParams: [String: String]
+    
+    init(feedType: FeedType) {
+        self.feedType = feedType
+        self.defaultParams = [
             "language": "en",
             "region": "US",
             "api_key": Constants.apiKey
         ]
     }
     
+    var base: String {
+        return Constants.apiBaseURL
+    }
+    
+    var params: [String: String] {
+        get {
+            return defaultParams
+        }
+        set {
+            self.defaultParams = newValue
+        }
+    }
+    
     func getPath(searchId: String?) -> String {
-        switch self {
+        switch feedType {
         case .trending:
             return "/3/trending/movie/day"
         case .nowPlaying:
@@ -55,14 +69,14 @@ extension MovieFeed: EndPoint {
         case .configuration:
             return "/3/configuration"
         default:
-            return "/3/movie/\(self)"
+            return "/3/movie/\(feedType)"
         }
     }
 }
 
 extension MovieFeed {
     func getNavigationTitle() -> String {
-        switch self {
+        switch feedType {
         case .trending:
             return "Trending"
         case .nowPlaying:
