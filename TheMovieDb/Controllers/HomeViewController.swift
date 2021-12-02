@@ -57,9 +57,6 @@ extension HomeViewController {
                 cell.setNeedsLayout()
             }
         }
-//        cell.imageView?.layoutMargins = UIEdgeInsets(top: 5, left: 0, bottom: 5, right: 0)
-//        cell.imageView?.layer.cornerRadius = 10
-//        cell.imageView?.clipsToBounds = true
         return cell
     }
     

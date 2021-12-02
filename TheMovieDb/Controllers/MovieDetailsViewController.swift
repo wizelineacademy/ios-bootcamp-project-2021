@@ -6,8 +6,29 @@
 //
 
 import UIKit
+import SwiftUI
 
-final class DetailsViewController: UIViewController {
+final class DetailsViewController: UIHostingController<DetailsSwiftUIView> {
+    var movie: Movie?
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder, rootView: DetailsSwiftUIView(movie: movie))
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        guard let movie = movie else { return }
+        self.rootView = DetailsSwiftUIView(movie: movie)
+
+    }
+    /*func getCast(movieId: Int, Completion: @escaping (Cast) -> Void) {
+        let getCastRepo = GetCast()
+        var credits: [Cast] = []
+        getCastRepo.getCredits(option: .cast(movieId: movieId)) { Credits in
+            credits.append(contentsOf: Credits.cast)
+        }
+    }*/
+}
+
+/*final class DetailsViewController: UIViewController {
     var movie: Movie?
     let basePosterUrl = "https://image.tmdb.org/t/p/w500"
     let detailView = DetailView()
@@ -19,8 +40,7 @@ final class DetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // view = detailView // Overrides the view
-//        view.addSubview(detailView) // Subview
+        view = detailView
         let imageUrl = URL(string: basePosterUrl + (movie?.posterPath)!)
         posterImageView.kf.setImage(with: imageUrl)
         titleLabel.text = movie?.title
@@ -29,9 +49,9 @@ final class DetailsViewController: UIViewController {
         
     }
     
-}
+}*/
 
-final class DetailView: UIView {
+/*final class DetailView: UIView {
     @IBOutlet weak var titleLabel: UILabel! = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -47,4 +67,4 @@ final class DetailView: UIView {
     // titleLabel.numberOfLines = 0
     
     // overviewLabel.numberOfLines = 0
-}
+}*/

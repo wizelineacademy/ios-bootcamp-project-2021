@@ -20,6 +20,7 @@ enum RequestPaths {
     case similarMovies(movieId: Int)
     case recommendations(movieId: Int)
     case searchById(movieId: Int)
+    case cast(movieId: Int)
     
     var path: String {
         switch self {
@@ -45,6 +46,8 @@ enum RequestPaths {
             return "/3/movie/" + String(movieId) + "/recommendations"
         case .searchById(movieId: let movieId):
             return "/3/movie/" + String(movieId)
+        case .cast(movieId: let movieId):
+            return "/3/movie/" + String(movieId) + "/credits"
         }
     }
 }

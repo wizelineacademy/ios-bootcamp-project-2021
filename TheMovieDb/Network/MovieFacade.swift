@@ -1,10 +1,9 @@
 //
-//  moviesFacade.swift
+//  MovieFacade.swift
 //  TheMovieDb
 //
-//  Created by Antonio Hernandez Ambrocio on 23/11/21.
+//  Created by Antonio Hernandez Ambrocio on 28/11/21.
 //
-/// Facade class to request all movies.
 
 import Foundation
 
