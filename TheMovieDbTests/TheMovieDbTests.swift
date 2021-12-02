@@ -43,7 +43,7 @@ class TheMovieDbTests: XCTestCase {
         let expectation = self.expectation(description: "MovieList")
         var movieList: [MovieViewModel]?
         
-        movieModel.getList(movieFeed: MovieFeed.trending) {
+        movieModel.getList(movieFeed: MovieFeed(feedType: .trending)) {
             movieList = $0
             
             // Fullfil the expectation to let the test runner know that it's OK to proceed
@@ -63,7 +63,7 @@ class TheMovieDbTests: XCTestCase {
         
         let expectation = self.expectation(description: "MovieList")
         var movieList: [MovieViewModel]?
-        movieModel.getList(movieFeed: MovieFeed.trending) {
+        movieModel.getList(movieFeed: MovieFeed(feedType: .trending)) {
             movieList = $0
             expectation.fulfill()
         }
