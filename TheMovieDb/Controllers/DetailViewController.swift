@@ -10,6 +10,8 @@ import SwiftUI
 
 class DetailViewController: UIViewController {
     
+    // MARK: - Hosting View for SwiftUI
+    
     var movieData: Movie?
     let swiftUI = DetailView()
     

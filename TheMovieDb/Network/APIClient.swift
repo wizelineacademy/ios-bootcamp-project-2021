@@ -12,6 +12,8 @@ protocol APIClient {
     func fetch<T: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> T?, completion: @escaping (Result<T, APIError>) -> Void)
 }
 
+// MARK: - JSON Generic Data Task
+
 extension APIClient {
     typealias JSONTaskCompletionHandler = (Decodable?, APIError?) -> Void
     private func decodingTask<T: Decodable>(with request: URLRequest, decodingType: T.Type, completionHandler completion: @escaping JSONTaskCompletionHandler) -> URLSessionDataTask {
@@ -37,6 +39,8 @@ extension APIClient {
         return task
     }
         
+// MARK: - Generic Fetch
+    
     func fetch<T: Decodable>(with request: URLRequest, decode: @escaping (Decodable) -> T?, completion: @escaping (Result<T, APIError>) -> Void) {
             let task = decodingTask(with: request, decodingType: T.self) { (json, error) in
                 

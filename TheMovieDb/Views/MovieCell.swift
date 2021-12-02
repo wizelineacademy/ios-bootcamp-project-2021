@@ -22,6 +22,8 @@ class MovieCell: UITableViewCell {
         updateUI(title: movie.title, releaseDate: movie.releaseDate, rating: movie.voteAverage, overview: movie.overview, poster: movie.posterPath)
     }
     
+    // MARK: - Populate Cells with data
+    
     private func updateUI(title: String?, releaseDate: String?, rating: Double?, overview: String?, poster: String?) {
         self.movieTitleLabel.text = title
         self.movieTitleLabel.adjustsFontSizeToFitWidth = true
@@ -32,13 +34,15 @@ class MovieCell: UITableViewCell {
         self.movieOverviewLabel.text = overview
         
         guard let posterPath = poster else { return }
-        urlString = "\(Constants.URLS.imageURL)\(posterPath)"
-        
-        if let imageURL = URL(string: urlString) {
-            movieImageView.kf.setImage(with: imageURL)
+        if let image = CacheManager.shared.getImage(identifier: posterPath) {
+            movieImageView.image = image
             movieImageView.layer.cornerRadius = movieImageView.frame.size.width / 9
+        } else {
+            if let imageURL = URL(string: "\(Constants.URLS.imageURL)\(posterPath)") {
+                movieImageView.downloadedFrom(url: imageURL)
+                movieImageView.layer.cornerRadius = movieImageView.frame.size.width / 9
+            }
         }
-        
     }
     
 }

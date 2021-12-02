@@ -26,12 +26,3 @@ struct Movie: Decodable {
     let backdropPath: String?
     
 }
-
-struct ReviewsData: Decodable {
-    let results: [Reviews]
-}
-
-struct Reviews: Decodable {
-    let author: String?
-    let content: String?
-}

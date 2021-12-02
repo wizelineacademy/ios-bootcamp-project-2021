@@ -6,6 +6,9 @@
 //
 
 import Foundation
+import UIKit
+
+// MARK: - Extension to reformat the date
 
 extension String {
     func readableDate() -> String {
@@ -18,4 +21,26 @@ extension String {
             return self
         }
     }
+}
+
+// MARK: - Extension to fetch de Image
+
+extension UIImageView {
+    func downloadedFrom(url: URL) {
+    URLSession.shared.dataTask(with: url) { data, response, error in
+        guard
+            let httpURLResponse = response as? HTTPURLResponse,
+                httpURLResponse.statusCode == 200,
+            let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+            let data = data, error == nil,
+            let image = UIImage(data: data)
+            else {
+                return
+                }
+            DispatchQueue.main.async {
+                self.image = image
+            }
+        }.resume()
+    }
+
 }

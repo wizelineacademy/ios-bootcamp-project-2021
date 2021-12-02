@@ -33,6 +33,8 @@ class MainViewController: UIViewController {
         
     }
     
+    // MARK: - Setup Table View from viewModel with completion in order to refresh the table view
+    
     private func setupTableView(page: Int) {
         mainViewModel.loadMoviesData(with: mainSegmentedControl.selectedSegmentIndex, page: page) { [weak self] in
             DispatchQueue.main.async { [weak self] in
@@ -43,6 +45,8 @@ class MainViewController: UIViewController {
 
 }
 
+// MARK: - Getting the segmented control ID, return pagination to 1 and reset the appended movies.
+
 extension MainViewController {
     @IBAction func mainSegmentedControlPressed(_ sender: UISegmentedControl) {
         pageIndex = 1
@@ -50,6 +54,8 @@ extension MainViewController {
         setupTableView(page: pageIndex)
     }
 }
+
+// MARK: - Protocol to fill the Table View
 
 extension MainViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,6 +79,8 @@ extension MainViewController: UITableViewDataSource {
        }
     }
 }
+
+// MARK: - Table View Delegate to show the Detail View
 
 extension MainViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

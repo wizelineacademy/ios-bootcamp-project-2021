@@ -7,6 +7,9 @@
 
 import Foundation
 
+// MARK: -  Enum for Add the Stars to the cell and DetailView.
+
+
 enum Utils {
    static func showStar(value: Int) -> String {
         var star: String = ""

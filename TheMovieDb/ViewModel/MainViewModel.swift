@@ -15,6 +15,8 @@ public class MainViewModel {
         self.client = client
     }
     
+    // MARK: - Func to define the list of movies that we want to see.
+    
     func loadMoviesData(with index: Int, page: Int, completion: @escaping () -> Void) {
         
         var endpoint: MovieFeed {

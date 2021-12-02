@@ -21,6 +21,8 @@ extension MovieFeed: Endpoint {
         return Constants.URLS.movieBaseURL
     }
     
+    // MARK: - Ternaries for Control Pagination
+    
     var path: String {
         switch self {
         case .nowPlaying(let page):
@@ -42,8 +44,3 @@ extension MovieFeed: Endpoint {
     }
     
 }
-
-//https://api.themoviedb.org/3/movie/top_rated?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&page=1
-//https://api.themoviedb.org/3/movie/now_playing&page=3?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a
-
-//https://api.themoviedb.org/3/movie/popular?api_key=f6cd5c1a9e6c6b965fdcab0fa6ddd38a&page=2

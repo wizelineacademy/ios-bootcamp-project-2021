@@ -14,6 +14,7 @@ struct Constants {
     static let searchViewControllerName: String = "SearchViewController"
     static let detailViewControllerName: String = "DetailViewController"
     static let storyboardName: String = "Main"
+    static let cacheDispatchQueue: String = "cacheImageQueue"
     
     struct MovieControl {
         static let nowPlaying: String = "/3/movie/now_playing"

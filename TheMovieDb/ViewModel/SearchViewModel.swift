@@ -13,6 +13,8 @@ public class SearchViewModel {
     init(client: MovieClient = MovieClient()) {
         self.client = client
     }
+    
+    // MARK: - Defining the Movie Search By Query
 
     func searchMovie(with query: String?, completion: @escaping () -> Void) {
         guard let query = query, !query.isEmpty else { return }

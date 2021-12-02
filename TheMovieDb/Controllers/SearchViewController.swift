@@ -35,6 +35,8 @@ class SearchViewController: UIViewController {
         
 }
 
+// MARK: - Search Bar Delegate
+
 extension SearchViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -49,6 +51,8 @@ extension SearchViewController: UISearchBarDelegate {
     }
 }
 
+// MARK: - Protocol to fill the Table View
+
 extension SearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         searchViewModel.numberOfRowsInSection()
@@ -61,6 +65,8 @@ extension SearchViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: - Table View Delegate for showing the Detail View
 
 extension SearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

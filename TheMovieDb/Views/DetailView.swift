@@ -19,8 +19,8 @@ struct DetailView: View {
         return backdropImage
     }
     
-    func buildCirclePosterImage () -> CirclePosterImage {
-        var circlePosterImage = CirclePosterImage()
+    func buildPosterImage () -> posterImage {
+        var circlePosterImage = posterImage()
         if let posterPath = movieData?.posterPath {
             circlePosterImage.posterPath = posterPath
         }
@@ -33,7 +33,7 @@ struct DetailView: View {
             VStack(alignment: .center) {
                 buildBackdropImage()
                     .frame(height: 300, alignment: .top)
-                buildCirclePosterImage()
+                buildPosterImage()
                     .offset(y: -130)
                     .padding(.bottom, -200)
                 Text(movieData?.title ?? "Movie Title Placeholder")
@@ -80,7 +80,7 @@ struct BackdropImage: View {
     }
 }
 
-struct CirclePosterImage: View {
+struct posterImage: View {
     var posterPath: String = String()
     var body: some View {
         let urlString = "\(Constants.URLS.imageURL)\(posterPath)"

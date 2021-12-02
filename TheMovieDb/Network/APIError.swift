@@ -7,6 +7,8 @@
 
 import Foundation
 
+// MARK: - Error Handling
+
 enum APIError: Error {
     case requestFailed
     case jsonConversionFailure
