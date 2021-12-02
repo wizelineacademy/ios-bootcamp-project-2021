@@ -1,5 +1,5 @@
 //
-//  Parameters.swift
+//  APIParameters.swift
 //  TheMovieDb
 //
 //  Created by Javier Cueto on 29/10/21.

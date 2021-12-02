@@ -37,7 +37,12 @@ final class HightSectionCell: UICollectionViewCell, Reusable {
         let gradientLayer = CAGradientLayer()
         gradientLayer.colors = [UIColor.black.withAlphaComponent(InterfaceConst.oneValue).cgColor,
                                 UIColor.black.withAlphaComponent(InterfaceConst.initZeroValue).cgColor]
-        gradientLayer.frame = CGRect(x: InterfaceConst.initZeroValue, y: InterfaceConst.initZeroValue, width: frame.width, height: frame.height / InterfaceConst.divideInto4)
+        gradientLayer.frame = CGRect(
+            x: InterfaceConst.initZeroValue,
+            y: InterfaceConst.initZeroValue,
+            width: frame.width,
+            height: frame.height / InterfaceConst.divideInto4
+        )
         gradientLayer.startPoint = CGPoint(x: InterfaceConst.oneValue, y: InterfaceConst.oneValue)
         gradientLayer.endPoint = CGPoint(x: InterfaceConst.oneValue, y: InterfaceConst.initZeroValue)
         view.layer.insertSublayer(gradientLayer, at: InterfaceConst.zeroPositionSublayer)
