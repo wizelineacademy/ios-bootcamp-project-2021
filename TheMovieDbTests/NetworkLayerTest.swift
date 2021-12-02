@@ -80,6 +80,29 @@ class NetworkLayerTest: XCTestCase {
         }
     }
     
+    func testCreditCastGet() {
+        let fetch = APIService()
+        let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
+        var cancellables = Set<AnyCancellable>()
+        let parameter = APIParameters(id: "20")
+        fetch.fetchData(endPoint: .credits, with: parameter)
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    XCTAssertTrue(false, "Error in request \(error.localizedDescription)______________")
+                    expectation.fulfill()
+                }
+            }, receiveValue: { (credit: CreditsMovie) in
+                XCTAssertNotNil(credit, "CreditMovie should not be nil")
+                expectation.fulfill()
+            }).store(in: &cancellables)
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+        }
+    }
+    
     // test error in decoding data, try to decoding a review with a movie
     func testErrorFetch() {
         let fetch = APIService()
