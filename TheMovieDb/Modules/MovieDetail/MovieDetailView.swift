@@ -73,7 +73,9 @@ extension MovieDetailView {
         let section = MovieDetailSections(rawValue: indexPath.section) ?? .similar
         guard let movies = movies[section] else { return DefaultSectionCell() }
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reusableIdentifier, for: indexPath) as? DefaultSectionCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: DefaultSectionCell.reusableIdentifier, for: indexPath
+        ) as? DefaultSectionCell else {
             return DefaultSectionCell()
         }
         

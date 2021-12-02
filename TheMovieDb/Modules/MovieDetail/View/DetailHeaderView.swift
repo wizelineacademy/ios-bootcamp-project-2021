@@ -115,8 +115,9 @@ final class DetailHeaderView: UICollectionReusableView {
         castButton.addTarget(self, action: #selector(handleCastButton), for: .touchUpInside)
         
         stackButtons = UIStackView(arrangedSubviews: [castButton, reviewsButton])
-        stackButtons.axis = .vertical
+        stackButtons.axis = UIDevice.current.userInterfaceIdiom == .pad ? .horizontal : .vertical
         stackButtons.spacing = InterfaceConst.paddingDefault
+        stackButtons.distribution = .fillEqually
         
         addSubview(stackButtons)
         stackButtons.anchor(
