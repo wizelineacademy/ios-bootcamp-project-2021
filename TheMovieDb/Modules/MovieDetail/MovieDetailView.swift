@@ -43,8 +43,16 @@ final class MovieDetailView: UICollectionViewController, DisplayError {
     
     // MARK: - Helpers
     private func configureUI() {
-        collectionView.register(DetailHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeaderView.reuseIdentifier)
-        collectionView.register(DetailHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeader.reuseIdentifier)
+        collectionView.register(
+            DetailHeaderView.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: DetailHeaderView.reuseIdentifier
+        )
+        collectionView.register(
+            DetailHeader.self,
+            forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+            withReuseIdentifier: DetailHeader.reuseIdentifier
+        )
         collectionView.register(DefaultSectionCell.self, forCellWithReuseIdentifier: DefaultSectionCell.reusableIdentifier)
         
         guard let viewModel = viewModel else { return }
@@ -73,7 +81,9 @@ extension MovieDetailView {
         let section = MovieDetailSections(rawValue: indexPath.section) ?? .similar
         guard let movies = movies[section] else { return DefaultSectionCell() }
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reusableIdentifier, for: indexPath) as? DefaultSectionCell else {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: DefaultSectionCell.reusableIdentifier, for: indexPath
+        ) as? DefaultSectionCell else {
             return DefaultSectionCell()
         }
         
@@ -85,28 +95,53 @@ extension MovieDetailView {
         
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    override func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        
         let groupName = MovieDetailSections(rawValue: indexPath.section)
         if indexPath.section == 0 {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DetailHeaderView.reuseIdentifier, for: indexPath) as? DetailHeaderView else {
+            
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: DetailHeaderView.reuseIdentifier,
+                for: indexPath
+            ) as? DetailHeaderView else {
                 return DetailHeaderView()
             }
+            
             header.viewModel = viewModel
             header.delegate = self
             return header
+            
         } else {
-            guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: DetailHeader.reuseIdentifier, for: indexPath) as? DetailHeader else {
+            
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: DetailHeader.reuseIdentifier,
+                for: indexPath
+            ) as? DetailHeader else {
                 return DetailHeader()
             }
+            
             header.nameHeader = groupName
             return header
+            
         }
     }
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension MovieDetailView: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        referenceSizeForHeaderInSection section: Int
+    ) -> CGSize {
+        
         let section = MovieDetailSections(rawValue: section) ?? .similar
         switch section {
         case .recommendations:
@@ -157,7 +192,7 @@ extension MovieDetailView: MovieDetailViewProtocol {
         self.viewModel = MovieDetailViewModel(movie: movie)
     }
     
-    func showRealatedMovies(_ relatedMovies: [MovieDetailSections: [Movie]]) {
+    func showRelatedMovies(_ relatedMovies: [MovieDetailSections: [Movie]]) {
         movies = relatedMovies
         self.reloadCollectionView()
     }

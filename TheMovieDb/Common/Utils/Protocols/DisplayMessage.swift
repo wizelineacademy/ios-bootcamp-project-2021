@@ -16,7 +16,7 @@ extension DisplayMessage where Self: UIViewController {
         let messageLabel: UILabel = {
             let label = UILabel()
             label.text = message
-            label.tag = InterfaceConst.defaultViewTag
+            label.tag = InterfaceConst.messageLabelTag
             label.font = UIFont.boldSystemFont(ofSize: InterfaceConst.defaultFontSize)
             return label
         }()
@@ -27,7 +27,7 @@ extension DisplayMessage where Self: UIViewController {
     }
     
     func removeMessageLabel() {
-        let messageLabel = view.viewWithTag(InterfaceConst.defaultViewTag)
+        let messageLabel = view.viewWithTag(InterfaceConst.messageLabelTag)
         messageLabel?.removeFromSuperview()
     }
 }

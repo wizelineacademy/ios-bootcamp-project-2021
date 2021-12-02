@@ -33,6 +33,7 @@ enum InterfaceConst {
     static let topRatedNumberShadowWidthOffset = 2
     static let headerFontSize = 18.0
     static let defaultViewTag = 117
+    static let messageLabelTag = 87
     static let defaultTimeAnimation = 0.5
     static let initZeroValue = 0.0
     static let initZeroNumberLineValue = 0

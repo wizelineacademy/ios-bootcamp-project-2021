@@ -97,4 +97,27 @@ class ViewModelsTest: XCTestCase {
         
     }
     
+    // CatViewModel
+    func testCastViewModel() {
+        
+        let dummyCast = CastDummy().getSingleCast()
+        let viewModel = CastViewModel(cast: dummyCast)
+        XCTAssertEqual(viewModel.character, viewModel.cast.character ?? "", "Name is not the same")
+        XCTAssertEqual(viewModel.name, viewModel.cast.name ?? "", "Actor name is no correct")
+        
+        let safeUrl = (MovieConst.imageCDN + (viewModel.cast.profilePath ?? ""))
+        
+        let url = URL(string: safeUrl)
+        XCTAssertEqual(viewModel.imageUrl, url, "url is not the same in random")
+        
+        let dummyCastSpecific = CastDummy().getSpecificCast(index: 1)
+        let viewModelSpecific = CastViewModel(cast: dummyCastSpecific)
+        
+        let urlSpecific = URL(string: MovieConst.imageCDN + "Ben_Affleck_by_Gage_Skidmore_3.jpg")
+        XCTAssertEqual(viewModelSpecific.imageUrl, urlSpecific, "Actor url is not the same")
+        XCTAssertEqual(viewModelSpecific.name, "Ben Affleck", "Error in actor name")
+        XCTAssertEqual(viewModelSpecific.character, "Batman", "Error in character")
+    
+    }
+    
 }

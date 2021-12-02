@@ -11,6 +11,7 @@ import UIKit
 protocol CastViewProtocol: AnyObject {
     // PRESENTER -> VIEW
     var presenter: CastPresenterProtocol? { get set }
+    
     func showCast(castViewModel: [CastViewModel])
     func showErrorMessage(withMessage error: String)
     func showMessageNoCast(with message: String)
@@ -42,6 +43,7 @@ protocol CastInteractorOutputProtocol: AnyObject {
 protocol CastInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: CastInteractorOutputProtocol? { get set }
+    
     func getCast()
 }
 

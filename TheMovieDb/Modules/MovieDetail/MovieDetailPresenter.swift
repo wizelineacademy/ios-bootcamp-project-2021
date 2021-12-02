@@ -49,7 +49,7 @@ extension MovieDetailPresenter: MovieDetailInteractorOutputProtocol {
     }
     
     func moviesFromInteractor(_ relatedMovies: [MovieDetailSections: [Movie]]) {
-        view?.showRealatedMovies(relatedMovies)
+        view?.showRelatedMovies(relatedMovies)
     }
     
 }

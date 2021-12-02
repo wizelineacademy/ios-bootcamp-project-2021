@@ -13,7 +13,7 @@ protocol MovieDetailViewProtocol: AnyObject {
     // PRESENTER -> VIEW
     var presenter: MovieDetailPresenterProtocol? { get set }
     
-    func showRealatedMovies(_ relatedMovies: [MovieDetailSections: [Movie]])
+    func showRelatedMovies(_ relatedMovies: [MovieDetailSections: [Movie]])
     func setMovie(_ movie: Movie)
     func showErrorMessage(withMessage: String)
 }

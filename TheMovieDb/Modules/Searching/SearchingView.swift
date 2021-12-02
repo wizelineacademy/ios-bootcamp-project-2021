@@ -81,12 +81,18 @@ extension SearchingView {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DefaultSectionCell.reusableIdentifier, for: indexPath) as? DefaultSectionCell else {
+        
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: DefaultSectionCell.reusableIdentifier,
+            for: indexPath
+        ) as? DefaultSectionCell else {
             return DefaultSectionCell()
         }
+        
         let viewModel = viewModel[indexPath.row]
         cell.viewModel = viewModel
         return cell
+        
     }
     
 }
@@ -118,12 +124,24 @@ extension SearchingView: UICollectionViewDelegateFlowLayout {
         
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        
         InterfaceConst.paddingDefault
+        
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumInteritemSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        
         InterfaceConst.paddingDefault
+        
     }
 }
 
@@ -156,11 +174,11 @@ extension SearchingView: SearchingViewProtocol {
     }
     
     func showSpinnerView() {
-        self.displaySpinner()
+        displaySpinner()
     }
     
     func stopSpinnerView() {
-        self.removeSpinner()
+        removeSpinner()
     }
     
 }

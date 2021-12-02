@@ -23,6 +23,7 @@
 		45257393275728C2004AC10A /* CastBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45257392275728C2004AC10A /* CastBuilder.swift */; };
 		4525739527572DD3004AC10A /* CastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525739427572DD3004AC10A /* CastViewModel.swift */; };
 		4525739727573291004AC10A /* CastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525739627573291004AC10A /* CastCell.swift */; };
+		4525739927585E0A004AC10A /* CastDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4525739827585E0A004AC10A /* CastDummy.swift */; };
 		452BD82B272A364800F842F5 /* APIEndPoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452BD82A272A364800F842F5 /* APIEndPoints.swift */; };
 		452BD82D272A395D00F842F5 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452BD82C272A395D00F842F5 /* Movie.swift */; };
 		452BD82F272A3A5700F842F5 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 452BD82E272A3A5700F842F5 /* APIService.swift */; };
@@ -141,6 +142,7 @@
 		45257392275728C2004AC10A /* CastBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastBuilder.swift; sourceTree = "<group>"; };
 		4525739427572DD3004AC10A /* CastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastViewModel.swift; sourceTree = "<group>"; };
 		4525739627573291004AC10A /* CastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastCell.swift; sourceTree = "<group>"; };
+		4525739827585E0A004AC10A /* CastDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastDummy.swift; sourceTree = "<group>"; };
 		452BD82A272A364800F842F5 /* APIEndPoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndPoints.swift; sourceTree = "<group>"; };
 		452BD82C272A395D00F842F5 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		452BD82E272A3A5700F842F5 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 			children = (
 				45120D33274607D700F6BDC7 /* MovieDummy.swift */,
 				45334C5F274749D900CB40DD /* ReviewDummy.swift */,
+				4525739827585E0A004AC10A /* CastDummy.swift */,
 			);
 			path = DummyData;
 			sourceTree = "<group>";
@@ -907,6 +910,7 @@
 				45120D34274607D700F6BDC7 /* MovieDummy.swift in Sources */,
 				837B4EBF258178BA003DFC67 /* TheMovieDbTests.swift in Sources */,
 				45334C60274749DA00CB40DD /* ReviewDummy.swift in Sources */,
+				4525739927585E0A004AC10A /* CastDummy.swift in Sources */,
 				45334C62274751B500CB40DD /* NetworkLayerTest.swift in Sources */,
 				45120D31274605A900F6BDC7 /* ViewModelsTest.swift in Sources */,
 			);

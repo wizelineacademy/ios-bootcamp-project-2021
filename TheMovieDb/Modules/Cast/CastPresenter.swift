@@ -26,8 +26,8 @@ extension CastPresenter: CastPresenterProtocol {
 
 extension CastPresenter: CastInteractorOutputProtocol {
     func noCast(with message: String) {
-        view?.showMessageNoCast(with: message)
         view?.stopSpinnerView()
+        view?.showMessageNoCast(with: message)
     }
     
     func onError(errorMessage: String) {
