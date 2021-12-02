@@ -31,4 +31,8 @@ struct NowPlayingRequest: Request, PageableModel {
     var decodingKey: JSONDecoder.KeyDecodingStrategy {
         return .convertFromSnakeCase
     }
+    
+    var jsonMock: String? {
+        return "now_playing"
+    }
 }

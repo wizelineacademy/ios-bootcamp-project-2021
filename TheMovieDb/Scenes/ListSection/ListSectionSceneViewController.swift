@@ -39,6 +39,7 @@ final class ListSectionSceneViewController: UICollectionViewController {
         super.init(nibName: identifier, bundle: Bundle.main)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

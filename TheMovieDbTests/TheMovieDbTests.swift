@@ -8,26 +8,60 @@
 import XCTest
 @testable import TheMovieDb
 
-class TheMovieDbTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+final class TheMovieDbTests: XCTestCase {
+    
+    override func setUp() {
+        super.setUp()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func test_workerTesting() {
+        var trendingRequest = TrendingRequest()
+        let worker = ListSectionSceneWorker(service: MockNetworkAPI(),
+                                            request: trendingRequest)
+        worker.callToMoviesRequest(completion: { response in
+            XCTAssertNotNil(response, "the response is nil")
+            trendingRequest.nextPage()
+            XCTAssertEqual(trendingRequest.page, 2)
+        }, onError: { error in
+            XCTAssertNil("Not executing")
+        })
+        worker.resetCounter()
+        XCTAssertEqual(trendingRequest.page, 1)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func test_workerTestingError() {
+        let trendingRequest = TrendingRequest()
+        let worker = ListSectionSceneWorker(service: MockNetworkAPI(isErrorTesting: true),
+                                            request: trendingRequest)
+        worker.callToMoviesRequest(completion: { response in
+            XCTAssertNil("Not executing")
+        }, onError: { error in
+            XCTAssertNotNil(error, "Error is nil")
+        })
+        worker.resetCounter()
+        XCTAssertEqual(trendingRequest.page, 1)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func test_interactor() {
+        let trendingRequest = TrendingRequest()
+        let interactor = ListSectionSceneInteractor()
+        let presenter = ListSectionScenePresenter()
+        let router = ListSectionSceneRouter()
+        let viewController = ListSectionSceneViewController(section: .trending)
+        viewController.interactor = interactor
+        router.source = viewController
+        viewController.router = router
+        presenter.viewController = viewController
+        interactor.worker = ListSectionSceneWorker(service: MockNetworkAPI(),
+                                                   request: trendingRequest)
+        interactor.presenter = presenter
+        
+        viewController.router = router
+        viewController.viewDidLoad()
+        viewController.interactor?.callSectionQuery()
+        viewController.interactor?.resetCounter()
+        interactor.worker = ListSectionSceneWorker(service: MockNetworkAPI(isErrorTesting: true),
+                                                   request: trendingRequest)
+        viewController.interactor?.callSectionQuery()
     }
-
 }

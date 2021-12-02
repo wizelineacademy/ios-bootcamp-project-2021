@@ -31,4 +31,8 @@ struct UpcomingRequest: Request, PageableModel {
     var decodingKey: JSONDecoder.KeyDecodingStrategy {
         return .convertFromSnakeCase
     }
+    
+    var jsonMock: String? {
+        return "upcoming_mock"
+    }
 }

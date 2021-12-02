@@ -31,4 +31,8 @@ struct PopularRequest: Request, PageableModel {
     var decodingKey: JSONDecoder.KeyDecodingStrategy {
         return .convertFromSnakeCase
     }
+    
+    var jsonMock: String? {
+        return "popular_mock"
+    }
 }
