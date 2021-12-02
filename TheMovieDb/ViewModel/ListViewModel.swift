@@ -10,16 +10,17 @@ import Foundation
 protocol ListViewModelDelegate: AnyObject {
     func didBeginRefreshing()
     func didEndRefreshing()
+    func nothingFound()
 }
 
 class ListViewModel: NSObject {
-    private let movieModel: MovieModel
-    private let movieFeed: MovieFeed
+    private let movieModel: MovieAPIModel
     private var movieList: [MovieViewModel] = []
+    var movieFeed: MovieFeed
     
     private weak var delegate: ListViewModelDelegate?
     
-    init(movieModel: MovieModel, movieFeed: MovieFeed, delegate: ListViewModelDelegate? = nil) {
+    init(movieModel: MovieAPIModel, movieFeed: MovieFeed, delegate: ListViewModelDelegate? = nil) {
         self.movieModel = movieModel
         self.movieFeed = movieFeed
         self.delegate = delegate
@@ -39,11 +40,18 @@ class ListViewModel: NSObject {
         movieModel.getList(movieFeed: movieFeed) { [weak self] movies in
             self?.movieList = movies
             self?.didRefresh()
+            if movies.isEmpty {
+                self?.nothingFound()
+            }
         }
     }
     
     func didRefresh() {
         self.delegate?.didEndRefreshing()
+    }
+    
+    func nothingFound() {
+        self.delegate?.nothingFound()
     }
     
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 struct MovieViewModel {
+    let id: Int
     let title: String
     let posterPath: String
     let mediaType: String
@@ -17,6 +18,7 @@ struct MovieViewModel {
     let baseURL: String
     
     init(movie: MovieItem, configuration: ConfigurationImage) {
+        self.id = movie.id ?? 0
         self.title = movie.title ?? ""
         self.posterPath = movie.posterPath ?? ""
         self.mediaType = movie.mediaType ?? ""
@@ -30,7 +32,7 @@ struct MovieViewModel {
         self.baseURL = configuration.getSecureBasePosterURL()
     }
     
-    lazy var posterURL: URL? = {
+    func getPosterURL() -> URL? {
         return URL(string: baseURL + posterPath)
-    }()
+    }
 }

@@ -13,4 +13,10 @@ struct Constants {
     static let apiKey = "f6cd5c1a9e6c6b965fdcab0fa6ddd38a"
     static let apiLanguage = "en"
     static let defaultPosterSize = "wp500"
+    
+    // MARK: - OS
+    static let subsystemName = "TheMovieDB"
+    
+    // MARK: - Views
+    static let reviewNumberOfLines = 3
 }

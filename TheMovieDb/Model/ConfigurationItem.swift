@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - ConfigurationWelcome
 struct ConfigurationWelcome: Decodable {
     let image: ConfigurationImage
     let changeKeys: [String]
@@ -17,6 +18,7 @@ struct ConfigurationWelcome: Decodable {
     }
 }
 
+// MARK: - ConfigurationImage
 struct ConfigurationImage: Decodable {
     let secureBaseURL: String
     let backdropSizes: [String]

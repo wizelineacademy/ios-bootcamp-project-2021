@@ -10,6 +10,7 @@ import UIKit
 protocol NavigationDelegate: AnyObject {
     func navigate(movieViewModel: MovieViewModel)
 }
+
 class ListView: NSObject {
     
     lazy var collectionView: UICollectionView = {
@@ -22,6 +23,12 @@ class ListView: NSObject {
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.register(MovieCell.self, forCellWithReuseIdentifier: MovieCell.cellIdentifier)
         return collection
+    }()
+    
+    lazy var nothingFoundView: NothingFoundView = {
+        let nothingFoundView = NothingFoundView(frame: .zero)
+        nothingFoundView.translatesAutoresizingMaskIntoConstraints = false
+        return nothingFoundView
     }()
     
     var viewModel: ListViewModel
