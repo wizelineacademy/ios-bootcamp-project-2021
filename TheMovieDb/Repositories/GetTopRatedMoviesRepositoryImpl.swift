@@ -7,29 +7,17 @@
 
 import Foundation
 
-class GetTopRatedMoviesRepositoryImpl: GetListMoviesRepository {
-    weak var delegate: DataLoadedFromRepository?
-    var movies: [Movie] = [] {
-        didSet {
-            delegate?.reloadData()
-        }
-    }
+final class GetTopRatedMoviesRepositoryImpl: GetListMoviesRepository {
     private let basePath: String = URLRequestType.popular.basePath
     let service = NetworkManager(urlSession: URLSession.shared)
     
-    func getListMovies() {
+    func getListMovies(completion: @escaping ([Movie]) -> Void) {
         service.get(path: basePath) { [weak self] response in
-            self?.handleResponse(response)
+            self?.handleResponse(response, completion: completion)
         }
     }
     
-    func handleResponse(_ response: MovieList) {
-        DispatchQueue.main.async {
-            self.movies = response.results
-        }
+    func handleResponse(_ response: MovieList, completion: @escaping ([Movie]) -> Void) {
+        completion(response.results)
     }
-}
-
-protocol DataLoadedFromRepository: AnyObject {
-    func reloadData()
 }

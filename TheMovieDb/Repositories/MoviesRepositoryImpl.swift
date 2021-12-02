@@ -6,6 +6,7 @@
 //
 
 import Foundation
+
 class MoviesRepositoryImpl {
     let service = NetworkManager(urlSession: URLSession.shared)
     var basePath = ""
@@ -20,7 +21,7 @@ class MoviesRepositoryImpl {
         }
     }
     
-    func handleResponse(_ response: MovieList) -> [Movie] {
+    private func handleResponse(_ response: MovieList) -> [Movie] {
         var movies: [Movie] = []
         DispatchQueue.main.async {
             movies = response.results

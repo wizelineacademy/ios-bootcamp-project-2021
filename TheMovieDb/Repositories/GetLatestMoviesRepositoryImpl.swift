@@ -7,20 +7,17 @@
 
 import Foundation
 
-class GetLatestMoviesRepositoryImpl: GetLatestMoviesRepository{
-    func getLatestMovies() {
-        service.get(path: basePath) { [weak self] response in
-            self?.handleResponse(response)
-        }
-    }
-    
-    var movies: [Movie] = []
+final class GetLatestMoviesRepositoryImpl: GetLatestMoviesRepository {
     private let basePath: String = URLRequestType.popular.basePath
     let service = NetworkManager(urlSession: URLSession.shared)
     
-    func handleResponse(_ response: MovieList) {
-        DispatchQueue.main.async {
-            self.movies = response.results
+    func getLatestMovies(completion: @escaping ([Movie]) -> Void) {
+        service.get(path: basePath) { [weak self] response in
+            self?.handleResponse(response, completion: completion)
         }
+    }
+    
+    func handleResponse(_ response: MovieList, completion: @escaping ([Movie]) -> Void) {
+        completion(response.results)
     }
 }

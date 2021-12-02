@@ -6,20 +6,18 @@
 //
 
 import Foundation
-class GetUpcomingMoviesRepositoryImpl: GetUpcomingMoviesRepository {
-    var movies: [Movie] = []
+
+final class GetUpcomingMoviesRepositoryImpl: GetUpcomingMoviesRepository {
     private let basePath: String = URLRequestType.upcoming.basePath
     let service = NetworkManager(urlSession: URLSession.shared)
     
-    func getUpcomingMovies() {
+    func getUpcomingMovies(completion: @escaping ([Movie]) -> Void) {
         service.get(path: basePath) { [weak self] response in
-            self?.handleResponse(response)
+            self?.handleResponse(response, completion: completion)
         }
     }
     
-    func handleResponse(_ response: MovieList) {
-        DispatchQueue.main.async {
-            self.movies = response.results
-        }
+    func handleResponse(_ response: MovieList, completion: @escaping ([Movie]) -> Void) {
+        completion(response.results)
     }
 }

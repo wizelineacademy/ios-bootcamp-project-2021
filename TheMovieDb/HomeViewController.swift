@@ -9,18 +9,19 @@ import UIKit
 
 final class HomeViewController: UICollectionViewController {
     var viewMoreButton = UIButton()
-
-    let service = NetworkManager(urlSession: URLSession.shared)
-    static let categoryHeaderUpcoming = "Upcoming"
-    let categoryHeaderUpcomingId = "Upcoming"
-    var movies: [Movie] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-
-    init() {
+    
+    private var service = NetworkManager(urlSession: URLSession.shared)
+    static let categoryHeaderUpcoming = TitleOfSection.upcoming.value
+    let categoryHeaderUpcomingId = TitleOfSection.upcoming.value
+    
+    
+    static let categoryHeaderNowPlaying = TitleOfSection.nowPlaying.value
+    let categoryHeaderNowPlayingId = TitleOfSection.nowPlaying.value
+    
+    let request = MovieFacade()
+    init(service: NetworkManager = NetworkManager(urlSession: URLSession.shared)) {
         super.init(collectionViewLayout: HomeViewController.createLayout())
+        self.service = service
     }
     
     static func createLayout() -> UICollectionViewCompositionalLayout {
@@ -45,6 +46,7 @@ final class HomeViewController: UICollectionViewController {
                 section.boundarySupplementaryItems = [
                     .init(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50)), elementKind: categoryHeaderUpcoming, alignment: .topLeading)
                 ]
+                section.orthogonalScrollingBehavior = .paging
                 return section
             }
         }
@@ -54,43 +56,69 @@ final class HomeViewController: UICollectionViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func setUpLayout() {
         collectionView.register(MovieCell.self, forCellWithReuseIdentifier: "cell")
         collectionView.register(HeaderOfSection.self, forSupplementaryViewOfKind: HomeViewController.categoryHeaderUpcoming, withReuseIdentifier: categoryHeaderUpcomingId)
         navigationItem.title = "Movies"
-
-        let url = "/3/trending/movie/day"
-        service.get(path: url) { [weak self] response in
-            self?.handleResponse(response)
-        }
     }
     
-    func handleResponse(_ response: MovieList) {
-        DispatchQueue.main.async {
-            self.movies = response.results
-        }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        request.delegate = self
+        setUpLayout()
+        request.getAllMovies()
     }
 }
 
 // MARK: - UICollectionView
 extension HomeViewController {
     public override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        movies.count
+        request.section[section].movies.count
     }
-
+    
     public override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! MovieCell
-        cell.label?.text = movies[indexPath.row].title
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MovieCell else {
+            return collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        }
+        let movie = request.section[indexPath.section].movies[indexPath.row]
+        let image = ImageForMovie()
+        var path = ""
+        if indexPath.section == 0 {
+            path = movie.backdropPath  ?? ""
+        } else {
+            path = movie.posterPath ?? ""
+        }
+       
+
+        cell.imageView?.getImageWithNSCache(withURL: URL(string: image.createURLForImage(path: path) ))
         return cell
     }
+    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        request.section.count
     }
+    
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: categoryHeaderUpcomingId, for: indexPath) as! HeaderOfSection
-        header.label.text = "Upcoming"
+        let identifier = categoryHeaderUpcomingId
+        
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: identifier, for: indexPath) as? HeaderOfSection else {
+            return HeaderOfSection()
+        }
+        let sectionName = MoviesSections(rawValue: indexPath.section)
+        header.label.text = sectionName?.description
+        
         return header
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movieSelected = request.section[indexPath.section].movies[indexPath.row]
+        self.navigationController?.pushViewController(DetailViewController(), animated: false)
+    }
+}
+
+
+extension HomeViewController: DataLoaded {
+    func reloadData() {
+        collectionView.reloadData()
     }
 }

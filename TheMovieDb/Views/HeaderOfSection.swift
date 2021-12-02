@@ -8,9 +8,13 @@
 import Foundation
 import UIKit
 
-class HeaderOfSection: UICollectionReusableView {
+final class HeaderOfSection: UICollectionReusableView {
     let label = UILabel()
-    var title: String?
+    public var title: MoviesSections? {
+        didSet {
+            setSectionName()
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,5 +29,10 @@ class HeaderOfSection: UICollectionReusableView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setSectionName() {
+        guard let title = self.title else { return }
+        label.text = title.description
     }
 }

@@ -7,21 +7,17 @@
 
 import Foundation
 
-class GetNowPlayingMoviesRepositoryImpl: GetNowPlayingMoviesRepository {
-    func getNowPlayingMoviesRepository() {
+final class GetNowPlayingMoviesRepositoryImpl: GetNowPlayingMoviesRepository {
+    let service = NetworkManager(urlSession: URLSession.shared)
+    private let basePath: String = URLRequestType.popular.basePath
+    
+    func getNowPlayingMoviesRepository(completion: @escaping ([Movie]) -> Void) {
         service.get(path: basePath) { [weak self] response in
-            self?.handleResponse(response)
+            self?.handleResponse(response, completion: completion)
         }
     }
     
-    var movies: [Movie] = []
-    let service = NetworkManager(urlSession: URLSession.shared)
-    private let basePath: String = URLRequestType.popular.basePath
-
-    
-    func handleResponse(_ response: MovieList) {
-        DispatchQueue.main.async {
-            self.movies = response.results
-        }
+    func handleResponse(_ response: MovieList, completion: @escaping ([Movie]) -> Void) {
+        completion(response.results)
     }
 }

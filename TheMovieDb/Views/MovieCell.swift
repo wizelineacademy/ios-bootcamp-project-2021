@@ -9,6 +9,7 @@ import Foundation
 
 class MovieCell: UICollectionViewCell {
     var imageView: UIImageView?
+    
     var label: UILabel?
     
     override init(frame: CGRect) {
