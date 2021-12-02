@@ -30,4 +30,8 @@ struct TrendingRequest: Request, PageableModel {
     var decodingKey: JSONDecoder.KeyDecodingStrategy {
         return .convertFromSnakeCase
     }
+    
+    var jsonMock: String? {
+        return "trending_mock"
+    }
 }

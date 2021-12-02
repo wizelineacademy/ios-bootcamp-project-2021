@@ -20,6 +20,11 @@
 		262B5A48272D8F2E00887232 /* HomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B5A47272D8F2E00887232 /* HomeViewCell.swift */; };
 		262B5A4B272D907300887232 /* HomeFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B5A4A272D907300887232 /* HomeFlowLayout.swift */; };
 		262B5A4D272D9B5100887232 /* HomeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 262B5A4C272D9B5100887232 /* HomeModel.swift */; };
+		2641959627586A1E00BFF3D7 /* trending_mock.json in Resources */ = {isa = PBXBuildFile; fileRef = 2641959527586A1E00BFF3D7 /* trending_mock.json */; };
+		264195982758700200BFF3D7 /* now_playing.json in Resources */ = {isa = PBXBuildFile; fileRef = 2641959727586FAD00BFF3D7 /* now_playing.json */; };
+		2641959A2758706300BFF3D7 /* popular_mock.json in Resources */ = {isa = PBXBuildFile; fileRef = 264195992758706300BFF3D7 /* popular_mock.json */; };
+		2641959C275870F400BFF3D7 /* top_rated_mock.json in Resources */ = {isa = PBXBuildFile; fileRef = 2641959B275870F400BFF3D7 /* top_rated_mock.json */; };
+		2641959E2758716000BFF3D7 /* upcoming_mock.json in Resources */ = {isa = PBXBuildFile; fileRef = 2641959D2758716000BFF3D7 /* upcoming_mock.json */; };
 		267DAE3F273E22D100FCB15D /* DetailRecommendationsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267DAE3E273E22D100FCB15D /* DetailRecommendationsCell.swift */; };
 		2699CC3B272F202E000F8E36 /* Kingfisher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2699CC3A272F202E000F8E36 /* Kingfisher.xcframework */; };
 		2699CC3C272F202E000F8E36 /* Kingfisher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2699CC3A272F202E000F8E36 /* Kingfisher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -143,6 +148,11 @@
 		262B5A47272D8F2E00887232 /* HomeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCell.swift; sourceTree = "<group>"; };
 		262B5A4A272D907300887232 /* HomeFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeFlowLayout.swift; sourceTree = "<group>"; };
 		262B5A4C272D9B5100887232 /* HomeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeModel.swift; sourceTree = "<group>"; };
+		2641959527586A1E00BFF3D7 /* trending_mock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = trending_mock.json; sourceTree = "<group>"; };
+		2641959727586FAD00BFF3D7 /* now_playing.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = now_playing.json; sourceTree = "<group>"; };
+		264195992758706300BFF3D7 /* popular_mock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = popular_mock.json; sourceTree = "<group>"; };
+		2641959B275870F400BFF3D7 /* top_rated_mock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = top_rated_mock.json; sourceTree = "<group>"; };
+		2641959D2758716000BFF3D7 /* upcoming_mock.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = upcoming_mock.json; sourceTree = "<group>"; };
 		267DAE3E273E22D100FCB15D /* DetailRecommendationsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecommendationsCell.swift; sourceTree = "<group>"; };
 		2699CC3A272F202E000F8E36 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = "<group>"; };
 		269E1C7B274C9352006393B4 /* DetailSceneConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSceneConfigurator.swift; sourceTree = "<group>"; };
@@ -291,6 +301,18 @@
 			path = FlowLayout;
 			sourceTree = "<group>";
 		};
+		264195942758693B00BFF3D7 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				2641959527586A1E00BFF3D7 /* trending_mock.json */,
+				2641959727586FAD00BFF3D7 /* now_playing.json */,
+				264195992758706300BFF3D7 /* popular_mock.json */,
+				2641959B275870F400BFF3D7 /* top_rated_mock.json */,
+				2641959D2758716000BFF3D7 /* upcoming_mock.json */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		267DAE3C273E21C400FCB15D /* Sections */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +441,7 @@
 		26F5D0D7274F05BD00D28A36 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				264195942758693B00BFF3D7 /* Mocks */,
 				26F5D0D9274F05D400D28A36 /* Responses */,
 				26F5D0D8274F05C900D28A36 /* Requests */,
 			);
@@ -693,11 +716,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				837B4EB4258178B9003DFC67 /* LaunchScreen.storyboard in Resources */,
+				2641959627586A1E00BFF3D7 /* trending_mock.json in Resources */,
+				2641959E2758716000BFF3D7 /* upcoming_mock.json in Resources */,
 				26F5D10B27547F7C00D28A36 /* ListSectionSceneViewController.xib in Resources */,
 				837B4EB1258178B9003DFC67 /* Assets.xcassets in Resources */,
+				2641959C275870F400BFF3D7 /* top_rated_mock.json in Resources */,
 				269E1C89274DAEAC006393B4 /* DetailSceneViewController.xib in Resources */,
 				26F5D0F9275457BA00D28A36 /* SearchSceneViewController.xib in Resources */,
+				2641959A2758706300BFF3D7 /* popular_mock.json in Resources */,
 				26F5D0E8275402E600D28A36 /* HomeSceneViewController.xib in Resources */,
+				264195982758700200BFF3D7 /* now_playing.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
