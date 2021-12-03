@@ -10,7 +10,6 @@ import UIKit
 var imageNSCache = NSCache<NSString, UIImage>()
 extension UIImageView {
     func getImageWithNSCache(withURL url: URL?) {
-        
         guard let url = url else { return }
         if let image = imageNSCache.object(forKey: url.absoluteString as NSString) {
             DispatchQueue.main.async {
@@ -19,7 +18,6 @@ extension UIImageView {
             return
         } else {
             let dataTask = URLSession.shared.dataTask(with: url) { data, response, error in
-                
                 if self.imageOnError(error: error) {
                     return
                 } else {
@@ -55,9 +53,7 @@ extension UIImageView {
                     self.image = defaultImage
                     imageNSCache.setObject(defaultImage ?? UIImage(), forKey: url.absoluteString as NSString)
                 }
-                
             }
         }
     }
-    
 }

@@ -84,7 +84,7 @@ extension HomeViewController {
         let image = ImageForMovie()
         var path = ""
         if indexPath.section == 0 {
-            path = movie.backdropPath  ?? ""
+            path = movie.backdropPath ?? ""
         } else {
             path = movie.posterPath ?? ""
         }

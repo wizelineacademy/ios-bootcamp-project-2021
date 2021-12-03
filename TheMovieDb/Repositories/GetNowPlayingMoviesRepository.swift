@@ -8,5 +8,5 @@
 import Foundation
 
 protocol GetNowPlayingMoviesRepository {
-    func getNowPlayingMoviesRepository(completion: @escaping ([Movie]) -> Void)
+    func getNowPlaying(completion: @escaping ([Movie]) -> Void)
 }

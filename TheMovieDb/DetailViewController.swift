@@ -25,6 +25,6 @@ final class DetailViewController: UIViewController {
         
         super.viewDidLoad()
         view.backgroundColor = .white
-        self.navigationItem.title = "Detail View Controller"
+        self.navigationItem.title = "Movie Detail"
     }
 }

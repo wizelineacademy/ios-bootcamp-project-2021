@@ -11,7 +11,7 @@ final class GetNowPlayingMoviesRepositoryImpl: GetNowPlayingMoviesRepository {
     let service = NetworkManager(urlSession: URLSession.shared)
     private let basePath: String = URLRequestType.popular.basePath
     
-    func getNowPlayingMoviesRepository(completion: @escaping ([Movie]) -> Void) {
+    func getNowPlaying(completion: @escaping ([Movie]) -> Void) {
         service.get(path: basePath) { [weak self] response in
             self?.handleResponse(response, completion: completion)
         }

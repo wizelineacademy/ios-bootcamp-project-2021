@@ -10,6 +10,9 @@ import Foundation
 enum Category {
     case popular
     case upcoming
+    case nowPlaying
+    case topRated
+    case trending
 }
 
 struct SectionData {
@@ -22,6 +25,9 @@ final class MovieFacade {
     let getPopularMovies = GetPopularMoviesRepositoryImpl() //pasar por init
     let getUpcomingMovies = GetUpcomingMoviesRepositoryImpl()
     let getNowPlayingMovies = GetNowPlayingMoviesRepositoryImpl()
+    let getTopRated = GetTopRatedMoviesRepositoryImpl()
+    let getLatestMovies = GetLatestMoviesRepositoryImpl()
+    
     let group = DispatchGroup()
     var section: [SectionData] = [] {
         didSet {
@@ -48,11 +54,29 @@ final class MovieFacade {
         }
         
         group.enter()
-        getNowPlayingMovies.getNowPlayingMoviesRepository { [weak self] nowPlayingMovies in
-            let nowPlaying = SectionData(category: .upcoming, movies: nowPlayingMovies)
+        getNowPlayingMovies.getNowPlaying { [weak self] nowPlayingMovies in
+            let nowPlaying = SectionData(category: .nowPlaying, movies: nowPlayingMovies)
             movies.append(nowPlaying)
             self?.group.leave()
         }
+        
+        group.enter()
+        getTopRated.getListMovies { [weak self] topRatedMovies in
+            let topRated = SectionData(category: .topRated, movies: topRatedMovies)
+            movies.append(topRated)
+            self?.group.leave()
+        }
+        
+        
+        group.enter()
+        getLatestMovies.getLatestMovies{ [weak self] getLatestMovies in
+            let latest = SectionData(category: .topRated, movies: getLatestMovies)
+            movies.append(latest)
+            self?.group.leave()
+        }
+            
+        
+        
         
         group.notify(queue: .main) {
             self.section = movies
