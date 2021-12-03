@@ -13,4 +13,8 @@ enum URLRequestType: String {
     case popular = "/3/movie/popular"
     case nowPlaying = "/3/movie/now_playing"
     case latest = "/3/movie/latest"
+    
+    var basePath: String {
+        self.rawValue
+    }
 }
