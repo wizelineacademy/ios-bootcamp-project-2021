@@ -11,7 +11,7 @@ class ExtraInfoCell: BaseCell {
   
   static let identifier = "ExtraInfoCell"
   
-  var movieDetails: MovieDetails? {
+  var movieDetails: MovieDetailsViewModel? {
     didSet {
       setupData()
     }
@@ -95,16 +95,11 @@ class ExtraInfoCell: BaseCell {
   }
   
   override func setupData() {
-    guard let budget = movieDetails?.getNumberFormat(dollars: movieDetails?.budget ?? 0),
-          let revenue = movieDetails?.getNumberFormat(dollars: movieDetails?.revenue ?? 0),
-          let status = movieDetails?.status,
-          let language = movieDetails?.originalLanguage
-    else { return }
     
-    self.budgetLabel.text = budget
-    self.revenueLabel.text = revenue
-    self.statusLabel.text = status
-    self.languageLabel.text = language.capitalized
+    self.budgetLabel.text = movieDetails?.budget
+    self.revenueLabel.text = movieDetails?.revenue
+    self.statusLabel.text = movieDetails?.status
+    self.languageLabel.text = movieDetails?.originalLanguage.capitalized
     
   }
   

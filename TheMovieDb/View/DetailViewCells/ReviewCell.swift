@@ -11,7 +11,7 @@ class ReviewCell: BaseCell {
   
   static let identifier = "ReviewCell"
   
-  var review: MovieReview? {
+  var review: ReviewViewModel? {
     didSet {
       setupData()
     }
@@ -20,7 +20,7 @@ class ReviewCell: BaseCell {
   var profileImage = ImageBuilder()
     .aspectImage(aspectRatio: .scaleAspectFill)
     .roundCorners(circle: true, radius: SizeAndMeasures.profilePictureSmall.measure, clipped: true)
-    .setPlaceHolder(image: UIImage(systemName: "person.crop.circle"))
+    .setPlaceHolder(image: UIImage(named: "notFoundImage"))
     .setBackgroundColor(color: .transparentWhite)
     .setTinColor(color: DesignColor.darkGray)
     .build()
@@ -63,22 +63,11 @@ class ReviewCell: BaseCell {
   
   override func setupData() {
     
-    guard let name = review?.author, let description = review?.content else { return }
-    var url: String?
-    var portrait = review?.authorDetails.avatarPath
-    let checkValidUrl = portrait?.prefix(9)
-    if checkValidUrl == "/https://" {
-      portrait?.removeFirst()
-      url = portrait
-    } else {
-      if portrait != nil {
-        url = "\(ApiPath.baseUrlImage.path)\(portrait ?? "")"
-      }
-    }
-
-    self.profileImage.loadImage(urlString: url)
-    self.nameLabel.text = name
-    self.descriptionLabel.text = description
+//    guard let name = review?.author else { return }
+    self.profileImage.loadImage(urlString: review?.profileImageAuthor)
+    self.nameLabel.text = review?.author
+//    guard let description = review?.content else { return }
+    self.descriptionLabel.text = review?.content
     
   }
   

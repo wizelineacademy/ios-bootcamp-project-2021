@@ -11,7 +11,7 @@ class OverviewCell: BaseCell {
   
   static let identifier = "OverviewCell"
   
-  var movieDetails: MovieDetails? {
+  var movieDetails: MovieDetailsViewModel? {
     didSet {
       setupData()
     }

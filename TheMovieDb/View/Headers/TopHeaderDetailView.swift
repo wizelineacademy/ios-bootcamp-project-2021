@@ -7,13 +7,12 @@
 
 import Foundation
 import UIKit
-import Kingfisher
 
 class TopHeaderDetailView: UICollectionReusableView {
   
   static let identifier = "TopHeaderDetailView"
   
-  var movieDetails: MovieDetails? {
+  var movieDetails: MovieDetailsViewModel? {
     didSet {
       setupData()
     }
@@ -83,21 +82,10 @@ class TopHeaderDetailView: UICollectionReusableView {
   }
   
   func setupData() {
-    guard
-      let title = movieDetails?.title,
-      let releaseDate = movieDetails?.getMovieReleaseDateFormat(),
-      let score = movieDetails?.voteAverage
-    else {return}
-    
-    let moviePoster = movieDetails?.backDropPath
-    let url: String?
-    if moviePoster != nil {
-      url = "\(ApiPath.baseUrlImage.path)\(moviePoster ?? "")"
-    } else { url = nil }
-    posterImage.loadImage(urlString: url)
-    releaseDateLabel.text = releaseDate
-    titleLabel.text = title
-    scoreLabel.text = "\(score)"
+    posterImage.loadImage(urlString: movieDetails?.backDropPath)
+    releaseDateLabel.text = movieDetails?.releaseDate
+    titleLabel.text = movieDetails?.title
+    scoreLabel.text = "\(movieDetails?.voteAverage ?? 0)"
   }
 
 }

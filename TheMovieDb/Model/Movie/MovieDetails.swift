@@ -12,18 +12,14 @@ struct MovieDetails: Codable {
   let id: Int
   let title: String
   let overview: String
-  let releaseDate: String
+  let releaseDate: String?
   let voteAverage: Float
   let budget: Int
   let backDropPath: String?
   let revenue: Int
   let originalLanguage: String
   let status: String
-  var cast: [Person]?
-  var reviews: [MovieReview]?
-  var similarMovies: [SimilarOrRecommendedMovie]?
-  var recommendedMovies: [SimilarOrRecommendedMovie]?
-  
+
   private enum CodingKeys: String, CodingKey {
     case id
     case title
@@ -35,10 +31,6 @@ struct MovieDetails: Codable {
     case revenue
     case originalLanguage = "original_language"
     case status
-    case cast
-    case reviews
-    case similarMovies
-    case recommendedMovies
     
   }
 }
@@ -46,6 +38,7 @@ struct MovieDetails: Codable {
 extension MovieDetails {
   
   func getDate() -> Date? {
+    guard let releaseDate = self.releaseDate else { return nil }
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
     return formatter.date(from: releaseDate )

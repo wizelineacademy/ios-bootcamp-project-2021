@@ -22,6 +22,17 @@ class SectionBuilder {
   enum TypeOfCollectionLayout {
     case item, group, section
   }
+  
+  func createItem(width: CGFloat, height: CGFloat) -> SectionBuilder {
+    self.item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .fractionalHeight(height)))
+    return self
+  }
+  
+  func createGroup(width: CGFloat, height: CGFloat, groupAxis: Axis) -> SectionBuilder {
+    guard let item = self.item else { fatalError("you need to create first the item") }
+    self.group = groupAxis == .horizontal ? NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .estimated(height)), subitems: [item]) : NSCollectionLayoutGroup.vertical(layoutSize: .init(widthDimension: .fractionalWidth(width), heightDimension: .estimated(height)), subitems: [item])
+    return self
+  }
 
   func createItemAndGroup(item: (w: CGFloat, h: CGFloat), group: (w: CGFloat, h: CGFloat), groupAxis: Axis) -> SectionBuilder {
     self.item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(item.w), heightDimension: .fractionalHeight(item.h)))

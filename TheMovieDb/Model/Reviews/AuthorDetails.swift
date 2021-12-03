@@ -7,16 +7,12 @@
 
 import Foundation
 
-struct AuthorDetails: Codable {
-  
-  var name: String?
-  var username: String
+struct AuthorDetails: Decodable {
+
   var avatarPath: String?
-  var rating: Int?
+  var rating: Float?
   
   private enum CodingKeys: String, CodingKey {
-    case name
-    case username
     case avatarPath = "avatar_path"
     case rating
   }

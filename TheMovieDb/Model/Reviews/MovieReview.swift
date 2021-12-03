@@ -7,23 +7,21 @@
 
 import Foundation
 
-struct MovieReview: Codable {
+struct MovieReview: Decodable {
   
   var id: String
   var author: String
   var content: String
   var authorDetails: AuthorDetails
-  var createdAt: String
   
   private enum CodingKeys: String, CodingKey {
     case id
     case author
     case content
     case authorDetails = "author_details"
-    case createdAt = "created_at"
   }
 }
 
-struct ListReviews: Codable {
-  var results: [MovieReview]?
+struct ListReviews: Decodable {
+  let results: [MovieReview]?
 }

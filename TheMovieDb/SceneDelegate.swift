@@ -14,21 +14,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let window = UIWindow(windowScene: windowScene)
-    setFirstViewController(window)
+    setLaunchViewController(window)
+
   }
   
-  fileprivate func setFirstViewController(_ window: UIWindow) {
-    let feedViewController = FeedViewController()
-    let moviePresenter =  MoviePresenter(view: feedViewController)
-    feedViewController.moviePresenter = moviePresenter
-    let navigationController = UINavigationController()
-    navigationController.viewControllers = [feedViewController]
-    navigationController.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-    navigationController.navigationBar.barTintColor = DesignColor.black.color
-    navigationController.navigationBar.isTranslucent = true
-    window.rootViewController = navigationController
-    window.makeKeyAndVisible()
+  fileprivate func setLaunchViewController(_ window: UIWindow) {
+    let launchViewController = LaunchViewController()
+    window.rootViewController = launchViewController
     self.window = window
+    self.window?.makeKeyAndVisible()
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {

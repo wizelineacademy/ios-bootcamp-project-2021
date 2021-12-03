@@ -11,7 +11,7 @@ class CastCell: BaseCell {
   
   static let identifier = "CastCell"
   
-  var person: Person? {
+  var person: PersonViewModel? {
     didSet {
       setupData()
     }
@@ -20,8 +20,8 @@ class CastCell: BaseCell {
   var profileImage = ImageBuilder()
     .aspectImage(aspectRatio: .scaleAspectFill)
     .roundCorners(circle: true, radius: SizeAndMeasures.profilePictureBig.measure, clipped: true)
-    .setBackgroundColor(color: .transparentWhite)
     .setPlaceHolder(image: UIImage(named: "notFoundImage"))
+    .setBackgroundColor(color: .transparentWhite)
     .build()
   
   var nameLabel = LabelBuilder()
@@ -54,13 +54,10 @@ class CastCell: BaseCell {
   }
   
   override func setupData() {
-    guard let name = person?.name, let character = person?.character else { return }
-    let url: String?
-    if let portrait = person?.profilePath {
-      url = "\(ApiPath.baseUrlImage.path)\(portrait)"
-    } else { url = nil }
-    profileImage.loadImage(urlString: url)
+    guard let name = person?.name else { return }
+    profileImage.loadImage(urlString: person?.profilePath)
     self.nameLabel.text = name
+    guard let character = person?.character else { return }
     self.characterLabel.text = character
   }
   

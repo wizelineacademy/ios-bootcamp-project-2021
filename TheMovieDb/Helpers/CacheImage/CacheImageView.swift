@@ -24,7 +24,8 @@ class CacheImageView: UIImageView {
   }()
   
   private var urlStringForChecking: String?
-  var emptyImage: UIImage?
+  
+  var emptyImage: UIImage? 
   
   public func loadImage(urlString: String?, completion: (() -> Void)? = nil) {
     self.showLoading(view: &activityIndicator)
@@ -48,9 +49,9 @@ class CacheImageView: UIImageView {
     let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, error) in
 
       guard let data = data, error == nil else { return }
-      guard let self = self else { return }
 
-      DispatchQueue.main.async {
+      DispatchQueue.main.async { [weak self] in
+        guard let self = self else { return }
         if let imageData = UIImage(data: data)?.jpegData(compressionQuality: 0.5) {
           if let newImageSmaller = UIImage(data: imageData) {
             let cacheItem = DiscardableImageCacheItem(image: newImageSmaller)
