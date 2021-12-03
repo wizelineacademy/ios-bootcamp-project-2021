@@ -65,7 +65,6 @@ extension HomeViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         selectedMovie = movie
         performSegue(withIdentifier: "ToDetailsScreen", sender: nil)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

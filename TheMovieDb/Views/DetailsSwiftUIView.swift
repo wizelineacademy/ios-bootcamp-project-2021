@@ -9,13 +9,11 @@ import SwiftUI
 import Kingfisher
 
 struct DetailsSwiftUIView: View {
-    let movie: Movie?
-    let basePosterUrl = "https://image.tmdb.org/t/p/w500"
-    
+    var movie: Movie?
     @State var credits: [Cast] = []
     @State var similarMovies: [Movie] = []
     @State var collapsed: Bool = true
-
+    let basePosterUrl = "https://image.tmdb.org/t/p/w500"
     init (movie: Movie?) {
         self.movie = movie
     }
@@ -90,6 +88,7 @@ struct DetailsSwiftUIView: View {
             Text("Movie not found")
         }
     }
+    
     func getCast(movieId: Int) {
         if collapsed {
             let getCastRepo = GetCast()
