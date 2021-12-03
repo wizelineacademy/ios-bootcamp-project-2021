@@ -57,10 +57,10 @@
             </objects>
             <point key="canvasLocation" x="41" y="33"/>
         </scene>
-        <!--Details View Model-->
+        <!--Details View Controller-->
         <scene sceneID="jJs-pJ-u3S">
             <objects>
-                <viewController id="Iro-YF-xNl" customClass="DetailsViewModel" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Iro-YF-xNl" customClass="DetailsViewController" customModule="TheMovieDb" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Uc-pW-Kxg">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -18,11 +18,4 @@ final class DetailsViewController: UIHostingController<DetailsSwiftUIView> {
         self.rootView = DetailsSwiftUIView(movie: movie)
 
     }
-    /*func getCast(movieId: Int, Completion: @escaping (Cast) -> Void) {
-        let getCastRepo = GetCast()
-        var credits: [Cast] = []
-        getCastRepo.getCredits(option: .cast(movieId: movieId)) { Credits in
-            credits.append(contentsOf: Credits.cast)
-        }
-    }*/
 }

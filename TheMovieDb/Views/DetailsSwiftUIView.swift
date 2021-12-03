@@ -14,6 +14,7 @@ struct DetailsSwiftUIView: View {
     @State var similarMovies: [Movie] = []
     @State var collapsed: Bool = true
     let basePosterUrl = "https://image.tmdb.org/t/p/w500"
+    
     init (movie: Movie?) {
         self.movie = movie
     }
@@ -36,7 +37,7 @@ struct DetailsSwiftUIView: View {
                          Text("Overview")
                              .font(.headline)
                              .padding(.top)
-                         Text(movie.overview)
+                         Text(movie.overview!)
                      }.padding()
                     
                     // Casting
