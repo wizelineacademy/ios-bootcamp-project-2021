@@ -21,7 +21,7 @@ struct SectionData {
 }
 
 final class MovieFacade {
-    let moviesProvider = GetMovieList()
+    let moviesProvider = MoviesListProvider()
     var sectionData: [SectionData] = []
     var group = DispatchGroup()
     

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-final class DetailsViewModel: ObservableObject {
+final class DetailsViewModel: UIViewController, ObservableObject {
     @Published var movie: Movie?
     @Published var credits: [Cast] = []
     @Published var similarMovies: [Movie] = []
@@ -17,7 +17,7 @@ final class DetailsViewModel: ObservableObject {
     
     func getCast(movieId: Int) {
         if collapsed {
-            let getCastRepo = GetCast()
+            let getCastRepo = CastProvider()
             getCastRepo.getCredits(option: .cast(movieId: movieId)) { credits in
                 self.credits.append(contentsOf: credits.cast)
             }
@@ -28,7 +28,7 @@ final class DetailsViewModel: ObservableObject {
     
     func getSimilarMovies(movieId: Int) {
         if collapsed {
-            let getCastRepo = GetMovieList()
+            let getCastRepo = MoviesListProvider()
             getCastRepo.getMoviesList(option: .similarMovies(movieId: movieId)) { credits in
                 self.similarMovies.append(contentsOf: credits.results)
             }

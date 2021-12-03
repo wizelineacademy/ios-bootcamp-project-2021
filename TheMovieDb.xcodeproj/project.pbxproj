@@ -23,9 +23,9 @@
 		B1AFD82E273611ED001182D9 /* PathComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1AFD82D273611ED001182D9 /* PathComposer.swift */; };
 		B1EB543E275452920071D467 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EB543D275452920071D467 /* Cast.swift */; };
 		B1EB54402754592B0071D467 /* Credits.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EB543F2754592B0071D467 /* Credits.swift */; };
-		B1EB544227545B090071D467 /* GetCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EB544127545B090071D467 /* GetCast.swift */; };
+		B1EB544227545B090071D467 /* CastProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EB544127545B090071D467 /* CastProvider.swift */; };
 		B1EB5444275467C80071D467 /* MovieFacade.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EB5443275467C80071D467 /* MovieFacade.swift */; };
-		B1EC03E22738E2EF00F02EAC /* GetMovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EC03E12738E2EF00F02EAC /* GetMovieList.swift */; };
+		B1EC03E22738E2EF00F02EAC /* MoviesListProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EC03E12738E2EF00F02EAC /* MoviesListProvider.swift */; };
 		B1EC03E7273CE1A800F02EAC /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1EC03E6273CE1A800F02EAC /* HomeViewController.swift */; };
 		B1FE57CA2752CC9A00D2549F /* DetailsSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1FE57C92752CC9A00D2549F /* DetailsSwiftUIView.swift */; };
 /* End PBXBuildFile section */
@@ -69,9 +69,9 @@
 		B1AFD82D273611ED001182D9 /* PathComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathComposer.swift; sourceTree = "<group>"; };
 		B1EB543D275452920071D467 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
 		B1EB543F2754592B0071D467 /* Credits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credits.swift; sourceTree = "<group>"; };
-		B1EB544127545B090071D467 /* GetCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCast.swift; sourceTree = "<group>"; };
+		B1EB544127545B090071D467 /* CastProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastProvider.swift; sourceTree = "<group>"; };
 		B1EB5443275467C80071D467 /* MovieFacade.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieFacade.swift; sourceTree = "<group>"; };
-		B1EC03E12738E2EF00F02EAC /* GetMovieList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetMovieList.swift; sourceTree = "<group>"; };
+		B1EC03E12738E2EF00F02EAC /* MoviesListProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesListProvider.swift; sourceTree = "<group>"; };
 		B1EC03E6273CE1A800F02EAC /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B1FE57C92752CC9A00D2549F /* DetailsSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsSwiftUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -191,8 +191,8 @@
 		B1AFD82827350057001182D9 /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
-				B1EC03E12738E2EF00F02EAC /* GetMovieList.swift */,
-				B1EB544127545B090071D467 /* GetCast.swift */,
+				B1EC03E12738E2EF00F02EAC /* MoviesListProvider.swift */,
+				B1EB544127545B090071D467 /* CastProvider.swift */,
 			);
 			path = Repositories;
 			sourceTree = "<group>";
@@ -366,9 +366,9 @@
 			files = (
 				B1AFD82E273611ED001182D9 /* PathComposer.swift in Sources */,
 				B1AFD81F2730C089001182D9 /* Request.swift in Sources */,
-				B1EC03E22738E2EF00F02EAC /* GetMovieList.swift in Sources */,
+				B1EC03E22738E2EF00F02EAC /* MoviesListProvider.swift in Sources */,
 				B12C609227596FD50095592B /* DetailsViewModel.swift in Sources */,
-				B1EB544227545B090071D467 /* GetCast.swift in Sources */,
+				B1EB544227545B090071D467 /* CastProvider.swift in Sources */,
 				837B4EA8258178B6003DFC67 /* AppDelegate.swift in Sources */,
 				B1EB543E275452920071D467 /* Cast.swift in Sources */,
 				B1EB5444275467C80071D467 /* MovieFacade.swift in Sources */,

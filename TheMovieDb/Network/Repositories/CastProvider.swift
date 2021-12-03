@@ -1,15 +1,15 @@
 //
-//  getMovieList.swift
+//  getCast.swift
 //  TheMovieDb
 //
-//  Created by Antonio Hernandez Ambrocio on 07/11/21.
+//  Created by Antonio Hernandez Ambrocio on 28/11/21.
 //
 
 import Foundation
 
-struct GetMovieList {
+struct CastProvider {
     
-    func getMoviesList(option: RequestPaths, completion: @escaping (MovieList) -> Void) {
+    func getCredits(option: RequestPaths, completion: @escaping (Credits) -> Void) {
         let service = NetworkManager(urlSession: URLSession.shared)
         service.get(path: option.path, urlQueryitems: nil) { response in
             completion(response)
