@@ -26,4 +26,3 @@ final class DetailsViewController: UIHostingController<DetailsSwiftUIView> {
         }
     }*/
 }
-

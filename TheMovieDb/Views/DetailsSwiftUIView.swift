@@ -9,13 +9,20 @@ import SwiftUI
 import Kingfisher
 
 struct DetailsSwiftUIView: View {
-    @StateObject private var detailsViewModel = DetailsViewModel()
+    var movie: Movie?
+    @State var credits: [Cast] = []
+    @State var similarMovies: [Movie] = []
+    @State var collapsed: Bool = true
+    let basePosterUrl = "https://image.tmdb.org/t/p/w500"
+    init (movie: Movie?) {
+        self.movie = movie
+    }
     
     var body: some View {
-        if let movie = detailsViewModel.movie {
+        if let movie = movie {
             GeometryReader { g in
                 ScrollView {
-                    KFImage(URL(string: detailsViewModel.basePosterUrl + movie.posterPath!))
+                     KFImage(URL(string: basePosterUrl + movie.posterPath!))
                          .resizable()
                          .aspectRatio(contentMode: .fit)
                          .frame(height: 350)
@@ -34,8 +41,8 @@ struct DetailsSwiftUIView: View {
                     
                     // Casting
                      List {
-                         Section(header: ListHeader(collapsed: $detailsViewModel.collapsed, sectionName: "Cast")) {
-                             ForEach(detailsViewModel.credits) { cast in
+                         Section(header: ListHeader(collapsed: self.$collapsed, sectionName: "Cast")) {
+                             ForEach(credits) { cast in
                                  HStack {
                                      Text(cast.name)
                                      Spacer()
@@ -45,7 +52,7 @@ struct DetailsSwiftUIView: View {
                              .transition(.slide)
                          }
                      }
-                     .onAppear { detailsViewModel.getCast(movieId: movie.id) }
+                     .onAppear { getCast(movieId: movie.id) }
                      .listStyle(.plain)
                      .frame(width: g.size.width - 5, height: 400, alignment: .center)
                     
@@ -54,9 +61,9 @@ struct DetailsSwiftUIView: View {
                         Text("Similar movies").font(.headline)
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
-                                ForEach(detailsViewModel.similarMovies) { movie in
+                                ForEach(similarMovies) { movie in
                                     VStack(spacing: 0) {
-                                        KFImage(URL(string: detailsViewModel.basePosterUrl + movie.posterPath!))
+                                        KFImage(URL(string: basePosterUrl + movie.posterPath!))
                                             .resizable()
                                             .aspectRatio(contentMode: .fit)
                                             .background(Color.gray.opacity(0.4))
@@ -70,7 +77,7 @@ struct DetailsSwiftUIView: View {
                                     }
                                     .frame(width: 150)
                                 }
-                            } .onAppear { detailsViewModel.getSimilarMovies(movieId: movie.id) }
+                            } .onAppear { getSimilarMovies(movieId: movie.id) }
                         }
                     }
                     .padding()
@@ -79,6 +86,36 @@ struct DetailsSwiftUIView: View {
             
         } else {
             Text("Movie not found")
+        }
+    }
+    
+    func getCast(movieId: Int) {
+        if collapsed {
+            let getCastRepo = CastProvider()
+            getCastRepo.getCredits(option: .cast(movieId: movieId)) { credits in
+                self.credits.append(contentsOf: credits.cast)
+            }
+        } else {
+            self.credits = []
+        }
+    }
+    
+    func getSimilarMovies(movieId: Int) {
+        if collapsed {
+            let getCastRepo = MoviesListProvider()
+            getCastRepo.getMoviesList(option: .similarMovies(movieId: movieId)) { credits in
+                self.similarMovies.append(contentsOf: credits.results)
+            }
+        } else {
+            self.credits = []
+        }
+    }
+    
+    func toggleCredits(movieId: Int) {
+        if credits.isEmpty {
+            getCast(movieId: movieId)
+        } else {
+            credits = []
         }
     }
     
@@ -108,6 +145,6 @@ struct ListHeader: View {
 
 struct DetailsSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        DetailsSwiftUIView()
+        DetailsSwiftUIView(movie: nil)
     }
 }
