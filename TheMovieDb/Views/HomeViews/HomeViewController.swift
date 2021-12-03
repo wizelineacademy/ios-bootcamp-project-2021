@@ -1,0 +1,120 @@
+//
+//  HomeCollectionViewController.swift
+//  TheMovieDb
+//
+//  Created by Jonathan Hernandez on 10/11/21.
+//
+
+import UIKit
+
+class HomeViewController: UIViewController, HomeView {
+   
+    var presenter: HomeViewPresenter?
+    
+    // MARK: Private Instances
+    private var latestSearch: String?
+    private lazy var movieHomeCollectionView: GenericMovieCollectionView<SectionMovie> = {
+        let movieHomeCollectionView = GenericMovieCollectionView<SectionMovie>(frame: view.bounds)
+        movieHomeCollectionView.delegateCollection = self
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        movieHomeCollectionView.refreshControl = refreshControl
+        movieHomeCollectionView.sendSubviewToBack(refreshControl)
+        return movieHomeCollectionView
+    }()
+    
+    // MARK: Lazy Vars
+    lazy private var searchController: SearchBar = {
+        let searchController = SearchBar("Search a Movie", delegate: self)
+        searchController.text = latestSearch
+        let searchResults = searchController.searchResultsController as? SearchMovieController
+        searchResults?.tableView.delegateTable = self
+        searchController.showsCancelButton = !searchController.isSearchBarEmpty
+        return searchController
+    }()
+    
+    // MARK: Life Cycle Application
+    override func viewDidLoad() {
+        super.viewDidLoad()
+   
+        guard let navbar = self.navigationController?.navigationBar else { return }
+        self.navigationItem.title = "Movies"
+        navbar.tintColor = .black
+        navbar.titleTextAttributes = [.foregroundColor: UIColor.black]
+        navbar.prefersLargeTitles = true
+
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        view.addSubview(movieHomeCollectionView)
+        presenter?.fetchAllMovieList()
+    }
+  
+    // MARK: Methods to conform HomeView
+    func showEmptyState() {
+        print("")
+    }
+    
+    func showMoviesHome(arrMovie: [SectionMovie: [MovieViewModel]]) {
+        movieHomeCollectionView.arrMovies = arrMovie
+        movieHomeCollectionView.sections = Array(arrMovie.keys)
+        movieHomeCollectionView.configureDataSource()
+        movieHomeCollectionView.reloadData()
+    }
+    
+   func showMoviesList(arrMovie: [MovieViewModel]) {
+       let results = searchController.searchResultsController as? SearchMovieController
+       results?.tableView.arrMovies = arrMovie
+       results?.tableView.reloadData()
+       
+    }
+    
+    func showLoading() {
+        print("")
+    }
+    
+    func stopLoading() {
+
+        movieHomeCollectionView.refreshControl?.endRefreshing()
+    }
+    
+    // MARK: Actions
+    @objc func refresh() {
+        presenter?.fetchAllMovieList()
+    }
+
+}
+
+extension HomeViewController: SearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        
+    }
+    
+    func updateSearchResults(for text: String) {
+        presenter?.searchMovie(strMovie: text)
+    }
+    
+}
+
+extension HomeViewController: GenericMovieCollectionViewDelegate {
+    func selectedCollectionItem<T>(movie: T) {
+        if ((movie.self as? MovieViewModel) != nil), let item = movie.self as? MovieViewModel {
+            presenter?.didSelectMovie(with: item)
+        }
+    }
+}
+
+extension HomeViewController: GenericTableViewDelegate {
+   
+    func selectedTableItem(movie: MovieViewModel) {
+        presenter?.didSelectMovie(with: movie)
+    }
+    
+    func didScroll() {
+         searchController.searchBar.resignFirstResponder()
+    }
+    
+}
