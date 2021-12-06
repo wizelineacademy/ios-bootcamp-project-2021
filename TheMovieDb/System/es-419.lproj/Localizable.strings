@@ -1,0 +1,45 @@
+/* 
+  Localizable.strings
+  TheMovieDb
+
+  Created by Javier Cueto on 28/11/21.
+  
+*/
+
+"Movies" = "Películas";
+"Search" = "Búsqueda";
+"Home" = "Inicio";
+
+
+
+"Invalid Request" = "Solicitud invalida";
+"Bad Request" = "Solicitud con error";
+"Unauthorized" = "No autorizado";
+"No Permission" = "Sin permiso al servicio";
+"Page not exist" = "El servicio no existe 🕵️‍♂️";
+"Error 400" = "Error 400";
+"The service is not working" = "El servicio no esta funcionando";
+"The service is not available" = "El servicio no esta disponible";
+"Error in decoding data" = "Error al decodificar los datos";
+"Error on URL" = "La url no esta correctamente formada";
+"Unknown Error" = "Error desconocido";
+
+"en" = "es";
+"US" = "MX";
+
+
+"Popular" = "Popular";
+"Trending" = "Trending";
+"Playing now" = "Lo que todos estan viendo";
+"Top rated" = "Mejor calificados";
+"Upcoming" = "Por estrenar";
+"Recommendations" = "Recomendaciones";
+"Similar" = "Similares";
+
+"Reviews" = "Reseñas";
+"Search" = "Buscar";
+"Cast" = "Elenco";
+"No movies" = "Lo sentimos, no encontramos películas 🕵️‍♂️";
+"No Reviews" = "Esta película aun no cuenta con reseñas 🎬";
+"No Cast" = "Esta película no cuenta con un elenco definido 🤷‍♂️";
+"Ok" = "Aceptar";

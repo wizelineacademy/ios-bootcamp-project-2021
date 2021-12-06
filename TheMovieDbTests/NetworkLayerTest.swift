@@ -6,10 +6,11 @@
 //
 
 import XCTest
+import Combine
 @testable import TheMovieDb
 
 class NetworkLayerTest: XCTestCase {
-
+    
     func testMoviesGet() {
         let fetchMovies = APIService()
         
@@ -35,16 +36,43 @@ class NetworkLayerTest: XCTestCase {
     
     private func moviesCall(fetchMovies: APIService, endPoint: APIEndPoints, parameters: APIParameters = APIParameters()) {
         let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
-        fetchMovies.fetchData(endPoint: endPoint, with: parameters) { (response: Result<Movies, Error>) in
-            switch response {
-                
-            case .success(let movies):
+        var cancellables = Set<AnyCancellable>()
+        
+        fetchMovies.fetchData(endPoint: endPoint, with: parameters)
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    XCTAssertTrue(false, "Error in request \(error.localizedDescription)______________")
+                    expectation.fulfill()
+                }
+            }, receiveValue: { (movies: Movies) in
                 XCTAssertNotNil(movies, "Movies should not be nil")
-            case .failure(let error):
-                XCTAssertTrue(false, "Error in request \(error.localizedDescription)")
+                expectation.fulfill()
+            }).store(in: &cancellables)
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
-            expectation.fulfill()
         }
+        
+    }
+    
+    func testReviewGet() {
+        let fetch = APIService()
+        let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
+        var cancellables = Set<AnyCancellable>()
+        
+        fetch.fetchData(endPoint: .review, with: APIParameters())
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    XCTAssertTrue(false, "Error in request \(error.localizedDescription)______________")
+                    expectation.fulfill()
+                }
+            }, receiveValue: { (reviews: Reviews) in
+                XCTAssertNotNil(reviews, "Reviews should not be nil")
+                expectation.fulfill()
+            }).store(in: &cancellables)
+        
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
@@ -52,20 +80,46 @@ class NetworkLayerTest: XCTestCase {
         }
     }
     
-    func testReviewGet() {
+    func testCreditCastGet() {
         let fetch = APIService()
-        
         let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
-        fetch.fetchData(endPoint: .review, with: APIParameters()) { (response: Result<Reviews, Error>) in
-            switch response {
-                
-            case .success(let movies):
-                XCTAssertNotNil(movies, "Movies should not be nil")
-            case .failure(let error):
-                XCTAssertTrue(false, "Error in request \(error.localizedDescription)")
+        var cancellables = Set<AnyCancellable>()
+        let parameter = APIParameters(id: "20")
+        fetch.fetchData(endPoint: .credits, with: parameter)
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    XCTAssertTrue(false, "Error in request \(error.localizedDescription)______________")
+                    expectation.fulfill()
+                }
+            }, receiveValue: { (credit: CreditsMovie) in
+                XCTAssertNotNil(credit, "CreditMovie should not be nil")
+                expectation.fulfill()
+            }).store(in: &cancellables)
+        
+        waitForExpectations(timeout: 1) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
-            expectation.fulfill()
         }
+    }
+    
+    // test error in decoding data, try to decoding a review with a movie
+    func testErrorFetch() {
+        let fetch = APIService()
+        let expectation = expectation(description: "SomeService does stuff and runs the callback closure")
+        var cancellables = Set<AnyCancellable>()
+        
+        fetch.fetchData(endPoint: .review, with: APIParameters())
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    XCTAssertTrue(true, "There is no error \(error.localizedDescription)______________")
+                    expectation.fulfill()
+                }
+            }, receiveValue: { (movies: Movie) in
+                XCTAssertNil(movies, "Movies should be nil")
+                expectation.fulfill()
+            }).store(in: &cancellables)
+        
         waitForExpectations(timeout: 1) { error in
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")

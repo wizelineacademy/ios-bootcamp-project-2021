@@ -7,25 +7,22 @@
 //
 
 import Foundation
+import Combine
 
-final class ReviewDetailPresenter {
+final class ReviewDetailPresenter: ObservableObject {
     
     // MARK: Properties
-    weak var view: ReviewDetailViewProtocol?
-    var interactor: ReviewDetailInteractorInputProtocol?
-        
-}
-
-extension ReviewDetailPresenter: ReviewDetailPresenterProtocol {
+    private let interactor: ReviewDetailInteractor?
+    private var cancellables = Set<AnyCancellable>()
+    @Published var review: Review?
     
-    func viewDidLoad() {
-        interactor?.getReview()
-    }
-}
-
-extension ReviewDetailPresenter: ReviewDetailInteractorOutputProtocol {
-    func interactorPushDataPresenter(receivedReview: Review) {
-        view?.presenterPushDataView(receivedReview: receivedReview)
+    init(interactor: ReviewDetailInteractor) {
+        self.interactor = interactor
+        self.interactor?.$review
+            .sink(receiveValue: { [weak self] review in
+                self?.review = review
+            })
+            .store(in: &cancellables)
     }
     
 }

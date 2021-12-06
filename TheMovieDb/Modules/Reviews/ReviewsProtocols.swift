@@ -6,13 +6,15 @@
 //  
 //
 
-import Foundation
+import Combine
 import UIKit
 
 protocol ReviewsViewProtocol: AnyObject {
     // PRESENTER -> VIEW
     var presenter: ReviewsPresenterProtocol? { get set }
     func showReviews(reviewViewModel: [ReviewViewModel])
+    func showErrorMessage(withMessage error: String)
+    func showMessageNoReviews(with message: String)
 }
 
 protocol ReviewsRouterProtocol: AnyObject {
@@ -37,26 +39,19 @@ protocol ReviewsPresenterProtocol: AnyObject {
 }
 
 protocol ReviewsInteractorOutputProtocol: AnyObject {
-// INTERACTOR -> PRESENTER
+    // INTERACTOR -> PRESENTER
     func reviewsFromInteractor(reviewViewModel: [ReviewViewModel])
+    func onError(errorMessage: String)
+    func noReviews(with message: String)
 }
 
-typealias ReviewsInteractorDataManagerProtocol = ReviewsInteractorInputProtocol & ReviewsRemoteDataManagerOutputProtocol
 protocol ReviewsInteractorInputProtocol: AnyObject {
     // PRESENTER -> INTERACTOR
     var presenter: ReviewsInteractorOutputProtocol? { get set }
-    var remoteDatamanager: ReviewsRemoteDataManagerInputProtocol? { get set }
-    
     func getReviews()
 }
 
-protocol ReviewsRemoteDataManagerInputProtocol: AnyObject {
-    // INTERACTOR -> REMOTEDATAMANAGER
-    var remoteRequestHandler: ReviewsRemoteDataManagerOutputProtocol? { get set }
-    func fetchReviews(movie: Movie)
-}
-
-protocol ReviewsRemoteDataManagerOutputProtocol: AnyObject {
-    // REMOTEDATAMANAGER -> INTERACTOR
-    func reviewsFromServer(reviewsData: Reviews)
+protocol ReviewsWorkerProtocol {
+    // WORKER -> INTERACTOR
+    func fetchReviews(with movie: Movie) -> AnyPublisher<Reviews, APIRequestError>
 }

@@ -49,9 +49,9 @@ class ViewModelsTest: XCTestCase {
         let url = URL(string: MovieConst.imageCDN + (viewModel.movie.posterPath ?? (viewModel.movie.backdropPath ?? "")))
         XCTAssertEqual(viewModel.imageUrl, url, "Movie url is not the same in random")
         XCTAssertEqual(viewModel.overview, viewModel.movie.overview, "Overview is not the same")
-        XCTAssertEqual(viewModel.date, "   \(viewModel.movie.releaseDate ?? "")   ", "Date is not the same")
-        XCTAssertEqual(viewModel.popularity, "   \(Int(viewModel.movie.popularity))%   ", "Erro in popularity")
-        XCTAssertEqual(viewModel.votes, "   Votes: \(viewModel.movie.voteCount)   ", "Votes is not equal")
+        XCTAssertEqual(viewModel.date, "   🗓 \(viewModel.movie.releaseDate ?? "")   ", "Date is not the same")
+        XCTAssertEqual(viewModel.popularity, "   🌟 \(Int(viewModel.movie.popularity))%   ", "Erro in popularity")
+        XCTAssertEqual(viewModel.votes, "   👍 \(viewModel.movie.voteCount)   ", "Votes is not equal")
 
         let dummyMovieSpecific = MovieDummy().getSpecificMovie()
         let viewModelSpecific = MovieDetailViewModel(movie: dummyMovieSpecific)
@@ -95,6 +95,29 @@ class ViewModelsTest: XCTestCase {
         let urlSpecific2 = URL(string: MovieConst.defaultImage)
         XCTAssertEqual(viewModelSpecific2.imageUrl, urlSpecific2, "Review url is not the same")
         
+    }
+    
+    // CatViewModel
+    func testCastViewModel() {
+        
+        let dummyCast = CastDummy().getSingleCast()
+        let viewModel = CastViewModel(cast: dummyCast)
+        XCTAssertEqual(viewModel.character, viewModel.cast.character ?? "", "Name is not the same")
+        XCTAssertEqual(viewModel.name, viewModel.cast.name ?? "", "Actor name is no correct")
+        
+        let safeUrl = (MovieConst.imageCDN + (viewModel.cast.profilePath ?? ""))
+        
+        let url = URL(string: safeUrl)
+        XCTAssertEqual(viewModel.imageUrl, url, "url is not the same in random")
+        
+        let dummyCastSpecific = CastDummy().getSpecificCast(index: 1)
+        let viewModelSpecific = CastViewModel(cast: dummyCastSpecific)
+        
+        let urlSpecific = URL(string: MovieConst.imageCDN + "Ben_Affleck_by_Gage_Skidmore_3.jpg")
+        XCTAssertEqual(viewModelSpecific.imageUrl, urlSpecific, "Actor url is not the same")
+        XCTAssertEqual(viewModelSpecific.name, "Ben Affleck", "Error in actor name")
+        XCTAssertEqual(viewModelSpecific.character, "Batman", "Error in character")
+    
     }
     
 }

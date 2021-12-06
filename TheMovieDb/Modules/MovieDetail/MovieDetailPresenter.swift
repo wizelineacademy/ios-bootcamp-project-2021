@@ -20,15 +20,17 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
    
     func viewDidLoad() {
         interactor?.getRelatedMovies()
-    }
-    
-    func setMovie(_ movie: Movie) {
-        view?.setMovie(movie)
+        interactor?.getMovie()
     }
     
     func showReviews(_ movie: Movie) {
         guard let view = view else { return }
         router?.showReviews(from: view, with: movie)
+    }
+    
+    func showCast(_ movie: Movie) {
+        guard let view = view else { return }
+        router?.showCast(from: view, with: movie)
     }
     
     func showMovie(_ movie: Movie) {
@@ -38,8 +40,16 @@ extension MovieDetailPresenter: MovieDetailPresenterProtocol {
 }
 
 extension MovieDetailPresenter: MovieDetailInteractorOutputProtocol {
+    func onError(errorMessage: String) {
+        view?.showErrorMessage(withMessage: errorMessage)
+    }
+    
+    func movieFromInteractor(with movie: Movie) {
+        view?.setMovie(movie)
+    }
+    
     func moviesFromInteractor(_ relatedMovies: [MovieDetailSections: [Movie]]) {
-        view?.showRealatedMoviews(relatedMovies)
+        view?.showRelatedMovies(relatedMovies)
     }
     
 }

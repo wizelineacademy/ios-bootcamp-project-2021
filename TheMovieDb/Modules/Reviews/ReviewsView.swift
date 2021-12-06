@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-final class ReviewsView: UICollectionViewController {
+final class ReviewsView: UICollectionViewController, DisplayError, DisplayMessage {
 
     // MARK: Properties
     var presenter: ReviewsPresenterProtocol?
@@ -17,7 +17,12 @@ final class ReviewsView: UICollectionViewController {
     
     // MARK: - LifeCycle
     init(layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()) {
-        layout.sectionInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+        layout.sectionInset = .init(
+            top: InterfaceConst.initZeroValue,
+            left: InterfaceConst.paddingDefault,
+            bottom: InterfaceConst.initZeroValue,
+            right: InterfaceConst.paddingDefault
+        )
         super.init(collectionViewLayout: layout)
     }
     
@@ -35,17 +40,24 @@ final class ReviewsView: UICollectionViewController {
     // MARK: - Helpers
     private func configureUI() {
         self.collectionView!.register(ReviewCell.self, forCellWithReuseIdentifier: ReviewCell.reusableIdentifier )
-        navigationItem.title = "Reviews"
+        navigationItem.title = InterfaceConst.reviews
         collectionView.backgroundColor = .systemBackground
+
     }
 }
 
 extension ReviewsView: ReviewsViewProtocol {
+    func showMessageNoReviews(with message: String) {
+        displayMessageLabel(with: message)
+    }
+    
+    func showErrorMessage(withMessage error: String) {
+        viewDisplayError(with: error)
+    }
+    
     func showReviews(reviewViewModel: [ReviewViewModel]) {
         self.viewModel = reviewViewModel
-        DispatchQueue.main.async {
-            self.collectionView.reloadData()
-        }
+        self.collectionView.reloadData()
     }
     
 }
@@ -69,7 +81,7 @@ extension ReviewsView {
 // MARK: - UICollectionViewDelegateFlowLayout
 extension ReviewsView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return .init(width: view.frame.width - 20, height: 200)
+        return .init(width: view.frame.width - InterfaceConst.reviewImageSizeMinus, height: InterfaceConst.heightCellReview)
     }
 }
 

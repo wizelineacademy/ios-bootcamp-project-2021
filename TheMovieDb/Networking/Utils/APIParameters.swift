@@ -1,5 +1,5 @@
 //
-//  Parameters.swift
+//  APIParameters.swift
 //  TheMovieDb
 //
 //  Created by Javier Cueto on 29/10/21.
@@ -14,7 +14,7 @@ struct APIParameters {
     var query = "&query="
     let id: String
     
-    init(language: String = "en", region: String = "US", page: String = "1", query: String = "Matrix", id: String = "603") {
+    init(language: String = "en".localized(), region: String = "US".localized(), page: String = "1", query: String = "Matrix", id: String = "603") {
         self.language += language
         self.region += region
         self.page += page

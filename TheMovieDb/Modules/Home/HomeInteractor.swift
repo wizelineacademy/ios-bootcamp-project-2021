@@ -7,24 +7,38 @@
 //
 
 import Foundation
+import Combine
 
 class HomeInteractor: HomeInteractorInputProtocol {
     // MARK: Properties
     weak var presenter: HomeInteractorOutputProtocol?
-    var remoteDatamanager: HomeRemoteDataManagerInputProtocol?
+    private var moviesWorker: MoviesWorkerProtocol!
+    private let group = DispatchGroup()
+    private var movies: [MovieGroupSections: [Movie]] = [:]
+    private var cancellable = Set<AnyCancellable>()
+    
+    init(movieDetailWorker: MoviesWorkerProtocol) {
+        self.moviesWorker = movieDetailWorker
+    }
 
     func getMovies() {
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.remoteDatamanager?.fetchMovies()
+        MovieGroupSections.allCases.forEach { fetchData(typeMovieSection: $0) }
+        group.notify(queue: .main) {
+            self.presenter?.moviesObtained(self.movies)
         }
-  
     }
     
-}
-
-extension HomeInteractor: HomeRemoteDataManagerOutputProtocol {
-    func fetchedMovies(_ movies: [MovieGroupSections: [Movie]]) {
-        presenter?.moviesObtained(movies)
+    private func fetchData(typeMovieSection: MovieGroupSections) {
+        group.enter()
+        moviesWorker.fetchMovies(endPoint: typeMovieSection.path, with: APIParameters())
+            .sink( receiveCompletion: { (completion) in
+                if case let .failure(error) = completion {
+                    self.presenter?.onError(errorMessage: error.localizedDescription)
+                }
+            }, receiveValue: { [unowned self] (movies: Movies) in
+                self.movies[typeMovieSection] = movies.movies
+                self.group.leave()
+            }).store(in: &cancellable)
     }
     
 }

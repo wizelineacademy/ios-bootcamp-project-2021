@@ -23,20 +23,27 @@ extension SearchingPresenter: SearchingPresenterProtocol {
         router?.showMovieDetail(from: view, with: movie)
     }
     
-    func viewDidLoad() {
-        // configure load previous searching
-    }
-    
     func searchMovies(_ searchText: String) {
         view?.showSpinnerView()
+        view?.removeMessageSearchesNotFound()
         interactor?.findMovies(searchText)
     }
 }
 
 extension SearchingPresenter: SearchingInteractorOutputProtocol {
-    func moviesFound(moviesFound: [MovieViewModel]) {
+    func noSearchesFound(with message: String) {
         view?.stopSpinnerView()
+        view?.showMessageNoSearchesFound(with: message)
+    }
+    
+    func onError(errorMessage: String) {
+        view?.showErrorMessage(withMessage: errorMessage)
+        view?.stopSpinnerView()
+    }
+    
+    func moviesFound(moviesFound: [MovieViewModel]) {
         view?.showMoviesResults(moviesFound)
+        view?.stopSpinnerView()
     }
 
 }
