@@ -1,0 +1,414 @@
+{
+    "dates": {
+        "maximum": "2021-12-29",
+        "minimum": "2021-12-08"
+    },
+    "page": 1,
+    "results": [
+        {
+            "adult": false,
+            "backdrop_path": "/70nxSw3mFBsGmtkvcs91PbjerwD.jpg",
+            "genre_ids": [
+                878,
+                28,
+                12
+            ],
+            "id": 580489,
+            "original_language": "en",
+            "original_title": "Venom: Let There Be Carnage",
+            "overview": "After finding a host body in investigative reporter Eddie Brock, the alien symbiote must face a new enemy, Carnage, the alter ego of serial killer Cletus Kasady.",
+            "popularity": 13071.277,
+            "poster_path": "/rjkmN1dniUHVYAtwuV3Tji7FsDO.jpg",
+            "release_date": "2021-10-01",
+            "title": "Venom: Let There Be Carnage",
+            "video": false,
+            "vote_average": 7.2,
+            "vote_count": 3726
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/g2djzUqA6mFplzC03gDk0WSyg99.jpg",
+            "genre_ids": [
+                12,
+                16,
+                35,
+                10751,
+                14,
+                10402
+            ],
+            "id": 568124,
+            "original_language": "en",
+            "original_title": "Encanto",
+            "overview": "The tale of an extraordinary family, the Madrigals, who live hidden in the mountains of Colombia, in a magical house, in a vibrant town, in a wondrous, charmed place called an Encanto. The magic of the Encanto has blessed every child in the family with a unique gift from super strength to the power to heal—every child except one, Mirabel. But when she discovers that the magic surrounding the Encanto is in danger, Mirabel decides that she, the only ordinary Madrigal, might just be her exceptional family's last hope.",
+            "popularity": 2402.284,
+            "poster_path": "/4j0PNHkMr5ax3IA8tjtxcmPU3QT.jpg",
+            "release_date": "2021-11-24",
+            "title": "Encanto",
+            "video": false,
+            "vote_average": 7.5,
+            "vote_count": 146
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/vIPIyTJqcgOKgKcExCvTDpLpTYW.jpg",
+            "genre_ids": [
+                28,
+                12,
+                878,
+                14
+            ],
+            "id": 634649,
+            "original_language": "en",
+            "original_title": "Spider-Man: No Way Home",
+            "overview": "Peter Parker is unmasked and no longer able to separate his normal life from the high-stakes of being a Super Hero. When he asks for help from Doctor Strange the stakes become even more dangerous, forcing him to discover what it truly means to be Spider-Man.",
+            "popularity": 3317.946,
+            "poster_path": "/1g0dhYtq4irTY1GPXvft6k4YLjm.jpg",
+            "release_date": "2021-12-17",
+            "title": "Spider-Man: No Way Home",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/lyvszvJJqqI8aqBJ70XzdCNoK0y.jpg",
+            "genre_ids": [
+                28,
+                12,
+                878,
+                18
+            ],
+            "id": 524434,
+            "original_language": "en",
+            "original_title": "Eternals",
+            "overview": "The Eternals are a team of ancient aliens who have been living on Earth in secret for thousands of years. When an unexpected tragedy forces them out of the shadows, they are forced to reunite against mankind’s most ancient enemy, the Deviants.",
+            "popularity": 1339.598,
+            "poster_path": "/6AdXwFTRTAzggD2QUTt5B7JFGKL.jpg",
+            "release_date": "2021-11-05",
+            "title": "Eternals",
+            "video": false,
+            "vote_average": 7.1,
+            "vote_count": 1293
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/xPpXYnCWfjkt3zzE0dpCNME1pXF.jpg",
+            "genre_ids": [
+                16,
+                28,
+                12,
+                14
+            ],
+            "id": 635302,
+            "original_language": "ja",
+            "original_title": "劇場版「鬼滅の刃」無限列車編",
+            "overview": "Tanjirō Kamado, joined with Inosuke Hashibira, a boy raised by boars who wears a boar's head, and Zenitsu Agatsuma, a scared boy who reveals his true power when he sleeps, boards the Infinity Train on a new mission with the Fire Hashira, Kyōjurō Rengoku, to defeat a demon who has been tormenting the people and killing the demon slayers who oppose it!",
+            "popularity": 718.817,
+            "poster_path": "/h8Rb9gBr48ODIwYUttZNYeMWeUU.jpg",
+            "release_date": "2021-02-26",
+            "title": "Demon Slayer -Kimetsu no Yaiba- The Movie: Mugen Train",
+            "video": false,
+            "vote_average": 8.4,
+            "vote_count": 1891
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/jlGmlFOcfo8n5tURmhC7YVd4Iyy.jpg",
+            "genre_ids": [
+                28,
+                12,
+                14
+            ],
+            "id": 436969,
+            "original_language": "en",
+            "original_title": "The Suicide Squad",
+            "overview": "Supervillains Harley Quinn, Bloodsport, Peacemaker and a collection of nutty cons at Belle Reve prison join the super-secret, super-shady Task Force X as they are dropped off at the remote, enemy-infused island of Corto Maltese.",
+            "popularity": 546.505,
+            "poster_path": "/kb4s0ML0iVZlG6wAKbbs9NAm6X.jpg",
+            "release_date": "2021-08-06",
+            "title": "The Suicide Squad",
+            "video": false,
+            "vote_average": 7.8,
+            "vote_count": 4886
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/20uxpCsKHyBshjF3Y8Px7y3JpbL.jpg",
+            "genre_ids": [
+                16,
+                35,
+                10751,
+                10402
+            ],
+            "id": 438695,
+            "original_language": "en",
+            "original_title": "Sing 2",
+            "overview": "Buster and his new cast now have their sights set on debuting a new show at the Crystal Tower Theater in glamorous Redshore City. But with no connections, he and his singers must sneak into the Crystal Entertainment offices, run by the ruthless wolf mogul Jimmy Crystal, where the gang pitches the ridiculous idea of casting the lion rock legend Clay Calloway in their show. Buster must embark on a quest to find the now-isolated Clay and persuade him to return to the stage.",
+            "popularity": 229.559,
+            "poster_path": "/mC0zoSvnmGw4nFBGVfkeFp7lcAU.jpg",
+            "release_date": "2021-12-22",
+            "title": "Sing 2",
+            "video": false,
+            "vote_average": 7.5,
+            "vote_count": 5
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/axMEROxH94BveBZBfPctWX4qLe4.jpg",
+            "genre_ids": [
+                16,
+                878,
+                10751,
+                35
+            ],
+            "id": 482321,
+            "original_language": "en",
+            "original_title": "Ron's Gone Wrong",
+            "overview": "In a world where walking, talking, digitally connected bots have become children's best friends, an 11-year-old finds that his robot buddy doesn't quite work the same as the others do.",
+            "popularity": 210.71,
+            "poster_path": "/2gq9sEE2iDRqKx8OiZP6mYSTq4.jpg",
+            "release_date": "2021-10-22",
+            "title": "Ron's Gone Wrong",
+            "video": false,
+            "vote_average": 7.6,
+            "vote_count": 60
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/mFbS5TwN95BcSEfiztdchLgTQ0v.jpg",
+            "genre_ids": [
+                36,
+                28,
+                18
+            ],
+            "id": 617653,
+            "original_language": "en",
+            "original_title": "The Last Duel",
+            "overview": "King Charles VI declares that Knight Jean de Carrouges settle his dispute with his squire, Jacques Le Gris, by challenging him to a duel.",
+            "popularity": 281.369,
+            "poster_path": "/zjrJE0fpzPvX8saJXj8VNfcjBoU.jpg",
+            "release_date": "2021-10-15",
+            "title": "The Last Duel",
+            "video": false,
+            "vote_average": 7.6,
+            "vote_count": 469
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/AiaIz0hC3Y25keSuUbeizdrQESY.jpg",
+            "genre_ids": [
+                16,
+                10751,
+                878,
+                14
+            ],
+            "id": 265712,
+            "original_language": "ja",
+            "original_title": "STAND BY ME ドラえもん",
+            "overview": "In the suburbs of Tokyo some time ago, there lived a clumsy boy about 10 years old. There appeared in front of him named Sewashi, Nobita's descendant of four generations later from the 22nd century, and Doraemon, a 22nd century cat-type caretaker robot who helps people with its secret gadgets. Sewashi claims that his family is suffering from the debts Nobita made even to his generation, so in order to change this disastrous future, he brought along Doraemon as Nobita's caretaker to bring happiness to his future, although Doraemon is not happy about this. And so Sewashi installed an accomplishment program into Doraemon forcing him to take care of Nobita. Unless he makes Nobita happy, Doraemon can no longer go back to the 22nd century. This is how the life of Doraemon and Nobita begins. Will Doraemon succeed this mission and return to the 22nd century?",
+            "popularity": 92.974,
+            "poster_path": "/jArnRnllnxbvE2CEV8jc2hhwweS.jpg",
+            "release_date": "2014-12-31",
+            "title": "Stand by Me Doraemon",
+            "video": false,
+            "vote_average": 7.3,
+            "vote_count": 314
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/dB0CxRwLXJoOrRPUvsJjb2hnPtq.jpg",
+            "genre_ids": [
+                28,
+                878
+            ],
+            "id": 624860,
+            "original_language": "en",
+            "original_title": "The Matrix Resurrections",
+            "overview": "Plagued by strange memories, Neo's life takes an unexpected turn when he finds himself back inside the Matrix.",
+            "popularity": 94.881,
+            "poster_path": "/xLNtaLaHudIzOqdEZ7R3lcDLrQQ.jpg",
+            "release_date": "2021-12-22",
+            "title": "The Matrix Resurrections",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/abG9ldrNqSEoguBsi9hmnjusJ0.jpg",
+            "genre_ids": [
+                18,
+                35,
+                878
+            ],
+            "id": 646380,
+            "original_language": "en",
+            "original_title": "Don't Look Up",
+            "overview": "Two astronomers go on a media tour to warn humankind of a planet-killing comet hurtling toward Earth. The response from a distracted world: Meh.",
+            "popularity": 62.499,
+            "poster_path": "/5SkzM3TPpt72FoO46NSjipNXkNG.jpg",
+            "release_date": "2021-12-10",
+            "title": "Don't Look Up",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/b2L7jOgo5cHiRIvljD2GCqZiYO2.jpg",
+            "genre_ids": [
+                18,
+                36,
+                10749
+            ],
+            "id": 454527,
+            "original_language": "fr",
+            "original_title": "Benedetta",
+            "overview": "In the late 17th century, with plague ravaging the land, Benedetta Carlini joins the convent in Pescia, Tuscany, as a novice. Capable from an early age of performing miracles, Benedetta’s impact on life in the community is immediate and momentous.",
+            "popularity": 58.916,
+            "poster_path": "/7eJfB8ZwnspJV4IwREbRrfiyVag.jpg",
+            "release_date": "2021-12-03",
+            "title": "Benedetta",
+            "video": false,
+            "vote_average": 6.7,
+            "vote_count": 193
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/fStC0dSCRQslE9NzXa36EyOom81.jpg",
+            "genre_ids": [
+                16
+            ],
+            "id": 728754,
+            "original_language": "ja",
+            "original_title": "STAND BY ME ドラえもん2",
+            "overview": "She and her beloved Shizuka are finally married! Nobita's childhood dream was supposed to come true on his wedding day, but for some reason, Nobita doesn't show up... One of the most popular episodes from the original story transcends time and space, and leads to Nobita's future. Doraemon and Nobita's great adventure begins in order to fulfill his grandmother's wish to see his bride at first sight. This is a story of tears and bonds, set in the past, present and future.",
+            "popularity": 52.159,
+            "poster_path": "/mu5t94c8IZU781aMg1E1FKinYG2.jpg",
+            "release_date": "2020-11-20",
+            "title": "Stand by Me Doraemon 2",
+            "video": false,
+            "vote_average": 7.6,
+            "vote_count": 71
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/4OTYefcAlaShn6TGVK33UxLW9R7.jpg",
+            "genre_ids": [
+                10752,
+                28,
+                53,
+                12
+            ],
+            "id": 476669,
+            "original_language": "en",
+            "original_title": "The King's Man",
+            "overview": "As a collection of history's worst tyrants and criminal masterminds gather to plot a war to wipe out millions, one man must race against time to stop them.",
+            "popularity": 53.632,
+            "poster_path": "/nj5HmHRZsrYQEYYXyAusFv35erP.jpg",
+            "release_date": "2021-12-22",
+            "title": "The King's Man",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/zsmTFn1Y2ulNd2njTjDbIhYwmkx.jpg",
+            "genre_ids": [
+                18,
+                35,
+                10749
+            ],
+            "id": 542178,
+            "original_language": "en",
+            "original_title": "The French Dispatch",
+            "overview": "The quirky staff of an American magazine based in 1970s France puts out its last issue, with stories featuring an artist sentenced to life imprisonment, student riots, and a kidnapping resolved by a chef.",
+            "popularity": 45.78,
+            "poster_path": "/6JXR3KJH5roiBCjWFt09xfgxHZc.jpg",
+            "release_date": "2021-10-22",
+            "title": "The French Dispatch",
+            "video": false,
+            "vote_average": 7.4,
+            "vote_count": 629
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/JFqL21ZaKWqneuk1wzmAIEWg8I.jpg",
+            "genre_ids": [
+                18
+            ],
+            "id": 567690,
+            "original_language": "en",
+            "original_title": "Dear Evan Hansen",
+            "overview": "Evan Hansen, a high schooler with social anxiety, unintentionally gets caught up in a lie after the family of a classmate who committed suicide mistakes one of Hansen’s letters for their son’s suicide note.",
+            "popularity": 40.853,
+            "poster_path": "/83pobg0tx4r4JeLenCAemanpnS2.jpg",
+            "release_date": "2021-09-24",
+            "title": "Dear Evan Hansen",
+            "video": false,
+            "vote_average": 6.7,
+            "vote_count": 75
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/3xTWG4j9GSUKgkcSR4GeCkd103p.jpg",
+            "genre_ids": [
+                18,
+                9648,
+                80
+            ],
+            "id": 597208,
+            "original_language": "en",
+            "original_title": "Nightmare Alley",
+            "overview": "An ambitious young carny with a talent for manipulating people with a few well-chosen words hooks up with a female psychiatrist who is even more dangerous than he is.",
+            "popularity": 50.05,
+            "poster_path": "/gX3fDxwVgqxezR524HDQp7Jo6RG.jpg",
+            "release_date": "2021-12-17",
+            "title": "Nightmare Alley",
+            "video": false,
+            "vote_average": 0,
+            "vote_count": 0
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/iehlEYH2bl2JPI5cz9oDKfQFOpC.jpg",
+            "genre_ids": [
+                18,
+                53
+            ],
+            "id": 645886,
+            "original_language": "en",
+            "original_title": "The Unforgivable",
+            "overview": "Released from prison into a society that won't forgive her past, a woman seeks redemption by searching for the sister she left behind.",
+            "popularity": 37.448,
+            "poster_path": "/gPQM1zqqsm6Lw1tHF41BwbmOkya.jpg",
+            "release_date": "2021-11-24",
+            "title": "The Unforgivable",
+            "video": false,
+            "vote_average": 4.3,
+            "vote_count": 3
+        },
+        {
+            "adult": false,
+            "backdrop_path": "/kXB7UhPxNP7AwfArqPqcCr7bw5L.jpg",
+            "genre_ids": [
+                27,
+                9648
+            ],
+            "id": 516329,
+            "original_language": "en",
+            "original_title": "Antlers",
+            "overview": "A young teacher discovers that her troubled student's father and younger brother harbor a deadly supernatural secret. Taking the boy into her care, the teacher must fight for their survival against horrors beyond imagination.",
+            "popularity": 39.256,
+            "poster_path": "/klsDRXM68wV7vZTTaAOuu62VNA1.jpg",
+            "release_date": "2021-10-29",
+            "title": "Antlers",
+            "video": false,
+            "vote_average": 6.2,
+            "vote_count": 67
+        }
+    ],
+    "total_pages": 5,
+    "total_results": 81
+}
