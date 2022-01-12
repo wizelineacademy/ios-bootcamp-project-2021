@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D704656278F584A00089C5C /* ScreenTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D704655278F584A00089C5C /* ScreenTitle.swift */; };
 		26141887860173D296C81BF5 /* Pods_TheMovieDb.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62A1E02989A258AB6535012 /* Pods_TheMovieDb.framework */; };
 		46E22ED33BE4AF69C0357245 /* Pods_TheMovieDbTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BD1A559CE48A27F58F55182 /* Pods_TheMovieDbTests.framework */; };
 		7178D8616370011FB6A426F9 /* Pods_TheMovieDb_TheMovieDbUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D124A01BDC696BF935624943 /* Pods_TheMovieDb_TheMovieDbUITests.framework */; };
@@ -111,6 +112,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D704655278F584A00089C5C /* ScreenTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenTitle.swift; sourceTree = "<group>"; };
 		129B7339C8EDEC08FD922CD6 /* Pods-TheMovieDbTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieDbTests.release.xcconfig"; path = "Target Support Files/Pods-TheMovieDbTests/Pods-TheMovieDbTests.release.xcconfig"; sourceTree = "<group>"; };
 		4A3B4AA87372A9CAE186AFEB /* Pods-TheMovieDbTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieDbTests.debug.xcconfig"; path = "Target Support Files/Pods-TheMovieDbTests/Pods-TheMovieDbTests.debug.xcconfig"; sourceTree = "<group>"; };
 		577484C50935EBA90B5C5C89 /* Pods-TheMovieDb.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TheMovieDb.release.xcconfig"; path = "Target Support Files/Pods-TheMovieDb/Pods-TheMovieDb.release.xcconfig"; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				8BCFAC6F2735F3820018EB1A /* CompositionalLayoutCreator.swift */,
 				8B13CE022749E19700B7F71E /* AttibutedTextCreator.swift */,
 				8B4625402730F57500230997 /* Extensions.swift */,
+				0D704655278F584A00089C5C /* ScreenTitle.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -952,6 +955,7 @@
 				8B2EC6EB2750BAB600DF2557 /* SearchViewPresenter.swift in Sources */,
 				8B2EC6F12751F25800DF2557 /* SearchDelegate.swift in Sources */,
 				8B2EC7182756DA1F00DF2557 /* ReviewsViewController.swift in Sources */,
+				0D704656278F584A00089C5C /* ScreenTitle.swift in Sources */,
 				8B2EC71B2756DA4E00DF2557 /* ReviewsViewProtocols.swift in Sources */,
 				8B01F3AA2745CF28003819D3 /* MoviesHomeInteractor.swift in Sources */,
 				8B01F3A82745CCC7003819D3 /* MoviesHomePresenter.swift in Sources */,

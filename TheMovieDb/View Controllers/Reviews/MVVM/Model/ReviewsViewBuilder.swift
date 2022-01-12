@@ -13,7 +13,7 @@ struct ReviewsViewBuilder: ReviewsViewBuilderProtocol {
         let storyboad = UIStoryboard(name: "Main", bundle: nil)
         guard let reviewsViewController = storyboad.instantiateViewController(withIdentifier: "ReviewsViewController") as? ReviewsViewController else { return nil}
         let dataApiManager = ReviewsAPIDataManager()
-        let viewModel = ReviewListViewModel(review: ReviewsViewModelList(results: []), apiDataManager: dataApiManager, movie: movie)
+        let viewModel = ReviewListViewModel(review: ReviewsViewModelList(results: []), apiDataManager: dataApiManager, movie: movie, screenTitle: .reviews)
         reviewsViewController.viewModel = viewModel
         return reviewsViewController
     }

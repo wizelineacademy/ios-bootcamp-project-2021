@@ -9,6 +9,8 @@ import UIKit
 import SwiftUI
 
 class ReviewListViewModel: ReviewListVideModelProtocol {
+   
+    var screenTitle: ScreenTitle
     var didFetchReviews: ((_ results: ReviewsViewModelList) -> Void)?
     var apiDataManager: ReviewsAPIDataManagerProtocol
     var reviews: ReviewsViewModelList {
@@ -18,10 +20,15 @@ class ReviewListViewModel: ReviewListVideModelProtocol {
     }
     var movie: MovieProtocol
     
-    init(review: ReviewsViewModelList, apiDataManager: ReviewsAPIDataManagerProtocol, movie: MovieProtocol) {
+    init(review: ReviewsViewModelList, apiDataManager: ReviewsAPIDataManagerProtocol, movie: MovieProtocol, screenTitle: ScreenTitle) {
         self.reviews = review
         self.apiDataManager = apiDataManager
         self.movie = movie
+        self.screenTitle = screenTitle
+    }
+    
+    func getScreenTitle() -> String {
+        return screenTitle.getScreenTitle()
     }
     
     func fetchReviewsOfMovie(id: String) {

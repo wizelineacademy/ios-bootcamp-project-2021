@@ -9,7 +9,6 @@ import UIKit
 
 class ReviewsViewController: UIViewController, ReviewViewProtocol {
     var viewModel: ReviewListVideModelProtocol?
-    let dataSource = ReviewsDataSource()
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -21,9 +20,9 @@ class ReviewsViewController: UIViewController, ReviewViewProtocol {
     }
     
     func setUpView() {
-        self.title = "Reviews"
+        self.title = self.viewModel?.getScreenTitle()
         collectionView.collectionViewLayout = CompotitionalLayoutCreator.createLayoutForMovieReviews()
-        collectionView.setup(dataSource: dataSource)
+        collectionView.setup(dataSource: self)
         collectionView.registerNibForCellWith(name: ReviewCollectionViewCell.identifierToDeque)
         collectionView.reloadData()
     }
@@ -34,13 +33,25 @@ class ReviewsViewController: UIViewController, ReviewViewProtocol {
     
     func didFetch() {
         viewModel?.didFetchReviews = { [weak self] reviewsViewModelList in
-            print(reviewsViewModelList)
-            self?.dataSource.reviewsViewModelList = reviewsViewModelList
             DispatchQueue.main.async {
                 self?.collectionView.reloadData()
             }
-            
         }
     }
    
+}
+
+extension ReviewsViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.viewModel?.reviews.results.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ReviewCollectionViewCell.identifierToDeque, for: indexPath) as? ReviewCollectionViewCell, let viewModel = self.viewModel?.reviews.results[indexPath.row] {
+            cell.setInfoWith(viewModel: viewModel)
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
+    }
 }

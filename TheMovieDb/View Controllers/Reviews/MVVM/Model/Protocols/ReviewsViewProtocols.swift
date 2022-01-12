@@ -12,6 +12,8 @@ protocol ReviewListVideModelProtocol {
     var movie: MovieProtocol { get set }
     var reviews: ReviewsViewModelList { get set }
     var apiDataManager: ReviewsAPIDataManagerProtocol { get set }
+    var screenTitle: ScreenTitle { get set }
+    func getScreenTitle() -> String
     func fetchReviewsOfMovie(id: String)
     var didFetchReviews: ((_ results: ReviewsViewModelList) -> Void)? { get set }
 }
