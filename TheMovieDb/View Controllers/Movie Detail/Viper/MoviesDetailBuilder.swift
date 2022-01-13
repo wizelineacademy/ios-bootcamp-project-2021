@@ -11,19 +11,12 @@ import UIKit
 struct MoviesDetailBuilder: MoviesDetailBuilderProtocol {
     static func buildModuleWith(movie: MovieProtocol) -> UIViewController? {
         let storyboad = UIStoryboard(name: "Main", bundle: nil)
-        guard let moviesDetailViewController = storyboad.instantiateViewController(withIdentifier: "MovieDetailViewController") as? MovieDetailViewController else { return nil }
-        moviesDetailViewController.movie = movie
-        let presenter = MoviesDetailPresenter()
-        let interactor = MoviesDetailInteractor()
-        let router = MoviesDetailRouter()
+        guard let moviesDetailViewController = storyboad.instantiateViewController(withIdentifier: "MovieDetailViewControllerMVVM") as? MovieDetailViewControllerMVVM else { return nil }
+      
         let apiDataManager = MoviesDetailAPIDataManager()
-        presenter.view = moviesDetailViewController
-        presenter.interactor = interactor
-        presenter.router = router
-        interactor.presenter = presenter
-        interactor.apiDataManager = apiDataManager
-        
-        moviesDetailViewController.presenter = presenter
-        return moviesDetailViewController
+        let router = MoviesDetailRouter()
+        let viewModel = MovieDetailViewModel(movie: movie, apiManager: apiDataManager, router: router)
+        moviesDetailViewController.viewModel = viewModel
+       return moviesDetailViewController
     }
 }
